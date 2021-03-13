@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net.Generator", "WebExtension.Net.Generator\WebExtension.Net.Generator.csproj", "{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net", "WebExtension.Net\WebExtension.Net.csproj", "{F84448CE-50BD-41BA-A49D-87F6CB4AF130}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36C5C454-9F2E-4505-B08D-452DED9D18F0}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\GitVersion.yml = ..\GitVersion.yml
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{790DED5B-7057-4D11-BD7D-79AFA689C68E}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\WebExtension.Net-CD.yml = ..\.github\workflows\WebExtension.Net-CD.yml
+		..\.github\workflows\WebExtension.Net-CI.yml = ..\.github\workflows\WebExtension.Net-CI.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F84448CE-50BD-41BA-A49D-87F6CB4AF130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F84448CE-50BD-41BA-A49D-87F6CB4AF130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F84448CE-50BD-41BA-A49D-87F6CB4AF130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F84448CE-50BD-41BA-A49D-87F6CB4AF130}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {500E229A-A512-45E3-B66E-46EB228929D3}
+	EndGlobalSection
+EndGlobal

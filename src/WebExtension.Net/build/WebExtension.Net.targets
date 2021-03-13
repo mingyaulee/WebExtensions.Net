@@ -1,0 +1,16 @@
+﻿<!-- build/WebExtension.Net.targets -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="WebExtensionAssetsContentsPath;WebExtensionAssetsTargetPath">
+
+  <PropertyGroup>
+    <WebExtensionAssetsPath Condition="'$(WebExtensionAssetsPath)' == ''">wwwroot</WebExtensionAssetsPath>
+    <WebExtensionAssetsContentsPath>$(MSBuildThisFileDirectory)..\content\WebExtensionScripts</WebExtensionAssetsContentsPath>
+    <WebExtensionAssetsTargetPath>$(WebExtensionAssetsPath)\WebExtensionScripts</WebExtensionAssetsTargetPath>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IncludeWebExtensionAssets)' != 'false'">
+    <None Include="$(WebExtensionAssetsContentsPath)\WebExtensionNet.js" Link="$(WebExtensionAssetsTargetPath)\WebExtensionNet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

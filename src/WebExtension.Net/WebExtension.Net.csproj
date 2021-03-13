@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsShippingPackage>true</IsShippingPackage>
+    <HasReferenceAssembly>false</HasReferenceAssembly>
+    <OutDir>BuildOutput\$(TargetFramework)</OutDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageOutputPath>PackageOutput</PackageOutputPath>
+    <Authors>mingyaulee</Authors>
+    <Description>A package for consuming WebExtensions API in a browser extension.</Description>
+    <RepositoryUrl>https://github.com/mingyaulee/WebExtension.Net</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="build\**">
+      <Pack>true</Pack>
+      <PackagePath>build</PackagePath>
+	</Content>
+    <Content Include="content\**">
+      <Pack>true</Pack>
+      <PackagePath>content</PackagePath>
+	</Content>
+    <Compile Remove="BuildOutput\**" />
+    <EmbeddedResource Remove="BuildOutput\**" />
+    <None Remove="BuildOutput\**" />
+    <Compile Remove="PackageOutput\**" />
+    <EmbeddedResource Remove="PackageOutput\**" />
+    <None Remove="PackageOutput\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.JSInterop" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="content\WebExtensionScripts\WebExtensionNet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
