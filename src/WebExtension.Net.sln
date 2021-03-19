@@ -16,8 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{790DED5B-7057-4D11-BD7D-79AFA689C68E}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\WebExtension.Net-CD.yml = ..\.github\workflows\WebExtension.Net-CD.yml
-		..\.github\workflows\WebExtension.Net-CI.yml = ..\.github\workflows\WebExtension.Net-CI.yml
+		..\.github\workflows\WebExtension.Net-Build.yml = ..\.github\workflows\WebExtension.Net-Build.yml
+		..\.github\workflows\WebExtension.Net-Release.yml = ..\.github\workflows\WebExtension.Net-Release.yml
 	EndProjectSection
 EndProject
 Global
