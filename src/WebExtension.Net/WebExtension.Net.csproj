@@ -15,6 +15,7 @@
     <Authors>mingyaulee</Authors>
     <Description>A package for consuming WebExtensions API in a browser extension.</Description>
     <RepositoryUrl>https://github.com/mingyaulee/WebExtension.Net</RepositoryUrl>
+    <PackageTags>Browser Chrome Firefox Edge Extension Addons .Net</PackageTags>	      
   </PropertyGroup>
 
   <ItemGroup>
