@@ -14,9 +14,9 @@
                     result = await result;
                 }
                 return result;
-            } catch {
+            } catch (error) {
                 console.error(api, args, target);
-                throw new Error(`Failed to execute WebExtension API browser.${api}`);
+                throw new Error(`Failed to execute browser.${api}: ${error.message}`);
             }
         }
     };
