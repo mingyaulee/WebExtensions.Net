@@ -1,4 +1,4 @@
-/// This file is auto generated at 2021-03-19T09:46:29
+// This file is auto generated at 2021-03-24T04:51:22
 
 using System;
 using System.Collections.Generic;
@@ -8,18 +8,26 @@ using System.Threading.Tasks;
 
 namespace WebExtension.Net.Tabs
 {
-    /// Enum Definition
-    /// <summary>An event that caused a muted state change.</summary>
+    // Enum Definition
+    /// <summary>
+    /// An event that caused a muted state change.
+    /// </summary>
     [JsonConverter(typeof(EnumStringConverter<MutedInfoReason>))]
     public enum MutedInfoReason
     {
-        /// <summary>A user input action has set/overridden the muted state.</summary>
+        /// <summary>
+        /// A user input action has set/overridden the muted state.
+        /// </summary>
         [EnumValue("user")]
         User,
-        /// <summary>Tab capture started, forcing a muted state change.</summary>
+        /// <summary>
+        /// Tab capture started, forcing a muted state change.
+        /// </summary>
         [EnumValue("capture")]
         Capture,
-        /// <summary>An extension, identified by the extensionId field, set the muted state.</summary>
+        /// <summary>
+        /// An extension, identified by the extensionId field, set the muted state.
+        /// </summary>
         [EnumValue("extension")]
         Extension,
     }

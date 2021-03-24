@@ -1,4 +1,4 @@
-/// This file is auto generated at 2021-03-19T09:46:29
+// This file is auto generated at 2021-03-24T04:51:22
 
 using System;
 using System.Collections.Generic;
@@ -8,23 +8,31 @@ using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    /// Class Definition
-    /// <summary></summary>
+    // Class Definition
+    /// <summary>
+    /// 
+    /// </summary>
     public class ThemeIcons
     {
         
-        /// Property Definition
-        /// <summary>A light icon to use for dark themes</summary>
+        // Property Definition
+        /// <summary>
+        /// A light icon to use for dark themes
+        /// </summary>
         [JsonPropertyName("light")]
         public ExtensionURL Light { get; set; }
         
-        /// Property Definition
-        /// <summary>The dark icon to use for light themes</summary>
+        // Property Definition
+        /// <summary>
+        /// The dark icon to use for light themes
+        /// </summary>
         [JsonPropertyName("dark")]
         public ExtensionURL Dark { get; set; }
         
-        /// Property Definition
-        /// <summary>The size of the icons</summary>
+        // Property Definition
+        /// <summary>
+        /// The size of the icons
+        /// </summary>
         [JsonPropertyName("size")]
         public int Size { get; set; }
     }

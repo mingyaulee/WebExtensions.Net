@@ -1,4 +1,4 @@
-/// This file is auto generated at 2021-03-19T09:46:29
+// This file is auto generated at 2021-03-24T04:51:22
 
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    /// String Format Definition
-    /// <summary></summary>
+    // String Format Definition
+    /// <summary>
+    /// 
+    /// </summary>
     public class HttpURL : BaseStringFormat
     {
         private const string pattern = "url";
+        /// <summary>Creates a new instance of HttpURL.</summary>
         public HttpURL(string value) : base(value, pattern)
         {
         }

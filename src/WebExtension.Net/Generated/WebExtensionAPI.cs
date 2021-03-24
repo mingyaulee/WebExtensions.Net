@@ -1,38 +1,28 @@
-/// This file is auto generated at 2021-03-19T09:46:29
+// This file is auto generated at 2021-03-24T04:51:22
 
-using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Windows;
+using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Tabs;
+using WebExtension.Net.Notifications;
 using WebExtension.Net.Runtime;
 using WebExtension.Net.WebNavigation;
-using WebExtension.Net.Notifications;
 using WebExtension.Net.WebRequest;
 
 namespace WebExtension.Net
 {
+    /// <inheritdoc />
     public class WebExtensionAPI : IWebExtensionAPI
     {
         private readonly WebExtensionJSRuntime webExtensionJSRuntime;
+        /// <summary>Creates a new instance of WebExtensionAPI.</summary>
         public WebExtensionAPI(WebExtensionJSRuntime webExtensionJSRuntime)
         {
             this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
         
-        private ContentScriptsAPI _contentScripts;
-        public IContentScriptsAPI ContentScripts
-        {
-            get
-            {
-                if (_contentScripts is null)
-                {
-                    _contentScripts = new ContentScriptsAPI(webExtensionJSRuntime);
-                }
-                return _contentScripts;
-            }
-        }
-        
         private WindowsAPI _windows;
+        /// <inheritdoc />
         public IWindowsAPI Windows
         {
             get
@@ -45,7 +35,22 @@ namespace WebExtension.Net
             }
         }
         
+        private ContentScriptsAPI _contentScripts;
+        /// <inheritdoc />
+        public IContentScriptsAPI ContentScripts
+        {
+            get
+            {
+                if (_contentScripts is null)
+                {
+                    _contentScripts = new ContentScriptsAPI(webExtensionJSRuntime);
+                }
+                return _contentScripts;
+            }
+        }
+        
         private TabsAPI _tabs;
+        /// <inheritdoc />
         public ITabsAPI Tabs
         {
             get
@@ -58,7 +63,22 @@ namespace WebExtension.Net
             }
         }
         
+        private NotificationsAPI _notifications;
+        /// <inheritdoc />
+        public INotificationsAPI Notifications
+        {
+            get
+            {
+                if (_notifications is null)
+                {
+                    _notifications = new NotificationsAPI(webExtensionJSRuntime);
+                }
+                return _notifications;
+            }
+        }
+        
         private RuntimeAPI _runtime;
+        /// <inheritdoc />
         public IRuntimeAPI Runtime
         {
             get
@@ -72,6 +92,7 @@ namespace WebExtension.Net
         }
         
         private WebNavigationAPI _webNavigation;
+        /// <inheritdoc />
         public IWebNavigationAPI WebNavigation
         {
             get
@@ -84,20 +105,8 @@ namespace WebExtension.Net
             }
         }
         
-        private NotificationsAPI _notifications;
-        public INotificationsAPI Notifications
-        {
-            get
-            {
-                if (_notifications is null)
-                {
-                    _notifications = new NotificationsAPI(webExtensionJSRuntime);
-                }
-                return _notifications;
-            }
-        }
-        
         private WebRequestAPI _webRequest;
+        /// <inheritdoc />
         public IWebRequestAPI WebRequest
         {
             get
