@@ -1,0 +1,17 @@
+﻿@page "/tests.html"
+@using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
+@inherits Blazor.BrowserExtension.Pages.BasePage
+
+@code {
+    [Inject]
+    public ITestRunner TestRunner { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            TestRunner.RunTests();
+        }
+    }
+}

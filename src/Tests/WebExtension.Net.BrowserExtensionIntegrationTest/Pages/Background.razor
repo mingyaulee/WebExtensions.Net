@@ -1,0 +1,15 @@
+﻿@page "/background"
+@inherits Blazor.BrowserExtension.Pages.BackgroundPage
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var testUrl = await WebExtension.Runtime.GetURL("tests.html?random=false");
+        await WebExtension.Tabs.Create(new
+        {
+            active = true,
+            url = testUrl
+        });
+    }
+} 

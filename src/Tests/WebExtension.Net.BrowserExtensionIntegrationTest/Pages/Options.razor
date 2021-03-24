@@ -1,0 +1,13 @@
+﻿@page "/options"
+@inherits Blazor.BrowserExtension.Pages.BasePage;
+
+<h3>Options</h3>
+<button @onclick="GetPluginUrl">Get plugin URL</button>
+<p>@pluginUrl</p>
+@code {
+    string pluginUrl = null;
+    async Task GetPluginUrl()
+    {
+        pluginUrl = await WebExtension.Runtime.GetURL("");
+    }
+}
