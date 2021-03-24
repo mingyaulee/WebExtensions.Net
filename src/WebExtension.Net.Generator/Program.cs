@@ -17,6 +17,9 @@ namespace WebExtension.Net.Generator
             };
             var rootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..\\..\\WebExtension.Net\\Generated"));
             var rootNamespace = "WebExtension.Net";
+            var rootApiDefinitionName = "WebExtensionAPI";
+            var rootApiDefinitionDescription = "Web Extension API";
+            var apiDefinitionClassNamePostfix = "API";
             var includeNamespaces = new List<string>()
             {
                 "contentScripts",
@@ -103,6 +106,9 @@ namespace WebExtension.Net.Generator
             var apiDefinitionRoot = builder.BuildRootFromSourceAsync(sourceUrls, runInParallel).GetAwaiter().GetResult();
             if (apiDefinitionRoot != null)
             {
+                apiDefinitionRoot.Name = rootApiDefinitionName;
+                apiDefinitionRoot.Description = rootApiDefinitionDescription;
+                apiDefinitionRoot.DefinitionClassNamePostfix = apiDefinitionClassNamePostfix;
                 apiDefinitionRoot.Directory = rootDirectory;
                 apiDefinitionRoot.RootNamespace = rootNamespace;
                 var writer = new ApiDefinitionWriter(logger, includeNamespaces, excludeNamespaces);

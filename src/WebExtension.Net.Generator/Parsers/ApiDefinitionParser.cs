@@ -24,6 +24,11 @@ namespace WebExtension.Net.Generator.Parsers
                 var apiDefinition = new ApiDefinition(jsonApiDefinition);
                 ParseCommonDefinition(apiDefinition, jsonApiDefinition, name: "namespace");
 
+                if (jsonApiDefinition.TryGetProperty("permissions", out var jsonPermissionsArray))
+                {
+                    apiDefinition.Permissions = jsonPermissionsArray.EnumerateArray().Select(jsonPermission => jsonPermission.GetString() ?? string.Empty).ToArray();
+                }
+
                 if (jsonApiDefinition.TryGetProperty("types", out var jsonTypeDefinitionArray))
                 {
                     apiDefinition.Types = ParseTypes(jsonTypeDefinitionArray).ToArray();

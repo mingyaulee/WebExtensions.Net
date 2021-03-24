@@ -26,7 +26,7 @@ namespace WebExtension.Net.Generator
             this.includeNamespaces = includeNamespaces;
             this.excludeNamespaces = excludeNamespaces;
             translator = new ApiDefinitionTranslator(logger);
-            header = $"/// This file is auto generated at {DateTime.UtcNow:s}{Environment.NewLine}{Environment.NewLine}";
+            header = $"// This file is auto generated at {DateTime.UtcNow:s}{Environment.NewLine}{Environment.NewLine}";
             jsonSerializerOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true
@@ -93,10 +93,11 @@ namespace WebExtension.Net.Generator
 
                         if (apiDefinition.Functions.Any())
                         {
-                            var apiDefinitionContent = translator.TranslateApiDefinition(apiDefinition, $"{apiDefinitionName}API");
-                            await WriteFile(apiDefinition, $"{apiDefinitionName}API.cs", apiDefinitionContent);
-                            var iApiDefinitionContent = translator.TranslateApiDefinitionInterface(apiDefinition, $"{apiDefinitionName}API");
-                            await WriteFile(apiDefinition, $"I{apiDefinitionName}API.cs", iApiDefinitionContent);
+                            var apiDefinitionNamePostfix = apiDefinitionRoot.DefinitionClassNamePostfix;
+                            var apiDefinitionContent = translator.TranslateApiDefinition(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}");
+                            await WriteFile(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}.cs", apiDefinitionContent);
+                            var iApiDefinitionContent = translator.TranslateApiDefinitionInterface(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}");
+                            await WriteFile(apiDefinition, $"I{apiDefinitionName}{apiDefinitionNamePostfix}.cs", iApiDefinitionContent);
                             apiDefinitions.Add(apiDefinition);
                         }
                     }
@@ -106,10 +107,10 @@ namespace WebExtension.Net.Generator
                     }
                 }
 
-                var webExtensionContent = translator.TranslateApiDefinitionRoot(apiDefinitionRoot, apiDefinitions, "WebExtensionAPI", "API");
-                await WriteFile(apiDefinitionRoot, "WebExtensionAPI.cs", webExtensionContent);
-                var iWebExtensionContent = translator.TranslateApiDefinitionRootInterface(apiDefinitionRoot, apiDefinitions, "WebExtensionAPI", "API");
-                await WriteFile(apiDefinitionRoot, "IWebExtensionAPI.cs", iWebExtensionContent);
+                var webExtensionContent = translator.TranslateApiDefinitionRoot(apiDefinitionRoot, apiDefinitions);
+                await WriteFile(apiDefinitionRoot, $"{apiDefinitionRoot.Name}.cs", webExtensionContent);
+                var iWebExtensionContent = translator.TranslateApiDefinitionRootInterface(apiDefinitionRoot, apiDefinitions);
+                await WriteFile(apiDefinitionRoot, $"I{apiDefinitionRoot.Name}.cs", iWebExtensionContent);
             }
             catch (Exception ex)
             {

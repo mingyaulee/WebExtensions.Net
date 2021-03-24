@@ -18,23 +18,25 @@ namespace WebExtension.Net.Generator.Translators
             this.logger = logger;
         }
 
-        public string TranslateApiDefinitionRoot(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions, string className, string definitionPostfix)
+        public string TranslateApiDefinitionRoot(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
         {
             var content = new StringBuilder();
             var usingNamespaces = apiDefinitions.Select(apiDefinition => $"using {apiDefinition.GetNamespace()};");
+            var apiDefinitionNamePostfix = apiDefinitionRoot.DefinitionClassNamePostfix;
             var apiProperties = apiDefinitions.SelectMany(apiDefinition =>
             {
                 return new[]
                 {
                     $"",
-                    $"private {apiDefinition.GetName()}{definitionPostfix} _{apiDefinition.Name};",
-                    $"public I{apiDefinition.GetName()}{definitionPostfix} {apiDefinition.GetName()}",
+                    $"private {apiDefinition.GetName()}{apiDefinitionNamePostfix} _{apiDefinition.Name};",
+                    $"/// <inheritdoc />",
+                    $"public I{apiDefinition.GetName()}{apiDefinitionNamePostfix} {apiDefinition.GetName()}",
                     $"{{",
                     $"    get",
                     $"    {{",
                     $"        if (_{apiDefinition.Name} is null)",
                     $"        {{",
-                    $"            _{apiDefinition.Name} = new {apiDefinition.GetName()}{definitionPostfix}(webExtensionJSRuntime);",
+                    $"            _{apiDefinition.Name} = new {apiDefinition.GetName()}{apiDefinitionNamePostfix}(webExtensionJSRuntime);",
                     $"        }}",
                     $"        return _{apiDefinition.Name};",
                     $"    }}",
@@ -45,10 +47,12 @@ namespace WebExtension.Net.Generator.Translators
             content.AppendLine($"");
             content.AppendLine($"namespace {apiDefinitionRoot.RootNamespace}");
             content.AppendLine($"{{");
-            content.AppendLine($"    public class {className} : I{className}");
+            content.AppendLine($"    /// <inheritdoc />");
+            content.AppendLine($"    public class {apiDefinitionRoot.Name} : I{apiDefinitionRoot.Name}");
             content.AppendLine($"    {{");
             content.AppendLine($"        private readonly WebExtensionJSRuntime webExtensionJSRuntime;");
-            content.AppendLine($"        public {className}(WebExtensionJSRuntime webExtensionJSRuntime)");
+            content.AppendLine($"        /// <summary>Creates a new instance of {apiDefinitionRoot.Name}.</summary>");
+            content.AppendLine($"        public {apiDefinitionRoot.Name}(WebExtensionJSRuntime webExtensionJSRuntime)");
             content.AppendLine($"        {{");
             content.AppendLine($"            this.webExtensionJSRuntime = webExtensionJSRuntime;");
             content.AppendLine($"        }}");
@@ -60,29 +64,38 @@ namespace WebExtension.Net.Generator.Translators
             return content.ToString();
         }
 
-        public string TranslateApiDefinitionRootInterface(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions, string className, string definitionPostfix)
+        public string TranslateApiDefinitionRootInterface(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
         {
             var content = new StringBuilder();
             var usingNamespaces = apiDefinitions.Select(apiDefinition => $"using {apiDefinition.GetNamespace()};");
-            var apiProperties = apiDefinitions.SelectMany(apiDefinition =>
-            {
-                return new[]
-                {
-                    $"/// <summary>{apiDefinition.Description}</summary>",
-                    $"I{apiDefinition.GetName()}{definitionPostfix} {apiDefinition.GetName()} {{ get; }}"
-                };
-            });
+            var apiProperties = apiDefinitions.SelectMany(apiDefinition => TranslateApiDefinitionRootProperty(apiDefinition, apiDefinitionRoot.DefinitionClassNamePostfix));
             content.AppendLine($"{string.Join(Environment.NewLine, usingNamespaces)}");
             content.AppendLine($"");
             content.AppendLine($"namespace {apiDefinitionRoot.RootNamespace}");
             content.AppendLine($"{{");
-            content.AppendLine($"    public interface I{className}");
+            content.AppendLine($"    /// <summary>{apiDefinitionRoot.Description}</summary>");
+            content.AppendLine($"    public interface I{apiDefinitionRoot.Name}");
             content.AppendLine($"    {{");
             content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", apiProperties)}");
             content.AppendLine($"    }}");
             content.AppendLine($"}}");
 
             return content.ToString();
+        }
+
+        private IEnumerable<string> TranslateApiDefinitionRootProperty(ApiDefinition apiDefinition, string definitionPostfix)
+        {
+            yield return $"/// <summary>";
+            foreach (var description in apiDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            if (apiDefinition.Permissions.Any())
+            {
+                yield return $"/// Requires manifest permission {string.Join(", ", apiDefinition.Permissions)}.";
+            }
+            yield return $"/// </summary>";
+            yield return $"I{apiDefinition.GetName()}{definitionPostfix} {apiDefinition.GetName()} {{ get; }}";
         }
 
         public string TranslateApiDefinition(ApiDefinition apiDefinition, string className)
@@ -102,10 +115,12 @@ namespace WebExtension.Net.Generator.Translators
             content.AppendLine($"");
             content.AppendLine($"namespace {apiDefinition.GetNamespace()}");
             content.AppendLine($"{{");
-            content.AppendLine($"    /// <summary>{apiDefinition.Description}</summary>");
+            content.AppendLine($"    /// <inheritdoc />");
             content.AppendLine($"    public class {className} : I{className}");
             content.AppendLine($"    {{");
             content.AppendLine($"        private readonly WebExtensionJSRuntime webExtensionJSRuntime;");
+            content.AppendLine($"        /// <summary>Creates a new instance of {className}.</summary>");
+            content.AppendLine($"        /// <param name=\"webExtensionJSRuntime\">Web Extension JS Runtime</param>");
             content.AppendLine($"        public {className}(WebExtensionJSRuntime webExtensionJSRuntime)");
             content.AppendLine($"        {{");
             content.AppendLine($"            this.webExtensionJSRuntime = webExtensionJSRuntime;");
@@ -135,7 +150,12 @@ namespace WebExtension.Net.Generator.Translators
             content.AppendLine($"");
             content.AppendLine($"namespace {apiDefinition.GetNamespace()}");
             content.AppendLine($"{{");
-            content.AppendLine($"    /// <summary>{apiDefinition.Description}</summary>");
+            content.AppendLine($"    /// <summary>");
+            foreach (var description in apiDefinition.GetDescription())
+            {
+                content.AppendLine($"    /// {description}");
+            }
+            content.AppendLine($"    /// </summary>");
             content.AppendLine($"    public interface I{className}");
             content.AppendLine($"    {{");
             content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", methods)}");
@@ -199,8 +219,13 @@ namespace WebExtension.Net.Generator.Translators
             {
                 logger.LogInformation($"        Class methods");
             }
-            yield return $"/// Class Definition";
-            yield return $"/// <summary>{classDefinition.Description}</summary>";
+            yield return $"// Class Definition";
+            yield return $"/// <summary>";
+            foreach (var description in classDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            yield return $"/// </summary>";
             if (classDefinition.Deprecated)
             {
                 yield return $"[Obsolete(\"{classDefinition.DeprecatedMessage}\")]";
@@ -221,8 +246,13 @@ namespace WebExtension.Net.Generator.Translators
         private IEnumerable<string> TranslateEnumDefinition(EnumDefinition enumDefinition)
         {
             var enumValues = enumDefinition.Values.SelectMany(TranslateEnumValueDefinition);
-            yield return $"/// Enum Definition";
-            yield return $"/// <summary>{enumDefinition.Description}</summary>";
+            yield return $"// Enum Definition";
+            yield return $"/// <summary>";
+            foreach (var description in enumDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            yield return $"/// </summary>";
             if (enumDefinition.Deprecated)
             {
                 yield return $"[Obsolete(\"{enumDefinition.DeprecatedMessage}\")]";
@@ -239,8 +269,13 @@ namespace WebExtension.Net.Generator.Translators
 
         private IEnumerable<string> TranslateStringFormatDefinition(StringFormatDefinition stringFormatDefinition)
         {
-            yield return $"/// String Format Definition";
-            yield return $"/// <summary>{stringFormatDefinition.Description}</summary>";
+            yield return $"// String Format Definition";
+            yield return $"/// <summary>";
+            foreach (var description in stringFormatDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            yield return $"/// </summary>";
             if (stringFormatDefinition.Deprecated)
             {
                 yield return $"[Obsolete(\"{stringFormatDefinition.DeprecatedMessage}\")]";
@@ -248,6 +283,7 @@ namespace WebExtension.Net.Generator.Translators
             yield return $"public class {stringFormatDefinition.GetName()} : BaseStringFormat";
             yield return $"{{";
             yield return $"    private const string pattern = \"{stringFormatDefinition.Format}\";";
+            yield return $"    /// <summary>Creates a new instance of {stringFormatDefinition.GetName()}.</summary>";
             yield return $"    public {stringFormatDefinition.GetName()}(string value) : base(value, pattern)";
             yield return $"    {{";
             yield return $"    }}";
@@ -260,8 +296,13 @@ namespace WebExtension.Net.Generator.Translators
             {
                 throw new Exception("List definition inner type should not be null");
             }
-            yield return $"/// List Definition";
-            yield return $"/// <summary>{listDefinition.Description}</summary>";
+            yield return $"// List Definition";
+            yield return $"/// <summary>";
+            foreach (var description in listDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            yield return $"/// </summary>";
             if (listDefinition.Deprecated)
             {
                 yield return $"[Obsolete(\"{listDefinition.DeprecatedMessage}\")]";
@@ -279,6 +320,7 @@ namespace WebExtension.Net.Generator.Translators
                 {
                     return new[]
                     {
+                        $"/// <summary>Creates a new instance of {multiTypeDefinition.GetName()}.</summary>",
                         $"public {multiTypeDefinition.GetName()}() {{ }}",
                         $""
                     };
@@ -287,6 +329,7 @@ namespace WebExtension.Net.Generator.Translators
                 return new[]
                 {
                     $"private readonly {typeReferenceName} {sanitizedVariableName};",
+                    $"/// <summary>Creates a new instance of {multiTypeDefinition.GetName()}.</summary>",
                     $"public {multiTypeDefinition.GetName()}({typeReferenceName} {sanitizedVariableName})",
                     $"{{",
                     $"    this.{sanitizedVariableName} = {sanitizedVariableName};",
@@ -294,8 +337,13 @@ namespace WebExtension.Net.Generator.Translators
                     $""
                 };
             });
-            yield return $"/// MultiType Definition";
-            yield return $"/// <summary>{multiTypeDefinition.Description}</summary>";
+            yield return $"// MultiType Definition";
+            yield return $"/// <summary>";
+            foreach (var description in multiTypeDefinition.GetDescription())
+            {
+                yield return $"/// {description}";
+            }
+            yield return $"/// </summary>";
             if (multiTypeDefinition.Deprecated)
             {
                 yield return $"[Obsolete(\"{multiTypeDefinition.DeprecatedMessage}\")]";
@@ -314,8 +362,13 @@ namespace WebExtension.Net.Generator.Translators
             if (!propertyDefinition.Unsupported)
             {
                 yield return $"";
-                yield return $"/// Property Definition";
-                yield return $"/// <summary>{propertyDefinition.Description}</summary>";
+                yield return $"// Property Definition";
+                yield return $"/// <summary>";
+                foreach (var description in propertyDefinition.GetDescription())
+                {
+                    yield return $"/// {description}";
+                }
+                yield return $"/// </summary>";
                 if (propertyDefinition.Deprecated)
                 {
                     yield return $"[Obsolete(\"{propertyDefinition.DeprecatedMessage}\")]";
@@ -345,21 +398,28 @@ namespace WebExtension.Net.Generator.Translators
                 foreach (var parameterTypeCombinations in GetParametersCombination(functionDefinition.Parameters))
                 {
                     yield return $"";
-                    yield return $"/// Function Definition";
+                    yield return $"// Function Definition";
                     yield return $"/// <summary>";
-                    yield return $"/// {functionDefinition.Description}";
+                    foreach (var description in functionDefinition.GetDescription())
+                    {
+                        yield return $"/// {description}";
+                    }
                     yield return $"/// </summary>";
                     foreach (var parameterTypeCombination in parameterTypeCombinations)
                     {
-                        yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{parameterTypeCombination.ParameterDefinition.Description}</param>";
+                        yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{string.Join(" ", parameterTypeCombination.ParameterDefinition.GetDescription())}</param>";
                     };
+                    if (returnType != null && functionDefinition.ReturnType != null)
+                    {
+                        yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
+                    }
                     if (functionDefinition.Deprecated)
                     {
                         yield return $"[Obsolete(\"{functionDefinition.DeprecatedMessage}\")]";
                     }
                     yield return $"public virtual {methodReturnType} {functionDefinition.GetName()}({string.Join(", ", parameterTypeCombinations.Select(TranslateParameterDefinition))})";
                     yield return $"{{";
-                    yield return $"    return webExtensionJSRuntime.{clientMethodInvoke}(\"{functionDefinition.FunctionAccessor}\"{string.Join("", parameterTypeCombinations.Select(parameterTypeCombination => $", {parameterTypeCombination.ParameterDefinition.Name}"))});";
+                    yield return $"    return webExtensionJSRuntime.{clientMethodInvoke}(\"{functionDefinition.FunctionAccessor}\"{string.Join(string.Empty, parameterTypeCombinations.Select(parameterTypeCombination => $", {parameterTypeCombination.ParameterDefinition.Name}"))});";
                     yield return $"}}";
                 }
             }
@@ -383,14 +443,21 @@ namespace WebExtension.Net.Generator.Translators
                 foreach (var parameterTypeCombinations in GetParametersCombination(functionDefinition.Parameters))
                 {
                     yield return $"";
-                    yield return $"/// Function Definition Interface";
+                    yield return $"// Function Definition Interface";
                     yield return $"/// <summary>";
-                    yield return $"/// {functionDefinition.Description}";
+                    foreach (var description in functionDefinition.GetDescription())
+                    {
+                        yield return $"/// {description}";
+                    }
                     yield return $"/// </summary>";
                     foreach (var parameterTypeCombination in parameterTypeCombinations)
                     {
-                        yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{parameterTypeCombination.ParameterDefinition.Description}</param>";
+                        yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{string.Join(" ", parameterTypeCombination.ParameterDefinition.GetDescription())}</param>";
                     };
+                    if (returnType != null && functionDefinition.ReturnType != null)
+                    {
+                        yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
+                    }
                     if (functionDefinition.Deprecated)
                     {
                         yield return $"[Obsolete(\"{functionDefinition.DeprecatedMessage}\")]";
@@ -435,7 +502,16 @@ namespace WebExtension.Net.Generator.Translators
         {
             if (!string.IsNullOrEmpty(enumValueDefinition.Description))
             {
-                yield return $"/// <summary>{enumValueDefinition.Description}</summary>";
+                yield return $"/// <summary>";
+                foreach (var description in enumValueDefinition.GetDescription())
+                {
+                    yield return $"/// {description}";
+                }
+                yield return $"/// </summary>";
+            }
+            else
+            {
+                yield return $"/// <summary>{enumValueDefinition.Name}</summary>";
             }
             var sanitizedValueName = enumValueDefinition.GetName().Replace("-", "_");
             if (enumValueDefinition.Deprecated)

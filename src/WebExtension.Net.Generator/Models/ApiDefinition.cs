@@ -10,6 +10,7 @@ namespace WebExtension.Net.Generator.Models
         {
             URL = string.Empty;
             Json = new [] { json };
+            Permissions = Enumerable.Empty<string>();
             Types = Enumerable.Empty<TypeDefinition>();
             Functions = Enumerable.Empty<FunctionDefinition>();
             Directory = string.Empty;
@@ -22,6 +23,7 @@ namespace WebExtension.Net.Generator.Models
         public bool Deprecated { get; set; }
         public string? DeprecatedMessage { get; set; }
         public IEnumerable<JsonElement> Json { get; set; }
+        public IEnumerable<string> Permissions { get;set; }
         public IEnumerable<TypeDefinition> Types { get;set; }
         public IEnumerable<FunctionDefinition> Functions { get;set; }
         public string? Directory { get; set; }
