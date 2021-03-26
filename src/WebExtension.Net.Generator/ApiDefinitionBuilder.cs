@@ -104,6 +104,7 @@ namespace WebExtension.Net.Generator
                 {
                     apiDefinition.URL = $"{apiDefinition.URL}|{duplicateApiDefinition.URL}";
                     apiDefinition.Json = apiDefinition.Json.Concat(duplicateApiDefinition.Json);
+                    apiDefinition.Properties = apiDefinition.Properties.Concat(duplicateApiDefinition.Properties);
                     apiDefinition.Functions = apiDefinition.Functions.Concat(duplicateApiDefinition.Functions);
                     apiDefinition.Types = apiDefinition.Types.Concat(duplicateApiDefinition.Types);
                 }

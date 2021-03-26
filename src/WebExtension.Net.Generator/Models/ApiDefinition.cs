@@ -12,6 +12,7 @@ namespace WebExtension.Net.Generator.Models
             Json = new [] { json };
             Permissions = Enumerable.Empty<string>();
             Types = Enumerable.Empty<TypeDefinition>();
+            Properties = Enumerable.Empty<PropertyDefinition>();
             Functions = Enumerable.Empty<FunctionDefinition>();
             Directory = string.Empty;
         }
@@ -25,6 +26,7 @@ namespace WebExtension.Net.Generator.Models
         public IEnumerable<JsonElement> Json { get; set; }
         public IEnumerable<string> Permissions { get;set; }
         public IEnumerable<TypeDefinition> Types { get;set; }
+        public IEnumerable<PropertyDefinition> Properties { get; set; }
         public IEnumerable<FunctionDefinition> Functions { get;set; }
         public string? Directory { get; set; }
         public string? RootNamespace { get; set; }

@@ -9,5 +9,7 @@
         public string? DeprecatedMessage { get; set; }
         public TypeReference? Type { get; set; }
         public bool Optional { get; set; }
+        public bool Constant { get; set; }
+        public string? ConstantValue { get; set; }
     }
 }

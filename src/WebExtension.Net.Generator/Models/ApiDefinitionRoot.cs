@@ -9,6 +9,7 @@ namespace WebExtension.Net.Generator.Models
             DefinitionUrls = new List<string>();
             ApiDefinitions = new List<ApiDefinition>();
             RootNamespace = string.Empty;
+            DefinitionBaseClassName = string.Empty;
             DefinitionClassNamePostfix = string.Empty;
         }
 
@@ -18,6 +19,7 @@ namespace WebExtension.Net.Generator.Models
         public string? Directory { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+        public string DefinitionBaseClassName { get; set; }
         public string DefinitionClassNamePostfix { get; set; }
     }
 }

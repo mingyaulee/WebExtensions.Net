@@ -98,15 +98,21 @@ namespace WebExtension.Net.Generator.Translators
             yield return $"I{apiDefinition.GetName()}{definitionPostfix} {apiDefinition.GetName()} {{ get; }}";
         }
 
-        public string TranslateApiDefinition(ApiDefinition apiDefinition, string className)
+        public string TranslateApiDefinition(ApiDefinition apiDefinition, string className, string baseClassName)
         {
-            if (!apiDefinition.Functions.Any())
-            {
-                return string.Empty;
-            }
-
             logger.LogInformation($"    API Class {className}");
             var content = new StringBuilder();
+            var constantProperties = apiDefinition.Properties.Where(property => property.Constant).SelectMany(TranslatePropertyDefinitionForApiDefinition);
+            var properties = apiDefinition.Properties.Where(property => !property.Constant).Select(propertyDefinition => new FunctionDefinition()
+            {
+                Name = propertyDefinition.Name,
+                Deprecated = propertyDefinition.Deprecated,
+                DeprecatedMessage = propertyDefinition.DeprecatedMessage,
+                Description = propertyDefinition.Description,
+                Parameters = new List<ParameterDefinition>(),
+                ReturnType = propertyDefinition.Type,
+                Unsupported = propertyDefinition.Unsupported
+            }).SelectMany(TranslatePropertyGetterFunctionDefinition);
             var methods = apiDefinition.Functions.SelectMany(TranslateFunctionDefinition);
             content.AppendLine($"using System;");
             content.AppendLine($"using System.Collections.Generic;");
@@ -116,16 +122,16 @@ namespace WebExtension.Net.Generator.Translators
             content.AppendLine($"namespace {apiDefinition.GetNamespace()}");
             content.AppendLine($"{{");
             content.AppendLine($"    /// <inheritdoc />");
-            content.AppendLine($"    public class {className} : I{className}");
+            content.AppendLine($"    public class {className} : {baseClassName}, I{className}");
             content.AppendLine($"    {{");
-            content.AppendLine($"        private readonly WebExtensionJSRuntime webExtensionJSRuntime;");
             content.AppendLine($"        /// <summary>Creates a new instance of {className}.</summary>");
             content.AppendLine($"        /// <param name=\"webExtensionJSRuntime\">Web Extension JS Runtime</param>");
-            content.AppendLine($"        public {className}(WebExtensionJSRuntime webExtensionJSRuntime)");
+            content.AppendLine($"        public {className}(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, \"{apiDefinition.Name}\")");
             content.AppendLine($"        {{");
-            content.AppendLine($"            this.webExtensionJSRuntime = webExtensionJSRuntime;");
             content.AppendLine($"        }}");
             content.AppendLine($"");
+            content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", constantProperties)}");
+            content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", properties)}");
             content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", methods)}");
             content.AppendLine($"    }}");
             content.AppendLine($"}}");
@@ -135,13 +141,19 @@ namespace WebExtension.Net.Generator.Translators
 
         public string TranslateApiDefinitionInterface(ApiDefinition apiDefinition, string className)
         {
-            if (!apiDefinition.Functions.Any())
-            {
-                return string.Empty;
-            }
-
             logger.LogInformation($"    API Interface I{className}");
             var content = new StringBuilder();
+            var constantProperties = apiDefinition.Properties.Where(property => property.Constant).SelectMany(TranslatePropertyDefinitionInterface);
+            var properties = apiDefinition.Properties.Where(property => !property.Constant).Select(propertyDefinition => new FunctionDefinition()
+            {
+                Name = propertyDefinition.Name,
+                Deprecated = propertyDefinition.Deprecated,
+                DeprecatedMessage = propertyDefinition.DeprecatedMessage,
+                Description = propertyDefinition.Description,
+                Parameters = new List<ParameterDefinition>(),
+                ReturnType = propertyDefinition.Type,
+                Unsupported = propertyDefinition.Unsupported
+            }).SelectMany(TranslatePropertyGetterFunctionDefinitionInterface);
             var methods = apiDefinition.Functions.SelectMany(TranslateFunctionDefinitionInterface);
             content.AppendLine($"using System;");
             content.AppendLine($"using System.Collections.Generic;");
@@ -158,6 +170,8 @@ namespace WebExtension.Net.Generator.Translators
             content.AppendLine($"    /// </summary>");
             content.AppendLine($"    public interface I{className}");
             content.AppendLine($"    {{");
+            content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", constantProperties)}");
+            content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", properties)}");
             content.AppendLine($"        {string.Join($"{Environment.NewLine}        ", methods)}");
             content.AppendLine($"    }}");
             content.AppendLine($"}}");
@@ -230,7 +244,7 @@ namespace WebExtension.Net.Generator.Translators
             {
                 yield return $"[Obsolete(\"{classDefinition.DeprecatedMessage}\")]";
             }
-            yield return $"public class {classDefinition.GetName()}{(methods.Any() ? $" : BaseObject" : "")}";
+            yield return $"public class {classDefinition.GetName()} : BaseObject";
             yield return $"{{";
             foreach (var propertyLine in properties)
             {
@@ -357,12 +371,33 @@ namespace WebExtension.Net.Generator.Translators
             yield return $"}}";
         }
 
+        public IEnumerable<string> TranslatePropertyDefinitionForApiDefinition(PropertyDefinition propertyDefinition)
+        {
+            return TranslatePropertyDefinition(propertyDefinition, false);
+        }
+
         public IEnumerable<string> TranslatePropertyDefinition(PropertyDefinition propertyDefinition)
+        {
+            return TranslatePropertyDefinition(propertyDefinition, true);
+        }
+
+        public IEnumerable<string> TranslatePropertyDefinition(PropertyDefinition propertyDefinition, bool includeJsonAttribute)
         {
             if (!propertyDefinition.Unsupported)
             {
                 yield return $"";
                 yield return $"// Property Definition";
+                var publicPropertyName = propertyDefinition.GetName();
+                var privatePropertyName = $"_{propertyDefinition.Name}";
+                var propertyType = TranslateTypeReference(propertyDefinition.Type, propertyDefinition.Optional);
+                if (propertyDefinition.Constant)
+                {
+                    yield return $"private const {propertyType} {privatePropertyName} = {propertyDefinition.ConstantValue};";
+                }
+                else
+                {
+                    yield return $"private {propertyType} {privatePropertyName};";
+                }
                 yield return $"/// <summary>";
                 foreach (var description in propertyDefinition.GetDescription())
                 {
@@ -373,8 +408,130 @@ namespace WebExtension.Net.Generator.Translators
                 {
                     yield return $"[Obsolete(\"{propertyDefinition.DeprecatedMessage}\")]";
                 }
-                yield return $"[JsonPropertyName(\"{propertyDefinition.Name}\")]";
-                yield return $"public {TranslateTypeReference(propertyDefinition.Type, propertyDefinition.Optional)} {propertyDefinition.GetName()} {{ get; set; }}";
+                if (propertyDefinition.Constant)
+                {
+                    yield return $"public {propertyType} {publicPropertyName} => {privatePropertyName};";
+                }
+                else
+                {
+                    if (includeJsonAttribute)
+                    {
+                        yield return $"[JsonPropertyName(\"{propertyDefinition.Name}\")]";
+                    }
+                    yield return $"public {propertyType} {publicPropertyName}";
+                    yield return $"{{";
+                    yield return $"    get";
+                    yield return $"    {{";
+                    yield return $"        InitializeProperty(\"{propertyDefinition.Name}\", {privatePropertyName});";
+                    yield return $"        return {privatePropertyName};";
+                    yield return $"    }}";
+                    yield return $"    set";
+                    yield return $"    {{";
+                    yield return $"        {privatePropertyName} = value;";
+                    yield return $"    }}";
+                    yield return $"}}";
+                }
+            }
+        }
+
+        public IEnumerable<string> TranslatePropertyDefinitionInterface(PropertyDefinition propertyDefinition)
+        {
+            if (!propertyDefinition.Unsupported)
+            {
+                yield return $"";
+                yield return $"// Property Definition Interface";
+                yield return $"/// <summary>";
+                foreach (var description in propertyDefinition.GetDescription())
+                {
+                    yield return $"/// {description}";
+                }
+                yield return $"/// </summary>";
+                if (propertyDefinition.Deprecated)
+                {
+                    yield return $"[Obsolete(\"{propertyDefinition.DeprecatedMessage}\")]";
+                }
+                if (propertyDefinition.Constant)
+                {
+                    yield return $"{TranslateTypeReference(propertyDefinition.Type, propertyDefinition.Optional)} {propertyDefinition.GetName()} {{ get; }}";
+                }
+                else
+                {
+                    yield return $"{TranslateTypeReference(propertyDefinition.Type, propertyDefinition.Optional)} {propertyDefinition.GetName()} {{ get; set; }}";
+                }
+            }
+        }
+
+        public IEnumerable<string> TranslatePropertyGetterFunctionDefinition(FunctionDefinition functionDefinition)
+        {
+            if (!functionDefinition.Unsupported)
+            {
+                var returnType = TranslateTypeReference(functionDefinition.ReturnType);
+                if (returnType == null)
+                {
+                    throw new Exception("Property definition type should not be null.");
+                }
+                if (returnType == "object")
+                {
+                    returnType = "JsonElement";
+                }
+                var methodReturnType = $"ValueTask<{returnType}>";
+                var clientMethodInvoke = $"GetPropertyAsync<{returnType}>";
+
+                yield return $"";
+                yield return $"// Property Getter Function Definition";
+                yield return $"/// <summary>";
+                foreach (var description in functionDefinition.GetDescription())
+                {
+                    yield return $"/// {description}";
+                }
+                yield return $"/// </summary>";
+                if (returnType != null && functionDefinition.ReturnType != null)
+                {
+                    yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
+                }
+                if (functionDefinition.Deprecated)
+                {
+                    yield return $"[Obsolete(\"{functionDefinition.DeprecatedMessage}\")]";
+                }
+                yield return $"public virtual {methodReturnType} Get{functionDefinition.GetName()}()";
+                yield return $"{{";
+                yield return $"    return {clientMethodInvoke}(\"{functionDefinition.Name}\");";
+                yield return $"}}";
+            }
+        }
+
+        public IEnumerable<string> TranslatePropertyGetterFunctionDefinitionInterface(FunctionDefinition functionDefinition)
+        {
+            if (!functionDefinition.Unsupported)
+            {
+                var returnType = TranslateTypeReference(functionDefinition.ReturnType);
+                if (returnType == null)
+                {
+                    throw new Exception("Property definition type should not be null.");
+                }
+                if (returnType == "object")
+                {
+                    returnType = "JsonElement";
+                }
+                var methodReturnType = $"ValueTask<{returnType}>";
+
+                yield return $"";
+                yield return $"// Property Getter Function Definition Interface";
+                yield return $"/// <summary>";
+                foreach (var description in functionDefinition.GetDescription())
+                {
+                    yield return $"/// {description}";
+                }
+                yield return $"/// </summary>";
+                if (returnType != null && functionDefinition.ReturnType != null)
+                {
+                    yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
+                }
+                if (functionDefinition.Deprecated)
+                {
+                    yield return $"[Obsolete(\"{functionDefinition.DeprecatedMessage}\")]";
+                }
+                yield return $"{methodReturnType} Get{functionDefinition.GetName()}();";
             }
         }
 
@@ -419,7 +576,7 @@ namespace WebExtension.Net.Generator.Translators
                     }
                     yield return $"public virtual {methodReturnType} {functionDefinition.GetName()}({string.Join(", ", parameterTypeCombinations.Select(TranslateParameterDefinition))})";
                     yield return $"{{";
-                    yield return $"    return webExtensionJSRuntime.{clientMethodInvoke}(\"{functionDefinition.FunctionAccessor}\"{string.Join(string.Empty, parameterTypeCombinations.Select(parameterTypeCombination => $", {parameterTypeCombination.ParameterDefinition.Name}"))});";
+                    yield return $"    return {clientMethodInvoke}(\"{functionDefinition.Name}\"{string.Join(string.Empty, parameterTypeCombinations.Select(parameterTypeCombination => $", {parameterTypeCombination.ParameterDefinition.Name}"))});";
                     yield return $"}}";
                 }
             }

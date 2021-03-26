@@ -17,7 +17,6 @@ namespace WebExtension.Net.Generator
         private readonly List<string> includeNamespaces;
         private readonly List<string> excludeNamespaces;
         private readonly ApiDefinitionTranslator translator;
-        private readonly string header;
         private readonly JsonSerializerOptions jsonSerializerOptions;
 
         public ApiDefinitionWriter(ILogger logger, List<string> includeNamespaces, List<string> excludeNamespaces)
@@ -26,7 +25,6 @@ namespace WebExtension.Net.Generator
             this.includeNamespaces = includeNamespaces;
             this.excludeNamespaces = excludeNamespaces;
             translator = new ApiDefinitionTranslator(logger);
-            header = $"// This file is auto generated at {DateTime.UtcNow:s}{Environment.NewLine}{Environment.NewLine}";
             jsonSerializerOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true
@@ -82,7 +80,7 @@ namespace WebExtension.Net.Generator
                         if (!Directory.Exists(apiDefinition.Directory))
                         {
                             Directory.CreateDirectory(apiDefinition.Directory);
-                            await File.WriteAllTextAsync(apiDefinition.GetFilePath("generated.txt"), string.Empty);
+                            await File.WriteAllTextAsync(apiDefinition.GetFilePath("generated.txt"), $"This file is auto generated at {DateTime.UtcNow:s}");
                         }
                         await WriteFile(apiDefinition, $"{apiDefinitionName}.json", JsonSerializer.Serialize(apiDefinition.Json, jsonSerializerOptions));
 
@@ -91,10 +89,10 @@ namespace WebExtension.Net.Generator
                             await WriteTypes(apiDefinition);
                         }
 
-                        if (apiDefinition.Functions.Any())
+                        if (apiDefinition.Properties.Any() || apiDefinition.Functions.Any())
                         {
                             var apiDefinitionNamePostfix = apiDefinitionRoot.DefinitionClassNamePostfix;
-                            var apiDefinitionContent = translator.TranslateApiDefinition(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}");
+                            var apiDefinitionContent = translator.TranslateApiDefinition(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}", apiDefinitionRoot.DefinitionBaseClassName);
                             await WriteFile(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}.cs", apiDefinitionContent);
                             var iApiDefinitionContent = translator.TranslateApiDefinitionInterface(apiDefinition, $"{apiDefinitionName}{apiDefinitionNamePostfix}");
                             await WriteFile(apiDefinition, $"I{apiDefinitionName}{apiDefinitionNamePostfix}.cs", iApiDefinitionContent);
@@ -141,7 +139,7 @@ namespace WebExtension.Net.Generator
             }
 
             var filePath = directoryNode.GetFilePath(path);
-            await File.WriteAllTextAsync(filePath, header + text);
+            await File.WriteAllTextAsync(filePath, text);
         }
     }
 }

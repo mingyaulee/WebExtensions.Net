@@ -19,6 +19,7 @@ namespace WebExtension.Net.Generator
             var rootNamespace = "WebExtension.Net";
             var rootApiDefinitionName = "WebExtensionAPI";
             var rootApiDefinitionDescription = "Web Extension API";
+            var apiDefinitionBaseClassName = "BaseAPI";
             var apiDefinitionClassNamePostfix = "API";
             var includeNamespaces = new List<string>()
             {
@@ -108,6 +109,7 @@ namespace WebExtension.Net.Generator
             {
                 apiDefinitionRoot.Name = rootApiDefinitionName;
                 apiDefinitionRoot.Description = rootApiDefinitionDescription;
+                apiDefinitionRoot.DefinitionBaseClassName = apiDefinitionBaseClassName;
                 apiDefinitionRoot.DefinitionClassNamePostfix = apiDefinitionClassNamePostfix;
                 apiDefinitionRoot.Directory = rootDirectory;
                 apiDefinitionRoot.RootNamespace = rootNamespace;

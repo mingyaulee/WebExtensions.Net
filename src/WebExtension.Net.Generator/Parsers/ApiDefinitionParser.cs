@@ -34,14 +34,14 @@ namespace WebExtension.Net.Generator.Parsers
                     apiDefinition.Types = ParseTypes(jsonTypeDefinitionArray).ToArray();
                 }
 
+                if (jsonApiDefinition.TryGetProperty("properties", out var jsonPropertyDefinitionArray))
+                {
+                    apiDefinition.Properties = ParseProperties(jsonPropertyDefinitionArray).ToArray();
+                }
+
                 if (jsonApiDefinition.TryGetProperty("functions", out var jsonFunctionDefinitionArray))
                 {
                     apiDefinition.Functions = ParseFunctions(jsonFunctionDefinitionArray).ToArray();
-                }
-
-                foreach (var function in apiDefinition.Functions)
-                {
-                    function.FunctionAccessor = $"{apiDefinition.Name}.{function.Name}";
                 }
 
                 yield return apiDefinition;
@@ -140,6 +140,29 @@ namespace WebExtension.Net.Generator.Parsers
                 propertyDefinition.Name = jsonProperty.Name;
                 propertyDefinition.Type = ParseTypeReference(jsonPropertyDefinition);
                 propertyDefinition.Optional = jsonPropertyDefinition.GetBooleanProperty("optional");
+                if (jsonPropertyDefinition.TryGetProperty("value", out var jsonValue))
+                {
+                    propertyDefinition.Constant = true;
+                    propertyDefinition.ConstantValue = jsonValue.ValueKind switch
+                    {
+                        JsonValueKind.String => $"\"{jsonValue.GetString()}\"",
+                        _ => jsonValue.ToString() ?? "null"
+                    };
+                    if (propertyDefinition.Type is null)
+                    {
+                        propertyDefinition.Type = new TypeReference()
+                        {
+                            Type = jsonValue.ValueKind switch
+                            {
+                                JsonValueKind.String => "string",
+                                JsonValueKind.Number => propertyDefinition.ConstantValue.Contains(".") ? "number" : "integer",
+                                JsonValueKind.True => "boolean",
+                                JsonValueKind.False => "boolean",
+                                _ => "any"
+                            }
+                        };
+                    }
+                }
                 yield return propertyDefinition;
             }
         }
