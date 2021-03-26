@@ -1,4 +1,6 @@
 ﻿using Microsoft.JSInterop;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebExtension.Net
@@ -21,21 +23,36 @@ namespace WebExtension.Net
         /// <summary>
         /// Invokes the specified JavaScript function asynchronously.
         /// </summary>
+        /// <param name="identifier">An identifier for the function to invoke. For example, the value "someScope.someFunction" will invoke the function window.someScope.someFunction.</param>
+        /// <param name="invokeOption">The option for invocation.</param>
         /// <param name="args">JSON-serializable arguments.</param>
         /// <returns>An instance of TValue obtained by JSON-deserializing the return value.</returns>
-        public ValueTask<TValue> InvokeAsync<TValue>(params object[] args)
+        public async ValueTask<TValue> InvokeAsync<TValue>(string identifier, InvokeOption invokeOption, params object[] args)
         {
-            return jsRuntime.InvokeAsync<TValue>("WebExtensionNet.Execute", args);
+            if (typeof(BaseObject).IsAssignableFrom(typeof(TValue)))
+            {
+                invokeOption.ReturnObjectReferenceId = Guid.NewGuid().ToString();
+            }
+            var invokeArgs = new object[] { invokeOption }.Concat(args).ToArray();
+            var result = await jsRuntime.InvokeAsync<TValue>(identifier, invokeArgs);
+            if (!string.IsNullOrEmpty(invokeOption.ReturnObjectReferenceId) && result is BaseObject baseObject)
+            {
+                baseObject.Initialize(this, invokeOption.ReturnObjectReferenceId, null);
+            }
+            return result;
         }
 
         /// <summary>
         /// Invokes the specified JavaScript function asynchronously.
         /// </summary>
+        /// <param name="identifier">An identifier for the function to invoke. For example, the value "someScope.someFunction" will invoke the function window.someScope.someFunction.</param>
+        /// <param name="invokeOption">The option for invocation.</param>
         /// <param name="args">JSON-serializable arguments.</param>
         /// <returns>A System.Threading.Tasks.ValueTask that represents the asynchronous invocation operation.</returns>
-        public ValueTask InvokeVoidAsync(params object[] args)
+        public ValueTask InvokeVoidAsync(string identifier, InvokeOption invokeOption, params object[] args)
         {
-            return jsRuntime.InvokeVoidAsync("WebExtensionNet.Execute", args);
+            var invokeArgs = new object[] { invokeOption }.Concat(args).ToArray();
+            return jsRuntime.InvokeVoidAsync(identifier, invokeArgs);
         }
     }
 }
