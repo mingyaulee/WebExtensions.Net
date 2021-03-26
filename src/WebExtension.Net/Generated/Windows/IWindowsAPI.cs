@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +10,19 @@ namespace WebExtension.Net.Windows
     /// </summary>
     public interface IWindowsAPI
     {
+        
+        // Property Definition Interface
+        /// <summary>
+        /// The windowId value that represents the absence of a browser window.
+        /// </summary>
+        int WINDOW_ID_NONE { get; }
+        
+        // Property Definition Interface
+        /// <summary>
+        /// The windowId value that represents the $(topic:current-window)[current window].
+        /// </summary>
+        int WINDOW_ID_CURRENT { get; }
+        
         
         // Function Definition Interface
         /// <summary>

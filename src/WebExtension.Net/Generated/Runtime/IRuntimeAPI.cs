@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +10,21 @@ namespace WebExtension.Net.Runtime
     /// </summary>
     public interface IRuntimeAPI
     {
+        
+        
+        // Property Getter Function Definition Interface
+        /// <summary>
+        /// This will be defined during an API method callback if there was an error
+        /// </summary>
+        /// <returns></returns>
+        ValueTask<JsonElement> GetLastError();
+        
+        // Property Getter Function Definition Interface
+        /// <summary>
+        /// The ID of the extension/app.
+        /// </summary>
+        /// <returns></returns>
+        ValueTask<string> GetId();
         
         // Function Definition Interface
         /// <summary>

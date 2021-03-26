@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,22 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Tabs
 {
     /// <inheritdoc />
-    public class TabsAPI : ITabsAPI
+    public class TabsAPI : BaseAPI, ITabsAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of TabsAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public TabsAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public TabsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "tabs")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        // Property Definition
+        private const int _TAB_ID_NONE = -1;
+        /// <summary>
+        /// An ID which represents the absence of a browser tab.
+        /// </summary>
+        public int TAB_ID_NONE => _TAB_ID_NONE;
+        
         
         // Function Definition
         /// <summary>
@@ -27,7 +31,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Tab> Get(int tabId)
         {
-            return webExtensionJSRuntime.InvokeAsync<Tab>("tabs.get", tabId);
+            return InvokeAsync<Tab>("get", tabId);
         }
         
         // Function Definition
@@ -37,7 +41,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Tab> GetCurrent()
         {
-            return webExtensionJSRuntime.InvokeAsync<Tab>("tabs.getCurrent");
+            return InvokeAsync<Tab>("getCurrent");
         }
         
         // Function Definition
@@ -49,7 +53,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Runtime.Port> Connect(int tabId, object connectInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Runtime.Port>("tabs.connect", tabId, connectInfo);
+            return InvokeAsync<Runtime.Port>("connect", tabId, connectInfo);
         }
         
         // Function Definition
@@ -62,7 +66,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="responseCallback"></param>
         public virtual ValueTask SendMessage(int tabId, object message, object options, Action responseCallback)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.sendMessage", tabId, message, options, responseCallback);
+            return InvokeVoidAsync("sendMessage", tabId, message, options, responseCallback);
         }
         
         // Function Definition
@@ -73,7 +77,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Tab> Create(object createProperties)
         {
-            return webExtensionJSRuntime.InvokeAsync<Tab>("tabs.create", createProperties);
+            return InvokeAsync<Tab>("create", createProperties);
         }
         
         // Function Definition
@@ -85,7 +89,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Tab> Duplicate(int tabId, object duplicateProperties)
         {
-            return webExtensionJSRuntime.InvokeAsync<Tab>("tabs.duplicate", tabId, duplicateProperties);
+            return InvokeAsync<Tab>("duplicate", tabId, duplicateProperties);
         }
         
         // Function Definition
@@ -96,7 +100,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<IEnumerable<Tab>> Query(object queryInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<IEnumerable<Tab>>("tabs.query", queryInfo);
+            return InvokeAsync<IEnumerable<Tab>>("query", queryInfo);
         }
         
         // Function Definition
@@ -107,7 +111,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Windows.Window> Highlight(object highlightInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Windows.Window>("tabs.highlight", highlightInfo);
+            return InvokeAsync<Windows.Window>("highlight", highlightInfo);
         }
         
         // Function Definition
@@ -119,7 +123,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<Tab> Update(int? tabId, object updateProperties)
         {
-            return webExtensionJSRuntime.InvokeAsync<Tab>("tabs.update", tabId, updateProperties);
+            return InvokeAsync<Tab>("update", tabId, updateProperties);
         }
         
         // Function Definition
@@ -131,7 +135,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<JsonElement> Move(int tabIds, object moveProperties)
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("tabs.move", tabIds, moveProperties);
+            return InvokeAsync<JsonElement>("move", tabIds, moveProperties);
         }
         
         // Function Definition
@@ -143,7 +147,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<JsonElement> Move(IEnumerable<int> tabIds, object moveProperties)
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("tabs.move", tabIds, moveProperties);
+            return InvokeAsync<JsonElement>("move", tabIds, moveProperties);
         }
         
         // Function Definition
@@ -154,7 +158,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="reloadProperties"></param>
         public virtual ValueTask Reload(int? tabId, object reloadProperties)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.reload", tabId, reloadProperties);
+            return InvokeVoidAsync("reload", tabId, reloadProperties);
         }
         
         // Function Definition
@@ -164,7 +168,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabId">The ID of the tab to warm up.</param>
         public virtual ValueTask Warmup(int tabId)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.warmup", tabId);
+            return InvokeVoidAsync("warmup", tabId);
         }
         
         // Function Definition
@@ -174,7 +178,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The tab or list of tabs to close.</param>
         public virtual ValueTask Remove(int tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.remove", tabIds);
+            return InvokeVoidAsync("remove", tabIds);
         }
         
         // Function Definition
@@ -184,7 +188,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The tab or list of tabs to close.</param>
         public virtual ValueTask Remove(IEnumerable<int> tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.remove", tabIds);
+            return InvokeVoidAsync("remove", tabIds);
         }
         
         // Function Definition
@@ -194,7 +198,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The tab or list of tabs to discard.</param>
         public virtual ValueTask Discard(int tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.discard", tabIds);
+            return InvokeVoidAsync("discard", tabIds);
         }
         
         // Function Definition
@@ -204,7 +208,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The tab or list of tabs to discard.</param>
         public virtual ValueTask Discard(IEnumerable<int> tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.discard", tabIds);
+            return InvokeVoidAsync("discard", tabIds);
         }
         
         // Function Definition
@@ -215,7 +219,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<string> DetectLanguage(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeAsync<string>("tabs.detectLanguage", tabId);
+            return InvokeAsync<string>("detectLanguage", tabId);
         }
         
         // Function Definition
@@ -225,7 +229,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabId">Defaults to the active tab of the $(topic:current-window)[current window].</param>
         public virtual ValueTask ToggleReaderMode(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.toggleReaderMode", tabId);
+            return InvokeVoidAsync("toggleReaderMode", tabId);
         }
         
         // Function Definition
@@ -236,7 +240,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="options"></param>
         public virtual ValueTask CaptureTab(int? tabId, ExtensionTypes.ImageDetails options)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.captureTab", tabId, options);
+            return InvokeVoidAsync("captureTab", tabId, options);
         }
         
         // Function Definition
@@ -248,7 +252,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<string> CaptureVisibleTab(int? windowId, ExtensionTypes.ImageDetails options)
         {
-            return webExtensionJSRuntime.InvokeAsync<string>("tabs.captureVisibleTab", windowId, options);
+            return InvokeAsync<string>("captureVisibleTab", windowId, options);
         }
         
         // Function Definition
@@ -260,7 +264,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<IEnumerable<object>> ExecuteScript(int? tabId, ExtensionTypes.InjectDetails details)
         {
-            return webExtensionJSRuntime.InvokeAsync<IEnumerable<object>>("tabs.executeScript", tabId, details);
+            return InvokeAsync<IEnumerable<object>>("executeScript", tabId, details);
         }
         
         // Function Definition
@@ -271,7 +275,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="details">Details of the CSS text to insert.</param>
         public virtual ValueTask InsertCSS(int? tabId, ExtensionTypes.InjectDetails details)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.insertCSS", tabId, details);
+            return InvokeVoidAsync("insertCSS", tabId, details);
         }
         
         // Function Definition
@@ -282,7 +286,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="details">Details of the CSS text to remove.</param>
         public virtual ValueTask RemoveCSS(int? tabId, ExtensionTypes.InjectDetails details)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.removeCSS", tabId, details);
+            return InvokeVoidAsync("removeCSS", tabId, details);
         }
         
         // Function Definition
@@ -293,7 +297,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="zoomFactor">The new zoom factor. Use a value of 0 here to set the tab to its current default zoom factor. Values greater than zero specify a (possibly non-default) zoom factor for the tab.</param>
         public virtual ValueTask SetZoom(int? tabId, double zoomFactor)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.setZoom", tabId, zoomFactor);
+            return InvokeVoidAsync("setZoom", tabId, zoomFactor);
         }
         
         // Function Definition
@@ -304,7 +308,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<double> GetZoom(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeAsync<double>("tabs.getZoom", tabId);
+            return InvokeAsync<double>("getZoom", tabId);
         }
         
         // Function Definition
@@ -315,7 +319,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="zoomSettings">Defines how zoom changes are handled and at what scope.</param>
         public virtual ValueTask SetZoomSettings(int? tabId, ZoomSettings zoomSettings)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.setZoomSettings", tabId, zoomSettings);
+            return InvokeVoidAsync("setZoomSettings", tabId, zoomSettings);
         }
         
         // Function Definition
@@ -326,7 +330,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<ZoomSettings> GetZoomSettings(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeAsync<ZoomSettings>("tabs.getZoomSettings", tabId);
+            return InvokeAsync<ZoomSettings>("getZoomSettings", tabId);
         }
         
         // Function Definition
@@ -335,7 +339,7 @@ namespace WebExtension.Net.Tabs
         /// </summary>
         public virtual ValueTask Print()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.print");
+            return InvokeVoidAsync("print");
         }
         
         // Function Definition
@@ -344,7 +348,7 @@ namespace WebExtension.Net.Tabs
         /// </summary>
         public virtual ValueTask PrintPreview()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.printPreview");
+            return InvokeVoidAsync("printPreview");
         }
         
         // Function Definition
@@ -355,7 +359,7 @@ namespace WebExtension.Net.Tabs
         /// <returns></returns>
         public virtual ValueTask<string> SaveAsPDF(PageSettings pageSettings)
         {
-            return webExtensionJSRuntime.InvokeAsync<string>("tabs.saveAsPDF", pageSettings);
+            return InvokeAsync<string>("saveAsPDF", pageSettings);
         }
         
         // Function Definition
@@ -365,7 +369,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The TAB ID or list of TAB IDs to show.</param>
         public virtual ValueTask Show(int tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.show", tabIds);
+            return InvokeVoidAsync("show", tabIds);
         }
         
         // Function Definition
@@ -375,7 +379,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The TAB ID or list of TAB IDs to show.</param>
         public virtual ValueTask Show(IEnumerable<int> tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.show", tabIds);
+            return InvokeVoidAsync("show", tabIds);
         }
         
         // Function Definition
@@ -385,7 +389,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The TAB ID or list of TAB IDs to hide.</param>
         public virtual ValueTask Hide(int tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.hide", tabIds);
+            return InvokeVoidAsync("hide", tabIds);
         }
         
         // Function Definition
@@ -395,7 +399,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabIds">The TAB ID or list of TAB IDs to hide.</param>
         public virtual ValueTask Hide(IEnumerable<int> tabIds)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.hide", tabIds);
+            return InvokeVoidAsync("hide", tabIds);
         }
         
         // Function Definition
@@ -407,7 +411,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="options"></param>
         public virtual ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId, object options)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.moveInSuccession", tabIds, tabId, options);
+            return InvokeVoidAsync("moveInSuccession", tabIds, tabId, options);
         }
         
         // Function Definition
@@ -417,7 +421,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabId">The ID of the tab to navigate forward.</param>
         public virtual ValueTask GoForward(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.goForward", tabId);
+            return InvokeVoidAsync("goForward", tabId);
         }
         
         // Function Definition
@@ -427,7 +431,7 @@ namespace WebExtension.Net.Tabs
         /// <param name="tabId">The ID of the tab to navigate backward.</param>
         public virtual ValueTask GoBack(int? tabId)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("tabs.goBack", tabId);
+            return InvokeVoidAsync("goBack", tabId);
         }
     }
 }

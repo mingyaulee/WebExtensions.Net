@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -21,7 +19,7 @@ namespace WebExtension.Net.Events
         /// </summary>
         public virtual ValueTask AddListener()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("");
+            return InvokeVoidAsync("addListener");
         }
         
         // Function Definition
@@ -30,7 +28,7 @@ namespace WebExtension.Net.Events
         /// </summary>
         public virtual ValueTask RemoveListener()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("");
+            return InvokeVoidAsync("removeListener");
         }
         
         // Function Definition
@@ -40,7 +38,7 @@ namespace WebExtension.Net.Events
         /// <returns></returns>
         public virtual ValueTask<bool> HasListener()
         {
-            return webExtensionJSRuntime.InvokeAsync<bool>("");
+            return InvokeAsync<bool>("hasListener");
         }
         
         // Function Definition
@@ -50,7 +48,7 @@ namespace WebExtension.Net.Events
         /// <returns></returns>
         public virtual ValueTask<bool> HasListeners()
         {
-            return webExtensionJSRuntime.InvokeAsync<bool>("");
+            return InvokeAsync<bool>("hasListeners");
         }
     }
 }

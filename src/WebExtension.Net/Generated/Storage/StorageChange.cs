@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,22 +10,46 @@ namespace WebExtension.Net.Storage
     /// <summary>
     /// 
     /// </summary>
-    public class StorageChange
+    public class StorageChange : BaseObject
     {
         
         // Property Definition
+        private object _oldValue;
         /// <summary>
         /// The old value of the item, if there was an old value.
         /// </summary>
         [JsonPropertyName("oldValue")]
-        public object OldValue { get; set; }
+        public object OldValue
+        {
+            get
+            {
+                InitializeProperty("oldValue", _oldValue);
+                return _oldValue;
+            }
+            set
+            {
+                _oldValue = value;
+            }
+        }
         
         // Property Definition
+        private object _newValue;
         /// <summary>
         /// The new value of the item, if there is a new value.
         /// </summary>
         [JsonPropertyName("newValue")]
-        public object NewValue { get; set; }
+        public object NewValue
+        {
+            get
+            {
+                InitializeProperty("newValue", _newValue);
+                return _newValue;
+            }
+            set
+            {
+                _newValue = value;
+            }
+        }
     }
 }
 

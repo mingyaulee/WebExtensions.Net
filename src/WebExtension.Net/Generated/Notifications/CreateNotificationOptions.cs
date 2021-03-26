@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,92 +10,236 @@ namespace WebExtension.Net.Notifications
     /// <summary>
     /// 
     /// </summary>
-    public class CreateNotificationOptions
+    public class CreateNotificationOptions : BaseObject
     {
         
         // Property Definition
+        private TemplateType _type;
         /// <summary>
         /// Which type of notification to display.
         /// </summary>
         [JsonPropertyName("type")]
-        public TemplateType Type { get; set; }
+        public TemplateType Type
+        {
+            get
+            {
+                InitializeProperty("type", _type);
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
+        }
         
         // Property Definition
+        private string _iconUrl;
         /// <summary>
         /// A URL to the sender's avatar, app icon, or a thumbnail for image notifications.
         /// </summary>
         [JsonPropertyName("iconUrl")]
-        public string IconUrl { get; set; }
+        public string IconUrl
+        {
+            get
+            {
+                InitializeProperty("iconUrl", _iconUrl);
+                return _iconUrl;
+            }
+            set
+            {
+                _iconUrl = value;
+            }
+        }
         
         // Property Definition
+        private string _appIconMaskUrl;
         /// <summary>
         /// A URL to the app icon mask.
         /// </summary>
         [JsonPropertyName("appIconMaskUrl")]
-        public string AppIconMaskUrl { get; set; }
+        public string AppIconMaskUrl
+        {
+            get
+            {
+                InitializeProperty("appIconMaskUrl", _appIconMaskUrl);
+                return _appIconMaskUrl;
+            }
+            set
+            {
+                _appIconMaskUrl = value;
+            }
+        }
         
         // Property Definition
+        private string _title;
         /// <summary>
         /// Title of the notification (e.g. sender name for email).
         /// </summary>
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                InitializeProperty("title", _title);
+                return _title;
+            }
+            set
+            {
+                _title = value;
+            }
+        }
         
         // Property Definition
+        private string _message;
         /// <summary>
         /// Main notification content.
         /// </summary>
         [JsonPropertyName("message")]
-        public string Message { get; set; }
+        public string Message
+        {
+            get
+            {
+                InitializeProperty("message", _message);
+                return _message;
+            }
+            set
+            {
+                _message = value;
+            }
+        }
         
         // Property Definition
+        private string _contextMessage;
         /// <summary>
         /// Alternate notification content with a lower-weight font.
         /// </summary>
         [JsonPropertyName("contextMessage")]
-        public string ContextMessage { get; set; }
+        public string ContextMessage
+        {
+            get
+            {
+                InitializeProperty("contextMessage", _contextMessage);
+                return _contextMessage;
+            }
+            set
+            {
+                _contextMessage = value;
+            }
+        }
         
         // Property Definition
+        private int? _priority;
         /// <summary>
         /// Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.
         /// </summary>
         [JsonPropertyName("priority")]
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                InitializeProperty("priority", _priority);
+                return _priority;
+            }
+            set
+            {
+                _priority = value;
+            }
+        }
         
         // Property Definition
+        private double? _eventTime;
         /// <summary>
         /// A timestamp associated with the notification, in milliseconds past the epoch.
         /// </summary>
         [JsonPropertyName("eventTime")]
-        public double? EventTime { get; set; }
+        public double? EventTime
+        {
+            get
+            {
+                InitializeProperty("eventTime", _eventTime);
+                return _eventTime;
+            }
+            set
+            {
+                _eventTime = value;
+            }
+        }
         
         // Property Definition
+        private string _imageUrl;
         /// <summary>
         /// A URL to the image thumbnail for image-type notifications.
         /// </summary>
         [JsonPropertyName("imageUrl")]
-        public string ImageUrl { get; set; }
+        public string ImageUrl
+        {
+            get
+            {
+                InitializeProperty("imageUrl", _imageUrl);
+                return _imageUrl;
+            }
+            set
+            {
+                _imageUrl = value;
+            }
+        }
         
         // Property Definition
+        private IEnumerable<NotificationItem> _items;
         /// <summary>
         /// Items for multi-item notifications.
         /// </summary>
         [JsonPropertyName("items")]
-        public IEnumerable<NotificationItem> Items { get; set; }
+        public IEnumerable<NotificationItem> Items
+        {
+            get
+            {
+                InitializeProperty("items", _items);
+                return _items;
+            }
+            set
+            {
+                _items = value;
+            }
+        }
         
         // Property Definition
+        private int? _progress;
         /// <summary>
         /// Current progress ranges from 0 to 100.
         /// </summary>
         [JsonPropertyName("progress")]
-        public int? Progress { get; set; }
+        public int? Progress
+        {
+            get
+            {
+                InitializeProperty("progress", _progress);
+                return _progress;
+            }
+            set
+            {
+                _progress = value;
+            }
+        }
         
         // Property Definition
+        private bool? _isClickable;
         /// <summary>
         /// Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.
         /// </summary>
         [JsonPropertyName("isClickable")]
-        public bool? IsClickable { get; set; }
+        public bool? IsClickable
+        {
+            get
+            {
+                InitializeProperty("isClickable", _isClickable);
+                return _isClickable;
+            }
+            set
+            {
+                _isClickable = value;
+            }
+        }
     }
 }
 

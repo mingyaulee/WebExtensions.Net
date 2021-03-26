@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,22 +10,46 @@ namespace WebExtension.Net.WebRequest
     /// <summary>
     /// Contains data uploaded in a URL request.
     /// </summary>
-    public class UploadData
+    public class UploadData : BaseObject
     {
         
         // Property Definition
+        private object _bytes;
         /// <summary>
         /// An ArrayBuffer with a copy of the data.
         /// </summary>
         [JsonPropertyName("bytes")]
-        public object Bytes { get; set; }
+        public object Bytes
+        {
+            get
+            {
+                InitializeProperty("bytes", _bytes);
+                return _bytes;
+            }
+            set
+            {
+                _bytes = value;
+            }
+        }
         
         // Property Definition
+        private string _file;
         /// <summary>
         /// A string with the file's path and name.
         /// </summary>
         [JsonPropertyName("file")]
-        public string File { get; set; }
+        public string File
+        {
+            get
+            {
+                InitializeProperty("file", _file);
+                return _file;
+            }
+            set
+            {
+                _file = value;
+            }
+        }
     }
 }
 

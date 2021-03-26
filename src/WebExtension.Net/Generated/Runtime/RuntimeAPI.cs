@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,35 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Runtime
 {
     /// <inheritdoc />
-    public class RuntimeAPI : IRuntimeAPI
+    public class RuntimeAPI : BaseAPI, IRuntimeAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of RuntimeAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public RuntimeAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public RuntimeAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        
+        // Property Getter Function Definition
+        /// <summary>
+        /// This will be defined during an API method callback if there was an error
+        /// </summary>
+        /// <returns></returns>
+        public virtual ValueTask<JsonElement> GetLastError()
+        {
+            return GetPropertyAsync<JsonElement>("lastError");
+        }
+        
+        // Property Getter Function Definition
+        /// <summary>
+        /// The ID of the extension/app.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ValueTask<string> GetId()
+        {
+            return GetPropertyAsync<string>("id");
+        }
         
         // Function Definition
         /// <summary>
@@ -26,7 +43,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<JsonElement> GetBackgroundPage()
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("runtime.getBackgroundPage");
+            return InvokeAsync<JsonElement>("getBackgroundPage");
         }
         
         // Function Definition
@@ -35,7 +52,7 @@ namespace WebExtension.Net.Runtime
         /// </summary>
         public virtual ValueTask OpenOptionsPage()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("runtime.openOptionsPage");
+            return InvokeVoidAsync("openOptionsPage");
         }
         
         // Function Definition
@@ -45,7 +62,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<JsonElement> GetManifest()
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("runtime.getManifest");
+            return InvokeAsync<JsonElement>("getManifest");
         }
         
         // Function Definition
@@ -56,7 +73,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<string> GetURL(string path)
         {
-            return webExtensionJSRuntime.InvokeAsync<string>("runtime.getURL", path);
+            return InvokeAsync<string>("getURL", path);
         }
         
         // Function Definition
@@ -66,7 +83,7 @@ namespace WebExtension.Net.Runtime
         /// <param name="url">URL to be opened after the extension is uninstalled. This URL must have an http: or https: scheme. Set an empty string to not open a new tab upon uninstallation.</param>
         public virtual ValueTask SetUninstallURL(string url)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("runtime.setUninstallURL", url);
+            return InvokeVoidAsync("setUninstallURL", url);
         }
         
         // Function Definition
@@ -75,7 +92,7 @@ namespace WebExtension.Net.Runtime
         /// </summary>
         public virtual ValueTask Reload()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("runtime.reload");
+            return InvokeVoidAsync("reload");
         }
         
         // Function Definition
@@ -87,7 +104,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<Port> Connect(string extensionId, object connectInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Port>("runtime.connect", extensionId, connectInfo);
+            return InvokeAsync<Port>("connect", extensionId, connectInfo);
         }
         
         // Function Definition
@@ -98,7 +115,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<Port> ConnectNative(string application)
         {
-            return webExtensionJSRuntime.InvokeAsync<Port>("runtime.connectNative", application);
+            return InvokeAsync<Port>("connectNative", application);
         }
         
         // Function Definition
@@ -111,7 +128,7 @@ namespace WebExtension.Net.Runtime
         /// <param name="responseCallback"></param>
         public virtual ValueTask SendMessage(string extensionId, object message, object options, Action responseCallback)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("runtime.sendMessage", extensionId, message, options, responseCallback);
+            return InvokeVoidAsync("sendMessage", extensionId, message, options, responseCallback);
         }
         
         // Function Definition
@@ -123,7 +140,7 @@ namespace WebExtension.Net.Runtime
         /// <param name="responseCallback"></param>
         public virtual ValueTask SendNativeMessage(string application, object message, Action responseCallback)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("runtime.sendNativeMessage", application, message, responseCallback);
+            return InvokeVoidAsync("sendNativeMessage", application, message, responseCallback);
         }
         
         // Function Definition
@@ -133,7 +150,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<BrowserInfo> GetBrowserInfo()
         {
-            return webExtensionJSRuntime.InvokeAsync<BrowserInfo>("runtime.getBrowserInfo");
+            return InvokeAsync<BrowserInfo>("getBrowserInfo");
         }
         
         // Function Definition
@@ -143,7 +160,7 @@ namespace WebExtension.Net.Runtime
         /// <returns></returns>
         public virtual ValueTask<PlatformInfo> GetPlatformInfo()
         {
-            return webExtensionJSRuntime.InvokeAsync<PlatformInfo>("runtime.getPlatformInfo");
+            return InvokeAsync<PlatformInfo>("getPlatformInfo");
         }
     }
 }

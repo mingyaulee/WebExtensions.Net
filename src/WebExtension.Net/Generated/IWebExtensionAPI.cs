@@ -1,11 +1,10 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using WebExtension.Net.Windows;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Tabs;
-using WebExtension.Net.Notifications;
 using WebExtension.Net.Runtime;
 using WebExtension.Net.WebNavigation;
+using WebExtension.Net.Storage;
+using WebExtension.Net.Notifications;
 using WebExtension.Net.WebRequest;
 
 namespace WebExtension.Net
@@ -26,11 +25,6 @@ namespace WebExtension.Net
         /// </summary>
         ITabsAPI Tabs { get; }
         /// <summary>
-        /// 
-        /// Requires manifest permission notifications.
-        /// </summary>
-        INotificationsAPI Notifications { get; }
-        /// <summary>
         /// Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.
         /// </summary>
         IRuntimeAPI Runtime { get; }
@@ -39,6 +33,16 @@ namespace WebExtension.Net
         /// Requires manifest permission webNavigation.
         /// </summary>
         IWebNavigationAPI WebNavigation { get; }
+        /// <summary>
+        /// Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.
+        /// Requires manifest permission storage.
+        /// </summary>
+        IStorageAPI Storage { get; }
+        /// <summary>
+        /// 
+        /// Requires manifest permission notifications.
+        /// </summary>
+        INotificationsAPI Notifications { get; }
         /// <summary>
         /// Use the <c>browser.webRequest</c> API to observe and analyze traffic and to intercept, block, or modify requests in-flight.
         /// Requires manifest permission webRequest.

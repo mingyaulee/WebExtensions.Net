@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,29 +10,65 @@ namespace WebExtension.Net.Manifest
     /// <summary>
     /// 
     /// </summary>
-    public class ThemeType
+    public class ThemeType : BaseObject
     {
         
         // Property Definition
+        private object _images;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("images")]
-        public object Images { get; set; }
+        public object Images
+        {
+            get
+            {
+                InitializeProperty("images", _images);
+                return _images;
+            }
+            set
+            {
+                _images = value;
+            }
+        }
         
         // Property Definition
+        private object _colors;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("colors")]
-        public object Colors { get; set; }
+        public object Colors
+        {
+            get
+            {
+                InitializeProperty("colors", _colors);
+                return _colors;
+            }
+            set
+            {
+                _colors = value;
+            }
+        }
         
         // Property Definition
+        private object _properties;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("properties")]
-        public object Properties { get; set; }
+        public object Properties
+        {
+            get
+            {
+                InitializeProperty("properties", _properties);
+                return _properties;
+            }
+            set
+            {
+                _properties = value;
+            }
+        }
     }
 }
 

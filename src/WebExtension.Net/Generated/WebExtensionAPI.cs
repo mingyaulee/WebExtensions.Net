@@ -1,11 +1,10 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using WebExtension.Net.Windows;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Tabs;
-using WebExtension.Net.Notifications;
 using WebExtension.Net.Runtime;
 using WebExtension.Net.WebNavigation;
+using WebExtension.Net.Storage;
+using WebExtension.Net.Notifications;
 using WebExtension.Net.WebRequest;
 
 namespace WebExtension.Net
@@ -63,20 +62,6 @@ namespace WebExtension.Net
             }
         }
         
-        private NotificationsAPI _notifications;
-        /// <inheritdoc />
-        public INotificationsAPI Notifications
-        {
-            get
-            {
-                if (_notifications is null)
-                {
-                    _notifications = new NotificationsAPI(webExtensionJSRuntime);
-                }
-                return _notifications;
-            }
-        }
-        
         private RuntimeAPI _runtime;
         /// <inheritdoc />
         public IRuntimeAPI Runtime
@@ -102,6 +87,34 @@ namespace WebExtension.Net
                     _webNavigation = new WebNavigationAPI(webExtensionJSRuntime);
                 }
                 return _webNavigation;
+            }
+        }
+        
+        private StorageAPI _storage;
+        /// <inheritdoc />
+        public IStorageAPI Storage
+        {
+            get
+            {
+                if (_storage is null)
+                {
+                    _storage = new StorageAPI(webExtensionJSRuntime);
+                }
+                return _storage;
+            }
+        }
+        
+        private NotificationsAPI _notifications;
+        /// <inheritdoc />
+        public INotificationsAPI Notifications
+        {
+            get
+            {
+                if (_notifications is null)
+                {
+                    _notifications = new NotificationsAPI(webExtensionJSRuntime);
+                }
+                return _notifications;
             }
         }
         

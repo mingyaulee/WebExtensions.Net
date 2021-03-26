@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +10,13 @@ namespace WebExtension.Net.WebRequest
     /// </summary>
     public interface IWebRequestAPI
     {
+        
+        // Property Definition Interface
+        /// <summary>
+        /// The maximum number of times that <c>handlerBehaviorChanged</c> can be called per 10 minute sustained interval. <c>handlerBehaviorChanged</c> is an expensive function call that shouldn't be called often.
+        /// </summary>
+        int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES { get; }
+        
         
         // Function Definition Interface
         /// <summary>

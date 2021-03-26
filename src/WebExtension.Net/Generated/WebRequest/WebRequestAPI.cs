@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,22 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebRequest
 {
     /// <inheritdoc />
-    public class WebRequestAPI : IWebRequestAPI
+    public class WebRequestAPI : BaseAPI, IWebRequestAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of WebRequestAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebRequestAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public WebRequestAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        // Property Definition
+        private const int _MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES = 20;
+        /// <summary>
+        /// The maximum number of times that <c>handlerBehaviorChanged</c> can be called per 10 minute sustained interval. <c>handlerBehaviorChanged</c> is an expensive function call that shouldn't be called often.
+        /// </summary>
+        public int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES => _MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES;
+        
         
         // Function Definition
         /// <summary>
@@ -25,7 +29,7 @@ namespace WebExtension.Net.WebRequest
         /// </summary>
         public virtual ValueTask HandlerBehaviorChanged()
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("webRequest.handlerBehaviorChanged");
+            return InvokeVoidAsync("handlerBehaviorChanged");
         }
         
         // Function Definition
@@ -36,7 +40,7 @@ namespace WebExtension.Net.WebRequest
         /// <returns></returns>
         public virtual ValueTask<JsonElement> FilterResponseData(string requestId)
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("webRequest.filterResponseData", requestId);
+            return InvokeAsync<JsonElement>("filterResponseData", requestId);
         }
         
         // Function Definition
@@ -47,7 +51,7 @@ namespace WebExtension.Net.WebRequest
         /// <param name="options"></param>
         public virtual ValueTask GetSecurityInfo(string requestId, object options)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("webRequest.getSecurityInfo", requestId, options);
+            return InvokeVoidAsync("getSecurityInfo", requestId, options);
         }
     }
 }

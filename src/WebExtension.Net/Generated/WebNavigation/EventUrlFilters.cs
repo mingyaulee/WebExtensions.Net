@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,15 +10,27 @@ namespace WebExtension.Net.WebNavigation
     /// <summary>
     /// 
     /// </summary>
-    public class EventUrlFilters
+    public class EventUrlFilters : BaseObject
     {
         
         // Property Definition
+        private IEnumerable<Events.UrlFilter> _url;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("url")]
-        public IEnumerable<Events.UrlFilter> Url { get; set; }
+        public IEnumerable<Events.UrlFilter> Url
+        {
+            get
+            {
+                InitializeProperty("url", _url);
+                return _url;
+            }
+            set
+            {
+                _url = value;
+            }
+        }
     }
 }
 

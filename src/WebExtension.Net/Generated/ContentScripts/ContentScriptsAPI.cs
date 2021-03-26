@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,16 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.ContentScripts
 {
     /// <inheritdoc />
-    public class ContentScriptsAPI : IContentScriptsAPI
+    public class ContentScriptsAPI : BaseAPI, IContentScriptsAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of ContentScriptsAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public ContentScriptsAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public ContentScriptsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        
         
         // Function Definition
         /// <summary>
@@ -26,7 +24,7 @@ namespace WebExtension.Net.ContentScripts
         /// <param name="contentScriptOptions"></param>
         public virtual ValueTask Register(RegisteredContentScriptOptions contentScriptOptions)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("contentScripts.register", contentScriptOptions);
+            return InvokeVoidAsync("register", contentScriptOptions);
         }
     }
 }

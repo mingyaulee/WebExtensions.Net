@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,16 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebNavigation
 {
     /// <inheritdoc />
-    public class WebNavigationAPI : IWebNavigationAPI
+    public class WebNavigationAPI : BaseAPI, IWebNavigationAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of WebNavigationAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebNavigationAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public WebNavigationAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        
         
         // Function Definition
         /// <summary>
@@ -27,7 +25,7 @@ namespace WebExtension.Net.WebNavigation
         /// <returns></returns>
         public virtual ValueTask<JsonElement> GetFrame(object details)
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("webNavigation.getFrame", details);
+            return InvokeAsync<JsonElement>("getFrame", details);
         }
         
         // Function Definition
@@ -38,7 +36,7 @@ namespace WebExtension.Net.WebNavigation
         /// <returns></returns>
         public virtual ValueTask<IEnumerable<object>> GetAllFrames(object details)
         {
-            return webExtensionJSRuntime.InvokeAsync<IEnumerable<object>>("webNavigation.getAllFrames", details);
+            return InvokeAsync<IEnumerable<object>>("getAllFrames", details);
         }
     }
 }

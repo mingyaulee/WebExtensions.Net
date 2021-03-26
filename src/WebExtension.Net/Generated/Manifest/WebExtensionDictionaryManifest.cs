@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,22 +10,46 @@ namespace WebExtension.Net.Manifest
     /// <summary>
     /// Represents a WebExtension dictionary manifest.json file
     /// </summary>
-    public class WebExtensionDictionaryManifest
+    public class WebExtensionDictionaryManifest : BaseObject
     {
         
         // Property Definition
+        private string _homepage_url;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("homepage_url")]
-        public string Homepage_url { get; set; }
+        public string Homepage_url
+        {
+            get
+            {
+                InitializeProperty("homepage_url", _homepage_url);
+                return _homepage_url;
+            }
+            set
+            {
+                _homepage_url = value;
+            }
+        }
         
         // Property Definition
+        private object _dictionaries;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("dictionaries")]
-        public object Dictionaries { get; set; }
+        public object Dictionaries
+        {
+            get
+            {
+                InitializeProperty("dictionaries", _dictionaries);
+                return _dictionaries;
+            }
+            set
+            {
+                _dictionaries = value;
+            }
+        }
     }
 }
 

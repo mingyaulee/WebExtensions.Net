@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,6 +10,13 @@ namespace WebExtension.Net.Tabs
     /// </summary>
     public interface ITabsAPI
     {
+        
+        // Property Definition Interface
+        /// <summary>
+        /// An ID which represents the absence of a browser tab.
+        /// </summary>
+        int TAB_ID_NONE { get; }
+        
         
         // Function Definition Interface
         /// <summary>

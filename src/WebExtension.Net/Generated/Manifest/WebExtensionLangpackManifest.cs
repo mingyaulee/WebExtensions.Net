@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,36 +10,84 @@ namespace WebExtension.Net.Manifest
     /// <summary>
     /// Represents a WebExtension language pack manifest.json file
     /// </summary>
-    public class WebExtensionLangpackManifest
+    public class WebExtensionLangpackManifest : BaseObject
     {
         
         // Property Definition
+        private string _homepage_url;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("homepage_url")]
-        public string Homepage_url { get; set; }
+        public string Homepage_url
+        {
+            get
+            {
+                InitializeProperty("homepage_url", _homepage_url);
+                return _homepage_url;
+            }
+            set
+            {
+                _homepage_url = value;
+            }
+        }
         
         // Property Definition
+        private string _langpack_id;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("langpack_id")]
-        public string Langpack_id { get; set; }
+        public string Langpack_id
+        {
+            get
+            {
+                InitializeProperty("langpack_id", _langpack_id);
+                return _langpack_id;
+            }
+            set
+            {
+                _langpack_id = value;
+            }
+        }
         
         // Property Definition
+        private object _languages;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("languages")]
-        public object Languages { get; set; }
+        public object Languages
+        {
+            get
+            {
+                InitializeProperty("languages", _languages);
+                return _languages;
+            }
+            set
+            {
+                _languages = value;
+            }
+        }
         
         // Property Definition
+        private object _sources;
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("sources")]
-        public object Sources { get; set; }
+        public object Sources
+        {
+            get
+            {
+                InitializeProperty("sources", _sources);
+                return _sources;
+            }
+            set
+            {
+                _sources = value;
+            }
+        }
     }
 }
 

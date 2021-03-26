@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,16 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Notifications
 {
     /// <inheritdoc />
-    public class NotificationsAPI : INotificationsAPI
+    public class NotificationsAPI : BaseAPI, INotificationsAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of NotificationsAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public NotificationsAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public NotificationsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "notifications")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        
         
         // Function Definition
         /// <summary>
@@ -28,7 +26,7 @@ namespace WebExtension.Net.Notifications
         /// <returns></returns>
         public virtual ValueTask<string> Create(string notificationId, CreateNotificationOptions options)
         {
-            return webExtensionJSRuntime.InvokeAsync<string>("notifications.create", notificationId, options);
+            return InvokeAsync<string>("create", notificationId, options);
         }
         
         // Function Definition
@@ -39,7 +37,7 @@ namespace WebExtension.Net.Notifications
         /// <returns></returns>
         public virtual ValueTask<bool> Clear(string notificationId)
         {
-            return webExtensionJSRuntime.InvokeAsync<bool>("notifications.clear", notificationId);
+            return InvokeAsync<bool>("clear", notificationId);
         }
         
         // Function Definition
@@ -49,7 +47,7 @@ namespace WebExtension.Net.Notifications
         /// <returns></returns>
         public virtual ValueTask<JsonElement> GetAll()
         {
-            return webExtensionJSRuntime.InvokeAsync<JsonElement>("notifications.getAll");
+            return InvokeAsync<JsonElement>("getAll");
         }
     }
 }

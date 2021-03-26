@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -8,16 +6,29 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Windows
 {
     /// <inheritdoc />
-    public class WindowsAPI : IWindowsAPI
+    public class WindowsAPI : BaseAPI, IWindowsAPI
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
         /// <summary>Creates a new instance of WindowsAPI.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WindowsAPI(WebExtensionJSRuntime webExtensionJSRuntime)
+        public WindowsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
+        
+        // Property Definition
+        private const int _WINDOW_ID_NONE = -1;
+        /// <summary>
+        /// The windowId value that represents the absence of a browser window.
+        /// </summary>
+        public int WINDOW_ID_NONE => _WINDOW_ID_NONE;
+        
+        // Property Definition
+        private const int _WINDOW_ID_CURRENT = -2;
+        /// <summary>
+        /// The windowId value that represents the $(topic:current-window)[current window].
+        /// </summary>
+        public int WINDOW_ID_CURRENT => _WINDOW_ID_CURRENT;
+        
         
         // Function Definition
         /// <summary>
@@ -28,7 +39,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<Window> Get(int windowId, GetInfo getInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Window>("windows.get", windowId, getInfo);
+            return InvokeAsync<Window>("get", windowId, getInfo);
         }
         
         // Function Definition
@@ -39,7 +50,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<Window> GetCurrent(GetInfo getInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Window>("windows.getCurrent", getInfo);
+            return InvokeAsync<Window>("getCurrent", getInfo);
         }
         
         // Function Definition
@@ -50,7 +61,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<Window> GetLastFocused(GetInfo getInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Window>("windows.getLastFocused", getInfo);
+            return InvokeAsync<Window>("getLastFocused", getInfo);
         }
         
         // Function Definition
@@ -61,7 +72,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<IEnumerable<Window>> GetAll(object getInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<IEnumerable<Window>>("windows.getAll", getInfo);
+            return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
         }
         
         // Function Definition
@@ -72,7 +83,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<Window> Create(object createData)
         {
-            return webExtensionJSRuntime.InvokeAsync<Window>("windows.create", createData);
+            return InvokeAsync<Window>("create", createData);
         }
         
         // Function Definition
@@ -84,7 +95,7 @@ namespace WebExtension.Net.Windows
         /// <returns></returns>
         public virtual ValueTask<Window> Update(int windowId, object updateInfo)
         {
-            return webExtensionJSRuntime.InvokeAsync<Window>("windows.update", windowId, updateInfo);
+            return InvokeAsync<Window>("update", windowId, updateInfo);
         }
         
         // Function Definition
@@ -94,7 +105,7 @@ namespace WebExtension.Net.Windows
         /// <param name="windowId"></param>
         public virtual ValueTask Remove(int windowId)
         {
-            return webExtensionJSRuntime.InvokeVoidAsync("windows.remove", windowId);
+            return InvokeVoidAsync("remove", windowId);
         }
     }
 }

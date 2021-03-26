@@ -1,5 +1,3 @@
-// This file is auto generated at 2021-03-24T04:51:22
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,22 +10,46 @@ namespace WebExtension.Net.Notifications
     /// <summary>
     /// 
     /// </summary>
-    public class NotificationItem
+    public class NotificationItem : BaseObject
     {
         
         // Property Definition
+        private string _title;
         /// <summary>
         /// Title of one item of a list notification.
         /// </summary>
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title
+        {
+            get
+            {
+                InitializeProperty("title", _title);
+                return _title;
+            }
+            set
+            {
+                _title = value;
+            }
+        }
         
         // Property Definition
+        private string _message;
         /// <summary>
         /// Additional details about this item.
         /// </summary>
         [JsonPropertyName("message")]
-        public string Message { get; set; }
+        public string Message
+        {
+            get
+            {
+                InitializeProperty("message", _message);
+                return _message;
+            }
+            set
+            {
+                _message = value;
+            }
+        }
     }
 }
 
