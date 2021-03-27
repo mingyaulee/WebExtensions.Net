@@ -16,6 +16,16 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
+        public async Task GetId()
+        {
+            // Act
+            var extensionId = await webExtensionApi.Runtime.GetId();
+
+            // Assert
+            extensionId.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public async Task GetManifest()
         {
             // Act
@@ -23,16 +33,6 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
 
             // Assert
             manifest.ValueKind.Should().Be(JsonValueKind.Object);
-        }
-
-        [Fact]
-        public async Task GetPlatformInfo()
-        {
-            // Act
-            var platformInfo = await webExtensionApi.Runtime.GetPlatformInfo();
-
-            // Assert
-            platformInfo.Should().NotBeNull();
         }
 
         [Fact]
@@ -44,6 +44,16 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             // Assert
             url.Should().StartWith("chrome-extension://")
                 .And.EndWith("/index.html");
+        }
+
+        [Fact]
+        public async Task GetPlatformInfo()
+        {
+            // Act
+            var platformInfo = await webExtensionApi.Runtime.GetPlatformInfo();
+
+            // Assert
+            platformInfo.Should().NotBeNull();
         }
     }
 }

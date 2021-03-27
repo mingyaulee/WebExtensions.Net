@@ -10,19 +10,19 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     public class NotificationsTests
     {
         private readonly IWebExtensionAPI webExtensionApi;
-        private readonly string notificationId;
+        private readonly string testNotificationId;
 
         public NotificationsTests(IWebExtensionAPI webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
-            notificationId = Guid.NewGuid().ToString();
+            testNotificationId = Guid.NewGuid().ToString();
         }
 
         [Fact(Order = 1)]
         public async Task Create()
         {
             // Act
-            var createdNotificationId = await webExtensionApi.Notifications.Create(notificationId, new CreateNotificationOptions()
+            var createdNotificationId = await webExtensionApi.Notifications.Create(testNotificationId, new CreateNotificationOptions()
             {
                 Title = "Testing notification",
                 Message = "Test notification message",
@@ -31,7 +31,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            createdNotificationId.Should().Be(notificationId);
+            createdNotificationId.Should().Be(testNotificationId);
         }
 
         [Fact(Order = 2)]
@@ -41,14 +41,14 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var notifications = await webExtensionApi.Notifications.GetAll();
 
             // Assert
-            notifications.EnumerateObject().Should().Contain(property => property.Name == notificationId);
+            notifications.EnumerateObject().Should().Contain(property => property.Name == testNotificationId);
         }
 
         [Fact(Order = 3)]
         public async Task Clear()
         {
             // Act
-            var notificationCleared = await webExtensionApi.Notifications.Clear(notificationId);
+            var notificationCleared = await webExtensionApi.Notifications.Clear(testNotificationId);
 
             // Assert
             notificationCleared.Should().BeTrue();

@@ -23,6 +23,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{402C7B21-F25A-4EB2-AAAE-A8F827CD0ED4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net.BrowserExtensionIntegrationTest", "Tests\WebExtension.Net.BrowserExtensionIntegrationTest\WebExtension.Net.BrowserExtensionIntegrationTest.csproj", "{C8382E8F-80E4-4EA5-B64E-D8AD46D84F90}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F84448CE-50BD-41BA-A49D-87F6CB4AF130} = {F84448CE-50BD-41BA-A49D-87F6CB4AF130}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,6 +18,9 @@
     "*://*/*",
     "webRequest",
     "webRequestBlocking",
-    "notifications"
+    "notifications",
+    "storage",
+    "tabs",
+    "windows"
   ]
 }
