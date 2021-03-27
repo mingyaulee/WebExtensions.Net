@@ -3,18 +3,17 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <BlazorEnableCompression>false</BlazorEnableCompression>
-    <StaticWebAssetBasePath>testProject</StaticWebAssetBasePath>
-    <RestoreSources>
+    <!--<RestoreSources>
       https://api.nuget.org/v3/index.json;
       $(MSBuildThisFileDirectory)\..\..\WebExtension.Net\PackageOutput
     </RestoreSources>
-    <RestorePackagesPath>..\..\..\packages</RestorePackagesPath>
+    <RestorePackagesPath>..\..\..\packages</RestorePackagesPath>-->
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Blazor.BrowserExtension" Version="0.1.0" />
     <!-- Local package reference built from project -->
-    <PackageReference Include="WebExtension.Net" Version="1.0.0" />
+    <!--<PackageReference Include="WebExtension.Net" Version="1.0.0" IncludeAssets="all" />-->
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.3" PrivateAssets="all" />
@@ -36,4 +35,10 @@
     <Content Remove="wwwroot\tests.html" />
   </ItemGroup>
 
+  <!-- Import project reference and build props and targets as if we are referencing the built NuGet package -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebExtension.Net\WebExtension.Net.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\WebExtension.Net\build\WebExtension.Net.props" />
+  <Import Project="..\..\WebExtension.Net\build\WebExtension.Net.targets" />
 </Project>

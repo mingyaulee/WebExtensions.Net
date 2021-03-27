@@ -30,11 +30,16 @@ class TestResultError extends Error {
     window.onload = undefined;
 
     /**
-     * 
+     * Executes the test method
      * @param {TestMethodInfo} testMethod
      * @param {function(): void} done
      */
     async function executeTestMethod(testMethod) {
+        setSpecProperty("testMethod", testMethod);
+        if (testMethod.skip) {
+            pending(testMethod.skip);
+            return;
+        }
         /** @type {TestResult} */
         const result = await testRunner.invokeMethodAsync("RunTest", testMethod);
         if (result.success) {
@@ -51,11 +56,7 @@ class TestResultError extends Error {
     function addTestClass(testClass) {
         describe(testClass.description, function () {
             for (var testMethod of testClass.testMethods) {
-                if (testMethod.skip) {
-                    xit(testMethod.description, executeTestMethod.bind(null, testMethod)).pend(testMethod.skip);
-                } else {
-                    it(testMethod.description, executeTestMethod.bind(null, testMethod));
-                }
+                it(testMethod.description, executeTestMethod.bind(null, testMethod));
             }
         });
     }
@@ -72,7 +73,30 @@ class TestResultError extends Error {
         runTests();
     }
 
+    function getTestResults() {
+        const runDetails = jsApiReporter.runDetails;
+        const tests = jsApiReporter.specs().map(spec => {
+            return {
+                fullName: spec.fullName,
+                description: spec.description,
+                status: spec.status,
+                duration: spec.duration,
+                skip: spec.properties?.testMethod?.skip,
+                declaringTypeFullName: spec.properties?.testMethod?.declaringTypeFullName,
+                methodName: spec.properties?.testMethod?.methodName,
+                failMessage: spec.failedExceptations?.[0]?.message,
+                stackTrace: spec.failedExceptations?.[0]?.stack
+            };
+        });
+        return {
+            status: runDetails.overallStatus,
+            duration: runDetails.totalTime,
+            tests: tests
+        };
+    }
+
     global.TestRunner = {
-        Start: startTestRunner
+        Start: startTestRunner,
+        GetTestResults: getTestResults
     };
 })(globalThis);
