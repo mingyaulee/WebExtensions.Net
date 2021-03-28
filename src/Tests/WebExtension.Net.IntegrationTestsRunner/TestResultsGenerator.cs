@@ -167,6 +167,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             }
             var counters = new CountersType()
             {
+                totalSpecified = true,
                 total = total,
                 executed = executed,
                 passed = passed,
