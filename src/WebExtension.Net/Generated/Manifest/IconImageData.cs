@@ -12,20 +12,26 @@ namespace WebExtension.Net.Manifest
     /// </summary>
     public class IconImageData
     {
-        private readonly object valueobject;
+        private readonly object currentValue = null;
+    
         /// <summary>Creates a new instance of IconImageData.</summary>
         public IconImageData(object valueobject)
         {
-            this.valueobject = valueobject;
+            currentValue = valueobject;
         }
         
-        private readonly ImageData valueImageData;
         /// <summary>Creates a new instance of IconImageData.</summary>
         public IconImageData(ImageData valueImageData)
         {
-            this.valueImageData = valueImageData;
+            currentValue = valueImageData;
         }
         
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

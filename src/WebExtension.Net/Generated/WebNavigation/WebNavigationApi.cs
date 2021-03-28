@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebNavigation
 {
     /// <inheritdoc />
-    public class WebNavigationAPI : BaseAPI, IWebNavigationAPI
+    public class WebNavigationApi : BaseApi, IWebNavigationApi
     {
-        /// <summary>Creates a new instance of WebNavigationAPI.</summary>
+        /// <summary>Creates a new instance of WebNavigationApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebNavigationAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
+        public WebNavigationApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
         {
         }
 

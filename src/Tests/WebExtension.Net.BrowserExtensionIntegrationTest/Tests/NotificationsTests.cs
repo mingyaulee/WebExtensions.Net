@@ -9,10 +9,10 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "browser.notifications")]
     public class NotificationsTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
         private readonly string testNotificationId;
 
-        public NotificationsTests(IWebExtensionAPI webExtensionApi)
+        public NotificationsTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
             testNotificationId = Guid.NewGuid().ToString();

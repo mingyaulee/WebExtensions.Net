@@ -35,7 +35,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
 
             if (!Directory.Exists(driverPath))
             {
-                throw new Exception($"Download the chromedriver from and extract the executable file to {driverPath}. Check available versions at http://chromedriver.storage.googleapis.com/");
+                throw new NotSupportedException($"Download the chromedriver from and extract the executable file to {driverPath}. Check available versions at http://chromedriver.storage.googleapis.com/");
             }
 
             try
@@ -47,16 +47,14 @@ namespace WebExtension.Net.IntegrationTestsRunner
 
                 // Test results
                 var testResults = GetTestResults(webDriver);
-                var resultGenerator = new TestResultsGenerator();
-                var resultsXML = resultGenerator.Generate(testResults);
+                var resultsXML = TestResultsGenerator.Generate(testResults);
                 var trxFilePath = $"{resultsPath}\\TestResults_{DateTime.UtcNow:yyyy-MM-dd_HH_mm_ss}.trx";
                 await WriteResultsToFile(trxFilePath, resultsXML);
                 Console.WriteLine($"Results file: {trxFilePath}");
 
                 // Test coverage
                 var testCoverage = await GetTestCoverageHits(webDriver);
-                var testCoverageWriter = new TestCoverageWriter();
-                testCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
+                TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
                 Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
             }
             catch (TestRunnerException testRunnerException)
@@ -69,14 +67,14 @@ namespace WebExtension.Net.IntegrationTestsRunner
             }
         }
 
-        private RemoteWebDriver GetWebDriver(string driverPath, string extensionPath)
+        private static RemoteWebDriver GetWebDriver(string driverPath, string extensionPath)
         {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument($"load-extension={extensionPath}");
             return new ChromeDriver(driverPath, chromeOptions);
         }
 
-        private async Task WaitForExtensionPageLoaded(RemoteWebDriver webDriver)
+        private static async Task WaitForExtensionPageLoaded(RemoteWebDriver webDriver)
         {
             // wait for 10 seconds
             var waitTime = 10 * 1000;
@@ -99,14 +97,14 @@ namespace WebExtension.Net.IntegrationTestsRunner
             }
         }
 
-        private void LaunchTestPage(RemoteWebDriver webDriver)
+        private static void LaunchTestPage(RemoteWebDriver webDriver)
         {
             var extensionUri = new Uri(webDriver.Url);
             var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false&coverlet";
             webDriver.Navigate().GoToUrl(testPageUrl);
         }
 
-        private async Task WaitForTestToFinish(RemoteWebDriver webDriver)
+        private static async Task WaitForTestToFinish(RemoteWebDriver webDriver)
         {
             // wait for 30 seconds
             var waitTime = 30 * 1000;
@@ -131,7 +129,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             }
         }
 
-        private TestRunInfo GetTestResults(RemoteWebDriver webDriver)
+        private static TestRunInfo GetTestResults(RemoteWebDriver webDriver)
         {
             var resultsObject = (string)webDriver.ExecuteScript("return JSON.stringify(TestRunner.GetTestResults());");
             var testRunResult = JsonSerializer.Deserialize<TestRunInfo>(resultsObject, new JsonSerializerOptions()
@@ -153,7 +151,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testRunResult;
         }
 
-        private async Task<TestCoverage> GetTestCoverageHits(RemoteWebDriver webDriver)
+        private static async Task<TestCoverage> GetTestCoverageHits(RemoteWebDriver webDriver)
         {
             // wait for 5 seconds
             var waitTime = 5 * 1000;
@@ -183,7 +181,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testCoverage;
         }
 
-        private async Task WriteResultsToFile(string trxFilePath, string resultsXML)
+        private static async Task WriteResultsToFile(string trxFilePath, string resultsXML)
         {
             try
             {

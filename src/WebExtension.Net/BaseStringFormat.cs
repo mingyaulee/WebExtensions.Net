@@ -20,7 +20,7 @@ namespace WebExtension.Net
             this.value = value;
             if (!string.IsNullOrEmpty(format) && !Regex.IsMatch(value, format))
             {
-                throw new Exception($"The value '{value}' does not match the format '{format}' specified for type {this.GetType().Name}.");
+                throw new ArgumentException($"The value '{value}' does not match the format '{format}' specified for type {this.GetType().Name}.");
             }
         }
 

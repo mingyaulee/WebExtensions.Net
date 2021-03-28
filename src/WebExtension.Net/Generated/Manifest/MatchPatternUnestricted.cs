@@ -12,13 +12,30 @@ namespace WebExtension.Net.Manifest
     /// </summary>
     public class MatchPatternUnestricted
     {
+        private readonly object currentValue = null;
+    
         private readonly string valuestring;
         /// <summary>Creates a new instance of MatchPatternUnestricted.</summary>
         public MatchPatternUnestricted(string valuestring)
         {
             this.valuestring = valuestring;
+            currentValue = valuestring;
         }
         
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator string(MatchPatternUnestricted value) => value.valuestring;
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator MatchPatternUnestricted(string value) => new(value);
+        
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

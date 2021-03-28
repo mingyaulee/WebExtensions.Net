@@ -14,82 +14,6 @@ namespace WebExtension.Net.Manifest
     {
         
         // Property Definition
-        private string _minimum_chrome_version;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("minimum_chrome_version")]
-        public string Minimum_chrome_version
-        {
-            get
-            {
-                InitializeProperty("minimum_chrome_version", _minimum_chrome_version);
-                return _minimum_chrome_version;
-            }
-            set
-            {
-                _minimum_chrome_version = value;
-            }
-        }
-        
-        // Property Definition
-        private string _minimum_opera_version;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("minimum_opera_version")]
-        public string Minimum_opera_version
-        {
-            get
-            {
-                InitializeProperty("minimum_opera_version", _minimum_opera_version);
-                return _minimum_opera_version;
-            }
-            set
-            {
-                _minimum_opera_version = value;
-            }
-        }
-        
-        // Property Definition
-        private object _icons;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("icons")]
-        public object Icons
-        {
-            get
-            {
-                InitializeProperty("icons", _icons);
-                return _icons;
-            }
-            set
-            {
-                _icons = value;
-            }
-        }
-        
-        // Property Definition
-        private string _incognito;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("incognito")]
-        public string Incognito
-        {
-            get
-            {
-                InitializeProperty("incognito", _incognito);
-                return _incognito;
-            }
-            set
-            {
-                _incognito = value;
-            }
-        }
-        
-        // Property Definition
         private object _background;
         /// <summary>
         /// 
@@ -109,21 +33,78 @@ namespace WebExtension.Net.Manifest
         }
         
         // Property Definition
-        private object _options_ui;
+        private object _browser_action;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("options_ui")]
-        public object Options_ui
+        [JsonPropertyName("browser_action")]
+        public object Browser_action
         {
             get
             {
-                InitializeProperty("options_ui", _options_ui);
-                return _options_ui;
+                InitializeProperty("browser_action", _browser_action);
+                return _browser_action;
             }
             set
             {
-                _options_ui = value;
+                _browser_action = value;
+            }
+        }
+        
+        // Property Definition
+        private object _chrome_settings_overrides;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("chrome_settings_overrides")]
+        public object Chrome_settings_overrides
+        {
+            get
+            {
+                InitializeProperty("chrome_settings_overrides", _chrome_settings_overrides);
+                return _chrome_settings_overrides;
+            }
+            set
+            {
+                _chrome_settings_overrides = value;
+            }
+        }
+        
+        // Property Definition
+        private object _chrome_url_overrides;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("chrome_url_overrides")]
+        public object Chrome_url_overrides
+        {
+            get
+            {
+                InitializeProperty("chrome_url_overrides", _chrome_url_overrides);
+                return _chrome_url_overrides;
+            }
+            set
+            {
+                _chrome_url_overrides = value;
+            }
+        }
+        
+        // Property Definition
+        private object _commands;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("commands")]
+        public object Commands
+        {
+            get
+            {
+                InitializeProperty("commands", _commands);
+                return _commands;
+            }
+            set
+            {
+                _commands = value;
             }
         }
         
@@ -166,59 +147,21 @@ namespace WebExtension.Net.Manifest
         }
         
         // Property Definition
-        private IEnumerable<PermissionOrOrigin> _permissions;
+        private string _default_locale;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("permissions")]
-        public IEnumerable<PermissionOrOrigin> Permissions
+        [JsonPropertyName("default_locale")]
+        public string Default_locale
         {
             get
             {
-                InitializeProperty("permissions", _permissions);
-                return _permissions;
+                InitializeProperty("default_locale", _default_locale);
+                return _default_locale;
             }
             set
             {
-                _permissions = value;
-            }
-        }
-        
-        // Property Definition
-        private IEnumerable<OptionalPermissionOrOrigin> _optional_permissions;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("optional_permissions")]
-        public IEnumerable<OptionalPermissionOrOrigin> Optional_permissions
-        {
-            get
-            {
-                InitializeProperty("optional_permissions", _optional_permissions);
-                return _optional_permissions;
-            }
-            set
-            {
-                _optional_permissions = value;
-            }
-        }
-        
-        // Property Definition
-        private IEnumerable<string> _web_accessible_resources;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("web_accessible_resources")]
-        public IEnumerable<string> Web_accessible_resources
-        {
-            get
-            {
-                InitializeProperty("web_accessible_resources", _web_accessible_resources);
-                return _web_accessible_resources;
-            }
-            set
-            {
-                _web_accessible_resources = value;
+                _default_locale = value;
             }
         }
         
@@ -242,21 +185,21 @@ namespace WebExtension.Net.Manifest
         }
         
         // Property Definition
-        private bool? _hidden;
+        private ExtensionURL _devtools_page;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("hidden")]
-        public bool? Hidden
+        [JsonPropertyName("devtools_page")]
+        public ExtensionURL Devtools_page
         {
             get
             {
-                InitializeProperty("hidden", _hidden);
-                return _hidden;
+                InitializeProperty("devtools_page", _devtools_page);
+                return _devtools_page;
             }
             set
             {
-                _hidden = value;
+                _devtools_page = value;
             }
         }
         
@@ -280,211 +223,59 @@ namespace WebExtension.Net.Manifest
         }
         
         // Property Definition
-        private ThemeExperiment _theme_experiment;
+        private bool? _hidden;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("theme_experiment")]
-        public ThemeExperiment Theme_experiment
+        [JsonPropertyName("hidden")]
+        public bool? Hidden
         {
             get
             {
-                InitializeProperty("theme_experiment", _theme_experiment);
-                return _theme_experiment;
+                InitializeProperty("hidden", _hidden);
+                return _hidden;
             }
             set
             {
-                _theme_experiment = value;
+                _hidden = value;
             }
         }
         
         // Property Definition
-        private object _sidebar_action;
+        private object _icons;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("sidebar_action")]
-        public object Sidebar_action
+        [JsonPropertyName("icons")]
+        public object Icons
         {
             get
             {
-                InitializeProperty("sidebar_action", _sidebar_action);
-                return _sidebar_action;
+                InitializeProperty("icons", _icons);
+                return _icons;
             }
             set
             {
-                _sidebar_action = value;
+                _icons = value;
             }
         }
         
         // Property Definition
-        private object _chrome_settings_overrides;
+        private string _incognito;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("chrome_settings_overrides")]
-        public object Chrome_settings_overrides
+        [JsonPropertyName("incognito")]
+        public string Incognito
         {
             get
             {
-                InitializeProperty("chrome_settings_overrides", _chrome_settings_overrides);
-                return _chrome_settings_overrides;
+                InitializeProperty("incognito", _incognito);
+                return _incognito;
             }
             set
             {
-                _chrome_settings_overrides = value;
-            }
-        }
-        
-        // Property Definition
-        private object _commands;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("commands")]
-        public object Commands
-        {
-            get
-            {
-                InitializeProperty("commands", _commands);
-                return _commands;
-            }
-            set
-            {
-                _commands = value;
-            }
-        }
-        
-        // Property Definition
-        private object _user_scripts;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("user_scripts")]
-        public object User_scripts
-        {
-            get
-            {
-                InitializeProperty("user_scripts", _user_scripts);
-                return _user_scripts;
-            }
-            set
-            {
-                _user_scripts = value;
-            }
-        }
-        
-        // Property Definition
-        private IEnumerable<ProtocolHandler> _protocol_handlers;
-        /// <summary>
-        /// A list of protocol handler definitions.
-        /// </summary>
-        [JsonPropertyName("protocol_handlers")]
-        public IEnumerable<ProtocolHandler> Protocol_handlers
-        {
-            get
-            {
-                InitializeProperty("protocol_handlers", _protocol_handlers);
-                return _protocol_handlers;
-            }
-            set
-            {
-                _protocol_handlers = value;
-            }
-        }
-        
-        // Property Definition
-        private ExtensionURL _devtools_page;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("devtools_page")]
-        public ExtensionURL Devtools_page
-        {
-            get
-            {
-                InitializeProperty("devtools_page", _devtools_page);
-                return _devtools_page;
-            }
-            set
-            {
-                _devtools_page = value;
-            }
-        }
-        
-        // Property Definition
-        private object _omnibox;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("omnibox")]
-        public object Omnibox
-        {
-            get
-            {
-                InitializeProperty("omnibox", _omnibox);
-                return _omnibox;
-            }
-            set
-            {
-                _omnibox = value;
-            }
-        }
-        
-        // Property Definition
-        private object _chrome_url_overrides;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("chrome_url_overrides")]
-        public object Chrome_url_overrides
-        {
-            get
-            {
-                InitializeProperty("chrome_url_overrides", _chrome_url_overrides);
-                return _chrome_url_overrides;
-            }
-            set
-            {
-                _chrome_url_overrides = value;
-            }
-        }
-        
-        // Property Definition
-        private object _browser_action;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("browser_action")]
-        public object Browser_action
-        {
-            get
-            {
-                InitializeProperty("browser_action", _browser_action);
-                return _browser_action;
-            }
-            set
-            {
-                _browser_action = value;
-            }
-        }
-        
-        // Property Definition
-        private string _default_locale;
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonPropertyName("default_locale")]
-        public string Default_locale
-        {
-            get
-            {
-                InitializeProperty("default_locale", _default_locale);
-                return _default_locale;
-            }
-            set
-            {
-                _default_locale = value;
+                _incognito = value;
             }
         }
         
@@ -508,21 +299,97 @@ namespace WebExtension.Net.Manifest
         }
         
         // Property Definition
-        private object _telemetry;
+        private string _minimum_chrome_version;
         /// <summary>
         /// 
         /// </summary>
-        [JsonPropertyName("telemetry")]
-        public object Telemetry
+        [JsonPropertyName("minimum_chrome_version")]
+        public string Minimum_chrome_version
         {
             get
             {
-                InitializeProperty("telemetry", _telemetry);
-                return _telemetry;
+                InitializeProperty("minimum_chrome_version", _minimum_chrome_version);
+                return _minimum_chrome_version;
             }
             set
             {
-                _telemetry = value;
+                _minimum_chrome_version = value;
+            }
+        }
+        
+        // Property Definition
+        private string _minimum_opera_version;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("minimum_opera_version")]
+        public string Minimum_opera_version
+        {
+            get
+            {
+                InitializeProperty("minimum_opera_version", _minimum_opera_version);
+                return _minimum_opera_version;
+            }
+            set
+            {
+                _minimum_opera_version = value;
+            }
+        }
+        
+        // Property Definition
+        private object _omnibox;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("omnibox")]
+        public object Omnibox
+        {
+            get
+            {
+                InitializeProperty("omnibox", _omnibox);
+                return _omnibox;
+            }
+            set
+            {
+                _omnibox = value;
+            }
+        }
+        
+        // Property Definition
+        private IEnumerable<OptionalPermissionOrOrigin> _optional_permissions;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("optional_permissions")]
+        public IEnumerable<OptionalPermissionOrOrigin> Optional_permissions
+        {
+            get
+            {
+                InitializeProperty("optional_permissions", _optional_permissions);
+                return _optional_permissions;
+            }
+            set
+            {
+                _optional_permissions = value;
+            }
+        }
+        
+        // Property Definition
+        private object _options_ui;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("options_ui")]
+        public object Options_ui
+        {
+            get
+            {
+                InitializeProperty("options_ui", _options_ui);
+                return _options_ui;
+            }
+            set
+            {
+                _options_ui = value;
             }
         }
         
@@ -542,6 +409,139 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _page_action = value;
+            }
+        }
+        
+        // Property Definition
+        private IEnumerable<PermissionOrOrigin> _permissions;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("permissions")]
+        public IEnumerable<PermissionOrOrigin> Permissions
+        {
+            get
+            {
+                InitializeProperty("permissions", _permissions);
+                return _permissions;
+            }
+            set
+            {
+                _permissions = value;
+            }
+        }
+        
+        // Property Definition
+        private IEnumerable<ProtocolHandler> _protocol_handlers;
+        /// <summary>
+        /// A list of protocol handler definitions.
+        /// </summary>
+        [JsonPropertyName("protocol_handlers")]
+        public IEnumerable<ProtocolHandler> Protocol_handlers
+        {
+            get
+            {
+                InitializeProperty("protocol_handlers", _protocol_handlers);
+                return _protocol_handlers;
+            }
+            set
+            {
+                _protocol_handlers = value;
+            }
+        }
+        
+        // Property Definition
+        private object _sidebar_action;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("sidebar_action")]
+        public object Sidebar_action
+        {
+            get
+            {
+                InitializeProperty("sidebar_action", _sidebar_action);
+                return _sidebar_action;
+            }
+            set
+            {
+                _sidebar_action = value;
+            }
+        }
+        
+        // Property Definition
+        private object _telemetry;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("telemetry")]
+        public object Telemetry
+        {
+            get
+            {
+                InitializeProperty("telemetry", _telemetry);
+                return _telemetry;
+            }
+            set
+            {
+                _telemetry = value;
+            }
+        }
+        
+        // Property Definition
+        private ThemeExperiment _theme_experiment;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("theme_experiment")]
+        public ThemeExperiment Theme_experiment
+        {
+            get
+            {
+                InitializeProperty("theme_experiment", _theme_experiment);
+                return _theme_experiment;
+            }
+            set
+            {
+                _theme_experiment = value;
+            }
+        }
+        
+        // Property Definition
+        private object _user_scripts;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("user_scripts")]
+        public object User_scripts
+        {
+            get
+            {
+                InitializeProperty("user_scripts", _user_scripts);
+                return _user_scripts;
+            }
+            set
+            {
+                _user_scripts = value;
+            }
+        }
+        
+        // Property Definition
+        private IEnumerable<string> _web_accessible_resources;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonPropertyName("web_accessible_resources")]
+        public IEnumerable<string> Web_accessible_resources
+        {
+            get
+            {
+                InitializeProperty("web_accessible_resources", _web_accessible_resources);
+                return _web_accessible_resources;
+            }
+            set
+            {
+                _web_accessible_resources = value;
             }
         }
     }

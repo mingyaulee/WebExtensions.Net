@@ -12,6 +12,8 @@ namespace WebExtension.Net.ExtensionTypes
     /// </summary>
     public class PlainJSONValue
     {
+        private readonly object currentValue = null;
+    
         /// <summary>Creates a new instance of PlainJSONValue.</summary>
         public PlainJSONValue() { }
         
@@ -20,36 +22,67 @@ namespace WebExtension.Net.ExtensionTypes
         public PlainJSONValue(double valuedouble)
         {
             this.valuedouble = valuedouble;
+            currentValue = valuedouble;
         }
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator double(PlainJSONValue value) => value.valuedouble;
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator PlainJSONValue(double value) => new(value);
         
         private readonly string valuestring;
         /// <summary>Creates a new instance of PlainJSONValue.</summary>
         public PlainJSONValue(string valuestring)
         {
             this.valuestring = valuestring;
+            currentValue = valuestring;
         }
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator string(PlainJSONValue value) => value.valuestring;
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator PlainJSONValue(string value) => new(value);
         
         private readonly bool valuebool;
         /// <summary>Creates a new instance of PlainJSONValue.</summary>
         public PlainJSONValue(bool valuebool)
         {
             this.valuebool = valuebool;
+            currentValue = valuebool;
         }
         
-        private readonly IEnumerable<PlainJSONValue> valueIEnumerablePlainJSONValue;
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator bool(PlainJSONValue value) => value.valuebool;
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator PlainJSONValue(bool value) => new(value);
+        
         /// <summary>Creates a new instance of PlainJSONValue.</summary>
         public PlainJSONValue(IEnumerable<PlainJSONValue> valueIEnumerablePlainJSONValue)
         {
-            this.valueIEnumerablePlainJSONValue = valueIEnumerablePlainJSONValue;
+            currentValue = valueIEnumerablePlainJSONValue;
         }
         
-        private readonly object valueobject;
         /// <summary>Creates a new instance of PlainJSONValue.</summary>
         public PlainJSONValue(object valueobject)
         {
-            this.valueobject = valueobject;
+            currentValue = valueobject;
         }
         
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

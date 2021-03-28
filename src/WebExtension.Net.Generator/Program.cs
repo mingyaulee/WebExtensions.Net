@@ -6,9 +6,9 @@ using System.Net.Http;
 
 namespace WebExtension.Net.Generator
 {
-    public class Program
+    public static class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var sourceUrls = new[]
             {
@@ -17,10 +17,10 @@ namespace WebExtension.Net.Generator
             };
             var rootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..\\..\\WebExtension.Net\\Generated"));
             var rootNamespace = "WebExtension.Net";
-            var rootApiDefinitionName = "WebExtensionAPI";
-            var rootApiDefinitionDescription = "Web Extension API";
-            var apiDefinitionBaseClassName = "BaseAPI";
-            var apiDefinitionClassNamePostfix = "API";
+            var rootApiDefinitionName = "WebExtensionApi";
+            var rootApiDefinitionDescription = "Web Extension Api";
+            var apiDefinitionBaseClassName = "BaseApi";
+            var apiDefinitionClassNamePostfix = "Api";
             var includeNamespaces = new List<string>()
             {
                 "contentScripts",
@@ -99,7 +99,7 @@ namespace WebExtension.Net.Generator
             var logger = loggerFactory.CreateLogger("Generator");
             if (logger is null)
             {
-                throw new Exception("Failed to initialize logger");
+                throw new InvalidOperationException("Failed to initialize logger");
             }
 
             using var httpClient = new HttpClient();

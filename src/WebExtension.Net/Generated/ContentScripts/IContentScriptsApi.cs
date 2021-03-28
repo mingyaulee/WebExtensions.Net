@@ -8,7 +8,7 @@ namespace WebExtension.Net.ContentScripts
     /// <summary>
     /// 
     /// </summary>
-    public interface IContentScriptsAPI
+    public interface IContentScriptsApi
     {
         
         

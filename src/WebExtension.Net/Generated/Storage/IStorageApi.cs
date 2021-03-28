@@ -8,7 +8,7 @@ namespace WebExtension.Net.Storage
     /// <summary>
     /// Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.
     /// </summary>
-    public interface IStorageAPI
+    public interface IStorageApi
     {
         
         

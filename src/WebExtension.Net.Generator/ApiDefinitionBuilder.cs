@@ -70,7 +70,7 @@ namespace WebExtension.Net.Generator
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var urls = responseContent.Split(new[] { '\n', '\r' })
                     .Where(x => x.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
-                    .Select(x => sourceUrl + x.Substring(x.LastIndexOf(" ") + 1));
+                    .Select(x => sourceUrl + x[(x.LastIndexOf(" ") + 1)..]);
                 apiRoot.DefinitionUrls.AddRange(urls);
             }
             return apiRoot;
@@ -95,7 +95,7 @@ namespace WebExtension.Net.Generator
             return Enumerable.Empty<ApiDefinition>();
         }
 
-        private List<ApiDefinition> MergeByNamespace(IEnumerable<ApiDefinition> apiDefinitions)
+        private static List<ApiDefinition> MergeByNamespace(IEnumerable<ApiDefinition> apiDefinitions)
         {
             return apiDefinitions.GroupBy(apiDefinition => apiDefinition.Name).Select(apiDefinitionGroup =>
             {
@@ -104,8 +104,8 @@ namespace WebExtension.Net.Generator
                 {
                     apiDefinition.URL = $"{apiDefinition.URL}|{duplicateApiDefinition.URL}";
                     apiDefinition.Json = apiDefinition.Json.Concat(duplicateApiDefinition.Json);
-                    apiDefinition.Properties = apiDefinition.Properties.Concat(duplicateApiDefinition.Properties);
-                    apiDefinition.Functions = apiDefinition.Functions.Concat(duplicateApiDefinition.Functions);
+                    apiDefinition.Properties = apiDefinition.Properties.Concat(duplicateApiDefinition.Properties).OrderBy(propertyDefinition => propertyDefinition.Name);
+                    apiDefinition.Functions = apiDefinition.Functions.Concat(duplicateApiDefinition.Functions).OrderBy(functionDefinition => functionDefinition.Name);
                     apiDefinition.Types = apiDefinition.Types.Concat(duplicateApiDefinition.Types);
                 }
                 if (apiDefinition.Types.OfType<ClassDefinition>().Any(classDefinition => !string.IsNullOrEmpty(classDefinition.ExtendsClass)))
@@ -113,10 +113,10 @@ namespace WebExtension.Net.Generator
                     apiDefinition.Types = MergeTypes(apiDefinition.Types).ToArray();
                 }
                 return apiDefinition;
-            }).ToList();
+            }).OrderBy(apiDefinition => apiDefinition.Name).ToList();
         }
 
-        private IEnumerable<TypeDefinition> MergeTypes(IEnumerable<TypeDefinition> typeDefinitions)
+        private static IEnumerable<TypeDefinition> MergeTypes(IEnumerable<TypeDefinition> typeDefinitions)
         {
             var extendingClasses = typeDefinitions.OfType<ClassDefinition>().GroupBy(classDefinition => classDefinition.ExtendsClass).ToDictionary(classDefinitionGroup => classDefinitionGroup.Key ?? string.Empty, classDefinitionGroup => classDefinitionGroup.ToArray());
             foreach (var typeDefinition in typeDefinitions)
@@ -129,8 +129,8 @@ namespace WebExtension.Net.Generator
                     }
                     if (classDefinition.Name != null && extendingClasses.ContainsKey(classDefinition.Name))
                     {
-                        classDefinition.Functions = classDefinition.Functions.Concat(extendingClasses[classDefinition.Name].SelectMany(extendingClass => extendingClass.Functions));
-                        classDefinition.Properties = classDefinition.Properties.Concat(extendingClasses[classDefinition.Name].SelectMany(extendingClass => extendingClass.Properties));
+                        classDefinition.Functions = classDefinition.Functions.Concat(extendingClasses[classDefinition.Name].SelectMany(extendingClass => extendingClass.Functions)).OrderBy(functionDefinition => functionDefinition.Name);
+                        classDefinition.Properties = classDefinition.Properties.Concat(extendingClasses[classDefinition.Name].SelectMany(extendingClass => extendingClass.Properties)).OrderBy(propertyDefinition => propertyDefinition.Name);
                     }
                 }
                 yield return typeDefinition;

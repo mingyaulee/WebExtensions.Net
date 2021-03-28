@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.ContentScripts
 {
     /// <inheritdoc />
-    public class ContentScriptsAPI : BaseAPI, IContentScriptsAPI
+    public class ContentScriptsApi : BaseApi, IContentScriptsApi
     {
-        /// <summary>Creates a new instance of ContentScriptsAPI.</summary>
+        /// <summary>Creates a new instance of ContentScriptsApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public ContentScriptsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
+        public ContentScriptsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
         {
         }
 

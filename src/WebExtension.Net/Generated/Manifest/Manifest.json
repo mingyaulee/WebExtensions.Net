@@ -8,7 +8,7 @@
           {
             "type": "string",
             "enum": [
-              "activityLog"
+              "contextualIdentities"
             ]
           }
         ]
@@ -41,22 +41,6 @@
             "type": "string",
             "enum": [
               "find"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "browserSettings"
             ]
           }
         ]
@@ -465,6 +449,22 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "cookies"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
         "$extend": "OptionalPermission",
         "choices": [
           {
@@ -486,7 +486,7 @@
           {
             "type": "string",
             "enum": [
-              "privacy"
+              "management"
             ]
           }
         ]
@@ -497,41 +497,144 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "sessions"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "menus",
+              "contextMenus"
+            ]
+          }
+        ]
+      },
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "menus.overrideContext"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "dns"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "activityLog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "id": "KeyName",
+        "type": "string",
+        "format": "manifestShortcutKey"
+      },
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
-          "sidebar_action": {
+          "commands": {
             "type": "object",
+            "optional": true,
             "additionalProperties": {
-              "$ref": "UnrecognizedProperty"
-            },
-            "properties": {
-              "default_title": {
-                "type": "string",
-                "optional": true,
-                "preprocess": "localize"
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "UnrecognizedProperty"
               },
-              "default_icon": {
-                "$ref": "IconPath",
-                "optional": true
-              },
-              "browser_style": {
-                "type": "boolean",
-                "optional": true,
-                "default": true
-              },
-              "default_panel": {
-                "type": "string",
-                "format": "strictRelativeUrl",
-                "preprocess": "localize"
-              },
-              "open_at_install": {
-                "type": "boolean",
-                "optional": true,
-                "default": true,
-                "description": "Whether or not the sidebar is opened at install. Default is \u003Ccode\u003Etrue\u003C/code\u003E."
+              "properties": {
+                "suggested_key": {
+                  "type": "object",
+                  "optional": true,
+                  "properties": {
+                    "default": {
+                      "$ref": "KeyName",
+                      "optional": true
+                    },
+                    "mac": {
+                      "$ref": "KeyName",
+                      "optional": true
+                    },
+                    "linux": {
+                      "$ref": "KeyName",
+                      "optional": true
+                    },
+                    "windows": {
+                      "$ref": "KeyName",
+                      "optional": true
+                    },
+                    "chromeos": {
+                      "type": "string",
+                      "optional": true
+                    },
+                    "android": {
+                      "type": "string",
+                      "optional": true
+                    },
+                    "ios": {
+                      "type": "string",
+                      "optional": true
+                    },
+                    "additionalProperties": {
+                      "type": "string",
+                      "deprecated": "Unknown platform name",
+                      "optional": true
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "preprocess": "localize",
+                  "optional": true
+                }
               }
-            },
-            "optional": true
+            }
           }
         }
       }
@@ -743,178 +846,43 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "management"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "contextualIdentities"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "browsingData"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "menus",
-              "contextMenus"
-            ]
-          }
-        ]
-      },
-      {
-        "$extend": "OptionalPermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "menus.overrideContext"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "id": "KeyName",
-        "type": "string",
-        "format": "manifestShortcutKey"
-      },
-      {
         "$extend": "WebExtensionManifest",
         "properties": {
-          "commands": {
+          "sidebar_action": {
             "type": "object",
-            "optional": true,
             "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "UnrecognizedProperty"
+              "$ref": "UnrecognizedProperty"
+            },
+            "properties": {
+              "default_title": {
+                "type": "string",
+                "optional": true,
+                "preprocess": "localize"
               },
-              "properties": {
-                "suggested_key": {
-                  "type": "object",
-                  "optional": true,
-                  "properties": {
-                    "default": {
-                      "$ref": "KeyName",
-                      "optional": true
-                    },
-                    "mac": {
-                      "$ref": "KeyName",
-                      "optional": true
-                    },
-                    "linux": {
-                      "$ref": "KeyName",
-                      "optional": true
-                    },
-                    "windows": {
-                      "$ref": "KeyName",
-                      "optional": true
-                    },
-                    "chromeos": {
-                      "type": "string",
-                      "optional": true
-                    },
-                    "android": {
-                      "type": "string",
-                      "optional": true
-                    },
-                    "ios": {
-                      "type": "string",
-                      "optional": true
-                    },
-                    "additionalProperties": {
-                      "type": "string",
-                      "deprecated": "Unknown platform name",
-                      "optional": true
-                    }
-                  }
-                },
-                "description": {
-                  "type": "string",
-                  "preprocess": "localize",
-                  "optional": true
-                }
+              "default_icon": {
+                "$ref": "IconPath",
+                "optional": true
+              },
+              "browser_style": {
+                "type": "boolean",
+                "optional": true,
+                "default": true
+              },
+              "default_panel": {
+                "type": "string",
+                "format": "strictRelativeUrl",
+                "preprocess": "localize"
+              },
+              "open_at_install": {
+                "type": "boolean",
+                "optional": true,
+                "default": true,
+                "description": "Whether or not the sidebar is opened at install. Default is \u003Ccode\u003Etrue\u003C/code\u003E."
               }
-            }
+            },
+            "optional": true
           }
         }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "proxy"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "dns"
-            ]
-          }
-        ]
       }
     ]
   },
@@ -938,156 +906,6 @@
             }
           }
         }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "id": "ProtocolHandler",
-        "type": "object",
-        "description": "Represents a protocol handler definition.",
-        "properties": {
-          "name": {
-            "description": "A user-readable title string for the protocol handler. This will be displayed to the user in interface objects as needed.",
-            "type": "string"
-          },
-          "protocol": {
-            "description": "The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the \u0022sms\u0022 scheme.",
-            "choices": [
-              {
-                "type": "string",
-                "enum": [
-                  "bitcoin",
-                  "dat",
-                  "dweb",
-                  "ftp",
-                  "geo",
-                  "gopher",
-                  "im",
-                  "ipfs",
-                  "ipns",
-                  "irc",
-                  "ircs",
-                  "magnet",
-                  "mailto",
-                  "mms",
-                  "news",
-                  "nntp",
-                  "sip",
-                  "sms",
-                  "smsto",
-                  "ssb",
-                  "ssh",
-                  "tel",
-                  "urn",
-                  "webcal",
-                  "wtai",
-                  "xmpp"
-                ]
-              },
-              {
-                "type": "string",
-                "pattern": "^(ext|web)\\\u002B[a-z0-9.\u002B-]\u002B$"
-              }
-            ]
-          },
-          "uriTemplate": {
-            "description": "The URL of the handler, as a string. This string should include \u0022%s\u0022 as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.",
-            "preprocess": "localize",
-            "choices": [
-              {
-                "$ref": "ExtensionURL"
-              },
-              {
-                "$ref": "HttpURL"
-              }
-            ]
-          }
-        }
-      },
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "protocol_handlers": {
-            "description": "A list of protocol handler definitions.",
-            "optional": true,
-            "type": "array",
-            "items": {
-              "$ref": "ProtocolHandler"
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "captivePortal"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "devtools_page": {
-            "$ref": "ExtensionURL",
-            "optional": true
-          }
-        }
-      },
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "devtools"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "activeTab"
-            ]
-          }
-        ]
-      },
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "tabs",
-              "tabHide"
-            ]
-          }
-        ]
       }
     ]
   },
@@ -1793,6 +1611,129 @@
     "namespace": "manifest",
     "types": [
       {
+        "id": "ProtocolHandler",
+        "type": "object",
+        "description": "Represents a protocol handler definition.",
+        "properties": {
+          "name": {
+            "description": "A user-readable title string for the protocol handler. This will be displayed to the user in interface objects as needed.",
+            "type": "string"
+          },
+          "protocol": {
+            "description": "The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the \u0022sms\u0022 scheme.",
+            "choices": [
+              {
+                "type": "string",
+                "enum": [
+                  "bitcoin",
+                  "dat",
+                  "dweb",
+                  "ftp",
+                  "geo",
+                  "gopher",
+                  "im",
+                  "ipfs",
+                  "ipns",
+                  "irc",
+                  "ircs",
+                  "magnet",
+                  "mailto",
+                  "mms",
+                  "news",
+                  "nntp",
+                  "sip",
+                  "sms",
+                  "smsto",
+                  "ssb",
+                  "ssh",
+                  "tel",
+                  "urn",
+                  "webcal",
+                  "wtai",
+                  "xmpp"
+                ]
+              },
+              {
+                "type": "string",
+                "pattern": "^(ext|web)\\\u002B[a-z0-9.\u002B-]\u002B$"
+              }
+            ]
+          },
+          "uriTemplate": {
+            "description": "The URL of the handler, as a string. This string should include \u0022%s\u0022 as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.",
+            "preprocess": "localize",
+            "choices": [
+              {
+                "$ref": "ExtensionURL"
+              },
+              {
+                "$ref": "HttpURL"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "protocol_handlers": {
+            "description": "A list of protocol handler definitions.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "ProtocolHandler"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "devtools_page": {
+            "$ref": "ExtensionURL",
+            "optional": true
+          }
+        }
+      },
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "devtools"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "downloads",
+              "downloads.open"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
         "$extend": "OptionalPermission",
         "choices": [
           {
@@ -1814,7 +1755,23 @@
           {
             "type": "string",
             "enum": [
-              "sessions"
+              "privacy"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "topSites"
             ]
           }
         ]
@@ -1831,22 +1788,6 @@
             "type": "string",
             "enum": [
               "normandyAddonStudy"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "nativeMessaging"
             ]
           }
         ]
@@ -1920,127 +1861,6 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "geckoProfiler"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "downloads",
-              "downloads.open"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "topSites"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "networkStatus"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "omnibox": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "UnrecognizedProperty"
-            },
-            "properties": {
-              "keyword": {
-                "type": "string",
-                "pattern": "^[^?\\s:][^\\s:]*$"
-              }
-            },
-            "optional": true
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "chrome_url_overrides": {
-            "type": "object",
-            "optional": true,
-            "properties": {
-              "newtab": {
-                "$ref": "ExtensionURL",
-                "optional": true,
-                "preprocess": "localize"
-              },
-              "bookmarks": {
-                "unsupported": true,
-                "$ref": "ExtensionURL",
-                "optional": true,
-                "preprocess": "localize"
-              },
-              "history": {
-                "unsupported": true,
-                "$ref": "ExtensionURL",
-                "optional": true,
-                "preprocess": "localize"
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "browser_action": {
@@ -2105,7 +1925,7 @@
           {
             "type": "string",
             "enum": [
-              "webNavigation"
+              "proxy"
             ]
           }
         ]
@@ -2118,14 +1938,49 @@
       {
         "$extend": "WebExtensionManifest",
         "properties": {
-          "default_locale": {
-            "type": "string",
-            "optional": "true"
-          },
-          "l10n_resources": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          "chrome_url_overrides": {
+            "type": "object",
+            "optional": true,
+            "properties": {
+              "newtab": {
+                "$ref": "ExtensionURL",
+                "optional": true,
+                "preprocess": "localize"
+              },
+              "bookmarks": {
+                "unsupported": true,
+                "$ref": "ExtensionURL",
+                "optional": true,
+                "preprocess": "localize"
+              },
+              "history": {
+                "unsupported": true,
+                "$ref": "ExtensionURL",
+                "optional": true,
+                "preprocess": "localize"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "omnibox": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "UnrecognizedProperty"
+            },
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "pattern": "^[^?\\s:][^\\s:]*$"
+              }
             },
             "optional": true
           }
@@ -2142,7 +1997,71 @@
           {
             "type": "string",
             "enum": [
-              "pkcs11"
+              "nativeMessaging"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "networkStatus"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "webNavigation"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "browserSettings"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "geckoProfiler"
             ]
           }
         ]
@@ -2169,12 +2088,12 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "OptionalPermissionNoPrompt",
+        "$extend": "OptionalPermission",
         "choices": [
           {
             "type": "string",
             "enum": [
-              "cookies"
+              "pkcs11"
             ]
           }
         ]
@@ -2190,24 +2109,19 @@
           {
             "type": "string",
             "enum": [
-              "webRequest",
-              "webRequestBlocking"
+              "activeTab"
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
+      },
       {
-        "$extend": "PermissionNoPrompt",
+        "$extend": "OptionalPermission",
         "choices": [
           {
             "type": "string",
             "enum": [
-              "identity"
+              "tabs",
+              "tabHide"
             ]
           }
         ]
@@ -2292,6 +2206,60 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "browsingData"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "default_locale": {
+            "type": "string",
+            "optional": "true"
+          },
+          "l10n_resources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "optional": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "webRequest",
+              "webRequestBlocking"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "page_action": {
@@ -2345,6 +2313,38 @@
             "optional": true
           }
         }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "identity"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "captivePortal"
+            ]
+          }
+        ]
       }
     ]
   }

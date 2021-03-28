@@ -20,12 +20,12 @@ Create a standard browser extension using JavaScript and load the WebAssembly ma
 1. Install `WebExtension.Net` from Nuget.
 2. A JavaScript file will be added to your project at the path `wwwroot/WebExtensionScripts/WebExtensionNet.js`. This `.js` file needs to be included in your  application, either by using a `<script>` element in HTML or using `import` from JavaScript code.
 3. Import the [WebExtension polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla for cross browser compatibility. This polyfill helps to convert the callback based Chrome extensions API to a Promise based API for asynchronous functions.
-4. Consume the WebExtension API by creating an instance of `WebExtensionAPI` as shown below.
+4. Consume the WebExtension API by creating an instance of `WebExtensionApi` as shown below.
 
 ```csharp
 // iJsRuntime is an instance of MonoWebAssemblyJSRuntime
 var webExtensionJsRuntime = new WebExtensionJSRuntime(iJsRuntime);
-var webExtensionApi = new WebExtensionAPI(webExtensionJsRuntime);
+var webExtensionApi = new WebExtensionApi(webExtensionJsRuntime);
 var manifest = await webExtensionApi.Runtime.GetManifest();
 ```
 

@@ -18,7 +18,7 @@ namespace WebExtension.Net.Generator.Translators
             this.logger = logger;
         }
 
-        public string TranslateApiDefinitionRoot(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
+        public static string TranslateApiDefinitionRoot(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
         {
             var content = new StringBuilder();
             var usingNamespaces = apiDefinitions.Select(apiDefinition => $"using {apiDefinition.GetNamespace()};");
@@ -64,7 +64,7 @@ namespace WebExtension.Net.Generator.Translators
             return content.ToString();
         }
 
-        public string TranslateApiDefinitionRootInterface(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
+        public static string TranslateApiDefinitionRootInterface(ApiDefinitionRoot apiDefinitionRoot, IEnumerable<ApiDefinition> apiDefinitions)
         {
             var content = new StringBuilder();
             var usingNamespaces = apiDefinitions.Select(apiDefinition => $"using {apiDefinition.GetNamespace()};");
@@ -83,7 +83,7 @@ namespace WebExtension.Net.Generator.Translators
             return content.ToString();
         }
 
-        private IEnumerable<string> TranslateApiDefinitionRootProperty(ApiDefinition apiDefinition, string definitionPostfix)
+        private static IEnumerable<string> TranslateApiDefinitionRootProperty(ApiDefinition apiDefinition, string definitionPostfix)
         {
             yield return $"/// <summary>";
             foreach (var description in apiDefinition.GetDescription())
@@ -257,7 +257,7 @@ namespace WebExtension.Net.Generator.Translators
             yield return $"}}";
         }
 
-        private IEnumerable<string> TranslateEnumDefinition(EnumDefinition enumDefinition)
+        private static IEnumerable<string> TranslateEnumDefinition(EnumDefinition enumDefinition)
         {
             var enumValues = enumDefinition.Values.SelectMany(TranslateEnumValueDefinition);
             yield return $"// Enum Definition";
@@ -281,7 +281,7 @@ namespace WebExtension.Net.Generator.Translators
             yield return $"}}";
         }
 
-        private IEnumerable<string> TranslateStringFormatDefinition(StringFormatDefinition stringFormatDefinition)
+        private static IEnumerable<string> TranslateStringFormatDefinition(StringFormatDefinition stringFormatDefinition)
         {
             yield return $"// String Format Definition";
             yield return $"/// <summary>";
@@ -308,7 +308,7 @@ namespace WebExtension.Net.Generator.Translators
         {
             if (listDefinition.InnerType is null)
             {
-                throw new Exception("List definition inner type should not be null");
+                throw new NotSupportedException("List definition inner type should not be null");
             }
             yield return $"// List Definition";
             yield return $"/// <summary>";
@@ -330,6 +330,10 @@ namespace WebExtension.Net.Generator.Translators
         {
             var constructors = multiTypeDefinition.TypeReferences.Select(TranslateTypeReference).Distinct().SelectMany(typeReferenceName =>
             {
+                if (typeReferenceName == null)
+                {
+                    return Array.Empty<string>();
+                }
                 if (typeReferenceName == "Null")
                 {
                     return new[]
@@ -340,6 +344,20 @@ namespace WebExtension.Net.Generator.Translators
                     };
                 }
                 var sanitizedVariableName = SanitizeVariableName($"value{typeReferenceName}");
+                // Rely on the convention that interface name starts with the letter I
+                // object and interface implicit conversion is not allowed in C#
+                if (typeReferenceName == "object" || typeReferenceName.StartsWith("I"))
+                {
+                    return new[]
+                    {
+                        $"/// <summary>Creates a new instance of {multiTypeDefinition.GetName()}.</summary>",
+                        $"public {multiTypeDefinition.GetName()}({typeReferenceName} {sanitizedVariableName})",
+                        $"{{",
+                        $"    currentValue = {sanitizedVariableName};",
+                        $"}}",
+                        $""
+                    };
+                }
                 return new[]
                 {
                     $"private readonly {typeReferenceName} {sanitizedVariableName};",
@@ -347,7 +365,16 @@ namespace WebExtension.Net.Generator.Translators
                     $"public {multiTypeDefinition.GetName()}({typeReferenceName} {sanitizedVariableName})",
                     $"{{",
                     $"    this.{sanitizedVariableName} = {sanitizedVariableName};",
+                    $"    currentValue = {sanitizedVariableName};",
                     $"}}",
+                    $"",
+                    $"/// <summary></summary>",
+                    $"/// <param name=\"value\"></param>",
+                    $"public static implicit operator {typeReferenceName}({multiTypeDefinition.GetName()} value) => value.{sanitizedVariableName};",
+                    $"",
+                    $"/// <summary></summary>",
+                    $"/// <param name=\"value\"></param>",
+                    $"public static implicit operator {multiTypeDefinition.GetName()}({typeReferenceName} value) => new(value);",
                     $""
                 };
             });
@@ -364,10 +391,18 @@ namespace WebExtension.Net.Generator.Translators
             }
             yield return $"public class {multiTypeDefinition.GetName()}";
             yield return $"{{";
+            yield return $"    private readonly object currentValue = null;";
+            yield return $"";
             foreach (var constructorLine in constructors)
             {
                 yield return $"    {constructorLine}";
             }
+            yield return $"";
+            yield return $"    /// <inheritdoc />";
+            yield return $"    public override string ToString()";
+            yield return $"    {{";
+            yield return $"        return currentValue?.ToString();";
+            yield return $"    }}";
             yield return $"}}";
         }
 
@@ -468,7 +503,7 @@ namespace WebExtension.Net.Generator.Translators
                 var returnType = TranslateTypeReference(functionDefinition.ReturnType);
                 if (returnType == null)
                 {
-                    throw new Exception("Property definition type should not be null.");
+                    throw new NotSupportedException("Property definition type should not be null.");
                 }
                 if (returnType == "object")
                 {
@@ -507,7 +542,7 @@ namespace WebExtension.Net.Generator.Translators
                 var returnType = TranslateTypeReference(functionDefinition.ReturnType);
                 if (returnType == null)
                 {
-                    throw new Exception("Property definition type should not be null.");
+                    throw new NotSupportedException("Property definition type should not be null.");
                 }
                 if (returnType == "object")
                 {
@@ -565,7 +600,7 @@ namespace WebExtension.Net.Generator.Translators
                     foreach (var parameterTypeCombination in parameterTypeCombinations)
                     {
                         yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{string.Join(" ", parameterTypeCombination.ParameterDefinition.GetDescription())}</param>";
-                    };
+                    }
                     if (returnType != null && functionDefinition.ReturnType != null)
                     {
                         yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
@@ -610,7 +645,7 @@ namespace WebExtension.Net.Generator.Translators
                     foreach (var parameterTypeCombination in parameterTypeCombinations)
                     {
                         yield return $"/// <param name=\"{parameterTypeCombination.ParameterDefinition.Name}\">{string.Join(" ", parameterTypeCombination.ParameterDefinition.GetDescription())}</param>";
-                    };
+                    }
                     if (returnType != null && functionDefinition.ReturnType != null)
                     {
                         yield return $"/// <returns>{string.Join(" ", functionDefinition.ReturnType.GetDescription())}</returns>";
@@ -633,7 +668,7 @@ namespace WebExtension.Net.Generator.Translators
             return $"{TranslateTypeReference(parameterTypeCombination.TypeReference)} {parameterTypeCombination.ParameterDefinition.Name}";
         }
 
-        private IEnumerable<IEnumerable<(ParameterDefinition ParameterDefinition, TypeReference TypeReference)>> GetParametersCombination(IEnumerable<ParameterDefinition> parameterDefinitions)
+        private static IEnumerable<IEnumerable<(ParameterDefinition ParameterDefinition, TypeReference TypeReference)>> GetParametersCombination(IEnumerable<ParameterDefinition> parameterDefinitions)
         {
             if (!parameterDefinitions.Any())
             {
@@ -643,7 +678,7 @@ namespace WebExtension.Net.Generator.Translators
             var parameters = parameterDefinitions.Select(parameterDefinition => {
                 if (parameterDefinition.TypeReference is null)
                 {
-                    throw new Exception($"Type reference cannot be null. Parameter definition: {parameterDefinition.Name}");
+                    throw new NotSupportedException($"Type reference cannot be null. Parameter definition: {parameterDefinition.Name}");
                 }
 
                 if (parameterDefinition.TypeReference.ChoicesType != null)
@@ -655,7 +690,7 @@ namespace WebExtension.Net.Generator.Translators
             return parameters.GetCombinations();
         }
 
-        public IEnumerable<string> TranslateEnumValueDefinition(EnumValueDefinition enumValueDefinition)
+        public static IEnumerable<string> TranslateEnumValueDefinition(EnumValueDefinition enumValueDefinition)
         {
             if (!string.IsNullOrEmpty(enumValueDefinition.Description))
             {
@@ -730,7 +765,7 @@ namespace WebExtension.Net.Generator.Translators
             return typeReference.GetName();
         }
 
-        private string SanitizeVariableName(string variableName)
+        private static string SanitizeVariableName(string variableName)
         {
             return Regex.Replace(variableName, "(-|<|>)", "");
         }

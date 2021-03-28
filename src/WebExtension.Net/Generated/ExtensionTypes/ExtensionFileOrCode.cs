@@ -12,13 +12,20 @@ namespace WebExtension.Net.ExtensionTypes
     /// </summary>
     public class ExtensionFileOrCode
     {
-        private readonly object valueobject;
+        private readonly object currentValue = null;
+    
         /// <summary>Creates a new instance of ExtensionFileOrCode.</summary>
         public ExtensionFileOrCode(object valueobject)
         {
-            this.valueobject = valueobject;
+            currentValue = valueobject;
         }
         
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

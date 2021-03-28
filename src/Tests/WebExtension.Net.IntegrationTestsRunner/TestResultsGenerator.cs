@@ -12,13 +12,13 @@ namespace WebExtension.Net.IntegrationTestsRunner
         private const string TestListId = "8c84fa94-04c1-424b-9868-57a2d4851a1d";
         private const string TestTypeId = "13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b";
 
-        public string Generate(TestRunInfo testRunInfo)
+        public static string Generate(TestRunInfo testRunInfo)
         {
             var vsTestRun = GetVSTestRun(testRunInfo);
             return SerializeToXML(vsTestRun);
         }
 
-        private TestRunType GetVSTestRun(TestRunInfo testRunInfo)
+        private static TestRunType GetVSTestRun(TestRunInfo testRunInfo)
         {
             var results = new ResultsType()
             {
@@ -51,7 +51,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             };
         }
 
-        private object MapTestResult(TestInfo testInfo)
+        private static object MapTestResult(TestInfo testInfo)
         {
             var testResult = new UnitTestResultType()
             {
@@ -87,7 +87,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testResult;
         }
 
-        private TestStatus MapStatus(string status)
+        private static TestStatus MapStatus(string status)
         {
             return status switch
             {
@@ -98,7 +98,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             };
         }
 
-        private object MapTestDefinition(TestInfo testInfo)
+        private static object MapTestDefinition(TestInfo testInfo)
         {
             var testDefinition = new UnitTestType()
             {
@@ -121,7 +121,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testDefinition;
         }
 
-        private TestEntryType MapTestEntry(TestInfo testInfo)
+        private static TestEntryType MapTestEntry(TestInfo testInfo)
         {
             return new TestEntryType()
             {
@@ -131,7 +131,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             };
         }
 
-        private TestRunTypeResultSummary MapSummary(TestRunInfo testRunInfo)
+        private static TestRunTypeResultSummary MapSummary(TestRunInfo testRunInfo)
         {
             var testSummary = new TestRunTypeResultSummary()
             {
@@ -180,7 +180,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testSummary;
         }
 
-        private string SerializeToXML(TestRunType testRun)
+        private static string SerializeToXML(TestRunType testRun)
         {
             try
             {

@@ -79,13 +79,23 @@ namespace WebExtension.Net
         /// </summary>
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose the object
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            // Cleanup
             if (!string.IsNullOrEmpty(referenceId) && webExtensionJSRuntime != null)
             {
 #pragma warning disable CA2012 // Use ValueTasks correctly - Waiting is not supported in runtime
                 webExtensionJSRuntime.InvokeVoidAsync("WebExtensionNet.RemoveObjectReference", new InvokeObjectReferenceOption(referenceId));
 #pragma warning restore CA2012 // Use ValueTasks correctly
                 referenceId = null;
-                GC.SuppressFinalize(this);
             }
         }
 
@@ -94,7 +104,7 @@ namespace WebExtension.Net
         /// </summary>
         ~BaseObject()
         {
-            Dispose();
+            Dispose(false);
         }
     }
 }

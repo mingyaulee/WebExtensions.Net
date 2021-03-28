@@ -65,12 +65,9 @@ namespace WebExtension.Net.Generator.Parsers
         private TypeDefinition? ParseType(JsonElement jsonTypeDefinition)
         {
             var type = jsonTypeDefinition.GetStringProperty("type");
-            if (string.IsNullOrEmpty(type))
+            if (string.IsNullOrEmpty(type) && jsonTypeDefinition.TryGetProperty("$extend", out _))
             {
-                if (jsonTypeDefinition.TryGetProperty("$extend", out _))
-                {
-                    type = "object";
-                }
+                type = "object";
             }
             switch (type)
             {
@@ -195,8 +192,10 @@ namespace WebExtension.Net.Generator.Parsers
                     }
                     else
                     {
-                        var parameterDefinition = new ParameterDefinition();
-                        parameterDefinition.TypeReference = ParseTypeReference(jsonParameterDefinition);
+                        var parameterDefinition = new ParameterDefinition
+                        {
+                            TypeReference = ParseTypeReference(jsonParameterDefinition)
+                        };
                         ParseCommonDefinition(parameterDefinition, jsonParameterDefinition);
                         parameterDefinition.Optional = jsonParameterDefinition.GetBooleanProperty("optional");
                         functionDefinition.Parameters.Add(parameterDefinition);
@@ -216,7 +215,7 @@ namespace WebExtension.Net.Generator.Parsers
             }
         }
 
-        private IEnumerable<EnumValueDefinition> ParseEnumValues(JsonElement jsonEnumValuesArray)
+        private static IEnumerable<EnumValueDefinition> ParseEnumValues(JsonElement jsonEnumValuesArray)
         {
             foreach (var jsonEnumValue in jsonEnumValuesArray.EnumerateArray())
             {
@@ -233,7 +232,7 @@ namespace WebExtension.Net.Generator.Parsers
             }
         }
 
-        private void ParseCommonDefinition(ICommonDefinition commonDefinition, JsonElement jsonDefinition, string name = "name")
+        private static void ParseCommonDefinition(ICommonDefinition commonDefinition, JsonElement jsonDefinition, string name = "name")
         {
             commonDefinition.Name = jsonDefinition.GetStringProperty(name);
             commonDefinition.Description = jsonDefinition.GetStringProperty("description");
@@ -259,18 +258,17 @@ namespace WebExtension.Net.Generator.Parsers
                 Type = type.GetStringProperty("type"),
                 Reference = type.GetStringProperty("$ref")
             };
-            if (typeReference.Type == "array")
+            if (typeReference.Type == "array" && type.TryGetProperty("items", out var itemType))
             {
-                if (type.TryGetProperty("items", out var itemType))
-                {
-                    typeReference.ArrayItemType = ParseTypeReference(itemType);
-                }
+                typeReference.ArrayItemType = ParseTypeReference(itemType);
             }
             if (typeReference.Type is null && typeReference.Reference is null)
             {
                 if (type.TryGetProperty("choices", out var choicesArray))
                 {
-                    typeReference.ChoicesType = choicesArray.EnumerateArray().Select(ParseTypeReference).Cast<TypeReference>().ToArray();
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+                    typeReference.ChoicesType = choicesArray.EnumerateArray().Select(ParseTypeReference).Where(typeReference => typeReference != null).ToArray();
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
                 }
                 else
                 {

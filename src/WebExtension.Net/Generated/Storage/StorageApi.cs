@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Storage
 {
     /// <inheritdoc />
-    public class StorageAPI : BaseAPI, IStorageAPI
+    public class StorageApi : BaseApi, IStorageApi
     {
-        /// <summary>Creates a new instance of StorageAPI.</summary>
+        /// <summary>Creates a new instance of StorageApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public StorageAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
+        public StorageApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
         {
         }
 

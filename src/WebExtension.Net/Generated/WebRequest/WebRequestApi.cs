@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebRequest
 {
     /// <inheritdoc />
-    public class WebRequestAPI : BaseAPI, IWebRequestAPI
+    public class WebRequestApi : BaseApi, IWebRequestApi
     {
-        /// <summary>Creates a new instance of WebRequestAPI.</summary>
+        /// <summary>Creates a new instance of WebRequestApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebRequestAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
+        public WebRequestApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
         {
         }
 

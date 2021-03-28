@@ -8,7 +8,7 @@ namespace WebExtension.Net.WebRequest
     /// <summary>
     /// Use the <c>browser.webRequest</c> API to observe and analyze traffic and to intercept, block, or modify requests in-flight.
     /// </summary>
-    public interface IWebRequestAPI
+    public interface IWebRequestApi
     {
         
         // Property Definition Interface

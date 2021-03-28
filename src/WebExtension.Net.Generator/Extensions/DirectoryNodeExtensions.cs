@@ -10,7 +10,7 @@ namespace WebExtension.Net.Generator.Extensions
         {
             if (directoryNode.Directory == null)
             {
-                throw new Exception("Directory cannot be null");
+                throw new InvalidOperationException("Directory cannot be null");
             }
             return Path.Combine(directoryNode.Directory, path);
         }

@@ -12,11 +12,12 @@ namespace WebExtension.Net.Manifest
     /// </summary>
     public class IconPath
     {
-        private readonly object valueobject;
+        private readonly object currentValue = null;
+    
         /// <summary>Creates a new instance of IconPath.</summary>
         public IconPath(object valueobject)
         {
-            this.valueobject = valueobject;
+            currentValue = valueobject;
         }
         
         private readonly ExtensionFileUrl valueExtensionFileUrl;
@@ -24,8 +25,23 @@ namespace WebExtension.Net.Manifest
         public IconPath(ExtensionFileUrl valueExtensionFileUrl)
         {
             this.valueExtensionFileUrl = valueExtensionFileUrl;
+            currentValue = valueExtensionFileUrl;
         }
         
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator ExtensionFileUrl(IconPath value) => value.valueExtensionFileUrl;
+        
+        /// <summary></summary>
+        /// <param name="value"></param>
+        public static implicit operator IconPath(ExtensionFileUrl value) => new(value);
+        
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

@@ -54,7 +54,7 @@ namespace WebExtension.Net.Generator
                 {
                     if (apiDefinition.Name is null)
                     {
-                        throw new Exception("ApiDefinition name should not be null");
+                        throw new NotSupportedException("ApiDefinition name should not be null");
                     }
 
                     if (excludeNamespaces.Contains(apiDefinition.Name))
@@ -105,9 +105,9 @@ namespace WebExtension.Net.Generator
                     }
                 }
 
-                var webExtensionContent = translator.TranslateApiDefinitionRoot(apiDefinitionRoot, apiDefinitions);
+                var webExtensionContent = ApiDefinitionTranslator.TranslateApiDefinitionRoot(apiDefinitionRoot, apiDefinitions);
                 await WriteFile(apiDefinitionRoot, $"{apiDefinitionRoot.Name}.cs", webExtensionContent);
-                var iWebExtensionContent = translator.TranslateApiDefinitionRootInterface(apiDefinitionRoot, apiDefinitions);
+                var iWebExtensionContent = ApiDefinitionTranslator.TranslateApiDefinitionRootInterface(apiDefinitionRoot, apiDefinitions);
                 await WriteFile(apiDefinitionRoot, $"I{apiDefinitionRoot.Name}.cs", iWebExtensionContent);
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace WebExtension.Net.Generator
             }
         }
 
-        private async Task WriteFile(IDirectoryNode directoryNode, string path, string? text)
+        private static async Task WriteFile(IDirectoryNode directoryNode, string path, string? text)
         {
             if (string.IsNullOrEmpty(text))
             {

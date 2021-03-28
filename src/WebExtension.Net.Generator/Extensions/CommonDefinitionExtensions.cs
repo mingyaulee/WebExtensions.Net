@@ -9,16 +9,13 @@ namespace WebExtension.Net.Generator.Extensions
     {
         public static string GetName(this ICommonDefinition commonDefinition)
         {
-            if (commonDefinition is TypeReference typeReference)
+            if (commonDefinition is TypeReference && string.IsNullOrEmpty(commonDefinition.Name))
             {
-                if (string.IsNullOrEmpty(commonDefinition.Name))
-                {
-                    throw new Exception($"Type reference has to be translated before calling GetName()");
-                }
+                throw new InvalidOperationException($"Type reference has to be translated before calling GetName()");
             }
             if (string.IsNullOrEmpty(commonDefinition.Name))
             {
-                throw new Exception("Name cannot be null " + JsonSerializer.Serialize((object)commonDefinition));
+                throw new NotSupportedException("Name cannot be null " + JsonSerializer.Serialize((object)commonDefinition));
             }
             if (commonDefinition.Name.Length > 1)
             {

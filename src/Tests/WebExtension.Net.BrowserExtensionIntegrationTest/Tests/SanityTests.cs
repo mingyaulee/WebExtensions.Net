@@ -9,9 +9,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "Sanity Tests")]
     public class SanityTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
 
-        public SanityTests(IWebExtensionAPI webExtensionApi)
+        public SanityTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
         }

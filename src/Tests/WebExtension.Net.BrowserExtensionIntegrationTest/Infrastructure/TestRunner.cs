@@ -45,13 +45,13 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
                 var testClassType = Type.GetType(testMethodInfo.DeclaringTypeFullName);
                 if (testClassType is null)
                 {
-                    throw new Exception("Test class type should not be null");
+                    throw new NotSupportedException("Test class type should not be null");
                 }
                 var testClassInstance = GetTestClassInstance(testClassType);
                 var methodInfo = testClassType.GetMethod(testMethodInfo.MethodName);
                 if (methodInfo is null)
                 {
-                    throw new Exception("Test method info should not be null");
+                    throw new NotSupportedException("Test method info should not be null");
                 }
                 var response = methodInfo.Invoke(testClassInstance, Array.Empty<object>());
                 if (response is Task task)
@@ -80,7 +80,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
             return testClassInstance;
         }
 
-        private string GetStackTrace(Exception ex)
+        private static string GetStackTrace(Exception ex)
         {
             if (ex is AssertionFailedException)
             {
@@ -93,7 +93,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
         public async Task GetTestCoverageInfo()
         {
             // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtension.Net
-            var webExtensionAssembly = typeof(WebExtension.Net.IWebExtensionAPI).Assembly;
+            var webExtensionAssembly = typeof(WebExtension.Net.IWebExtensionApi).Assembly;
             var types = webExtensionAssembly.GetTypes();
             var coverletType = types.FirstOrDefault(type => type.Namespace?.Contains("Coverlet", StringComparison.OrdinalIgnoreCase) ?? false);
             if (coverletType == null)

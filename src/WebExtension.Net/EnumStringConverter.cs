@@ -13,16 +13,16 @@ namespace WebExtension.Net
     /// <typeparam name="EnumType"></typeparam>
     public class EnumStringConverter<EnumType> : JsonConverter<EnumType>
     {
-        private IEnumerable<EnumValueMapping> _enumValueMappings;
-        private IEnumerable<EnumValueMapping> enumValueMappings
+        private IEnumerable<EnumValueMapping> enumValueMappings;
+        private IEnumerable<EnumValueMapping> EnumValueMappings
         {
             get
             {
-                if (_enumValueMappings is null)
+                if (enumValueMappings is null)
                 {
-                    _enumValueMappings = GetEnumValueMappings();
+                    enumValueMappings = GetEnumValueMappings();
                 }
-                return _enumValueMappings;
+                return enumValueMappings;
             }
         }
 
@@ -30,7 +30,7 @@ namespace WebExtension.Net
         public override EnumType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var stringValue = reader.GetString();
-            var enumValue = enumValueMappings.SingleOrDefault(mapping => mapping.StringValue.Equals(stringValue)).EnumValue;
+            var enumValue = EnumValueMappings.SingleOrDefault(mapping => mapping.StringValue.Equals(stringValue)).EnumValue;
             if (Enum.TryParse(typeof(EnumType), enumValue, true, out var result))
             {
                 return (EnumType)result;
@@ -41,10 +41,10 @@ namespace WebExtension.Net
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, EnumType value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(enumValueMappings.SingleOrDefault(mapping => mapping.EnumValue.Equals(value.ToString())).StringValue);
+            writer.WriteStringValue(EnumValueMappings.SingleOrDefault(mapping => mapping.EnumValue.Equals(value.ToString())).StringValue);
         }
 
-        private IEnumerable<EnumValueMapping> GetEnumValueMappings()
+        private static IEnumerable<EnumValueMapping> GetEnumValueMappings()
         {
             return typeof(EnumType).GetMembers().Select(member => new EnumValueMapping()
             {

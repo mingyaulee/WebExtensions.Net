@@ -8,7 +8,7 @@ namespace WebExtension.Net.Runtime
     /// <summary>
     /// Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.
     /// </summary>
-    public interface IRuntimeAPI
+    public interface IRuntimeApi
     {
         
         

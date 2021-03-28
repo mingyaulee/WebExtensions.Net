@@ -8,10 +8,10 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "browser.windows")]
     public class WindowsTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
         private int? testWindowId;
 
-        public WindowsTests(IWebExtensionAPI webExtensionApi)
+        public WindowsTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
         }

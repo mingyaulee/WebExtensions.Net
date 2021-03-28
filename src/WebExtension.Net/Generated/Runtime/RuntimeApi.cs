@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Runtime
 {
     /// <inheritdoc />
-    public class RuntimeAPI : BaseAPI, IRuntimeAPI
+    public class RuntimeApi : BaseApi, IRuntimeApi
     {
-        /// <summary>Creates a new instance of RuntimeAPI.</summary>
+        /// <summary>Creates a new instance of RuntimeApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public RuntimeAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
+        public RuntimeApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
         {
         }
 

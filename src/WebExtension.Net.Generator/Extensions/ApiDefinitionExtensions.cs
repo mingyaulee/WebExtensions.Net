@@ -9,7 +9,7 @@ namespace WebExtension.Net.Generator.Extensions
         {
             if (string.IsNullOrEmpty(apiDefinition.RootNamespace))
             {
-                throw new Exception("Base namespace cannot be null");
+                throw new NotSupportedException("Base namespace cannot be null");
             }
             return $"{apiDefinition.RootNamespace}.{apiDefinition.GetName()}";
         }

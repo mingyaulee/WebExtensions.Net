@@ -8,9 +8,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "browser.runtime")]
     public class RuntimeTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
 
-        public RuntimeTests(IWebExtensionAPI webExtensionApi)
+        public RuntimeTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
         }

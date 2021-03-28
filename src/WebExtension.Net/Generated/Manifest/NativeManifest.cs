@@ -12,13 +12,20 @@ namespace WebExtension.Net.Manifest
     /// </summary>
     public class NativeManifest
     {
-        private readonly object valueobject;
+        private readonly object currentValue = null;
+    
         /// <summary>Creates a new instance of NativeManifest.</summary>
         public NativeManifest(object valueobject)
         {
-            this.valueobject = valueobject;
+            currentValue = valueobject;
         }
         
+    
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return currentValue?.ToString();
+        }
     }
 }
 

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using WebExtension.Net.IntegrationTestsRunner.Models;
 
 namespace WebExtension.Net.IntegrationTestsRunner
 {
     public class TestCoverageWriter
     {
-        public void Write(string hitsFilePath, int[] hitsArray)
+        public static void Write(string hitsFilePath, int[] hitsArray)
         {
             try
             {

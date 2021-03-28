@@ -9,11 +9,11 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "browser.tabs")]
     public class TabsTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
         private int? testTabId;
         private readonly string testTabUrl;
 
-        public TabsTests(IWebExtensionAPI webExtensionApi)
+        public TabsTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
             testTabUrl = "https://developer.chrome.com/?testId=" + Guid.NewGuid().ToString();
@@ -90,7 +90,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             // Act
             var tab = await webExtensionApi.Tabs.Update(testTabId.Value, new
             {
-                url = url
+                url
             });
 
             // Assert

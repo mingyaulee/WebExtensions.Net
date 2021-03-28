@@ -10,13 +10,13 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     [TestClass(Description = "browser.storage")]
     public class StorageTests
     {
-        private readonly IWebExtensionAPI webExtensionApi;
+        private readonly IWebExtensionApi webExtensionApi;
         private readonly string storageTestKey1;
         private readonly string storageTestValue1;
         private readonly string storageTestKey2;
         private readonly string storageTestValue2;
 
-        public StorageTests(IWebExtensionAPI webExtensionApi)
+        public StorageTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
             storageTestKey1 = "test";

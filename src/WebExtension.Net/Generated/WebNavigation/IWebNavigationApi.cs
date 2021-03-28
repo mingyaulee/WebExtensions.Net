@@ -8,7 +8,7 @@ namespace WebExtension.Net.WebNavigation
     /// <summary>
     /// Use the <c>browser.webNavigation</c> API to receive notifications about the status of navigation requests in-flight.
     /// </summary>
-    public interface IWebNavigationAPI
+    public interface IWebNavigationApi
     {
         
         

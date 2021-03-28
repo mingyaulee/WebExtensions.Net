@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Windows
 {
     /// <inheritdoc />
-    public class WindowsAPI : BaseAPI, IWindowsAPI
+    public class WindowsApi : BaseApi, IWindowsApi
     {
-        /// <summary>Creates a new instance of WindowsAPI.</summary>
+        /// <summary>Creates a new instance of WindowsApi.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WindowsAPI(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
+        public WindowsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
         {
         }
 
