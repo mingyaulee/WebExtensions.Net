@@ -70,7 +70,10 @@ class TestResultError extends Error {
         for (var testClass of testClasses) {
             addTestClass(testClass);
         }
-        runTests();
+        return new Promise(resolve => {
+            afterAll(() => resolve());
+            runTests();
+        });
     }
 
     function getTestResults() {
@@ -95,8 +98,19 @@ class TestResultError extends Error {
         };
     }
 
+    let testCoverage = null;
+    function setTestCoverage(value) {
+        testCoverage = value;
+    }
+
+    function getTestCoverage() {
+        return testCoverage;
+    }
+
     global.TestRunner = {
         Start: startTestRunner,
-        GetTestResults: getTestResults
+        GetTestResults: getTestResults,
+        SetTestCoverage: setTestCoverage,
+        GetTestCoverage: getTestCoverage
     };
 })(globalThis);

@@ -6,12 +6,18 @@
     [Inject]
     public ITestRunner TestRunner { get; set; }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
+        await base.OnAfterRenderAsync(firstRender);
+        var coverlet = Navigation.Uri.Contains("coverlet");
         base.OnAfterRender(firstRender);
         if (firstRender)
         {
-            TestRunner.RunTests();
+            await TestRunner.RunTests();
+            if (coverlet)
+            {
+                await TestRunner.GetTestCoverageInfo();
+            }
         }
     }
 }

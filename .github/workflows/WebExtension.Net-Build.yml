@@ -41,15 +41,20 @@ jobs:
       run: |
         New-Item -Path .\.sonar\scanner -ItemType Directory
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+    - name: Install Coverlet Console
+      shell: powershell
+      run: |
+        New-Item -Path .\.coverlet\console -ItemType Directory
+        dotnet tool install coverlet.console --tool-path .\.coverlet\console --version 3.0.3
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"mingyaulee_WebExtension.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="src/Tests/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="src/Tests/TestResults/**/*.opencover.xml" /d:sonar.coverage.exclusions="src/Tests/**/*.*,src/WebExtension.Net.Generator/**/*.*"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"mingyaulee_WebExtension.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="src/Tests/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="src/Tests/TestResults/**/*.opencover.xml"
         dotnet build ./src --configuration Release
-        dotnet test ./src --no-restore --no-build --configuration Release --logger "console;verbosity=detailed" --collect "XPlat Code Coverage" --results-directory ./src/Tests/TestResults -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+        .\.coverlet\console\coverlet ./src/Tests/WebExtension.Net.BrowserExtensionIntegrationTest/bin/Release/net5.0/wwwroot/framework --include "[WebExtension.Net]*" --target "dotnet" --targetargs "test ./src --no-build --no-restore --configuration Release" --format opencover --output ./src/Tests/TestResults/coverage --verbosity detailed
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   tag:

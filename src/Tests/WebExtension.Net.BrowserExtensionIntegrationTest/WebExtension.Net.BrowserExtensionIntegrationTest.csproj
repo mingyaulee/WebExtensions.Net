@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <BlazorEnableCompression>false</BlazorEnableCompression>
+    <!-- Disable caching so that we can skip integrity check. This is for coverlet to inject the hits counter into the assembly which will change the integrity hash. -->
+    <BlazorCacheBootResources>false</BlazorCacheBootResources>
     <!--<RestoreSources>
       https://api.nuget.org/v3/index.json;
       $(MSBuildThisFileDirectory)\..\..\WebExtension.Net\PackageOutput
@@ -11,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.BrowserExtension" Version="0.1.0" />
+    <PackageReference Include="Blazor.BrowserExtension" Version="0.1.1" />
     <!-- Local package reference built from project -->
     <!--<PackageReference Include="WebExtension.Net" Version="1.0.0" IncludeAssets="all" />-->
     <PackageReference Include="FluentAssertions" Version="5.10.3" />

@@ -5,6 +5,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using WebExtension.Net.BrowserExtensionIntegrationTest.Models;
 
@@ -87,6 +88,38 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
                 return string.Join(Environment.NewLine, ex.StackTrace.Split(Environment.NewLine).Where(line => !line.Contains($"{nameof(FluentAssertions)}.")));
             }
             return ex.StackTrace;
+        }
+
+        public async Task GetTestCoverageInfo()
+        {
+            // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtension.Net
+            var webExtensionAssembly = typeof(WebExtension.Net.IWebExtensionAPI).Assembly;
+            var types = webExtensionAssembly.GetTypes();
+            var coverletType = types.FirstOrDefault(type => type.Namespace?.Contains("Coverlet", StringComparison.OrdinalIgnoreCase) ?? false);
+            if (coverletType == null)
+            {
+                logger.LogError("Failed to get coverlet type.");
+                return;
+            }
+            var hitsArrayField = coverletType.GetField("HitsArray", BindingFlags.Public | BindingFlags.Static);
+            if (hitsArrayField == null)
+            {
+                logger.LogError("Failed to get 'HitsArray' field.");
+                return;
+            }
+            var hitsFilePathField = coverletType.GetField("HitsFilePath", BindingFlags.Public | BindingFlags.Static);
+            if (hitsFilePathField == null)
+            {
+                logger.LogError("Failed to get 'HitsFilePath' field.");
+                return;
+            }
+            var hitsArray = (int[])hitsArrayField.GetValue(null);
+            var hitsFilePath = (string)hitsFilePathField.GetValue(null);
+            await jsRuntime.InvokeVoidAsync("TestRunner.SetTestCoverage", new
+            {
+                HitsFilePath = hitsFilePath,
+                HitsArray = hitsArray
+            });
         }
     }
 }

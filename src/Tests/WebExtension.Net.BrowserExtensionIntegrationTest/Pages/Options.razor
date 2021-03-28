@@ -2,12 +2,15 @@
 @inherits Blazor.BrowserExtension.Pages.BasePage;
 
 <h3>Options</h3>
-<button @onclick="GetPluginUrl">Get plugin URL</button>
-<p>@pluginUrl</p>
+<button class="btn btn-primary" @onclick="RunIntegrationTests">Run Integration Tests</button>
 @code {
-    string pluginUrl = null;
-    async Task GetPluginUrl()
+    async Task RunIntegrationTests()
     {
-        pluginUrl = await WebExtension.Runtime.GetURL("");
+        var testUrl = await WebExtension.Runtime.GetURL("tests.html?random=false");
+        await WebExtension.Tabs.Create(new
+        {
+            active = true,
+            url = testUrl
+        });
     }
 }

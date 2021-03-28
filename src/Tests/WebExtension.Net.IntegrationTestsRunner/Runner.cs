@@ -42,12 +42,22 @@ namespace WebExtension.Net.IntegrationTestsRunner
             {
                 using var webDriver = GetWebDriver(driverPath, extensionPath);
                 await WaitForExtensionPageLoaded(webDriver);
+                LaunchTestPage(webDriver);
                 await WaitForTestToFinish(webDriver);
+
+                // Test results
                 var testResults = GetTestResults(webDriver);
                 var resultGenerator = new TestResultsGenerator();
                 var resultsXML = resultGenerator.Generate(testResults);
                 var trxFilePath = $"{resultsPath}\\TestResults_{DateTime.UtcNow:yyyy-MM-dd_HH_mm_ss}.trx";
                 await WriteResultsToFile(trxFilePath, resultsXML);
+                Console.WriteLine($"Results file: {trxFilePath}");
+
+                // Test coverage
+                var testCoverage = await GetTestCoverageHits(webDriver);
+                var testCoverageWriter = new TestCoverageWriter();
+                testCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
+                Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
             }
             catch (TestRunnerException testRunnerException)
             {
@@ -87,6 +97,13 @@ namespace WebExtension.Net.IntegrationTestsRunner
             {
                 throw new TestRunnerException("Failed to wait for extension page to load.");
             }
+        }
+
+        private void LaunchTestPage(RemoteWebDriver webDriver)
+        {
+            var extensionUri = new Uri(webDriver.Url);
+            var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false&coverlet";
+            webDriver.Navigate().GoToUrl(testPageUrl);
         }
 
         private async Task WaitForTestToFinish(RemoteWebDriver webDriver)
@@ -136,12 +153,41 @@ namespace WebExtension.Net.IntegrationTestsRunner
             return testRunResult;
         }
 
+        private async Task<TestCoverage> GetTestCoverageHits(RemoteWebDriver webDriver)
+        {
+            // wait for 5 seconds
+            var waitTime = 5 * 1000;
+            var interval = 500;
+            var count = waitTime / interval;
+
+            TestCoverage testCoverage = null;
+
+            while (count > 0)
+            {
+                count--;
+                var resultsObject = (string)webDriver.ExecuteScript("return JSON.stringify(TestRunner.GetTestCoverage());");
+                testCoverage = JsonSerializer.Deserialize<TestCoverage>(resultsObject, new JsonSerializerOptions()
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+                if (testCoverage != null)
+                {
+                    break;
+                }
+                await Task.Delay(interval);
+            }
+
+            Assert.IsNotNull(testCoverage);
+            Assert.IsNotNull(testCoverage.HitsFilePath);
+
+            return testCoverage;
+        }
+
         private async Task WriteResultsToFile(string trxFilePath, string resultsXML)
         {
             try
             {
                 await File.WriteAllTextAsync(trxFilePath, resultsXML);
-                Console.WriteLine($"Results file: {trxFilePath}");
             }
             catch (Exception exception)
             {
