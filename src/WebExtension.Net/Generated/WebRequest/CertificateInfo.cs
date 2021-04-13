@@ -1,23 +1,22 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebRequest
 {
-    // Class Definition
-    /// <summary>
-    /// Contains the certificate properties of the request if it is a secure request.
-    /// </summary>
+    // Type Class
+    /// <summary>Contains the certificate properties of the request if it is a secure request.</summary>
     public class CertificateInfo : BaseObject
     {
-        
-        // Property Definition
         private string _subject;
-        /// <summary>
-        /// 
-        /// </summary>
+        private string _issuer;
+        private object _validity;
+        private object _fingerprint;
+        private string _serialNumber;
+        private bool _isBuiltInRoot;
+        private object _subjectPublicKeyInfoDigest;
+        private IEnumerable<int?> _rawDER;
+
+        /// <summary></summary>
         [JsonPropertyName("subject")]
         public string Subject
         {
@@ -31,12 +30,8 @@ namespace WebExtension.Net.WebRequest
                 _subject = value;
             }
         }
-        
-        // Property Definition
-        private string _issuer;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("issuer")]
         public string Issuer
         {
@@ -50,12 +45,8 @@ namespace WebExtension.Net.WebRequest
                 _issuer = value;
             }
         }
-        
-        // Property Definition
-        private object _validity;
-        /// <summary>
-        /// Contains start and end timestamps.
-        /// </summary>
+
+        /// <summary>Contains start and end timestamps.</summary>
         [JsonPropertyName("validity")]
         public object Validity
         {
@@ -69,12 +60,8 @@ namespace WebExtension.Net.WebRequest
                 _validity = value;
             }
         }
-        
-        // Property Definition
-        private object _fingerprint;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("fingerprint")]
         public object Fingerprint
         {
@@ -88,12 +75,8 @@ namespace WebExtension.Net.WebRequest
                 _fingerprint = value;
             }
         }
-        
-        // Property Definition
-        private string _serialNumber;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("serialNumber")]
         public string SerialNumber
         {
@@ -107,12 +90,8 @@ namespace WebExtension.Net.WebRequest
                 _serialNumber = value;
             }
         }
-        
-        // Property Definition
-        private bool _isBuiltInRoot;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("isBuiltInRoot")]
         public bool IsBuiltInRoot
         {
@@ -126,12 +105,8 @@ namespace WebExtension.Net.WebRequest
                 _isBuiltInRoot = value;
             }
         }
-        
-        // Property Definition
-        private object _subjectPublicKeyInfoDigest;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("subjectPublicKeyInfoDigest")]
         public object SubjectPublicKeyInfoDigest
         {
@@ -145,14 +120,10 @@ namespace WebExtension.Net.WebRequest
                 _subjectPublicKeyInfoDigest = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<int> _rawDER;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("rawDER")]
-        public IEnumerable<int> RawDER
+        public IEnumerable<int?> RawDER
         {
             get
             {
@@ -166,4 +137,3 @@ namespace WebExtension.Net.WebRequest
         }
     }
 }
-

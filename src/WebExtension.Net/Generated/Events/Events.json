@@ -5,69 +5,69 @@
     "types": [
       {
         "id": "Rule",
-        "type": "object",
         "description": "Description of a declarative rule for handling events.",
+        "type": "object",
         "properties": {
           "id": {
-            "type": "string",
+            "description": "Optional identifier that allows referencing this rule.",
             "optional": true,
-            "description": "Optional identifier that allows referencing this rule."
+            "type": "string"
           },
           "tags": {
+            "description": "Tags can be used to annotate rules and perform operations on sets of rules.",
+            "optional": true,
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "optional": true,
-            "description": "Tags can be used to annotate rules and perform operations on sets of rules."
+            }
           },
           "conditions": {
+            "description": "List of conditions that can trigger the actions.",
             "type": "array",
             "items": {
               "type": "any"
-            },
-            "description": "List of conditions that can trigger the actions."
+            }
           },
           "actions": {
+            "description": "List of actions that are triggered if one of the condtions is fulfilled.",
             "type": "array",
             "items": {
               "type": "any"
-            },
-            "description": "List of actions that are triggered if one of the condtions is fulfilled."
+            }
           },
           "priority": {
-            "type": "integer",
+            "description": "Optional priority of this rule. Defaults to 100.",
             "optional": true,
-            "description": "Optional priority of this rule. Defaults to 100."
+            "type": "integer"
           }
         }
       },
       {
         "id": "Event",
-        "type": "object",
         "description": "An object which allows the addition and removal of listeners for a Chrome event.",
+        "type": "object",
         "functions": [
           {
             "name": "addListener",
-            "type": "function",
             "description": "Registers an event listener \u003Cem\u003Ecallback\u003C/em\u003E to an event.",
+            "type": "function",
             "parameters": [
               {
                 "name": "callback",
-                "type": "function",
-                "description": "Called when an event occurs. The parameters of this function depend on the type of event."
+                "description": "Called when an event occurs. The parameters of this function depend on the type of event.",
+                "type": "function"
               }
             ]
           },
           {
             "name": "removeListener",
-            "type": "function",
             "description": "Deregisters an event listener \u003Cem\u003Ecallback\u003C/em\u003E from an event.",
+            "type": "function",
             "parameters": [
               {
                 "name": "callback",
-                "type": "function",
-                "description": "Listener that shall be unregistered."
+                "description": "Listener that shall be unregistered.",
+                "type": "function"
               }
             ]
           },
@@ -77,13 +77,13 @@
             "parameters": [
               {
                 "name": "callback",
-                "type": "function",
-                "description": "Listener whose registration status shall be tested."
+                "description": "Listener whose registration status shall be tested.",
+                "type": "function"
               }
             ],
             "returns": {
-              "type": "boolean",
-              "description": "True if \u003Cem\u003Ecallback\u003C/em\u003E is registered to the event."
+              "description": "True if \u003Cem\u003Ecallback\u003C/em\u003E is registered to the event.",
+              "type": "boolean"
             }
           },
           {
@@ -91,125 +91,125 @@
             "type": "function",
             "parameters": [],
             "returns": {
-              "type": "boolean",
-              "description": "True if any event listeners are registered to the event."
+              "description": "True if any event listeners are registered to the event.",
+              "type": "boolean"
             }
           },
           {
             "name": "addRules",
-            "unsupported": true,
-            "type": "function",
             "description": "Registers rules to handle events.",
+            "type": "function",
+            "unsupported": true,
             "parameters": [
               {
                 "name": "eventName",
-                "type": "string",
-                "description": "Name of the event this function affects."
+                "description": "Name of the event this function affects.",
+                "type": "string"
               },
               {
                 "name": "webViewInstanceId",
-                "type": "integer",
-                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call."
+                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call.",
+                "type": "integer"
               },
               {
                 "name": "rules",
+                "description": "Rules to be registered. These do not replace previously registered rules.",
                 "type": "array",
                 "items": {
                   "$ref": "Rule"
-                },
-                "description": "Rules to be registered. These do not replace previously registered rules."
+                }
               },
               {
                 "name": "callback",
+                "description": "Called with registered rules.",
                 "optional": true,
                 "type": "function",
                 "parameters": [
                   {
                     "name": "rules",
+                    "description": "Rules that were registered, the optional parameters are filled with values.",
                     "type": "array",
                     "items": {
                       "$ref": "Rule"
-                    },
-                    "description": "Rules that were registered, the optional parameters are filled with values."
+                    }
                   }
-                ],
-                "description": "Called with registered rules."
+                ]
               }
             ]
           },
           {
             "name": "getRules",
-            "unsupported": true,
-            "type": "function",
             "description": "Returns currently registered rules.",
+            "type": "function",
+            "unsupported": true,
             "parameters": [
               {
                 "name": "eventName",
-                "type": "string",
-                "description": "Name of the event this function affects."
+                "description": "Name of the event this function affects.",
+                "type": "string"
               },
               {
                 "name": "webViewInstanceId",
-                "type": "integer",
-                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call."
+                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call.",
+                "type": "integer"
               },
               {
                 "name": "ruleIdentifiers",
+                "description": "If an array is passed, only rules with identifiers contained in this array are returned.",
                 "optional": true,
                 "type": "array",
                 "items": {
                   "type": "string"
-                },
-                "description": "If an array is passed, only rules with identifiers contained in this array are returned."
+                }
               },
               {
                 "name": "callback",
+                "description": "Called with registered rules.",
                 "type": "function",
                 "parameters": [
                   {
                     "name": "rules",
+                    "description": "Rules that were registered, the optional parameters are filled with values.",
                     "type": "array",
                     "items": {
                       "$ref": "Rule"
-                    },
-                    "description": "Rules that were registered, the optional parameters are filled with values."
+                    }
                   }
-                ],
-                "description": "Called with registered rules."
+                ]
               }
             ]
           },
           {
             "name": "removeRules",
-            "unsupported": true,
-            "type": "function",
             "description": "Unregisters currently registered rules.",
+            "type": "function",
+            "unsupported": true,
             "parameters": [
               {
                 "name": "eventName",
-                "type": "string",
-                "description": "Name of the event this function affects."
+                "description": "Name of the event this function affects.",
+                "type": "string"
               },
               {
                 "name": "webViewInstanceId",
-                "type": "integer",
-                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call."
+                "description": "If provided, this is an integer that uniquely identfies the \u003Cwebview\u003E associated with this function call.",
+                "type": "integer"
               },
               {
                 "name": "ruleIdentifiers",
+                "description": "If an array is passed, only rules with identifiers contained in this array are unregistered.",
                 "optional": true,
                 "type": "array",
                 "items": {
                   "type": "string"
-                },
-                "description": "If an array is passed, only rules with identifiers contained in this array are unregistered."
+                }
               },
               {
                 "name": "callback",
+                "description": "Called when rules were unregistered.",
                 "optional": true,
                 "type": "function",
-                "parameters": [],
-                "description": "Called when rules were unregistered."
+                "parameters": []
               }
             ]
           }
@@ -217,125 +217,125 @@
       },
       {
         "id": "UrlFilter",
-        "type": "object",
         "description": "Filters URLs for various criteria. See \u003Ca href=\u0027events#filtered\u0027\u003Eevent filtering\u003C/a\u003E. All criteria are case sensitive.",
+        "type": "object",
         "properties": {
           "hostContains": {
-            "type": "string",
             "description": "Matches if the host name of the URL contains a specified string. To test whether a host name component has a prefix \u0027foo\u0027, use hostContains: \u0027.foo\u0027. This matches \u0027www.foobar.com\u0027 and \u0027foo.com\u0027, because an implicit dot is added at the beginning of the host name. Similarly, hostContains can be used to match against component suffix (\u0027foo.\u0027) and to exactly match against components (\u0027.foo.\u0027). Suffix- and exact-matching for the last components need to be done separately using hostSuffix, because no implicit dot is added at the end of the host name.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "hostEquals": {
-            "type": "string",
             "description": "Matches if the host name of the URL is equal to a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "hostPrefix": {
-            "type": "string",
             "description": "Matches if the host name of the URL starts with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "hostSuffix": {
-            "type": "string",
             "description": "Matches if the host name of the URL ends with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "pathContains": {
-            "type": "string",
             "description": "Matches if the path segment of the URL contains a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "pathEquals": {
-            "type": "string",
             "description": "Matches if the path segment of the URL is equal to a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "pathPrefix": {
-            "type": "string",
             "description": "Matches if the path segment of the URL starts with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "pathSuffix": {
-            "type": "string",
             "description": "Matches if the path segment of the URL ends with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "queryContains": {
-            "type": "string",
             "description": "Matches if the query segment of the URL contains a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "queryEquals": {
-            "type": "string",
             "description": "Matches if the query segment of the URL is equal to a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "queryPrefix": {
-            "type": "string",
             "description": "Matches if the query segment of the URL starts with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "querySuffix": {
-            "type": "string",
             "description": "Matches if the query segment of the URL ends with a specified string.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "urlContains": {
-            "type": "string",
             "description": "Matches if the URL (without fragment identifier) contains a specified string. Port numbers are stripped from the URL if they match the default port number.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "urlEquals": {
-            "type": "string",
             "description": "Matches if the URL (without fragment identifier) is equal to a specified string. Port numbers are stripped from the URL if they match the default port number.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "urlMatches": {
-            "type": "string",
             "description": "Matches if the URL (without fragment identifier) matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the \u003Ca href=\u0022https://github.com/google/re2/blob/master/doc/syntax.txt\u0022\u003ERE2 syntax\u003C/a\u003E.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "originAndPathMatches": {
-            "type": "string",
             "description": "Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the \u003Ca href=\u0022https://github.com/google/re2/blob/master/doc/syntax.txt\u0022\u003ERE2 syntax\u003C/a\u003E.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "urlPrefix": {
-            "type": "string",
             "description": "Matches if the URL (without fragment identifier) starts with a specified string. Port numbers are stripped from the URL if they match the default port number.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "urlSuffix": {
-            "type": "string",
             "description": "Matches if the URL (without fragment identifier) ends with a specified string. Port numbers are stripped from the URL if they match the default port number.",
-            "optional": true
+            "optional": true,
+            "type": "string"
           },
           "schemes": {
-            "type": "array",
             "description": "Matches if the scheme of the URL is equal to any of the schemes specified in the array.",
             "optional": true,
+            "type": "array",
             "items": {
               "type": "string"
             }
           },
           "ports": {
-            "type": "array",
             "description": "Matches if the port of the URL is contained in any of the specified port lists. For example \u003Ccode\u003E[80, 443, [1000, 1200]]\u003C/code\u003E matches all requests on port 80, 443 and in the range 1000-1200.",
             "optional": true,
+            "type": "array",
             "items": {
               "choices": [
                 {
-                  "type": "integer",
-                  "description": "A specific port."
+                  "description": "A specific port.",
+                  "type": "integer"
                 },
                 {
+                  "description": "A pair of integers identiying the start and end (both inclusive) of a port range.",
                   "type": "array",
                   "minItems": 2,
                   "maxItems": 2,
                   "items": {
                     "type": "integer"
-                  },
-                  "description": "A pair of integers identiying the start and end (both inclusive) of a port range."
+                  }
                 }
               ]
             }

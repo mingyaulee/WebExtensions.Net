@@ -1,23 +1,26 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Notifications
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class CreateNotificationOptions : BaseObject
     {
-        
-        // Property Definition
         private TemplateType _type;
-        /// <summary>
-        /// Which type of notification to display.
-        /// </summary>
+        private string _iconUrl;
+        private string _appIconMaskUrl;
+        private string _title;
+        private string _message;
+        private string _contextMessage;
+        private int? _priority;
+        private double? _eventTime;
+        private string _imageUrl;
+        private IEnumerable<NotificationItem> _items;
+        private int? _progress;
+        private bool? _isClickable;
+
+        /// <summary>Which type of notification to display.</summary>
         [JsonPropertyName("type")]
         public TemplateType Type
         {
@@ -31,12 +34,8 @@ namespace WebExtension.Net.Notifications
                 _type = value;
             }
         }
-        
-        // Property Definition
-        private string _iconUrl;
-        /// <summary>
-        /// A URL to the sender's avatar, app icon, or a thumbnail for image notifications.
-        /// </summary>
+
+        /// <summary>A URL to the sender's avatar, app icon, or a thumbnail for image notifications.</summary>
         [JsonPropertyName("iconUrl")]
         public string IconUrl
         {
@@ -50,12 +49,8 @@ namespace WebExtension.Net.Notifications
                 _iconUrl = value;
             }
         }
-        
-        // Property Definition
-        private string _appIconMaskUrl;
-        /// <summary>
-        /// A URL to the app icon mask.
-        /// </summary>
+
+        /// <summary>A URL to the app icon mask.</summary>
         [JsonPropertyName("appIconMaskUrl")]
         public string AppIconMaskUrl
         {
@@ -69,12 +64,8 @@ namespace WebExtension.Net.Notifications
                 _appIconMaskUrl = value;
             }
         }
-        
-        // Property Definition
-        private string _title;
-        /// <summary>
-        /// Title of the notification (e.g. sender name for email).
-        /// </summary>
+
+        /// <summary>Title of the notification (e.g. sender name for email).</summary>
         [JsonPropertyName("title")]
         public string Title
         {
@@ -88,12 +79,8 @@ namespace WebExtension.Net.Notifications
                 _title = value;
             }
         }
-        
-        // Property Definition
-        private string _message;
-        /// <summary>
-        /// Main notification content.
-        /// </summary>
+
+        /// <summary>Main notification content.</summary>
         [JsonPropertyName("message")]
         public string Message
         {
@@ -107,12 +94,8 @@ namespace WebExtension.Net.Notifications
                 _message = value;
             }
         }
-        
-        // Property Definition
-        private string _contextMessage;
-        /// <summary>
-        /// Alternate notification content with a lower-weight font.
-        /// </summary>
+
+        /// <summary>Alternate notification content with a lower-weight font.</summary>
         [JsonPropertyName("contextMessage")]
         public string ContextMessage
         {
@@ -126,12 +109,8 @@ namespace WebExtension.Net.Notifications
                 _contextMessage = value;
             }
         }
-        
-        // Property Definition
-        private int? _priority;
-        /// <summary>
-        /// Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.
-        /// </summary>
+
+        /// <summary>Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.</summary>
         [JsonPropertyName("priority")]
         public int? Priority
         {
@@ -145,12 +124,8 @@ namespace WebExtension.Net.Notifications
                 _priority = value;
             }
         }
-        
-        // Property Definition
-        private double? _eventTime;
-        /// <summary>
-        /// A timestamp associated with the notification, in milliseconds past the epoch.
-        /// </summary>
+
+        /// <summary>A timestamp associated with the notification, in milliseconds past the epoch.</summary>
         [JsonPropertyName("eventTime")]
         public double? EventTime
         {
@@ -164,12 +139,8 @@ namespace WebExtension.Net.Notifications
                 _eventTime = value;
             }
         }
-        
-        // Property Definition
-        private string _imageUrl;
-        /// <summary>
-        /// A URL to the image thumbnail for image-type notifications.
-        /// </summary>
+
+        /// <summary>A URL to the image thumbnail for image-type notifications.</summary>
         [JsonPropertyName("imageUrl")]
         public string ImageUrl
         {
@@ -183,12 +154,8 @@ namespace WebExtension.Net.Notifications
                 _imageUrl = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<NotificationItem> _items;
-        /// <summary>
-        /// Items for multi-item notifications.
-        /// </summary>
+
+        /// <summary>Items for multi-item notifications.</summary>
         [JsonPropertyName("items")]
         public IEnumerable<NotificationItem> Items
         {
@@ -202,12 +169,8 @@ namespace WebExtension.Net.Notifications
                 _items = value;
             }
         }
-        
-        // Property Definition
-        private int? _progress;
-        /// <summary>
-        /// Current progress ranges from 0 to 100.
-        /// </summary>
+
+        /// <summary>Current progress ranges from 0 to 100.</summary>
         [JsonPropertyName("progress")]
         public int? Progress
         {
@@ -221,12 +184,8 @@ namespace WebExtension.Net.Notifications
                 _progress = value;
             }
         }
-        
-        // Property Definition
-        private bool? _isClickable;
-        /// <summary>
-        /// Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.
-        /// </summary>
+
+        /// <summary>Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.</summary>
         [JsonPropertyName("isClickable")]
         public bool? IsClickable
         {
@@ -242,4 +201,3 @@ namespace WebExtension.Net.Notifications
         }
     }
 }
-

@@ -1,23 +1,19 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Events
 {
-    // Class Definition
-    /// <summary>
-    /// Description of a declarative rule for handling events.
-    /// </summary>
+    // Type Class
+    /// <summary>Description of a declarative rule for handling events.</summary>
     public class Rule : BaseObject
     {
-        
-        // Property Definition
         private string _id;
-        /// <summary>
-        /// Optional identifier that allows referencing this rule.
-        /// </summary>
+        private IEnumerable<string> _tags;
+        private IEnumerable<object> _conditions;
+        private IEnumerable<object> _actions;
+        private int? _priority;
+
+        /// <summary>Optional identifier that allows referencing this rule.</summary>
         [JsonPropertyName("id")]
         public string Id
         {
@@ -31,12 +27,8 @@ namespace WebExtension.Net.Events
                 _id = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<string> _tags;
-        /// <summary>
-        /// Tags can be used to annotate rules and perform operations on sets of rules.
-        /// </summary>
+
+        /// <summary>Tags can be used to annotate rules and perform operations on sets of rules.</summary>
         [JsonPropertyName("tags")]
         public IEnumerable<string> Tags
         {
@@ -50,12 +42,8 @@ namespace WebExtension.Net.Events
                 _tags = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<object> _conditions;
-        /// <summary>
-        /// List of conditions that can trigger the actions.
-        /// </summary>
+
+        /// <summary>List of conditions that can trigger the actions.</summary>
         [JsonPropertyName("conditions")]
         public IEnumerable<object> Conditions
         {
@@ -69,12 +57,8 @@ namespace WebExtension.Net.Events
                 _conditions = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<object> _actions;
-        /// <summary>
-        /// List of actions that are triggered if one of the condtions is fulfilled.
-        /// </summary>
+
+        /// <summary>List of actions that are triggered if one of the condtions is fulfilled.</summary>
         [JsonPropertyName("actions")]
         public IEnumerable<object> Actions
         {
@@ -88,12 +72,8 @@ namespace WebExtension.Net.Events
                 _actions = value;
             }
         }
-        
-        // Property Definition
-        private int? _priority;
-        /// <summary>
-        /// Optional priority of this rule. Defaults to 100.
-        /// </summary>
+
+        /// <summary>Optional priority of this rule. Defaults to 100.</summary>
         [JsonPropertyName("priority")]
         public int? Priority
         {
@@ -109,4 +89,3 @@ namespace WebExtension.Net.Events
         }
     }
 }
-

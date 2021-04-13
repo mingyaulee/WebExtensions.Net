@@ -4,82 +4,82 @@
     "types": [
       {
         "id": "RegisteredContentScriptOptions",
-        "type": "object",
         "description": "Details of a content script registered programmatically",
+        "type": "object",
         "properties": {
           "matches": {
-            "type": "array",
             "optional": false,
+            "type": "array",
             "minItems": 1,
             "items": {
               "$ref": "manifest.MatchPattern"
             }
           },
           "excludeMatches": {
-            "type": "array",
             "optional": true,
+            "type": "array",
             "minItems": 1,
             "items": {
               "$ref": "manifest.MatchPattern"
             }
           },
           "includeGlobs": {
-            "type": "array",
             "optional": true,
+            "type": "array",
             "items": {
               "type": "string"
             }
           },
           "excludeGlobs": {
-            "type": "array",
             "optional": true,
+            "type": "array",
             "items": {
               "type": "string"
             }
           },
           "css": {
-            "type": "array",
-            "optional": true,
             "description": "The list of CSS files to inject",
+            "optional": true,
+            "type": "array",
             "items": {
               "$ref": "extensionTypes.ExtensionFileOrCode"
             }
           },
           "js": {
-            "type": "array",
-            "optional": true,
             "description": "The list of JS files to inject",
+            "optional": true,
+            "type": "array",
             "items": {
               "$ref": "extensionTypes.ExtensionFileOrCode"
             }
           },
           "allFrames": {
-            "type": "boolean",
+            "description": "If allFrames is \u003Ccode\u003Etrue\u003C/code\u003E, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it\u0027s \u003Ccode\u003Efalse\u003C/code\u003E and is only injected into the top frame.",
             "optional": true,
-            "description": "If allFrames is \u003Ccode\u003Etrue\u003C/code\u003E, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it\u0027s \u003Ccode\u003Efalse\u003C/code\u003E and is only injected into the top frame."
+            "type": "boolean"
           },
           "matchAboutBlank": {
-            "type": "boolean",
+            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
             "optional": true,
-            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is \u003Ccode\u003Efalse\u003C/code\u003E."
+            "type": "boolean"
           },
           "runAt": {
-            "$ref": "extensionTypes.RunAt",
+            "description": "The soonest that the JavaScript or CSS will be injected into the tab. Defaults to \u0022document_idle\u0022.",
             "optional": true,
-            "description": "The soonest that the JavaScript or CSS will be injected into the tab. Defaults to \u0022document_idle\u0022."
+            "$ref": "extensionTypes.RunAt"
           }
         }
       },
       {
         "id": "RegisteredContentScript",
-        "type": "object",
         "description": "An object that represents a content script registered programmatically",
+        "type": "object",
         "functions": [
           {
             "name": "unregister",
-            "type": "function",
             "description": "Unregister a content script registered programmatically",
             "async": true,
+            "type": "function",
             "parameters": []
           }
         ]
@@ -88,9 +88,9 @@
     "functions": [
       {
         "name": "register",
-        "type": "function",
         "description": "Register a content script programmatically",
         "async": true,
+        "type": "function",
         "parameters": [
           {
             "name": "contentScriptOptions",

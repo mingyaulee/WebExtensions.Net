@@ -1,23 +1,18 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Tabs
 {
-    // Class Definition
-    /// <summary>
-    /// An object describing filters to apply to tabs.onUpdated events.
-    /// </summary>
+    // Type Class
+    /// <summary>An object describing filters to apply to tabs.onUpdated events.</summary>
     public class UpdateFilter : BaseObject
     {
-        
-        // Property Definition
         private IEnumerable<string> _urls;
-        /// <summary>
-        /// A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the <c>"tabs"</c> or  <c>"activeTab"</c> permission.
-        /// </summary>
+        private IEnumerable<UpdatePropertyName> _properties;
+        private int? _tabId;
+        private int? _windowId;
+
+        /// <summary>A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the <c>"tabs"</c> or  <c>"activeTab"</c> permission.</summary>
         [JsonPropertyName("urls")]
         public IEnumerable<string> Urls
         {
@@ -31,12 +26,8 @@ namespace WebExtension.Net.Tabs
                 _urls = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<UpdatePropertyName> _properties;
-        /// <summary>
-        /// A list of property names. Events that do not match any of the names will be filtered out.
-        /// </summary>
+
+        /// <summary>A list of property names. Events that do not match any of the names will be filtered out.</summary>
         [JsonPropertyName("properties")]
         public IEnumerable<UpdatePropertyName> Properties
         {
@@ -50,12 +41,8 @@ namespace WebExtension.Net.Tabs
                 _properties = value;
             }
         }
-        
-        // Property Definition
-        private int? _tabId;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("tabId")]
         public int? TabId
         {
@@ -69,12 +56,8 @@ namespace WebExtension.Net.Tabs
                 _tabId = value;
             }
         }
-        
-        // Property Definition
-        private int? _windowId;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("windowId")]
         public int? WindowId
         {
@@ -90,4 +73,3 @@ namespace WebExtension.Net.Tabs
         }
     }
 }
-

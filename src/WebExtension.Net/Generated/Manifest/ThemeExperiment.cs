@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class ThemeExperiment : BaseObject
     {
-        
-        // Property Definition
         private ExtensionURL _stylesheet;
-        /// <summary>
-        /// 
-        /// </summary>
+        private object _images;
+        private object _colors;
+        private object _properties;
+
+        /// <summary></summary>
         [JsonPropertyName("stylesheet")]
         public ExtensionURL Stylesheet
         {
@@ -31,12 +25,8 @@ namespace WebExtension.Net.Manifest
                 _stylesheet = value;
             }
         }
-        
-        // Property Definition
-        private object _images;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("images")]
         public object Images
         {
@@ -50,12 +40,8 @@ namespace WebExtension.Net.Manifest
                 _images = value;
             }
         }
-        
-        // Property Definition
-        private object _colors;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("colors")]
         public object Colors
         {
@@ -69,12 +55,8 @@ namespace WebExtension.Net.Manifest
                 _colors = value;
             }
         }
-        
-        // Property Definition
-        private object _properties;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("properties")]
         public object Properties
         {
@@ -90,4 +72,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

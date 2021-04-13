@@ -1,23 +1,20 @@
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Runtime
 {
-    // Class Definition
-    /// <summary>
-    /// An object which allows two way communication with other pages.
-    /// </summary>
+    // Type Class
+    /// <summary>An object which allows two way communication with other pages.</summary>
     public class Port : BaseObject
     {
-        
-        // Property Definition
         private string _name;
-        /// <summary>
-        /// 
-        /// </summary>
+        private Action _disconnect;
+        private Events.Event _onDisconnect;
+        private Events.Event _onMessage;
+        private Action _postMessage;
+        private MessageSender _sender;
+
+        /// <summary></summary>
         [JsonPropertyName("name")]
         public string Name
         {
@@ -31,12 +28,8 @@ namespace WebExtension.Net.Runtime
                 _name = value;
             }
         }
-        
-        // Property Definition
-        private Action _disconnect;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("disconnect")]
         public Action Disconnect
         {
@@ -50,12 +43,8 @@ namespace WebExtension.Net.Runtime
                 _disconnect = value;
             }
         }
-        
-        // Property Definition
-        private Events.Event _onDisconnect;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("onDisconnect")]
         public Events.Event OnDisconnect
         {
@@ -69,12 +58,8 @@ namespace WebExtension.Net.Runtime
                 _onDisconnect = value;
             }
         }
-        
-        // Property Definition
-        private Events.Event _onMessage;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("onMessage")]
         public Events.Event OnMessage
         {
@@ -88,12 +73,8 @@ namespace WebExtension.Net.Runtime
                 _onMessage = value;
             }
         }
-        
-        // Property Definition
-        private Action _postMessage;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("postMessage")]
         public Action PostMessage
         {
@@ -107,12 +88,8 @@ namespace WebExtension.Net.Runtime
                 _postMessage = value;
             }
         }
-        
-        // Property Definition
-        private MessageSender _sender;
-        /// <summary>
-        /// This property will <b>only</b> be present on ports passed to onConnect/onConnectExternal listeners.
-        /// </summary>
+
+        /// <summary>This property will 'b'only'/b' be present on ports passed to onConnect/onConnectExternal listeners.</summary>
         [JsonPropertyName("sender")]
         public MessageSender Sender
         {
@@ -128,4 +105,3 @@ namespace WebExtension.Net.Runtime
         }
     }
 }
-

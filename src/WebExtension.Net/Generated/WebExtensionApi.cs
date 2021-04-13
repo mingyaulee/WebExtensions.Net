@@ -9,18 +9,25 @@ using WebExtension.Net.Windows;
 
 namespace WebExtension.Net
 {
-    /// <inheritdoc />
+    /// <summary>Web Extension Api</summary>
     public class WebExtensionApi : IWebExtensionApi
     {
         private readonly WebExtensionJSRuntime webExtensionJSRuntime;
-        /// <summary>Creates a new instance of WebExtensionApi.</summary>
+        private IContentScriptsApi _contentScripts;
+        private INotificationsApi _notifications;
+        private IRuntimeApi _runtime;
+        private IStorageApi _storage;
+        private ITabsApi _tabs;
+        private IWebNavigationApi _webNavigation;
+        private IWebRequestApi _webRequest;
+        private IWindowsApi _windows;
+
+        /// <summary>Creates a new instance of <see cref="WebExtensionApi" />.</summary>
         public WebExtensionApi(WebExtensionJSRuntime webExtensionJSRuntime)
         {
             this.webExtensionJSRuntime = webExtensionJSRuntime;
         }
 
-        
-        private ContentScriptsApi _contentScripts;
         /// <inheritdoc />
         public IContentScriptsApi ContentScripts
         {
@@ -33,8 +40,7 @@ namespace WebExtension.Net
                 return _contentScripts;
             }
         }
-        
-        private NotificationsApi _notifications;
+
         /// <inheritdoc />
         public INotificationsApi Notifications
         {
@@ -47,8 +53,7 @@ namespace WebExtension.Net
                 return _notifications;
             }
         }
-        
-        private RuntimeApi _runtime;
+
         /// <inheritdoc />
         public IRuntimeApi Runtime
         {
@@ -61,8 +66,7 @@ namespace WebExtension.Net
                 return _runtime;
             }
         }
-        
-        private StorageApi _storage;
+
         /// <inheritdoc />
         public IStorageApi Storage
         {
@@ -75,8 +79,7 @@ namespace WebExtension.Net
                 return _storage;
             }
         }
-        
-        private TabsApi _tabs;
+
         /// <inheritdoc />
         public ITabsApi Tabs
         {
@@ -89,8 +92,7 @@ namespace WebExtension.Net
                 return _tabs;
             }
         }
-        
-        private WebNavigationApi _webNavigation;
+
         /// <inheritdoc />
         public IWebNavigationApi WebNavigation
         {
@@ -103,8 +105,7 @@ namespace WebExtension.Net
                 return _webNavigation;
             }
         }
-        
-        private WebRequestApi _webRequest;
+
         /// <inheritdoc />
         public IWebRequestApi WebRequest
         {
@@ -117,8 +118,7 @@ namespace WebExtension.Net
                 return _webRequest;
             }
         }
-        
-        private WindowsApi _windows;
+
         /// <inheritdoc />
         public IWindowsApi Windows
         {

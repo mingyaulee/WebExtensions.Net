@@ -1,48 +1,44 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // MultiType Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Multitype Class
+    /// <summary></summary>
     public class ThemeColor
     {
+        private readonly string valueString;
         private readonly object currentValue = null;
-    
-        private readonly string valuestring;
-        /// <summary>Creates a new instance of ThemeColor.</summary>
-        public ThemeColor(string valuestring)
+
+        /// <summary>Creates a new instance of <see cref="ThemeColor" />.</summary>
+        /// <param name="value">The value.</param>
+        public ThemeColor(string value)
         {
-            this.valuestring = valuestring;
-            currentValue = valuestring;
+            valueString = value;
+            currentValue = value;
         }
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator string(ThemeColor value) => value.valuestring;
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
+
+        /// <summary>Creates a new instance of <see cref="ThemeColor" />.</summary>
+        /// <param name="value">The value.</param>
+        public ThemeColor(IEnumerable<int> value)
+        {
+            currentValue = value;
+        }
+
+        /// <summary>Creates a new instance of <see cref="ThemeColor" />.</summary>
+        /// <param name="value">The value.</param>
+        public ThemeColor(IEnumerable<double> value)
+        {
+            currentValue = value;
+        }
+
+        /// <summary>Converts from <see cref="ThemeColor" /> to <see cref="string" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator string(ThemeColor value) => value.valueString;
+
+        /// <summary>Converts from <see cref="string" /> to <see cref="ThemeColor" />.</summary>
+        /// <param name="value">The value to convert from.</param>
         public static implicit operator ThemeColor(string value) => new(value);
-        
-        /// <summary>Creates a new instance of ThemeColor.</summary>
-        public ThemeColor(IEnumerable<int> valueIEnumerableint)
-        {
-            currentValue = valueIEnumerableint;
-        }
-        
-        /// <summary>Creates a new instance of ThemeColor.</summary>
-        public ThemeColor(IEnumerable<double> valueIEnumerabledouble)
-        {
-            currentValue = valueIEnumerabledouble;
-        }
-        
-    
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -50,4 +46,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

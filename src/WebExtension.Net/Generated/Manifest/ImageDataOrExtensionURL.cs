@@ -1,22 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
 namespace WebExtension.Net.Manifest
 {
-    // String Format Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // String Format Class
+    /// <summary></summary>
     public class ImageDataOrExtensionURL : BaseStringFormat
     {
         private const string pattern = "imageDataOrStrictRelativeUrl";
-        /// <summary>Creates a new instance of ImageDataOrExtensionURL.</summary>
+
+        /// <summary>Creates a new instance of <see cref="ImageDataOrExtensionURL" />.</summary>
         public ImageDataOrExtensionURL(string value) : base(value, pattern)
         {
         }
     }
 }
-

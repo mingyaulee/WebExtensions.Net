@@ -1,55 +1,39 @@
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebExtension.Net.Events
 {
-    // Class Definition
-    /// <summary>
-    /// An object which allows the addition and removal of listeners for a Chrome event.
-    /// </summary>
+    // Type Class
+    /// <summary>An object which allows the addition and removal of listeners for a Chrome event.</summary>
     public class Event : BaseObject
     {
-        
-        // Function Definition
-        /// <summary>
-        /// Registers an event listener <em>callback</em> to an event.
-        /// </summary>
-        public virtual ValueTask AddListener()
+        /// <summary>Registers an event listener 'em'callback'/em' to an event.</summary>
+        /// <param name="callback">Called when an event occurs. The parameters of this function depend on the type of event.</param>
+        public virtual ValueTask AddListener(Action callback)
         {
-            return InvokeVoidAsync("addListener");
+            return InvokeVoidAsync("addListener", callback);
         }
-        
-        // Function Definition
-        /// <summary>
-        /// Deregisters an event listener <em>callback</em> from an event.
-        /// </summary>
-        public virtual ValueTask RemoveListener()
+
+        /// <summary>Deregisters an event listener 'em'callback'/em' from an event.</summary>
+        /// <param name="callback">Listener that shall be unregistered.</param>
+        public virtual ValueTask RemoveListener(Action callback)
         {
-            return InvokeVoidAsync("removeListener");
+            return InvokeVoidAsync("removeListener", callback);
         }
-        
-        // Function Definition
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public virtual ValueTask<bool> HasListener()
+
+        /// <summary></summary>
+        /// <param name="callback">Listener whose registration status shall be tested.</param>
+        /// <returns>True if 'em'callback'/em' is registered to the event.</returns>
+        public virtual ValueTask<bool> HasListener(Action callback)
         {
-            return InvokeAsync<bool>("hasListener");
+            return InvokeAsync<bool>("hasListener", callback);
         }
-        
-        // Function Definition
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+
+        /// <summary></summary>
+        /// <returns>True if any event listeners are registered to the event.</returns>
         public virtual ValueTask<bool> HasListeners()
         {
             return InvokeAsync<bool>("hasListeners");
         }
     }
 }
-

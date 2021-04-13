@@ -1,23 +1,27 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Windows
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class Window : BaseObject
     {
-        
-        // Property Definition
         private int? _id;
-        /// <summary>
-        /// The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.
-        /// </summary>
+        private bool _focused;
+        private int? _top;
+        private int? _left;
+        private int? _width;
+        private int? _height;
+        private IEnumerable<Tabs.Tab> _tabs;
+        private bool _incognito;
+        private WindowType _type;
+        private WindowState _state;
+        private bool _alwaysOnTop;
+        private string _sessionId;
+        private string _title;
+
+        /// <summary>The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.</summary>
         [JsonPropertyName("id")]
         public int? Id
         {
@@ -31,12 +35,8 @@ namespace WebExtension.Net.Windows
                 _id = value;
             }
         }
-        
-        // Property Definition
-        private bool _focused;
-        /// <summary>
-        /// Whether the window is currently the focused window.
-        /// </summary>
+
+        /// <summary>Whether the window is currently the focused window.</summary>
         [JsonPropertyName("focused")]
         public bool Focused
         {
@@ -50,12 +50,8 @@ namespace WebExtension.Net.Windows
                 _focused = value;
             }
         }
-        
-        // Property Definition
-        private int? _top;
-        /// <summary>
-        /// The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.
-        /// </summary>
+
+        /// <summary>The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("top")]
         public int? Top
         {
@@ -69,12 +65,8 @@ namespace WebExtension.Net.Windows
                 _top = value;
             }
         }
-        
-        // Property Definition
-        private int? _left;
-        /// <summary>
-        /// The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.
-        /// </summary>
+
+        /// <summary>The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("left")]
         public int? Left
         {
@@ -88,12 +80,8 @@ namespace WebExtension.Net.Windows
                 _left = value;
             }
         }
-        
-        // Property Definition
-        private int? _width;
-        /// <summary>
-        /// The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.
-        /// </summary>
+
+        /// <summary>The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("width")]
         public int? Width
         {
@@ -107,12 +95,8 @@ namespace WebExtension.Net.Windows
                 _width = value;
             }
         }
-        
-        // Property Definition
-        private int? _height;
-        /// <summary>
-        /// The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API.
-        /// </summary>
+
+        /// <summary>The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("height")]
         public int? Height
         {
@@ -126,12 +110,8 @@ namespace WebExtension.Net.Windows
                 _height = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<Tabs.Tab> _tabs;
-        /// <summary>
-        /// Array of $(ref:tabs.Tab) objects representing the current tabs in the window.
-        /// </summary>
+
+        /// <summary>Array of $(ref:tabs.Tab) objects representing the current tabs in the window.</summary>
         [JsonPropertyName("tabs")]
         public IEnumerable<Tabs.Tab> Tabs
         {
@@ -145,12 +125,8 @@ namespace WebExtension.Net.Windows
                 _tabs = value;
             }
         }
-        
-        // Property Definition
-        private bool _incognito;
-        /// <summary>
-        /// Whether the window is incognito.
-        /// </summary>
+
+        /// <summary>Whether the window is incognito.</summary>
         [JsonPropertyName("incognito")]
         public bool Incognito
         {
@@ -164,12 +140,8 @@ namespace WebExtension.Net.Windows
                 _incognito = value;
             }
         }
-        
-        // Property Definition
-        private WindowType _type;
-        /// <summary>
-        /// The type of browser window this is.
-        /// </summary>
+
+        /// <summary>The type of browser window this is.</summary>
         [JsonPropertyName("type")]
         public WindowType Type
         {
@@ -183,12 +155,8 @@ namespace WebExtension.Net.Windows
                 _type = value;
             }
         }
-        
-        // Property Definition
-        private WindowState _state;
-        /// <summary>
-        /// The state of this browser window.
-        /// </summary>
+
+        /// <summary>The state of this browser window.</summary>
         [JsonPropertyName("state")]
         public WindowState State
         {
@@ -202,12 +170,8 @@ namespace WebExtension.Net.Windows
                 _state = value;
             }
         }
-        
-        // Property Definition
-        private bool _alwaysOnTop;
-        /// <summary>
-        /// Whether the window is set to be always on top.
-        /// </summary>
+
+        /// <summary>Whether the window is set to be always on top.</summary>
         [JsonPropertyName("alwaysOnTop")]
         public bool AlwaysOnTop
         {
@@ -221,12 +185,8 @@ namespace WebExtension.Net.Windows
                 _alwaysOnTop = value;
             }
         }
-        
-        // Property Definition
-        private string _sessionId;
-        /// <summary>
-        /// The session ID used to uniquely identify a Window obtained from the $(ref:sessions) API.
-        /// </summary>
+
+        /// <summary>The session ID used to uniquely identify a Window obtained from the $(ref:sessions) API.</summary>
         [JsonPropertyName("sessionId")]
         public string SessionId
         {
@@ -240,12 +200,8 @@ namespace WebExtension.Net.Windows
                 _sessionId = value;
             }
         }
-        
-        // Property Definition
-        private string _title;
-        /// <summary>
-        /// The title of the window. Read-only.
-        /// </summary>
+
+        /// <summary>The title of the window. Read-only.</summary>
         [JsonPropertyName("title")]
         public string Title
         {
@@ -261,4 +217,3 @@ namespace WebExtension.Net.Windows
         }
     }
 }
-

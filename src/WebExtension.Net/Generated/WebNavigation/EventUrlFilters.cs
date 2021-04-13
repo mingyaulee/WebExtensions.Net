@@ -1,23 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebNavigation
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class EventUrlFilters : BaseObject
     {
-        
-        // Property Definition
         private IEnumerable<Events.UrlFilter> _url;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("url")]
         public IEnumerable<Events.UrlFilter> Url
         {
@@ -33,4 +25,3 @@ namespace WebExtension.Net.WebNavigation
         }
     }
 }
-

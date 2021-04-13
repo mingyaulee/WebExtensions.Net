@@ -1,27 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebRequest
 {
-    // Enum Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <summary></summary>
     [JsonConverter(typeof(EnumStringConverter<OnAuthRequiredOptions>))]
     public enum OnAuthRequiredOptions
     {
         /// <summary>responseHeaders</summary>
         [EnumValue("responseHeaders")]
         ResponseHeaders,
+
         /// <summary>blocking</summary>
         [EnumValue("blocking")]
         Blocking,
+
         /// <summary>asyncBlocking</summary>
         [EnumValue("asyncBlocking")]
         AsyncBlocking,
     }
 }
-

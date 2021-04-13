@@ -1,42 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
 namespace WebExtension.Net.Manifest
 {
-    // MultiType Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Multitype Class
+    /// <summary></summary>
     public class IconPath
     {
         private readonly object currentValue = null;
-    
-        /// <summary>Creates a new instance of IconPath.</summary>
-        public IconPath(object valueobject)
+
+        /// <summary>Creates a new instance of <see cref="IconPath" />.</summary>
+        public IconPath()
         {
-            currentValue = valueobject;
         }
-        
-        private readonly ExtensionFileUrl valueExtensionFileUrl;
-        /// <summary>Creates a new instance of IconPath.</summary>
-        public IconPath(ExtensionFileUrl valueExtensionFileUrl)
+
+        /// <summary>Creates a new instance of <see cref="IconPath" />.</summary>
+        /// <param name="value">The value.</param>
+        public IconPath(object value)
         {
-            this.valueExtensionFileUrl = valueExtensionFileUrl;
-            currentValue = valueExtensionFileUrl;
+            currentValue = value;
         }
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator ExtensionFileUrl(IconPath value) => value.valueExtensionFileUrl;
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator IconPath(ExtensionFileUrl value) => new(value);
-        
-    
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -44,4 +25,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

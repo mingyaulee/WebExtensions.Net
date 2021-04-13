@@ -1,23 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// Represents a WebExtension dictionary manifest.json file
-    /// </summary>
+    // Type Class
+    /// <summary>Represents a WebExtension dictionary manifest.json file</summary>
     public class WebExtensionDictionaryManifest : BaseObject
     {
-        
-        // Property Definition
         private string _homepage_url;
-        /// <summary>
-        /// 
-        /// </summary>
+        private object _dictionaries;
+
+        /// <summary></summary>
         [JsonPropertyName("homepage_url")]
         public string Homepage_url
         {
@@ -31,12 +23,8 @@ namespace WebExtension.Net.Manifest
                 _homepage_url = value;
             }
         }
-        
-        // Property Definition
-        private object _dictionaries;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("dictionaries")]
         public object Dictionaries
         {
@@ -52,4 +40,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

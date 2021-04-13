@@ -1,23 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// Contents of manifest.json for a static theme
-    /// </summary>
+    // Type Class
+    /// <summary>Contents of manifest.json for a static theme</summary>
     public class ThemeManifest : BaseObject
     {
-        
-        // Property Definition
         private ThemeType _theme;
-        /// <summary>
-        /// 
-        /// </summary>
+        private ThemeType _dark_theme;
+        private string _default_locale;
+        private ThemeExperiment _theme_experiment;
+        private object _icons;
+
+        /// <summary></summary>
         [JsonPropertyName("theme")]
         public ThemeType Theme
         {
@@ -31,12 +26,8 @@ namespace WebExtension.Net.Manifest
                 _theme = value;
             }
         }
-        
-        // Property Definition
-        private ThemeType _dark_theme;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("dark_theme")]
         public ThemeType Dark_theme
         {
@@ -50,12 +41,8 @@ namespace WebExtension.Net.Manifest
                 _dark_theme = value;
             }
         }
-        
-        // Property Definition
-        private string _default_locale;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("default_locale")]
         public string Default_locale
         {
@@ -69,12 +56,8 @@ namespace WebExtension.Net.Manifest
                 _default_locale = value;
             }
         }
-        
-        // Property Definition
-        private ThemeExperiment _theme_experiment;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("theme_experiment")]
         public ThemeExperiment Theme_experiment
         {
@@ -88,12 +71,8 @@ namespace WebExtension.Net.Manifest
                 _theme_experiment = value;
             }
         }
-        
-        // Property Definition
-        private object _icons;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("icons")]
         public object Icons
         {
@@ -109,4 +88,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

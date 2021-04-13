@@ -1,26 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
 namespace WebExtension.Net.ExtensionTypes
 {
-    // MultiType Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Multitype Class
+    /// <summary></summary>
     public class ExtensionFileOrCode
     {
         private readonly object currentValue = null;
-    
-        /// <summary>Creates a new instance of ExtensionFileOrCode.</summary>
-        public ExtensionFileOrCode(object valueobject)
+
+        /// <summary>Creates a new instance of <see cref="ExtensionFileOrCode" />.</summary>
+        /// <param name="value">The value.</param>
+        public ExtensionFileOrCode(object value)
         {
-            currentValue = valueobject;
+            currentValue = value;
         }
-        
-    
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -28,4 +20,3 @@ namespace WebExtension.Net.ExtensionTypes
         }
     }
 }
-

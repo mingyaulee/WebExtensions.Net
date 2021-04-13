@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class FirefoxSpecificProperties : BaseObject
     {
-        
-        // Property Definition
         private ExtensionID _id;
-        /// <summary>
-        /// 
-        /// </summary>
+        private string _update_url;
+        private string _strict_min_version;
+        private string _strict_max_version;
+
+        /// <summary></summary>
         [JsonPropertyName("id")]
         public ExtensionID Id
         {
@@ -31,12 +25,8 @@ namespace WebExtension.Net.Manifest
                 _id = value;
             }
         }
-        
-        // Property Definition
-        private string _update_url;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("update_url")]
         public string Update_url
         {
@@ -50,12 +40,8 @@ namespace WebExtension.Net.Manifest
                 _update_url = value;
             }
         }
-        
-        // Property Definition
-        private string _strict_min_version;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("strict_min_version")]
         public string Strict_min_version
         {
@@ -69,12 +55,8 @@ namespace WebExtension.Net.Manifest
                 _strict_min_version = value;
             }
         }
-        
-        // Property Definition
-        private string _strict_max_version;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("strict_max_version")]
         public string Strict_max_version
         {
@@ -90,4 +72,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

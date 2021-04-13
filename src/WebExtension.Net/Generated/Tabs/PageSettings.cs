@@ -1,23 +1,36 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Tabs
 {
-    // Class Definition
-    /// <summary>
-    /// Defines the page settings to be used when saving a page as a pdf file.
-    /// </summary>
+    // Type Class
+    /// <summary>Defines the page settings to be used when saving a page as a pdf file.</summary>
     public class PageSettings : BaseObject
     {
-        
-        // Property Definition
         private string _toFileName;
-        /// <summary>
-        /// The name of the file. May include optional .pdf extension.
-        /// </summary>
+        private int? _paperSizeUnit;
+        private double? _paperWidth;
+        private double? _paperHeight;
+        private int? _orientation;
+        private double? _scaling;
+        private bool? _shrinkToFit;
+        private bool? _showBackgroundColors;
+        private bool? _showBackgroundImages;
+        private double? _edgeLeft;
+        private double? _edgeRight;
+        private double? _edgeTop;
+        private double? _edgeBottom;
+        private double? _marginLeft;
+        private double? _marginRight;
+        private double? _marginTop;
+        private double? _marginBottom;
+        private string _headerLeft;
+        private string _headerCenter;
+        private string _headerRight;
+        private string _footerLeft;
+        private string _footerCenter;
+        private string _footerRight;
+
+        /// <summary>The name of the file. May include optional .pdf extension.</summary>
         [JsonPropertyName("toFileName")]
         public string ToFileName
         {
@@ -31,12 +44,8 @@ namespace WebExtension.Net.Tabs
                 _toFileName = value;
             }
         }
-        
-        // Property Definition
-        private int? _paperSizeUnit;
-        /// <summary>
-        /// The page size unit: 0 = inches, 1 = millimeters. Default: 0.
-        /// </summary>
+
+        /// <summary>The page size unit: 0 = inches, 1 = millimeters. Default: 0.</summary>
         [JsonPropertyName("paperSizeUnit")]
         public int? PaperSizeUnit
         {
@@ -50,12 +59,8 @@ namespace WebExtension.Net.Tabs
                 _paperSizeUnit = value;
             }
         }
-        
-        // Property Definition
-        private double? _paperWidth;
-        /// <summary>
-        /// The paper width in paper size units. Default: 8.5.
-        /// </summary>
+
+        /// <summary>The paper width in paper size units. Default: 8.5.</summary>
         [JsonPropertyName("paperWidth")]
         public double? PaperWidth
         {
@@ -69,12 +74,8 @@ namespace WebExtension.Net.Tabs
                 _paperWidth = value;
             }
         }
-        
-        // Property Definition
-        private double? _paperHeight;
-        /// <summary>
-        /// The paper height in paper size units. Default: 11.0.
-        /// </summary>
+
+        /// <summary>The paper height in paper size units. Default: 11.0.</summary>
         [JsonPropertyName("paperHeight")]
         public double? PaperHeight
         {
@@ -88,12 +89,8 @@ namespace WebExtension.Net.Tabs
                 _paperHeight = value;
             }
         }
-        
-        // Property Definition
-        private int? _orientation;
-        /// <summary>
-        /// The page content orientation: 0 = portrait, 1 = landscape. Default: 0.
-        /// </summary>
+
+        /// <summary>The page content orientation: 0 = portrait, 1 = landscape. Default: 0.</summary>
         [JsonPropertyName("orientation")]
         public int? Orientation
         {
@@ -107,12 +104,8 @@ namespace WebExtension.Net.Tabs
                 _orientation = value;
             }
         }
-        
-        // Property Definition
-        private double? _scaling;
-        /// <summary>
-        /// The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0.
-        /// </summary>
+
+        /// <summary>The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0.</summary>
         [JsonPropertyName("scaling")]
         public double? Scaling
         {
@@ -126,12 +119,8 @@ namespace WebExtension.Net.Tabs
                 _scaling = value;
             }
         }
-        
-        // Property Definition
-        private bool? _shrinkToFit;
-        /// <summary>
-        /// Whether the page content should shrink to fit the page width (overrides scaling). Default: true.
-        /// </summary>
+
+        /// <summary>Whether the page content should shrink to fit the page width (overrides scaling). Default: true.</summary>
         [JsonPropertyName("shrinkToFit")]
         public bool? ShrinkToFit
         {
@@ -145,12 +134,8 @@ namespace WebExtension.Net.Tabs
                 _shrinkToFit = value;
             }
         }
-        
-        // Property Definition
-        private bool? _showBackgroundColors;
-        /// <summary>
-        /// Whether the page background colors should be shown. Default: false.
-        /// </summary>
+
+        /// <summary>Whether the page background colors should be shown. Default: false.</summary>
         [JsonPropertyName("showBackgroundColors")]
         public bool? ShowBackgroundColors
         {
@@ -164,12 +149,8 @@ namespace WebExtension.Net.Tabs
                 _showBackgroundColors = value;
             }
         }
-        
-        // Property Definition
-        private bool? _showBackgroundImages;
-        /// <summary>
-        /// Whether the page background images should be shown. Default: false.
-        /// </summary>
+
+        /// <summary>Whether the page background images should be shown. Default: false.</summary>
         [JsonPropertyName("showBackgroundImages")]
         public bool? ShowBackgroundImages
         {
@@ -183,12 +164,8 @@ namespace WebExtension.Net.Tabs
                 _showBackgroundImages = value;
             }
         }
-        
-        // Property Definition
-        private double? _edgeLeft;
-        /// <summary>
-        /// The spacing between the left header/footer and the left edge of the paper (inches). Default: 0.
-        /// </summary>
+
+        /// <summary>The spacing between the left header/footer and the left edge of the paper (inches). Default: 0.</summary>
         [JsonPropertyName("edgeLeft")]
         public double? EdgeLeft
         {
@@ -202,12 +179,8 @@ namespace WebExtension.Net.Tabs
                 _edgeLeft = value;
             }
         }
-        
-        // Property Definition
-        private double? _edgeRight;
-        /// <summary>
-        /// The spacing between the right header/footer and the right edge of the paper (inches). Default: 0.
-        /// </summary>
+
+        /// <summary>The spacing between the right header/footer and the right edge of the paper (inches). Default: 0.</summary>
         [JsonPropertyName("edgeRight")]
         public double? EdgeRight
         {
@@ -221,12 +194,8 @@ namespace WebExtension.Net.Tabs
                 _edgeRight = value;
             }
         }
-        
-        // Property Definition
-        private double? _edgeTop;
-        /// <summary>
-        /// The spacing between the top of the headers and the top edge of the paper (inches). Default: 0
-        /// </summary>
+
+        /// <summary>The spacing between the top of the headers and the top edge of the paper (inches). Default: 0</summary>
         [JsonPropertyName("edgeTop")]
         public double? EdgeTop
         {
@@ -240,12 +209,8 @@ namespace WebExtension.Net.Tabs
                 _edgeTop = value;
             }
         }
-        
-        // Property Definition
-        private double? _edgeBottom;
-        /// <summary>
-        /// The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.
-        /// </summary>
+
+        /// <summary>The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.</summary>
         [JsonPropertyName("edgeBottom")]
         public double? EdgeBottom
         {
@@ -259,12 +224,8 @@ namespace WebExtension.Net.Tabs
                 _edgeBottom = value;
             }
         }
-        
-        // Property Definition
-        private double? _marginLeft;
-        /// <summary>
-        /// The margin between the page content and the left edge of the paper (inches). Default: 0.5.
-        /// </summary>
+
+        /// <summary>The margin between the page content and the left edge of the paper (inches). Default: 0.5.</summary>
         [JsonPropertyName("marginLeft")]
         public double? MarginLeft
         {
@@ -278,12 +239,8 @@ namespace WebExtension.Net.Tabs
                 _marginLeft = value;
             }
         }
-        
-        // Property Definition
-        private double? _marginRight;
-        /// <summary>
-        /// The margin between the page content and the right edge of the paper (inches). Default: 0.5.
-        /// </summary>
+
+        /// <summary>The margin between the page content and the right edge of the paper (inches). Default: 0.5.</summary>
         [JsonPropertyName("marginRight")]
         public double? MarginRight
         {
@@ -297,12 +254,8 @@ namespace WebExtension.Net.Tabs
                 _marginRight = value;
             }
         }
-        
-        // Property Definition
-        private double? _marginTop;
-        /// <summary>
-        /// The margin between the page content and the top edge of the paper (inches). Default: 0.5.
-        /// </summary>
+
+        /// <summary>The margin between the page content and the top edge of the paper (inches). Default: 0.5.</summary>
         [JsonPropertyName("marginTop")]
         public double? MarginTop
         {
@@ -316,12 +269,8 @@ namespace WebExtension.Net.Tabs
                 _marginTop = value;
             }
         }
-        
-        // Property Definition
-        private double? _marginBottom;
-        /// <summary>
-        /// The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.
-        /// </summary>
+
+        /// <summary>The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.</summary>
         [JsonPropertyName("marginBottom")]
         public double? MarginBottom
         {
@@ -335,12 +284,8 @@ namespace WebExtension.Net.Tabs
                 _marginBottom = value;
             }
         }
-        
-        // Property Definition
-        private string _headerLeft;
-        /// <summary>
-        /// The text for the page's left header. Default: '&amp;T'.
-        /// </summary>
+
+        /// <summary>The text for the page's left header. Default: '&amp;T'.</summary>
         [JsonPropertyName("headerLeft")]
         public string HeaderLeft
         {
@@ -354,12 +299,8 @@ namespace WebExtension.Net.Tabs
                 _headerLeft = value;
             }
         }
-        
-        // Property Definition
-        private string _headerCenter;
-        /// <summary>
-        /// The text for the page's center header. Default: ''.
-        /// </summary>
+
+        /// <summary>The text for the page's center header. Default: ''.</summary>
         [JsonPropertyName("headerCenter")]
         public string HeaderCenter
         {
@@ -373,12 +314,8 @@ namespace WebExtension.Net.Tabs
                 _headerCenter = value;
             }
         }
-        
-        // Property Definition
-        private string _headerRight;
-        /// <summary>
-        /// The text for the page's right header. Default: '&amp;U'.
-        /// </summary>
+
+        /// <summary>The text for the page's right header. Default: '&amp;U'.</summary>
         [JsonPropertyName("headerRight")]
         public string HeaderRight
         {
@@ -392,12 +329,8 @@ namespace WebExtension.Net.Tabs
                 _headerRight = value;
             }
         }
-        
-        // Property Definition
-        private string _footerLeft;
-        /// <summary>
-        /// The text for the page's left footer. Default: '&amp;PT'.
-        /// </summary>
+
+        /// <summary>The text for the page's left footer. Default: '&amp;PT'.</summary>
         [JsonPropertyName("footerLeft")]
         public string FooterLeft
         {
@@ -411,12 +344,8 @@ namespace WebExtension.Net.Tabs
                 _footerLeft = value;
             }
         }
-        
-        // Property Definition
-        private string _footerCenter;
-        /// <summary>
-        /// The text for the page's center footer. Default: ''.
-        /// </summary>
+
+        /// <summary>The text for the page's center footer. Default: ''.</summary>
         [JsonPropertyName("footerCenter")]
         public string FooterCenter
         {
@@ -430,12 +359,8 @@ namespace WebExtension.Net.Tabs
                 _footerCenter = value;
             }
         }
-        
-        // Property Definition
-        private string _footerRight;
-        /// <summary>
-        /// The text for the page's right footer. Default: '&amp;D'.
-        /// </summary>
+
+        /// <summary>The text for the page's right footer. Default: '&amp;D'.</summary>
         [JsonPropertyName("footerRight")]
         public string FooterRight
         {
@@ -451,4 +376,3 @@ namespace WebExtension.Net.Tabs
         }
     }
 }
-

@@ -5,8 +5,8 @@
     "types": [
       {
         "id": "MutedInfoReason",
-        "type": "string",
         "description": "An event that caused a muted state change.",
+        "type": "string",
         "enum": [
           {
             "name": "user",
@@ -24,42 +24,42 @@
       },
       {
         "id": "MutedInfo",
-        "type": "object",
         "description": "Tab muted state and the reason for the last state change.",
+        "type": "object",
         "properties": {
           "muted": {
-            "type": "boolean",
-            "description": "Whether the tab is prevented from playing sound (but hasn\u0027t necessarily recently produced sound). Equivalent to whether the muted audio indicator is showing."
+            "description": "Whether the tab is prevented from playing sound (but hasn\u0027t necessarily recently produced sound). Equivalent to whether the muted audio indicator is showing.",
+            "type": "boolean"
           },
           "reason": {
-            "$ref": "MutedInfoReason",
+            "description": "The reason the tab was muted or unmuted. Not set if the tab\u0027s mute state has never been changed.",
             "optional": true,
-            "description": "The reason the tab was muted or unmuted. Not set if the tab\u0027s mute state has never been changed."
+            "$ref": "MutedInfoReason"
           },
           "extensionId": {
-            "type": "string",
+            "description": "The ID of the extension that changed the muted state. Not set if an extension was not the reason the muted state last changed.",
             "optional": true,
-            "description": "The ID of the extension that changed the muted state. Not set if an extension was not the reason the muted state last changed."
+            "type": "string"
           }
         }
       },
       {
         "id": "SharingState",
-        "type": "object",
         "description": "Tab sharing state for screen, microphone and camera.",
+        "type": "object",
         "properties": {
           "screen": {
-            "type": "string",
+            "description": "If the tab is sharing the screen the value will be one of \u0022Screen\u0022, \u0022Window\u0022, or \u0022Application\u0022, or undefined if not screen sharing.",
             "optional": true,
-            "description": "If the tab is sharing the screen the value will be one of \u0022Screen\u0022, \u0022Window\u0022, or \u0022Application\u0022, or undefined if not screen sharing."
+            "type": "string"
           },
           "camera": {
-            "type": "boolean",
-            "description": "True if the tab is using the camera."
+            "description": "True if the tab is using the camera.",
+            "type": "boolean"
           },
           "microphone": {
-            "type": "boolean",
-            "description": "True if the tab is using the microphone."
+            "description": "True if the tab is using the microphone.",
+            "type": "boolean"
           }
         }
       },
@@ -68,156 +68,147 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "minimum": -1,
+            "description": "The ID of the tab. Tab IDs are unique within a browser session. Under some circumstances a Tab may not be assigned an ID, for example when querying foreign tabs using the $(ref:sessions) API, in which case a session ID may be present. Tab ID can also be set to $(ref:tabs.TAB_ID_NONE) for apps and devtools windows.",
             "optional": true,
-            "description": "The ID of the tab. Tab IDs are unique within a browser session. Under some circumstances a Tab may not be assigned an ID, for example when querying foreign tabs using the $(ref:sessions) API, in which case a session ID may be present. Tab ID can also be set to $(ref:tabs.TAB_ID_NONE) for apps and devtools windows."
+            "type": "integer",
+            "minimum": -1
           },
           "index": {
+            "description": "The zero-based index of the tab within its window.",
             "type": "integer",
-            "minimum": -1,
-            "description": "The zero-based index of the tab within its window."
+            "minimum": -1
           },
           "windowId": {
-            "type": "integer",
+            "description": "The ID of the window the tab is contained within.",
             "optional": true,
-            "minimum": 0,
-            "description": "The ID of the window the tab is contained within."
+            "type": "integer",
+            "minimum": 0
           },
           "openerTabId": {
-            "type": "integer",
-            "minimum": 0,
+            "description": "The ID of the tab that opened this tab, if any. This property is only present if the opener tab still exists.",
             "optional": true,
-            "description": "The ID of the tab that opened this tab, if any. This property is only present if the opener tab still exists."
+            "type": "integer",
+            "minimum": 0
           },
           "selected": {
-            "type": "boolean",
             "description": "Whether the tab is selected.",
-            "deprecated": "Please use $(ref:tabs.Tab.highlighted).",
-            "unsupported": true
+            "type": "boolean",
+            "unsupported": true,
+            "deprecated": "Please use $(ref:tabs.Tab.highlighted)."
           },
           "highlighted": {
-            "type": "boolean",
-            "description": "Whether the tab is highlighted. Works as an alias of active"
+            "description": "Whether the tab is highlighted. Works as an alias of active",
+            "type": "boolean"
           },
           "active": {
-            "type": "boolean",
-            "description": "Whether the tab is active in its window. (Does not necessarily mean the window is focused.)"
+            "description": "Whether the tab is active in its window. (Does not necessarily mean the window is focused.)",
+            "type": "boolean"
           },
           "pinned": {
-            "type": "boolean",
-            "description": "Whether the tab is pinned."
+            "description": "Whether the tab is pinned.",
+            "type": "boolean"
           },
           "lastAccessed": {
-            "type": "integer",
+            "description": "The last time the tab was accessed as the number of milliseconds since epoch.",
             "optional": true,
-            "description": "The last time the tab was accessed as the number of milliseconds since epoch."
+            "type": "integer"
           },
           "audible": {
-            "type": "boolean",
+            "description": "Whether the tab has produced sound over the past couple of seconds (but it might not be heard if also muted). Equivalent to whether the speaker audio indicator is showing.",
             "optional": true,
-            "description": "Whether the tab has produced sound over the past couple of seconds (but it might not be heard if also muted). Equivalent to whether the speaker audio indicator is showing."
+            "type": "boolean"
           },
           "mutedInfo": {
-            "$ref": "MutedInfo",
+            "description": "Current tab muted state and the reason for the last state change.",
             "optional": true,
-            "description": "Current tab muted state and the reason for the last state change."
+            "$ref": "MutedInfo"
           },
           "url": {
-            "type": "string",
+            "description": "The URL the tab is displaying. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
             "optional": true,
-            "permissions": [
-              "tabs"
-            ],
-            "description": "The URL the tab is displaying. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+            "type": "string"
           },
           "title": {
-            "type": "string",
+            "description": "The title of the tab. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
             "optional": true,
-            "permissions": [
-              "tabs"
-            ],
-            "description": "The title of the tab. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+            "type": "string"
           },
           "favIconUrl": {
-            "type": "string",
+            "description": "The URL of the tab\u0027s favicon. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission. It may also be an empty string if the tab is loading.",
             "optional": true,
-            "permissions": [
-              "tabs"
-            ],
-            "description": "The URL of the tab\u0027s favicon. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission. It may also be an empty string if the tab is loading."
+            "type": "string"
           },
           "status": {
-            "type": "string",
+            "description": "Either \u003Cem\u003Eloading\u003C/em\u003E or \u003Cem\u003Ecomplete\u003C/em\u003E.",
             "optional": true,
-            "description": "Either \u003Cem\u003Eloading\u003C/em\u003E or \u003Cem\u003Ecomplete\u003C/em\u003E."
+            "type": "string"
           },
           "discarded": {
-            "type": "boolean",
+            "description": "True while the tab is not loaded with content.",
             "optional": true,
-            "description": "True while the tab is not loaded with content."
+            "type": "boolean"
           },
           "incognito": {
-            "type": "boolean",
-            "description": "Whether the tab is in an incognito window."
+            "description": "Whether the tab is in an incognito window.",
+            "type": "boolean"
           },
           "width": {
-            "type": "integer",
+            "description": "The width of the tab in pixels.",
             "optional": true,
-            "description": "The width of the tab in pixels."
+            "type": "integer"
           },
           "height": {
-            "type": "integer",
+            "description": "The height of the tab in pixels.",
             "optional": true,
-            "description": "The height of the tab in pixels."
+            "type": "integer"
           },
           "hidden": {
-            "type": "boolean",
+            "description": "True if the tab is hidden.",
             "optional": true,
-            "description": "True if the tab is hidden."
+            "type": "boolean"
           },
           "sessionId": {
-            "type": "string",
+            "description": "The session ID used to uniquely identify a Tab obtained from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The session ID used to uniquely identify a Tab obtained from the $(ref:sessions) API."
+            "type": "string"
           },
           "cookieStoreId": {
-            "type": "string",
+            "description": "The CookieStoreId used for the tab.",
             "optional": true,
-            "description": "The CookieStoreId used for the tab."
+            "type": "string"
           },
           "isArticle": {
-            "type": "boolean",
+            "description": "Whether the document in the tab can be rendered in reader mode.",
             "optional": true,
-            "description": "Whether the document in the tab can be rendered in reader mode."
+            "type": "boolean"
           },
           "isInReaderMode": {
-            "type": "boolean",
+            "description": "Whether the document in the tab is being rendered in reader mode.",
             "optional": true,
-            "description": "Whether the document in the tab is being rendered in reader mode."
+            "type": "boolean"
           },
           "sharingState": {
-            "$ref": "SharingState",
+            "description": "Current tab sharing state for screen, microphone and camera.",
             "optional": true,
-            "description": "Current tab sharing state for screen, microphone and camera."
+            "$ref": "SharingState"
           },
           "attention": {
-            "type": "boolean",
+            "description": "Whether the tab is drawing attention.",
             "optional": true,
-            "description": "Whether the tab is drawing attention."
+            "type": "boolean"
           },
           "successorTabId": {
-            "type": "integer",
+            "description": "The ID of this tab\u0027s successor, if any; $(ref:tabs.TAB_ID_NONE) otherwise.",
             "optional": true,
-            "minimum": -1,
-            "description": "The ID of this tab\u0027s successor, if any; $(ref:tabs.TAB_ID_NONE) otherwise."
+            "type": "integer",
+            "minimum": -1
           }
         }
       },
       {
         "id": "ZoomSettingsMode",
-        "type": "string",
         "description": "Defines how zoom changes are handled, i.e. which entity is responsible for the actual scaling of the page; defaults to \u003Ccode\u003Eautomatic\u003C/code\u003E.",
+        "type": "string",
         "enum": [
           {
             "name": "automatic",
@@ -235,8 +226,8 @@
       },
       {
         "id": "ZoomSettingsScope",
-        "type": "string",
         "description": "Defines whether zoom changes will persist for the page\u0027s origin, or only take effect in this tab; defaults to \u003Ccode\u003Eper-origin\u003C/code\u003E when in \u003Ccode\u003Eautomatic\u003C/code\u003E mode, and \u003Ccode\u003Eper-tab\u003C/code\u003E otherwise.",
+        "type": "string",
         "enum": [
           {
             "name": "per-origin",
@@ -250,159 +241,160 @@
       },
       {
         "id": "ZoomSettings",
-        "type": "object",
         "description": "Defines how zoom changes in a tab are handled and at what scope.",
+        "type": "object",
         "properties": {
           "mode": {
-            "$ref": "ZoomSettingsMode",
             "description": "Defines how zoom changes are handled, i.e. which entity is responsible for the actual scaling of the page; defaults to \u003Ccode\u003Eautomatic\u003C/code\u003E.",
-            "optional": true
+            "optional": true,
+            "$ref": "ZoomSettingsMode"
           },
           "scope": {
-            "$ref": "ZoomSettingsScope",
             "description": "Defines whether zoom changes will persist for the page\u0027s origin, or only take effect in this tab; defaults to \u003Ccode\u003Eper-origin\u003C/code\u003E when in \u003Ccode\u003Eautomatic\u003C/code\u003E mode, and \u003Ccode\u003Eper-tab\u003C/code\u003E otherwise.",
-            "optional": true
+            "optional": true,
+            "$ref": "ZoomSettingsScope"
           },
           "defaultZoomFactor": {
-            "type": "number",
+            "description": "Used to return the default zoom level for the current tab in calls to tabs.getZoomSettings.",
             "optional": true,
-            "description": "Used to return the default zoom level for the current tab in calls to tabs.getZoomSettings."
+            "type": "number"
           }
         }
       },
       {
         "id": "PageSettings",
-        "type": "object",
         "description": "Defines the page settings to be used when saving a page as a pdf file.",
+        "type": "object",
         "properties": {
           "toFileName": {
-            "type": "string",
+            "description": "The name of the file. May include optional .pdf extension.",
             "optional": true,
-            "description": "The name of the file. May include optional .pdf extension."
+            "type": "string"
           },
           "paperSizeUnit": {
-            "type": "integer",
+            "description": "The page size unit: 0 = inches, 1 = millimeters. Default: 0.",
             "optional": true,
-            "description": "The page size unit: 0 = inches, 1 = millimeters. Default: 0."
+            "type": "integer"
           },
           "paperWidth": {
-            "type": "number",
+            "description": "The paper width in paper size units. Default: 8.5.",
             "optional": true,
-            "description": "The paper width in paper size units. Default: 8.5."
+            "type": "number"
           },
           "paperHeight": {
-            "type": "number",
+            "description": "The paper height in paper size units. Default: 11.0.",
             "optional": true,
-            "description": "The paper height in paper size units. Default: 11.0."
+            "type": "number"
           },
           "orientation": {
-            "type": "integer",
+            "description": "The page content orientation: 0 = portrait, 1 = landscape. Default: 0.",
             "optional": true,
-            "description": "The page content orientation: 0 = portrait, 1 = landscape. Default: 0."
+            "type": "integer"
           },
           "scaling": {
-            "type": "number",
+            "description": "The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0.",
             "optional": true,
-            "description": "The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0."
+            "type": "number"
           },
           "shrinkToFit": {
-            "type": "boolean",
+            "description": "Whether the page content should shrink to fit the page width (overrides scaling). Default: true.",
             "optional": true,
-            "description": "Whether the page content should shrink to fit the page width (overrides scaling). Default: true."
+            "type": "boolean"
           },
           "showBackgroundColors": {
-            "type": "boolean",
+            "description": "Whether the page background colors should be shown. Default: false.",
             "optional": true,
-            "description": "Whether the page background colors should be shown. Default: false."
+            "type": "boolean"
           },
           "showBackgroundImages": {
-            "type": "boolean",
+            "description": "Whether the page background images should be shown. Default: false.",
             "optional": true,
-            "description": "Whether the page background images should be shown. Default: false."
+            "type": "boolean"
           },
           "edgeLeft": {
-            "type": "number",
+            "description": "The spacing between the left header/footer and the left edge of the paper (inches). Default: 0.",
             "optional": true,
-            "description": "The spacing between the left header/footer and the left edge of the paper (inches). Default: 0."
+            "type": "number"
           },
           "edgeRight": {
-            "type": "number",
+            "description": "The spacing between the right header/footer and the right edge of the paper (inches). Default: 0.",
             "optional": true,
-            "description": "The spacing between the right header/footer and the right edge of the paper (inches). Default: 0."
+            "type": "number"
           },
           "edgeTop": {
-            "type": "number",
+            "description": "The spacing between the top of the headers and the top edge of the paper (inches). Default: 0",
             "optional": true,
-            "description": "The spacing between the top of the headers and the top edge of the paper (inches). Default: 0"
+            "type": "number"
           },
           "edgeBottom": {
-            "type": "number",
+            "description": "The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.",
             "optional": true,
-            "description": "The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0."
+            "type": "number"
           },
           "marginLeft": {
-            "type": "number",
+            "description": "The margin between the page content and the left edge of the paper (inches). Default: 0.5.",
             "optional": true,
-            "description": "The margin between the page content and the left edge of the paper (inches). Default: 0.5."
+            "type": "number"
           },
           "marginRight": {
-            "type": "number",
+            "description": "The margin between the page content and the right edge of the paper (inches). Default: 0.5.",
             "optional": true,
-            "description": "The margin between the page content and the right edge of the paper (inches). Default: 0.5."
+            "type": "number"
           },
           "marginTop": {
-            "type": "number",
+            "description": "The margin between the page content and the top edge of the paper (inches). Default: 0.5.",
             "optional": true,
-            "description": "The margin between the page content and the top edge of the paper (inches). Default: 0.5."
+            "type": "number"
           },
           "marginBottom": {
-            "type": "number",
+            "description": "The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.",
             "optional": true,
-            "description": "The margin between the page content and the bottom edge of the paper (inches). Default: 0.5."
+            "type": "number"
           },
           "headerLeft": {
-            "type": "string",
+            "description": "The text for the page\u0027s left header. Default: \u0027\u0026T\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s left header. Default: \u0027\u0026T\u0027."
+            "type": "string"
           },
           "headerCenter": {
-            "type": "string",
+            "description": "The text for the page\u0027s center header. Default: \u0027\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s center header. Default: \u0027\u0027."
+            "type": "string"
           },
           "headerRight": {
-            "type": "string",
+            "description": "The text for the page\u0027s right header. Default: \u0027\u0026U\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s right header. Default: \u0027\u0026U\u0027."
+            "type": "string"
           },
           "footerLeft": {
-            "type": "string",
+            "description": "The text for the page\u0027s left footer. Default: \u0027\u0026PT\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s left footer. Default: \u0027\u0026PT\u0027."
+            "type": "string"
           },
           "footerCenter": {
-            "type": "string",
+            "description": "The text for the page\u0027s center footer. Default: \u0027\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s center footer. Default: \u0027\u0027."
+            "type": "string"
           },
           "footerRight": {
-            "type": "string",
+            "description": "The text for the page\u0027s right footer. Default: \u0027\u0026D\u0027.",
             "optional": true,
-            "description": "The text for the page\u0027s right footer. Default: \u0027\u0026D\u0027."
+            "type": "string"
           }
         }
       },
       {
         "id": "TabStatus",
+        "description": "Whether the tabs have completed loading.",
         "type": "string",
         "enum": [
           "loading",
           "complete"
-        ],
-        "description": "Whether the tabs have completed loading."
+        ]
       },
       {
         "id": "WindowType",
+        "description": "The type of window.",
         "type": "string",
         "enum": [
           "normal",
@@ -410,11 +402,11 @@
           "panel",
           "app",
           "devtools"
-        ],
-        "description": "The type of window."
+        ]
       },
       {
         "id": "UpdatePropertyName",
+        "description": "Event names supported in onUpdated.",
         "type": "string",
         "enum": [
           "attention",
@@ -429,64 +421,63 @@
           "status",
           "title",
           "url"
-        ],
-        "description": "Event names supported in onUpdated."
+        ]
       },
       {
         "id": "UpdateFilter",
-        "type": "object",
         "description": "An object describing filters to apply to tabs.onUpdated events.",
+        "type": "object",
         "properties": {
           "urls": {
-            "type": "array",
             "description": "A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E or  \u003Ccode\u003E\u0022activeTab\u0022\u003C/code\u003E permission.",
             "optional": true,
+            "type": "array",
+            "minItems": 1,
             "items": {
               "type": "string"
-            },
-            "minItems": 1
+            }
           },
           "properties": {
-            "type": "array",
-            "optional": true,
             "description": "A list of property names. Events that do not match any of the names will be filtered out.",
+            "optional": true,
+            "type": "array",
+            "minItems": 1,
             "items": {
               "$ref": "UpdatePropertyName"
-            },
-            "minItems": 1
+            }
           },
           "tabId": {
-            "type": "integer",
-            "optional": true
+            "optional": true,
+            "type": "integer"
           },
           "windowId": {
-            "type": "integer",
-            "optional": true
+            "optional": true,
+            "type": "integer"
           }
         }
       }
     ],
     "properties": {
       "TAB_ID_NONE": {
-        "value": -1,
-        "description": "An ID which represents the absence of a browser tab."
+        "description": "An ID which represents the absence of a browser tab.",
+        "value": -1
       }
     },
     "functions": [
       {
         "name": "get",
-        "type": "function",
         "description": "Retrieves details about the specified tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
@@ -498,18 +489,18 @@
       },
       {
         "name": "getCurrent",
-        "type": "function",
         "description": "Gets the tab that this script call is being made from. May be undefined if called from a non-tab context (for example: a background page or popup view).",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
-                "$ref": "Tab",
-                "optional": true
+                "optional": true,
+                "$ref": "Tab"
               }
             ]
           }
@@ -517,63 +508,63 @@
       },
       {
         "name": "connect",
-        "type": "function",
         "description": "Connects to the content script(s) in the specified tab. The $(ref:runtime.onConnect) event is fired in each content script running in the specified tab for the current extension. For more details, see $(topic:messaging)[Content Script Messaging].",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "connectInfo",
+            "optional": true,
+            "type": "object",
             "properties": {
               "name": {
-                "type": "string",
+                "description": "Will be passed into onConnect for content scripts that are listening for the connection event.",
                 "optional": true,
-                "description": "Will be passed into onConnect for content scripts that are listening for the connection event."
+                "type": "string"
               },
               "frameId": {
-                "type": "integer",
+                "description": "Open a port to a specific $(topic:frame_ids)[frame] identified by \u003Ccode\u003EframeId\u003C/code\u003E instead of all frames in the tab.",
                 "optional": true,
-                "minimum": 0,
-                "description": "Open a port to a specific $(topic:frame_ids)[frame] identified by \u003Ccode\u003EframeId\u003C/code\u003E instead of all frames in the tab."
+                "type": "integer",
+                "minimum": 0
               }
-            },
-            "optional": true
+            }
           }
         ],
         "returns": {
-          "$ref": "runtime.Port",
-          "description": "A port that can be used to communicate with the content scripts running in the specified tab. The port\u0027s $(ref:runtime.Port) event is fired if the tab closes or does not exist. "
+          "description": "A port that can be used to communicate with the content scripts running in the specified tab. The port\u0027s $(ref:runtime.Port) event is fired if the tab closes or does not exist. ",
+          "$ref": "runtime.Port"
         }
       },
       {
         "name": "sendRequest",
-        "deprecated": "Please use $(ref:runtime.sendMessage).",
-        "unsupported": true,
-        "type": "function",
         "description": "Sends a single request to the content script(s) in the specified tab, with an optional callback to run when a response is sent back.  The $(ref:extension.onRequest) event is fired in each content script running in the specified tab for the current extension.",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:runtime.sendMessage).",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "any",
-            "name": "request"
+            "name": "request",
+            "type": "any"
           },
           {
-            "type": "function",
             "name": "responseCallback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "response",
-                "type": "any",
-                "description": "The JSON response object sent by the handler of the request. If an error occurs while connecting to the specified tab, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message."
+                "description": "The JSON response object sent by the handler of the request. If an error occurs while connecting to the specified tab, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message.",
+                "type": "any"
               }
             ]
           }
@@ -581,41 +572,41 @@
       },
       {
         "name": "sendMessage",
-        "type": "function",
         "description": "Sends a single message to the content script(s) in the specified tab, with an optional callback to run when a response is sent back.  The $(ref:runtime.onMessage) event is fired in each content script running in the specified tab for the current extension.",
         "async": "responseCallback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "any",
-            "name": "message"
+            "name": "message",
+            "type": "any"
           },
           {
-            "type": "object",
             "name": "options",
+            "optional": true,
+            "type": "object",
             "properties": {
               "frameId": {
-                "type": "integer",
+                "description": "Send a message to a specific $(topic:frame_ids)[frame] identified by \u003Ccode\u003EframeId\u003C/code\u003E instead of all frames in the tab.",
                 "optional": true,
-                "minimum": 0,
-                "description": "Send a message to a specific $(topic:frame_ids)[frame] identified by \u003Ccode\u003EframeId\u003C/code\u003E instead of all frames in the tab."
+                "type": "integer",
+                "minimum": 0
               }
-            },
-            "optional": true
+            }
           },
           {
-            "type": "function",
             "name": "responseCallback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "response",
-                "type": "any",
-                "description": "The JSON response object sent by the handler of the message. If an error occurs while connecting to the specified tab, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message."
+                "description": "The JSON response object sent by the handler of the message. If an error occurs while connecting to the specified tab, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message.",
+                "type": "any"
               }
             ]
           }
@@ -623,22 +614,22 @@
       },
       {
         "name": "getSelected",
-        "deprecated": "Please use $(ref:tabs.query) \u003Ccode\u003E{active: true}\u003C/code\u003E.",
-        "unsupported": true,
-        "type": "function",
         "description": "Gets the tab that is selected in the specified window.",
         "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:tabs.query) \u003Ccode\u003E{active: true}\u003C/code\u003E.",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
-            "minimum": -2,
+            "description": "Defaults to the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "Defaults to the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": -2
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
@@ -650,22 +641,22 @@
       },
       {
         "name": "getAllInWindow",
-        "deprecated": "Please use $(ref:tabs.query) \u003Ccode\u003E{windowId: windowId}\u003C/code\u003E.",
-        "unsupported": true,
-        "type": "function",
         "description": "Gets details about all tabs in the specified window.",
         "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:tabs.query) \u003Ccode\u003E{windowId: windowId}\u003C/code\u003E.",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
-            "minimum": -2,
+            "description": "Defaults to the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "Defaults to the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": -2
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "tabs",
@@ -680,86 +671,86 @@
       },
       {
         "name": "create",
-        "type": "function",
         "description": "Creates a new tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "createProperties",
+            "type": "object",
             "properties": {
               "windowId": {
-                "type": "integer",
-                "minimum": -2,
+                "description": "The window to create the new tab in. Defaults to the $(topic:current-window)[current window].",
                 "optional": true,
-                "description": "The window to create the new tab in. Defaults to the $(topic:current-window)[current window]."
+                "type": "integer",
+                "minimum": -2
               },
               "index": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The position the tab should take in the window. The provided value will be clamped to between zero and the number of tabs in the window.",
                 "optional": true,
-                "description": "The position the tab should take in the window. The provided value will be clamped to between zero and the number of tabs in the window."
+                "type": "integer",
+                "minimum": 0
               },
               "url": {
-                "type": "string",
+                "description": "The URL to navigate the tab to initially. Fully-qualified URLs must include a scheme (i.e. \u0027http://www.google.com\u0027, not \u0027www.google.com\u0027). Relative URLs will be relative to the current page within the extension. Defaults to the New Tab Page.",
                 "optional": true,
-                "description": "The URL to navigate the tab to initially. Fully-qualified URLs must include a scheme (i.e. \u0027http://www.google.com\u0027, not \u0027www.google.com\u0027). Relative URLs will be relative to the current page within the extension. Defaults to the New Tab Page."
+                "type": "string"
               },
               "active": {
-                "type": "boolean",
+                "description": "Whether the tab should become the active tab in the window. Does not affect whether the window is focused (see $(ref:windows.update)). Defaults to \u003Cvar\u003Etrue\u003C/var\u003E.",
                 "optional": true,
-                "description": "Whether the tab should become the active tab in the window. Does not affect whether the window is focused (see $(ref:windows.update)). Defaults to \u003Cvar\u003Etrue\u003C/var\u003E."
+                "type": "boolean"
               },
               "selected": {
-                "deprecated": "Please use \u003Cem\u003Eactive\u003C/em\u003E.",
-                "unsupported": true,
-                "type": "boolean",
+                "description": "Whether the tab should become the selected tab in the window. Defaults to \u003Cvar\u003Etrue\u003C/var\u003E",
                 "optional": true,
-                "description": "Whether the tab should become the selected tab in the window. Defaults to \u003Cvar\u003Etrue\u003C/var\u003E"
+                "type": "boolean",
+                "unsupported": true,
+                "deprecated": "Please use \u003Cem\u003Eactive\u003C/em\u003E."
               },
               "pinned": {
-                "type": "boolean",
+                "description": "Whether the tab should be pinned. Defaults to \u003Cvar\u003Efalse\u003C/var\u003E",
                 "optional": true,
-                "description": "Whether the tab should be pinned. Defaults to \u003Cvar\u003Efalse\u003C/var\u003E"
+                "type": "boolean"
               },
               "openerTabId": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as the newly created tab.",
                 "optional": true,
-                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as the newly created tab."
+                "type": "integer",
+                "minimum": 0
               },
               "cookieStoreId": {
-                "type": "string",
+                "description": "The CookieStoreId for the tab that opened this tab.",
                 "optional": true,
-                "description": "The CookieStoreId for the tab that opened this tab."
+                "type": "string"
               },
               "openInReaderMode": {
-                "type": "boolean",
+                "description": "Whether the document in the tab should be opened in reader mode.",
                 "optional": true,
-                "description": "Whether the document in the tab should be opened in reader mode."
+                "type": "boolean"
               },
               "discarded": {
-                "type": "boolean",
+                "description": "Whether the tab is marked as \u0027discarded\u0027 when created.",
                 "optional": true,
-                "description": "Whether the tab is marked as \u0027discarded\u0027 when created."
+                "type": "boolean"
               },
               "title": {
-                "type": "string",
+                "description": "The title used for display if the tab is created in discarded mode.",
                 "optional": true,
-                "description": "The title used for display if the tab is created in discarded mode."
+                "type": "string"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
-                "$ref": "Tab",
+                "description": "Details about the created tab. Will contain the ID of the new tab.",
                 "optional": true,
-                "description": "Details about the created tab. Will contain the ID of the new tab."
+                "$ref": "Tab"
               }
             ]
           }
@@ -767,42 +758,42 @@
       },
       {
         "name": "duplicate",
-        "type": "function",
         "description": "Duplicates a tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
-            "description": "The ID of the tab which is to be duplicated."
+            "description": "The ID of the tab which is to be duplicated.",
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "object",
             "name": "duplicateProperties",
             "optional": true,
+            "type": "object",
             "properties": {
               "index": {
-                "type": "integer",
+                "description": "The position the new tab should take in the window. The provided value will be clamped to between zero and the number of tabs in the window.",
                 "optional": true,
-                "description": "The position the new tab should take in the window. The provided value will be clamped to between zero and the number of tabs in the window."
+                "type": "integer"
               },
               "active": {
-                "type": "boolean",
+                "description": "Whether the tab should become the active tab in the window. Does not affect whether the window is focused (see $(ref:windows.update)). Defaults to \u003Cvar\u003Etrue\u003C/var\u003E.",
                 "optional": true,
-                "description": "Whether the tab should become the active tab in the window. Does not affect whether the window is focused (see $(ref:windows.update)). Defaults to \u003Cvar\u003Etrue\u003C/var\u003E."
+                "type": "boolean"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
-                "optional": true,
                 "description": "Details about the duplicated tab. The $(ref:tabs.Tab) object doesn\u0027t contain \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E if the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission has not been requested.",
+                "optional": true,
                 "$ref": "Tab"
               }
             ]
@@ -811,75 +802,77 @@
       },
       {
         "name": "query",
-        "type": "function",
         "description": "Gets all tabs that have the specified properties, or all tabs if no properties are specified.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "queryInfo",
+            "type": "object",
             "properties": {
               "active": {
-                "type": "boolean",
+                "description": "Whether the tabs are active in their windows.",
                 "optional": true,
-                "description": "Whether the tabs are active in their windows."
+                "type": "boolean"
               },
               "attention": {
-                "type": "boolean",
+                "description": "Whether the tabs are drawing attention.",
                 "optional": true,
-                "description": "Whether the tabs are drawing attention."
+                "type": "boolean"
               },
               "pinned": {
-                "type": "boolean",
+                "description": "Whether the tabs are pinned.",
                 "optional": true,
-                "description": "Whether the tabs are pinned."
+                "type": "boolean"
               },
               "audible": {
-                "type": "boolean",
+                "description": "Whether the tabs are audible.",
                 "optional": true,
-                "description": "Whether the tabs are audible."
+                "type": "boolean"
               },
               "muted": {
-                "type": "boolean",
+                "description": "Whether the tabs are muted.",
                 "optional": true,
-                "description": "Whether the tabs are muted."
+                "type": "boolean"
               },
               "highlighted": {
-                "type": "boolean",
+                "description": "Whether the tabs are highlighted.  Works as an alias of active.",
                 "optional": true,
-                "description": "Whether the tabs are highlighted.  Works as an alias of active."
+                "type": "boolean"
               },
               "currentWindow": {
-                "type": "boolean",
+                "description": "Whether the tabs are in the $(topic:current-window)[current window].",
                 "optional": true,
-                "description": "Whether the tabs are in the $(topic:current-window)[current window]."
+                "type": "boolean"
               },
               "lastFocusedWindow": {
-                "type": "boolean",
+                "description": "Whether the tabs are in the last focused window.",
                 "optional": true,
-                "description": "Whether the tabs are in the last focused window."
+                "type": "boolean"
               },
               "status": {
-                "$ref": "TabStatus",
+                "description": "Whether the tabs have completed loading.",
                 "optional": true,
-                "description": "Whether the tabs have completed loading."
+                "$ref": "TabStatus"
               },
               "discarded": {
-                "type": "boolean",
+                "description": "True while the tabs are not loaded with content.",
                 "optional": true,
-                "description": "True while the tabs are not loaded with content."
+                "type": "boolean"
               },
               "hidden": {
-                "type": "boolean",
+                "description": "True while the tabs are hidden.",
                 "optional": true,
-                "description": "True while the tabs are hidden."
+                "type": "boolean"
               },
               "title": {
-                "type": "string",
+                "description": "Match page titles against a pattern.",
                 "optional": true,
-                "description": "Match page titles against a pattern."
+                "type": "string"
               },
               "url": {
+                "description": "Match tabs against one or more $(topic:match_patterns)[URL patterns]. Note that fragment identifiers are not matched.",
+                "optional": true,
                 "choices": [
                   {
                     "type": "string"
@@ -890,39 +883,39 @@
                       "type": "string"
                     }
                   }
-                ],
-                "optional": true,
-                "description": "Match tabs against one or more $(topic:match_patterns)[URL patterns]. Note that fragment identifiers are not matched."
+                ]
               },
               "windowId": {
-                "type": "integer",
+                "description": "The ID of the parent window, or $(ref:windows.WINDOW_ID_CURRENT) for the $(topic:current-window)[current window].",
                 "optional": true,
-                "minimum": -2,
-                "description": "The ID of the parent window, or $(ref:windows.WINDOW_ID_CURRENT) for the $(topic:current-window)[current window]."
+                "type": "integer",
+                "minimum": -2
               },
               "windowType": {
-                "$ref": "WindowType",
+                "description": "The type of window the tabs are in.",
                 "optional": true,
-                "description": "The type of window the tabs are in."
+                "$ref": "WindowType"
               },
               "index": {
-                "type": "integer",
+                "description": "The position of the tabs within their windows.",
                 "optional": true,
-                "minimum": 0,
-                "description": "The position of the tabs within their windows."
+                "type": "integer",
+                "minimum": 0
               },
               "cookieStoreId": {
-                "type": "string",
+                "description": "The CookieStoreId used for the tab.",
                 "optional": true,
-                "description": "The CookieStoreId used for the tab."
+                "type": "string"
               },
               "openerTabId": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",
                 "optional": true,
-                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab."
+                "type": "integer",
+                "minimum": 0
               },
               "screen": {
+                "description": "True for any screen sharing, or a string to specify type of screen sharing.",
+                "optional": true,
                 "choices": [
                   {
                     "type": "string",
@@ -935,25 +928,23 @@
                   {
                     "type": "boolean"
                   }
-                ],
-                "optional": true,
-                "description": "True for any screen sharing, or a string to specify type of screen sharing."
+                ]
               },
               "camera": {
-                "type": "boolean",
+                "description": "True if the tab is using the camera.",
                 "optional": true,
-                "description": "True if the tab is using the camera."
+                "type": "boolean"
               },
               "microphone": {
-                "type": "boolean",
+                "description": "True if the tab is using the microphone.",
                 "optional": true,
-                "description": "True if the tab is using the microphone."
+                "type": "boolean"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "result",
@@ -968,25 +959,24 @@
       },
       {
         "name": "highlight",
-        "type": "function",
         "description": "Highlights the given tabs.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "highlightInfo",
+            "type": "object",
             "properties": {
               "windowId": {
-                "type": "integer",
-                "optional": true,
                 "description": "The window that contains the tabs.",
+                "optional": true,
+                "type": "integer",
                 "minimum": -2
               },
               "populate": {
-                "type": "boolean",
+                "description": "If true, the $(ref:windows.Window) returned will have a \u003Cvar\u003Etabs\u003C/var\u003E property that contains a list of the $(ref:tabs.Tab) objects. The \u003Ccode\u003ETab\u003C/code\u003E objects only contain the \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E properties if the extension\u0027s manifest file includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission. If false, the $(ref:windows.Window) won\u0027t have the \u003Cvar\u003Etabs\u003C/var\u003E property.",
                 "optional": true,
-                "default": true,
-                "description": "If true, the $(ref:windows.Window) returned will have a \u003Cvar\u003Etabs\u003C/var\u003E property that contains a list of the $(ref:tabs.Tab) objects. The \u003Ccode\u003ETab\u003C/code\u003E objects only contain the \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E properties if the extension\u0027s manifest file includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission. If false, the $(ref:windows.Window) won\u0027t have the \u003Cvar\u003Etabs\u003C/var\u003E property."
+                "type": "boolean"
               },
               "tabs": {
                 "description": "One or more tab indices to highlight.",
@@ -1006,14 +996,14 @@
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
-                "$ref": "windows.Window",
-                "description": "Contains details about the window whose tabs were highlighted."
+                "description": "Contains details about the window whose tabs were highlighted.",
+                "$ref": "windows.Window"
               }
             ]
           }
@@ -1021,82 +1011,82 @@
       },
       {
         "name": "update",
-        "type": "function",
         "description": "Modifies the properties of a tab. Properties that are not specified in \u003Cvar\u003EupdateProperties\u003C/var\u003E are not modified.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "Defaults to the selected tab of the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "Defaults to the selected tab of the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "object",
             "name": "updateProperties",
+            "type": "object",
             "properties": {
               "url": {
-                "type": "string",
+                "description": "A URL to navigate the tab to.",
                 "optional": true,
-                "description": "A URL to navigate the tab to."
+                "type": "string"
               },
               "active": {
-                "type": "boolean",
+                "description": "Whether the tab should be active. Does not affect whether the window is focused (see $(ref:windows.update)).",
                 "optional": true,
-                "description": "Whether the tab should be active. Does not affect whether the window is focused (see $(ref:windows.update))."
+                "type": "boolean"
               },
               "highlighted": {
-                "type": "boolean",
+                "description": "Adds or removes the tab from the current selection.",
                 "optional": true,
-                "description": "Adds or removes the tab from the current selection."
+                "type": "boolean"
               },
               "selected": {
-                "unsupported": true,
-                "deprecated": "Please use \u003Cem\u003Ehighlighted\u003C/em\u003E.",
-                "type": "boolean",
+                "description": "Whether the tab should be selected.",
                 "optional": true,
-                "description": "Whether the tab should be selected."
+                "type": "boolean",
+                "unsupported": true,
+                "deprecated": "Please use \u003Cem\u003Ehighlighted\u003C/em\u003E."
               },
               "pinned": {
-                "type": "boolean",
+                "description": "Whether the tab should be pinned.",
                 "optional": true,
-                "description": "Whether the tab should be pinned."
+                "type": "boolean"
               },
               "muted": {
-                "type": "boolean",
+                "description": "Whether the tab should be muted.",
                 "optional": true,
-                "description": "Whether the tab should be muted."
+                "type": "boolean"
               },
               "openerTabId": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",
                 "optional": true,
-                "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab."
+                "type": "integer",
+                "minimum": 0
               },
               "loadReplace": {
-                "type": "boolean",
+                "description": "Whether the load should replace the current history entry for the tab.",
                 "optional": true,
-                "description": "Whether the load should replace the current history entry for the tab."
+                "type": "boolean"
               },
               "successorTabId": {
-                "type": "integer",
-                "minimum": -1,
+                "description": "The ID of this tab\u0027s successor. If specified, the successor tab must be in the same window as this tab.",
                 "optional": true,
-                "description": "The ID of this tab\u0027s successor. If specified, the successor tab must be in the same window as this tab."
+                "type": "integer",
+                "minimum": -1
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "tab",
-                "$ref": "Tab",
+                "description": "Details about the updated tab. The $(ref:tabs.Tab) object doesn\u0027t contain \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E if the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission has not been requested.",
                 "optional": true,
-                "description": "Details about the updated tab. The $(ref:tabs.Tab) object doesn\u0027t contain \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E if the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission has not been requested."
+                "$ref": "Tab"
               }
             ]
           }
@@ -1104,9 +1094,9 @@
       },
       {
         "name": "move",
-        "type": "function",
         "description": "Moves one or more tabs to a new position within its window, or to a new window. Note that tabs can only be moved to and from normal (window.type === \u0022normal\u0022) windows.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
@@ -1126,26 +1116,26 @@
             ]
           },
           {
-            "type": "object",
             "name": "moveProperties",
+            "type": "object",
             "properties": {
               "windowId": {
-                "type": "integer",
-                "minimum": -2,
+                "description": "Defaults to the window the tab is currently in.",
                 "optional": true,
-                "description": "Defaults to the window the tab is currently in."
+                "type": "integer",
+                "minimum": -2
               },
               "index": {
+                "description": "The position to move the window to. -1 will place the tab at the end of the window.",
                 "type": "integer",
-                "minimum": -1,
-                "description": "The position to move the window to. -1 will place the tab at the end of the window."
+                "minimum": -1
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "tabs",
@@ -1168,57 +1158,57 @@
       },
       {
         "name": "reload",
-        "type": "function",
         "description": "Reload a tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to reload; defaults to the selected tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab to reload; defaults to the selected tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "object",
             "name": "reloadProperties",
             "optional": true,
+            "type": "object",
             "properties": {
               "bypassCache": {
-                "type": "boolean",
+                "description": "Whether using any local cache. Default is false.",
                 "optional": true,
-                "description": "Whether using any local cache. Default is false."
+                "type": "boolean"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "warmup",
-        "type": "function",
         "description": "Warm up a tab",
         "async": true,
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to warm up.",
             "optional": false,
-            "description": "The ID of the tab to warm up."
+            "type": "integer",
+            "minimum": 0
           }
         ]
       },
       {
         "name": "remove",
-        "type": "function",
         "description": "Closes one or more tabs.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
@@ -1238,18 +1228,18 @@
             ]
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "discard",
-        "type": "function",
         "description": "discards one or more tabs.",
         "async": true,
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
@@ -1272,25 +1262,25 @@
       },
       {
         "name": "detectLanguage",
-        "type": "function",
         "description": "Detects the primary language of the content in a tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "Defaults to the active tab of the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "Defaults to the active tab of the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
-                "type": "string",
                 "name": "language",
-                "description": "An ISO language code such as \u003Ccode\u003Een\u003C/code\u003E or \u003Ccode\u003Efr\u003C/code\u003E. For a complete list of languages supported by this method, see \u003Ca href=\u0027http://src.chromium.org/viewvc/chrome/trunk/src/third_party/cld/languages/internal/languages.cc\u0027\u003EkLanguageInfoTable\u003C/a\u003E. The 2nd to 4th columns will be checked and the first non-NULL value will be returned except for Simplified Chinese for which zh-CN will be returned. For an unknown language, \u003Ccode\u003Eund\u003C/code\u003E will be returned."
+                "description": "An ISO language code such as \u003Ccode\u003Een\u003C/code\u003E or \u003Ccode\u003Efr\u003C/code\u003E. For a complete list of languages supported by this method, see \u003Ca href=\u0027http://src.chromium.org/viewvc/chrome/trunk/src/third_party/cld/languages/internal/languages.cc\u0027\u003EkLanguageInfoTable\u003C/a\u003E. The 2nd to 4th columns will be checked and the first non-NULL value will be returned except for Simplified Chinese for which zh-CN will be returned. For an unknown language, \u003Ccode\u003Eund\u003C/code\u003E will be returned.",
+                "type": "string"
               }
             ]
           }
@@ -1298,71 +1288,65 @@
       },
       {
         "name": "toggleReaderMode",
-        "type": "function",
         "description": "Toggles reader mode for the document in the tab.",
         "async": true,
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "Defaults to the active tab of the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "Defaults to the active tab of the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": 0
           }
         ]
       },
       {
         "name": "captureTab",
-        "type": "function",
         "description": "Captures an area of a specified tab. You must have $(topic:declare_permissions)[\u0026lt;all_urls\u0026gt;] permission to use this method.",
-        "permissions": [
-          "\u003Call_urls\u003E"
-        ],
         "async": true,
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The tab to capture. Defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The tab to capture. Defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "$ref": "extensionTypes.ImageDetails",
             "name": "options",
-            "optional": true
+            "optional": true,
+            "$ref": "extensionTypes.ImageDetails"
           }
         ]
       },
       {
         "name": "captureVisibleTab",
-        "type": "function",
         "description": "Captures an area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[\u0026lt;all_urls\u0026gt;] permission to use this method.",
-        "permissions": [
-          "\u003Call_urls\u003E"
-        ],
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
-            "minimum": -2,
+            "description": "The target window. Defaults to the $(topic:current-window)[current window].",
             "optional": true,
-            "description": "The target window. Defaults to the $(topic:current-window)[current window]."
+            "type": "integer",
+            "minimum": -2
           },
           {
-            "$ref": "extensionTypes.ImageDetails",
             "name": "options",
-            "optional": true
+            "optional": true,
+            "$ref": "extensionTypes.ImageDetails"
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
-                "type": "string",
                 "name": "dataUrl",
-                "description": "A data URL which encodes an image of the visible area of the captured tab. May be assigned to the \u0027src\u0027 property of an HTML Image element for display."
+                "description": "A data URL which encodes an image of the visible area of the captured tab. May be assigned to the \u0027src\u0027 property of an HTML Image element for display.",
+                "type": "string"
               }
             ]
           }
@@ -1370,36 +1354,36 @@
       },
       {
         "name": "executeScript",
-        "type": "function",
         "description": "Injects JavaScript code into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab in which to run the script; defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab in which to run the script; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "$ref": "extensionTypes.InjectDetails",
             "name": "details",
-            "description": "Details of the script to run."
+            "description": "Details of the script to run.",
+            "$ref": "extensionTypes.InjectDetails"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called after all the JavaScript has been executed.",
+            "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "result",
+                "description": "The result of the script in every injected frame.",
                 "optional": true,
                 "type": "array",
                 "items": {
                   "type": "any"
-                },
-                "description": "The result of the script in every injected frame."
+                }
               }
             ]
           }
@@ -1407,107 +1391,107 @@
       },
       {
         "name": "insertCSS",
-        "type": "function",
         "description": "Injects CSS into a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab in which to insert the CSS; defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab in which to insert the CSS; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "$ref": "extensionTypes.InjectDetails",
             "name": "details",
-            "description": "Details of the CSS text to insert."
+            "description": "Details of the CSS text to insert.",
+            "$ref": "extensionTypes.InjectDetails"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called when all the CSS has been inserted.",
+            "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "removeCSS",
-        "type": "function",
         "description": "Removes injected CSS from a page. For details, see the $(topic:content_scripts)[programmatic injection] section of the content scripts doc.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab from which to remove the injected CSS; defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab from which to remove the injected CSS; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "$ref": "extensionTypes.InjectDetails",
             "name": "details",
-            "description": "Details of the CSS text to remove."
+            "description": "Details of the CSS text to remove.",
+            "$ref": "extensionTypes.InjectDetails"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called when all the CSS has been removed.",
+            "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "setZoom",
-        "type": "function",
         "description": "Zooms a specified tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to zoom; defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab to zoom; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "number",
             "name": "zoomFactor",
-            "description": "The new zoom factor. Use a value of 0 here to set the tab to its current default zoom factor. Values greater than zero specify a (possibly non-default) zoom factor for the tab."
+            "description": "The new zoom factor. Use a value of 0 here to set the tab to its current default zoom factor. Values greater than zero specify a (possibly non-default) zoom factor for the tab.",
+            "type": "number"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called after the zoom factor has been changed.",
+            "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "getZoom",
-        "type": "function",
         "description": "Gets the current zoom factor of a specified tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to get the current zoom factor from; defaults to the active tab of the current window.",
             "optional": true,
-            "description": "The ID of the tab to get the current zoom factor from; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
             "description": "Called with the tab\u0027s current zoom factor after it has been fetched.",
+            "type": "function",
             "parameters": [
               {
-                "type": "number",
                 "name": "zoomFactor",
-                "description": "The tab\u0027s current zoom factor."
+                "description": "The tab\u0027s current zoom factor.",
+                "type": "number"
               }
             ]
           }
@@ -1515,53 +1499,53 @@
       },
       {
         "name": "setZoomSettings",
-        "type": "function",
         "description": "Sets the zoom settings for a specified tab, which define how zoom changes are handled. These settings are reset to defaults upon navigating the tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "description": "The ID of the tab to change the zoom settings for; defaults to the active tab of the current window.",
             "optional": true,
-            "minimum": 0,
-            "description": "The ID of the tab to change the zoom settings for; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "$ref": "ZoomSettings",
             "name": "zoomSettings",
-            "description": "Defines how zoom changes are handled and at what scope."
+            "description": "Defines how zoom changes are handled and at what scope.",
+            "$ref": "ZoomSettings"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called after the zoom settings have been changed.",
+            "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "getZoomSettings",
-        "type": "function",
         "description": "Gets the current zoom settings of a specified tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "description": "The ID of the tab to get the current zoom settings from; defaults to the active tab of the current window.",
             "optional": true,
-            "minimum": 0,
-            "description": "The ID of the tab to get the current zoom settings from; defaults to the active tab of the current window."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
             "description": "Called with the tab\u0027s current zoom settings.",
+            "type": "function",
             "parameters": [
               {
-                "$ref": "ZoomSettings",
                 "name": "zoomSettings",
-                "description": "The tab\u0027s current zoom settings."
+                "description": "The tab\u0027s current zoom settings.",
+                "$ref": "ZoomSettings"
               }
             ]
           }
@@ -1569,46 +1553,46 @@
       },
       {
         "name": "print",
-        "type": "function",
         "description": "Prints page in active tab.",
+        "type": "function",
         "parameters": []
       },
       {
         "name": "printPreview",
-        "type": "function",
         "description": "Shows print preview for page in active tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called after print preview entered.",
+            "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "saveAsPDF",
-        "type": "function",
         "description": "Saves page in active tab as a PDF file.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "$ref": "PageSettings",
             "name": "pageSettings",
-            "description": "The page settings used to save the PDF file."
+            "description": "The page settings used to save the PDF file.",
+            "$ref": "PageSettings"
           },
           {
-            "type": "function",
             "name": "callback",
-            "optional": true,
             "description": "Called after save as dialog closed.",
+            "optional": true,
+            "type": "function",
             "parameters": [
               {
-                "type": "string",
                 "name": "status",
-                "description": "Save status: saved, replaced, canceled, not_saved, not_replaced."
+                "description": "Save status: saved, replaced, canceled, not_saved, not_replaced.",
+                "type": "string"
               }
             ]
           }
@@ -1616,12 +1600,9 @@
       },
       {
         "name": "show",
-        "type": "function",
         "description": "Shows one or more tabs.",
-        "permissions": [
-          "tabHide"
-        ],
         "async": true,
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
@@ -1644,12 +1625,9 @@
       },
       {
         "name": "hide",
-        "type": "function",
         "description": "Hides one or more tabs. The \u003Ccode\u003E\u0022tabHide\u0022\u003C/code\u003E permission is required to hide tabs.  Not all tabs are hidable.  Returns an array of hidden tabs.",
-        "permissions": [
-          "tabHide"
-        ],
         "async": true,
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
@@ -1672,44 +1650,42 @@
       },
       {
         "name": "moveInSuccession",
-        "type": "function",
-        "async": true,
         "description": "Removes an array of tabs from their lines of succession and prepends or appends them in a chain to another tab.",
+        "async": true,
+        "type": "function",
         "parameters": [
           {
             "name": "tabIds",
+            "description": "An array of tab IDs to move in the line of succession. For each tab in the array, the tab\u0027s current predecessors will have their successor set to the tab\u0027s current successor, and each tab will then be set to be the successor of the previous tab in the array. Any tabs not in the same window as the tab indicated by the second argument (or the first tab in the array, if no second argument) will be skipped.",
             "type": "array",
+            "minItems": 1,
             "items": {
               "type": "integer",
               "minimum": 0
-            },
-            "minItems": 1,
-            "description": "An array of tab IDs to move in the line of succession. For each tab in the array, the tab\u0027s current predecessors will have their successor set to the tab\u0027s current successor, and each tab will then be set to be the successor of the previous tab in the array. Any tabs not in the same window as the tab indicated by the second argument (or the first tab in the array, if no second argument) will be skipped."
+            }
           },
           {
             "name": "tabId",
-            "type": "integer",
+            "description": "The ID of a tab to set as the successor of the last tab in the array, or $(ref:tabs.TAB_ID_NONE) to leave the last tab without a successor. If options.append is true, then this tab is made the predecessor of the first tab in the array instead.",
             "optional": true,
             "default": -1,
-            "minimum": -1,
-            "description": "The ID of a tab to set as the successor of the last tab in the array, or $(ref:tabs.TAB_ID_NONE) to leave the last tab without a successor. If options.append is true, then this tab is made the predecessor of the first tab in the array instead."
+            "type": "integer",
+            "minimum": -1
           },
           {
             "name": "options",
-            "type": "object",
             "optional": true,
+            "type": "object",
             "properties": {
               "append": {
-                "type": "boolean",
+                "description": "Whether to move the tabs before (false) or after (true) tabId in the succession. Defaults to false.",
                 "optional": true,
-                "default": false,
-                "description": "Whether to move the tabs before (false) or after (true) tabId in the succession. Defaults to false."
+                "type": "boolean"
               },
               "insert": {
-                "type": "boolean",
+                "description": "Whether to link up the current predecessors or successor (depending on options.append) of tabId to the other side of the chain after it is prepended or appended. If true, one of the following happens: if options.append is false, the first tab in the array is set as the successor of any current predecessors of tabId; if options.append is true, the current successor of tabId is set as the successor of the last tab in the array. Defaults to false.",
                 "optional": true,
-                "default": false,
-                "description": "Whether to link up the current predecessors or successor (depending on options.append) of tabId to the other side of the chain after it is prepended or appended. If true, one of the following happens: if options.append is false, the first tab in the array is set as the successor of any current predecessors of tabId; if options.append is true, the current successor of tabId is set as the successor of the last tab in the array. Defaults to false."
+                "type": "boolean"
               }
             }
           }
@@ -1717,42 +1693,42 @@
       },
       {
         "name": "goForward",
-        "type": "function",
         "description": "Navigate to next page in tab\u0027s history, if available",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to navigate forward.",
             "optional": true,
-            "description": "The ID of the tab to navigate forward."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
       },
       {
         "name": "goBack",
-        "type": "function",
         "description": "Navigate to previous page in tab\u0027s history, if available.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
+            "description": "The ID of the tab to navigate backward.",
             "optional": true,
-            "description": "The ID of the tab to navigate backward."
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
@@ -1761,130 +1737,121 @@
     "events": [
       {
         "name": "onCreated",
-        "type": "function",
         "description": "Fired when a tab is created. Note that the tab\u0027s URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.",
+        "type": "function",
         "parameters": [
           {
-            "$ref": "Tab",
             "name": "tab",
-            "description": "Details of the tab that was created."
+            "description": "Details of the tab that was created.",
+            "$ref": "Tab"
           }
         ]
       },
       {
         "name": "onUpdated",
-        "type": "function",
         "description": "Fired when a tab is updated.",
+        "extraParameters": [
+          {
+            "name": "filter",
+            "description": "A set of filters that restricts the events that will be sent to this listener.",
+            "optional": true,
+            "$ref": "UpdateFilter"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "changeInfo",
             "description": "Lists the changes to the state of the tab that was updated.",
+            "type": "object",
             "properties": {
               "attention": {
-                "type": "boolean",
+                "description": "The tab\u0027s new attention state.",
                 "optional": true,
-                "description": "The tab\u0027s new attention state."
+                "type": "boolean"
               },
               "audible": {
-                "type": "boolean",
+                "description": "The tab\u0027s new audible state.",
                 "optional": true,
-                "description": "The tab\u0027s new audible state."
+                "type": "boolean"
               },
               "discarded": {
-                "type": "boolean",
+                "description": "True while the tab is not loaded with content.",
                 "optional": true,
-                "description": "True while the tab is not loaded with content."
+                "type": "boolean"
               },
               "favIconUrl": {
-                "type": "string",
+                "description": "The tab\u0027s new favicon URL. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
                 "optional": true,
-                "permissions": [
-                  "tabs"
-                ],
-                "description": "The tab\u0027s new favicon URL. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+                "type": "string"
               },
               "hidden": {
-                "type": "boolean",
+                "description": "The tab\u0027s new hidden state.",
                 "optional": true,
-                "description": "The tab\u0027s new hidden state."
+                "type": "boolean"
               },
               "isArticle": {
-                "type": "boolean",
+                "description": "Whether the document in the tab can be rendered in reader mode.",
                 "optional": true,
-                "description": "Whether the document in the tab can be rendered in reader mode."
+                "type": "boolean"
               },
               "mutedInfo": {
-                "$ref": "MutedInfo",
+                "description": "The tab\u0027s new muted state and the reason for the change.",
                 "optional": true,
-                "description": "The tab\u0027s new muted state and the reason for the change."
+                "$ref": "MutedInfo"
               },
               "pinned": {
-                "type": "boolean",
+                "description": "The tab\u0027s new pinned state.",
                 "optional": true,
-                "description": "The tab\u0027s new pinned state."
+                "type": "boolean"
               },
               "sharingState": {
-                "$ref": "SharingState",
+                "description": "The tab\u0027s new sharing state for screen, microphone and camera.",
                 "optional": true,
-                "description": "The tab\u0027s new sharing state for screen, microphone and camera."
+                "$ref": "SharingState"
               },
               "status": {
-                "type": "string",
+                "description": "The status of the tab. Can be either \u003Cem\u003Eloading\u003C/em\u003E or \u003Cem\u003Ecomplete\u003C/em\u003E.",
                 "optional": true,
-                "description": "The status of the tab. Can be either \u003Cem\u003Eloading\u003C/em\u003E or \u003Cem\u003Ecomplete\u003C/em\u003E."
+                "type": "string"
               },
               "title": {
-                "type": "string",
+                "description": "The title of the tab if it has changed. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
                 "optional": true,
-                "permissions": [
-                  "tabs"
-                ],
-                "description": "The title of the tab if it has changed. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+                "type": "string"
               },
               "url": {
-                "type": "string",
+                "description": "The tab\u0027s URL if it has changed. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
                 "optional": true,
-                "permissions": [
-                  "tabs"
-                ],
-                "description": "The tab\u0027s URL if it has changed. This property is only present if the extension\u0027s manifest includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+                "type": "string"
               }
             }
           },
           {
-            "$ref": "Tab",
             "name": "tab",
-            "description": "Gives the state of the tab that was updated."
-          }
-        ],
-        "extraParameters": [
-          {
-            "$ref": "UpdateFilter",
-            "name": "filter",
-            "optional": true,
-            "description": "A set of filters that restricts the events that will be sent to this listener."
+            "description": "Gives the state of the tab that was updated.",
+            "$ref": "Tab"
           }
         ]
       },
       {
         "name": "onMoved",
-        "type": "function",
         "description": "Fired when a tab is moved within a window. Only one move event is fired, representing the tab the user directly moved. Move events are not fired for the other tabs that must move in response. This event is not fired when a tab is moved between windows. For that, see $(ref:tabs.onDetached).",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "moveInfo",
+            "type": "object",
             "properties": {
               "windowId": {
                 "type": "integer",
@@ -1904,25 +1871,25 @@
       },
       {
         "name": "onSelectionChanged",
-        "deprecated": "Please use $(ref:tabs.onActivated).",
-        "unsupported": true,
-        "type": "function",
         "description": "Fires when the selected tab in a window changes.",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:tabs.onActivated).",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
-            "description": "The ID of the tab that has become active."
+            "description": "The ID of the tab that has become active.",
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "object",
             "name": "selectInfo",
+            "type": "object",
             "properties": {
               "windowId": {
+                "description": "The ID of the window the selected tab changed inside of.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the window the selected tab changed inside of."
+                "minimum": 0
               }
             }
           }
@@ -1930,25 +1897,25 @@
       },
       {
         "name": "onActiveChanged",
-        "deprecated": "Please use $(ref:tabs.onActivated).",
-        "unsupported": true,
-        "type": "function",
         "description": "Fires when the selected tab in a window changes. Note that the tab\u0027s URL may not be set at the time this event fired, but you can listen to $(ref:tabs.onUpdated) events to be notified when a URL is set.",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:tabs.onActivated).",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
-            "minimum": 0,
-            "description": "The ID of the tab that has become active."
+            "description": "The ID of the tab that has become active.",
+            "type": "integer",
+            "minimum": 0
           },
           {
-            "type": "object",
             "name": "selectInfo",
+            "type": "object",
             "properties": {
               "windowId": {
+                "description": "The ID of the window the selected tab changed inside of.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the window the selected tab changed inside of."
+                "minimum": 0
               }
             }
           }
@@ -1956,28 +1923,28 @@
       },
       {
         "name": "onActivated",
-        "type": "function",
         "description": "Fires when the active tab in a window changes. Note that the tab\u0027s URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "activeInfo",
+            "type": "object",
             "properties": {
               "tabId": {
+                "description": "The ID of the tab that has become active.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the tab that has become active."
+                "minimum": 0
               },
               "previousTabId": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The ID of the tab that was previously active, if that tab is still open.",
                 "optional": true,
-                "description": "The ID of the tab that was previously active, if that tab is still open."
+                "type": "integer",
+                "minimum": 0
               },
               "windowId": {
+                "description": "The ID of the window the active tab changed inside of.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the window the active tab changed inside of."
+                "minimum": 0
               }
             }
           }
@@ -1985,27 +1952,27 @@
       },
       {
         "name": "onHighlightChanged",
-        "deprecated": "Please use $(ref:tabs.onHighlighted).",
-        "unsupported": true,
-        "type": "function",
         "description": "Fired when the highlighted or selected tabs in a window changes.",
+        "type": "function",
+        "unsupported": true,
+        "deprecated": "Please use $(ref:tabs.onHighlighted).",
         "parameters": [
           {
-            "type": "object",
             "name": "selectInfo",
+            "type": "object",
             "properties": {
               "windowId": {
+                "description": "The window whose tabs changed.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The window whose tabs changed."
+                "minimum": 0
               },
               "tabIds": {
+                "description": "All highlighted tabs in the window.",
                 "type": "array",
                 "items": {
                   "type": "integer",
                   "minimum": 0
-                },
-                "description": "All highlighted tabs in the window."
+                }
               }
             }
           }
@@ -2013,25 +1980,25 @@
       },
       {
         "name": "onHighlighted",
-        "type": "function",
         "description": "Fired when the highlighted or selected tabs in a window changes.",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "highlightInfo",
+            "type": "object",
             "properties": {
               "windowId": {
+                "description": "The window whose tabs changed.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The window whose tabs changed."
+                "minimum": 0
               },
               "tabIds": {
+                "description": "All highlighted tabs in the window.",
                 "type": "array",
                 "items": {
                   "type": "integer",
                   "minimum": 0
-                },
-                "description": "All highlighted tabs in the window."
+                }
               }
             }
           }
@@ -2039,17 +2006,17 @@
       },
       {
         "name": "onDetached",
-        "type": "function",
         "description": "Fired when a tab is detached from a window, for example because it is being moved between windows.",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "detachInfo",
+            "type": "object",
             "properties": {
               "oldWindowId": {
                 "type": "integer",
@@ -2065,17 +2032,17 @@
       },
       {
         "name": "onAttached",
-        "type": "function",
         "description": "Fired when a tab is attached to a window, for example because it was moved between windows.",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "attachInfo",
+            "type": "object",
             "properties": {
               "newWindowId": {
                 "type": "integer",
@@ -2091,26 +2058,26 @@
       },
       {
         "name": "onRemoved",
-        "type": "function",
         "description": "Fired when a tab is closed.",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "tabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "object",
             "name": "removeInfo",
+            "type": "object",
             "properties": {
               "windowId": {
+                "description": "The window whose tab is closed.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The window whose tab is closed."
+                "minimum": 0
               },
               "isWindowClosing": {
-                "type": "boolean",
-                "description": "True when the tab is being closed because its window is being closed."
+                "description": "True when the tab is being closed because its window is being closed.",
+                "type": "boolean"
               }
             }
           }
@@ -2118,29 +2085,29 @@
       },
       {
         "name": "onReplaced",
-        "type": "function",
         "description": "Fired when a tab is replaced with another tab due to prerendering or instant.",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "addedTabId",
+            "type": "integer",
             "minimum": 0
           },
           {
-            "type": "integer",
             "name": "removedTabId",
+            "type": "integer",
             "minimum": 0
           }
         ]
       },
       {
         "name": "onZoomChange",
-        "type": "function",
         "description": "Fired when a tab is zoomed.",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "ZoomChangeInfo",
+            "type": "object",
             "properties": {
               "tabId": {
                 "type": "integer",

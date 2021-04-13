@@ -5,8 +5,8 @@
     "types": [
       {
         "id": "WindowType",
-        "type": "string",
         "description": "The type of browser window this is. Under some circumstances a Window may not be assigned type property, for example when querying closed windows from the $(ref:sessions) API.",
+        "type": "string",
         "enum": [
           "normal",
           "popup",
@@ -17,8 +17,8 @@
       },
       {
         "id": "WindowState",
-        "type": "string",
         "description": "The state of this browser window. Under some circumstances a Window may not be assigned state property, for example when querying closed windows from the $(ref:sessions) API.",
+        "type": "string",
         "enum": [
           "normal",
           "minimized",
@@ -32,77 +32,77 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
+            "description": "The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.",
             "optional": true,
-            "minimum": 0,
-            "description": "The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present."
+            "type": "integer",
+            "minimum": 0
           },
           "focused": {
-            "type": "boolean",
-            "description": "Whether the window is currently the focused window."
+            "description": "Whether the window is currently the focused window.",
+            "type": "boolean"
           },
           "top": {
-            "type": "integer",
+            "description": "The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API."
+            "type": "integer"
           },
           "left": {
-            "type": "integer",
+            "description": "The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API."
+            "type": "integer"
           },
           "width": {
-            "type": "integer",
+            "description": "The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API."
+            "type": "integer"
           },
           "height": {
-            "type": "integer",
+            "description": "The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API."
+            "type": "integer"
           },
           "tabs": {
+            "description": "Array of $(ref:tabs.Tab) objects representing the current tabs in the window.",
+            "optional": true,
             "type": "array",
             "items": {
               "$ref": "tabs.Tab"
-            },
-            "optional": true,
-            "description": "Array of $(ref:tabs.Tab) objects representing the current tabs in the window."
+            }
           },
           "incognito": {
-            "type": "boolean",
-            "description": "Whether the window is incognito."
+            "description": "Whether the window is incognito.",
+            "type": "boolean"
           },
           "type": {
-            "$ref": "WindowType",
+            "description": "The type of browser window this is.",
             "optional": true,
-            "description": "The type of browser window this is."
+            "$ref": "WindowType"
           },
           "state": {
-            "$ref": "WindowState",
+            "description": "The state of this browser window.",
             "optional": true,
-            "description": "The state of this browser window."
+            "$ref": "WindowState"
           },
           "alwaysOnTop": {
-            "type": "boolean",
-            "description": "Whether the window is set to be always on top."
+            "description": "Whether the window is set to be always on top.",
+            "type": "boolean"
           },
           "sessionId": {
-            "type": "string",
+            "description": "The session ID used to uniquely identify a Window obtained from the $(ref:sessions) API.",
             "optional": true,
-            "description": "The session ID used to uniquely identify a Window obtained from the $(ref:sessions) API."
+            "type": "string"
           },
           "title": {
-            "type": "string",
+            "description": "The title of the window. Read-only.",
             "optional": true,
-            "description": "The title of the window. Read-only."
+            "type": "string"
           }
         }
       },
       {
         "id": "CreateType",
-        "type": "string",
         "description": "Specifies what type of browser window to create. The \u0027panel\u0027 and \u0027detached_panel\u0027 types create a popup unless the \u0027--enable-panels\u0027 flag is set.",
+        "type": "string",
         "enum": [
           "normal",
           "popup",
@@ -112,56 +112,56 @@
       },
       {
         "id": "GetInfo",
-        "type": "object",
         "description": "Specifies whether the $(ref:windows.Window) returned should contain a list of the $(ref:tabs.Tab) objects.",
+        "type": "object",
         "properties": {
           "populate": {
-            "type": "boolean",
+            "description": "If true, the $(ref:windows.Window) returned will have a \u003Cvar\u003Etabs\u003C/var\u003E property that contains a list of the $(ref:tabs.Tab) objects. The \u003Ccode\u003ETab\u003C/code\u003E objects only contain the \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E properties if the extension\u0027s manifest file includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission.",
             "optional": true,
-            "description": "If true, the $(ref:windows.Window) returned will have a \u003Cvar\u003Etabs\u003C/var\u003E property that contains a list of the $(ref:tabs.Tab) objects. The \u003Ccode\u003ETab\u003C/code\u003E objects only contain the \u003Ccode\u003Eurl\u003C/code\u003E, \u003Ccode\u003Etitle\u003C/code\u003E and \u003Ccode\u003EfavIconUrl\u003C/code\u003E properties if the extension\u0027s manifest file includes the \u003Ccode\u003E\u0022tabs\u0022\u003C/code\u003E permission."
+            "type": "boolean"
           },
           "windowTypes": {
+            "description": "\u003Ccode\u003EwindowTypes\u003C/code\u003E is deprecated and ignored on Firefox.",
+            "optional": true,
             "type": "array",
+            "deprecated": true,
             "items": {
               "$ref": "WindowType"
-            },
-            "optional": true,
-            "deprecated": true,
-            "description": "\u003Ccode\u003EwindowTypes\u003C/code\u003E is deprecated and ignored on Firefox."
+            }
           }
         }
       }
     ],
     "properties": {
       "WINDOW_ID_NONE": {
-        "value": -1,
-        "description": "The windowId value that represents the absence of a browser window."
+        "description": "The windowId value that represents the absence of a browser window.",
+        "value": -1
       },
       "WINDOW_ID_CURRENT": {
-        "value": -2,
-        "description": "The windowId value that represents the $(topic:current-window)[current window]."
+        "description": "The windowId value that represents the $(topic:current-window)[current window].",
+        "value": -2
       }
     },
     "functions": [
       {
         "name": "get",
-        "type": "function",
         "description": "Gets details about a window.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
+            "type": "integer",
             "minimum": -2
           },
           {
-            "$ref": "GetInfo",
             "name": "getInfo",
-            "optional": true
+            "optional": true,
+            "$ref": "GetInfo"
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
@@ -173,18 +173,18 @@
       },
       {
         "name": "getCurrent",
-        "type": "function",
         "description": "Gets the $(topic:current-window)[current window].",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "$ref": "GetInfo",
             "name": "getInfo",
-            "optional": true
+            "optional": true,
+            "$ref": "GetInfo"
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
@@ -196,18 +196,18 @@
       },
       {
         "name": "getLastFocused",
-        "type": "function",
         "description": "Gets the window that was most recently focused \u0026mdash; typically the window \u0027on top\u0027.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "$ref": "GetInfo",
             "name": "getInfo",
-            "optional": true
+            "optional": true,
+            "$ref": "GetInfo"
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
@@ -219,30 +219,29 @@
       },
       {
         "name": "getAll",
-        "type": "function",
         "description": "Gets all windows.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
-            "$import": "GetInfo",
             "name": "getInfo",
-            "optional": true,
             "description": "Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.",
+            "optional": true,
+            "type": "object",
             "properties": {
               "windowTypes": {
+                "description": "If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to \u003Ccode\u003E[\u0027app\u0027, \u0027normal\u0027, \u0027panel\u0027, \u0027popup\u0027]\u003C/code\u003E, with \u003Ccode\u003E\u0027app\u0027\u003C/code\u003E and \u003Ccode\u003E\u0027panel\u0027\u003C/code\u003E window types limited to the extension\u0027s own windows.",
+                "optional": true,
                 "type": "array",
                 "items": {
                   "$ref": "WindowType"
-                },
-                "optional": true,
-                "description": "If set, the $(ref:windows.Window) returned will be filtered based on its type. If unset the default filter is set to \u003Ccode\u003E[\u0027app\u0027, \u0027normal\u0027, \u0027panel\u0027, \u0027popup\u0027]\u003C/code\u003E, with \u003Ccode\u003E\u0027app\u0027\u003C/code\u003E and \u003Ccode\u003E\u0027panel\u0027\u003C/code\u003E window types limited to the extension\u0027s own windows."
+                }
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "windows",
@@ -257,15 +256,15 @@
       },
       {
         "name": "create",
-        "type": "function",
         "description": "Creates (opens) a new browser with any optional sizing, position or default URL provided.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "createData",
             "optional": true,
             "default": {},
+            "type": "object",
             "properties": {
               "url": {
                 "description": "A URL or array of URLs to open as tabs in the window. Fully-qualified URLs must include a scheme (i.e. \u0027http://www.google.com\u0027, not \u0027www.google.com\u0027). Relative URLs will be relative to the current page within the extension. Defaults to the New Tab Page.",
@@ -285,34 +284,36 @@
                 ]
               },
               "tabId": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The id of the tab for which you want to adopt to the new window.",
                 "optional": true,
-                "description": "The id of the tab for which you want to adopt to the new window."
+                "type": "integer",
+                "minimum": 0
               },
               "left": {
-                "type": "integer",
+                "description": "The number of pixels to position the new window from the left edge of the screen. If not specified, the new window is offset naturally from the last focused window. This value is ignored for panels.",
                 "optional": true,
-                "description": "The number of pixels to position the new window from the left edge of the screen. If not specified, the new window is offset naturally from the last focused window. This value is ignored for panels."
+                "type": "integer"
               },
               "top": {
-                "type": "integer",
+                "description": "The number of pixels to position the new window from the top edge of the screen. If not specified, the new window is offset naturally from the last focused window. This value is ignored for panels.",
                 "optional": true,
-                "description": "The number of pixels to position the new window from the top edge of the screen. If not specified, the new window is offset naturally from the last focused window. This value is ignored for panels."
+                "type": "integer"
               },
               "width": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The width in pixels of the new window, including the frame. If not specified defaults to a natural width.",
                 "optional": true,
-                "description": "The width in pixels of the new window, including the frame. If not specified defaults to a natural width."
+                "type": "integer",
+                "minimum": 0
               },
               "height": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The height in pixels of the new window, including the frame. If not specified defaults to a natural height.",
                 "optional": true,
-                "description": "The height in pixels of the new window, including the frame. If not specified defaults to a natural height."
+                "type": "integer",
+                "minimum": 0
               },
               "focused": {
+                "description": "If true, opens an active window. If false, opens an inactive window.",
+                "optional": true,
                 "choices": [
                   {
                     "type": "boolean",
@@ -322,57 +323,55 @@
                   },
                   {
                     "type": "boolean",
+                    "deprecated": "Opening inactive windows is not supported.",
                     "enum": [
                       false
-                    ],
-                    "deprecated": "Opening inactive windows is not supported."
+                    ]
                   }
-                ],
-                "optional": true,
-                "description": "If true, opens an active window. If false, opens an inactive window."
+                ]
               },
               "incognito": {
-                "type": "boolean",
+                "description": "Whether the new window should be an incognito window.",
                 "optional": true,
-                "description": "Whether the new window should be an incognito window."
+                "type": "boolean"
               },
               "type": {
-                "$ref": "CreateType",
+                "description": "Specifies what type of browser window to create. The \u0027panel\u0027 and \u0027detached_panel\u0027 types create a popup unless the \u0027--enable-panels\u0027 flag is set.",
                 "optional": true,
-                "description": "Specifies what type of browser window to create. The \u0027panel\u0027 and \u0027detached_panel\u0027 types create a popup unless the \u0027--enable-panels\u0027 flag is set."
+                "$ref": "CreateType"
               },
               "state": {
-                "$ref": "WindowState",
+                "description": "The initial state of the window. The \u0027minimized\u0027, \u0027maximized\u0027 and \u0027fullscreen\u0027 states cannot be combined with \u0027left\u0027, \u0027top\u0027, \u0027width\u0027 or \u0027height\u0027.",
                 "optional": true,
-                "description": "The initial state of the window. The \u0027minimized\u0027, \u0027maximized\u0027 and \u0027fullscreen\u0027 states cannot be combined with \u0027left\u0027, \u0027top\u0027, \u0027width\u0027 or \u0027height\u0027."
+                "$ref": "WindowState"
               },
               "allowScriptsToClose": {
-                "type": "boolean",
+                "description": "Allow scripts to close the window.",
                 "optional": true,
-                "description": "Allow scripts to close the window."
+                "type": "boolean"
               },
               "cookieStoreId": {
-                "type": "string",
+                "description": "The CookieStoreId to use for all tabs that were created when the window is opened.",
                 "optional": true,
-                "description": "The CookieStoreId to use for all tabs that were created when the window is opened."
+                "type": "string"
               },
               "titlePreface": {
-                "type": "string",
+                "description": "A string to add to the beginning of the window title.",
                 "optional": true,
-                "description": "A string to add to the beginning of the window title."
+                "type": "string"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
-                "$ref": "Window",
                 "description": "Contains details about the created window.",
-                "optional": true
+                "optional": true,
+                "$ref": "Window"
               }
             ]
           }
@@ -380,67 +379,67 @@
       },
       {
         "name": "update",
-        "type": "function",
         "description": "Updates the properties of a window. Specify only the properties that you want to change; unspecified properties will be left unchanged.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
+            "type": "integer",
             "minimum": -2
           },
           {
-            "type": "object",
             "name": "updateInfo",
+            "type": "object",
             "properties": {
               "left": {
-                "type": "integer",
+                "description": "The offset from the left edge of the screen to move the window to in pixels. This value is ignored for panels.",
                 "optional": true,
-                "description": "The offset from the left edge of the screen to move the window to in pixels. This value is ignored for panels."
+                "type": "integer"
               },
               "top": {
-                "type": "integer",
+                "description": "The offset from the top edge of the screen to move the window to in pixels. This value is ignored for panels.",
                 "optional": true,
-                "description": "The offset from the top edge of the screen to move the window to in pixels. This value is ignored for panels."
+                "type": "integer"
               },
               "width": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The width to resize the window to in pixels. This value is ignored for panels.",
                 "optional": true,
-                "description": "The width to resize the window to in pixels. This value is ignored for panels."
+                "type": "integer",
+                "minimum": 0
               },
               "height": {
-                "type": "integer",
-                "minimum": 0,
+                "description": "The height to resize the window to in pixels. This value is ignored for panels.",
                 "optional": true,
-                "description": "The height to resize the window to in pixels. This value is ignored for panels."
+                "type": "integer",
+                "minimum": 0
               },
               "focused": {
-                "type": "boolean",
+                "description": "If true, brings the window to the front. If false, brings the next window in the z-order to the front.",
                 "optional": true,
-                "description": "If true, brings the window to the front. If false, brings the next window in the z-order to the front."
+                "type": "boolean"
               },
               "drawAttention": {
-                "type": "boolean",
+                "description": "If true, causes the window to be displayed in a manner that draws the user\u0027s attention to the window, without changing the focused window. The effect lasts until the user changes focus to the window. This option has no effect if the window already has focus. Set to false to cancel a previous draw attention request.",
                 "optional": true,
-                "description": "If true, causes the window to be displayed in a manner that draws the user\u0027s attention to the window, without changing the focused window. The effect lasts until the user changes focus to the window. This option has no effect if the window already has focus. Set to false to cancel a previous draw attention request."
+                "type": "boolean"
               },
               "state": {
-                "$ref": "WindowState",
+                "description": "The new state of the window. The \u0027minimized\u0027, \u0027maximized\u0027 and \u0027fullscreen\u0027 states cannot be combined with \u0027left\u0027, \u0027top\u0027, \u0027width\u0027 or \u0027height\u0027.",
                 "optional": true,
-                "description": "The new state of the window. The \u0027minimized\u0027, \u0027maximized\u0027 and \u0027fullscreen\u0027 states cannot be combined with \u0027left\u0027, \u0027top\u0027, \u0027width\u0027 or \u0027height\u0027."
+                "$ref": "WindowState"
               },
               "titlePreface": {
-                "type": "string",
+                "description": "A string to add to the beginning of the window title.",
                 "optional": true,
-                "description": "A string to add to the beginning of the window title."
+                "type": "string"
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": [
               {
                 "name": "window",
@@ -452,19 +451,19 @@
       },
       {
         "name": "remove",
-        "type": "function",
         "description": "Removes (closes) a window, and all the tabs inside it.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
+            "type": "integer",
             "minimum": -2
           },
           {
-            "type": "function",
             "name": "callback",
             "optional": true,
+            "type": "function",
             "parameters": []
           }
         ]
@@ -473,69 +472,39 @@
     "events": [
       {
         "name": "onCreated",
-        "type": "function",
         "description": "Fired when a window is created.",
-        "filters": [
-          {
-            "name": "windowTypes",
-            "type": "array",
-            "items": {
-              "$ref": "WindowType"
-            },
-            "description": "Conditions that the window\u0027s type being created must satisfy. By default it will satisfy \u003Ccode\u003E[\u0027app\u0027, \u0027normal\u0027, \u0027panel\u0027, \u0027popup\u0027]\u003C/code\u003E, with \u003Ccode\u003E\u0027app\u0027\u003C/code\u003E and \u003Ccode\u003E\u0027panel\u0027\u003C/code\u003E window types limited to the extension\u0027s own windows."
-          }
-        ],
+        "type": "function",
         "parameters": [
           {
-            "$ref": "Window",
             "name": "window",
-            "description": "Details of the window that was created."
+            "description": "Details of the window that was created.",
+            "$ref": "Window"
           }
         ]
       },
       {
         "name": "onRemoved",
-        "type": "function",
         "description": "Fired when a window is removed (closed).",
-        "filters": [
-          {
-            "name": "windowTypes",
-            "type": "array",
-            "items": {
-              "$ref": "WindowType"
-            },
-            "description": "Conditions that the window\u0027s type being removed must satisfy. By default it will satisfy \u003Ccode\u003E[\u0027app\u0027, \u0027normal\u0027, \u0027panel\u0027, \u0027popup\u0027]\u003C/code\u003E, with \u003Ccode\u003E\u0027app\u0027\u003C/code\u003E and \u003Ccode\u003E\u0027panel\u0027\u003C/code\u003E window types limited to the extension\u0027s own windows."
-          }
-        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
-            "minimum": 0,
-            "description": "ID of the removed window."
+            "description": "ID of the removed window.",
+            "type": "integer",
+            "minimum": 0
           }
         ]
       },
       {
         "name": "onFocusChanged",
-        "type": "function",
         "description": "Fired when the currently focused window changes. Will be $(ref:windows.WINDOW_ID_NONE) if all browser windows have lost focus. Note: On some Linux window managers, WINDOW_ID_NONE will always be sent immediately preceding a switch from one browser window to another.",
-        "filters": [
-          {
-            "name": "windowTypes",
-            "type": "array",
-            "items": {
-              "$ref": "WindowType"
-            },
-            "description": "Conditions that the window\u0027s type being removed must satisfy. By default it will satisfy \u003Ccode\u003E[\u0027app\u0027, \u0027normal\u0027, \u0027panel\u0027, \u0027popup\u0027]\u003C/code\u003E, with \u003Ccode\u003E\u0027app\u0027\u003C/code\u003E and \u003Ccode\u003E\u0027panel\u0027\u003C/code\u003E window types limited to the extension\u0027s own windows."
-          }
-        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "integer",
             "name": "windowId",
-            "minimum": -1,
-            "description": "ID of the newly focused window."
+            "description": "ID of the newly focused window.",
+            "type": "integer",
+            "minimum": -1
           }
         ]
       }

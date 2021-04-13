@@ -8,6 +8,7 @@
     "types": [
       {
         "id": "TransitionType",
+        "description": "Cause of the navigation. The same transition types as defined in the history API are used. These are the same transition types as defined in the $(topic:transition_types)[history API] except with \u003Ccode\u003E\u0022start_page\u0022\u003C/code\u003E in place of \u003Ccode\u003E\u0022auto_toplevel\u0022\u003C/code\u003E (for backwards compatibility).",
         "type": "string",
         "enum": [
           "link",
@@ -21,8 +22,7 @@
           "reload",
           "keyword",
           "keyword_generated"
-        ],
-        "description": "Cause of the navigation. The same transition types as defined in the history API are used. These are the same transition types as defined in the $(topic:transition_types)[history API] except with \u003Ccode\u003E\u0022start_page\u0022\u003C/code\u003E in place of \u003Ccode\u003E\u0022auto_toplevel\u0022\u003C/code\u003E (for backwards compatibility)."
+        ]
       },
       {
         "id": "TransitionQualifier",
@@ -51,62 +51,62 @@
     "functions": [
       {
         "name": "getFrame",
-        "type": "function",
         "description": "Retrieves information about the given frame. A frame refers to an \u0026lt;iframe\u0026gt; or a \u0026lt;frame\u0026gt; of a web page and is identified by a tab ID and a frame ID.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
             "description": "Information about the frame to retrieve information about.",
+            "type": "object",
             "properties": {
               "tabId": {
+                "description": "The ID of the tab in which the frame is.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the tab in which the frame is."
+                "minimum": 0
               },
               "processId": {
+                "description": "The ID of the process runs the renderer for this tab.",
                 "optional": true,
-                "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "type": "integer"
               },
               "frameId": {
+                "description": "The ID of the frame in the given tab.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the frame in the given tab."
+                "minimum": 0
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
-                "type": "object",
                 "name": "details",
-                "optional": true,
                 "description": "Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.",
+                "optional": true,
+                "type": "object",
                 "properties": {
                   "errorOccurred": {
+                    "description": "True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired.",
                     "optional": true,
-                    "type": "boolean",
-                    "description": "True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired."
+                    "type": "boolean"
                   },
                   "url": {
-                    "type": "string",
-                    "description": "The URL currently associated with this frame, if the frame identified by the frameId existed at one point in the given tab. The fact that an URL is associated with a given frameId does not imply that the corresponding frame still exists."
+                    "description": "The URL currently associated with this frame, if the frame identified by the frameId existed at one point in the given tab. The fact that an URL is associated with a given frameId does not imply that the corresponding frame still exists.",
+                    "type": "string"
                   },
                   "tabId": {
-                    "type": "integer",
-                    "description": "The ID of the tab in which the frame is."
+                    "description": "The ID of the tab in which the frame is.",
+                    "type": "integer"
                   },
                   "frameId": {
-                    "type": "integer",
-                    "description": "The ID of the frame. 0 indicates that this is the main frame; a positive value indicates the ID of a subframe."
+                    "description": "The ID of the frame. 0 indicates that this is the main frame; a positive value indicates the ID of a subframe.",
+                    "type": "integer"
                   },
                   "parentFrameId": {
-                    "type": "integer",
-                    "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists."
+                    "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists.",
+                    "type": "integer"
                   }
                 }
               }
@@ -116,59 +116,59 @@
       },
       {
         "name": "getAllFrames",
-        "type": "function",
         "description": "Retrieves information about all frames of a given tab.",
         "async": "callback",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
             "description": "Information about the tab to retrieve all frames from.",
+            "type": "object",
             "properties": {
               "tabId": {
+                "description": "The ID of the tab.",
                 "type": "integer",
-                "minimum": 0,
-                "description": "The ID of the tab."
+                "minimum": 0
               }
             }
           },
           {
-            "type": "function",
             "name": "callback",
+            "type": "function",
             "parameters": [
               {
                 "name": "details",
-                "type": "array",
                 "description": "A list of frames in the given tab, null if the specified tab ID is invalid.",
                 "optional": true,
+                "type": "array",
                 "items": {
                   "type": "object",
                   "properties": {
                     "errorOccurred": {
+                      "description": "True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired.",
                       "optional": true,
-                      "type": "boolean",
-                      "description": "True if the last navigation in this frame was interrupted by an error, i.e. the onErrorOccurred event fired."
+                      "type": "boolean"
                     },
                     "processId": {
-                      "unsupported": true,
+                      "description": "The ID of the process runs the renderer for this tab.",
                       "type": "integer",
-                      "description": "The ID of the process runs the renderer for this tab."
+                      "unsupported": true
                     },
                     "tabId": {
-                      "type": "integer",
-                      "description": "The ID of the tab in which the frame is."
+                      "description": "The ID of the tab in which the frame is.",
+                      "type": "integer"
                     },
                     "frameId": {
-                      "type": "integer",
-                      "description": "The ID of the frame. 0 indicates that this is the main frame; a positive value indicates the ID of a subframe."
+                      "description": "The ID of the frame. 0 indicates that this is the main frame; a positive value indicates the ID of a subframe.",
+                      "type": "integer"
                     },
                     "parentFrameId": {
-                      "type": "integer",
-                      "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists."
+                      "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists.",
+                      "type": "integer"
                     },
                     "url": {
-                      "type": "string",
-                      "description": "The URL currently associated with this frame."
+                      "description": "The URL currently associated with this frame.",
+                      "type": "string"
                     }
                   }
                 }
@@ -181,350 +181,350 @@
     "events": [
       {
         "name": "onBeforeNavigate",
-        "type": "function",
         "description": "Fired when a navigation is about to occur.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation is about to occur."
+                "description": "The ID of the tab in which the navigation is about to occur.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique for a given tab and process."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique for a given tab and process.",
+                "type": "integer"
               },
               "parentFrameId": {
-                "type": "integer",
-                "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists."
+                "description": "ID of frame that wraps the frame. Set to -1 of no parent frame exists.",
+                "type": "integer"
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the browser was about to start the navigation, in milliseconds since the epoch."
+                "description": "The time when the browser was about to start the navigation, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onCommitted",
-        "type": "function",
         "description": "Fired when a navigation is committed. The document (and the resources it refers to, such as images and subframes) might still be downloading, but at least part of the document has been received from the server and the browser has decided to switch to the new document.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "transitionType": {
-                "unsupported": true,
+                "description": "Cause of the navigation.",
                 "$ref": "TransitionType",
-                "description": "Cause of the navigation."
+                "unsupported": true
               },
               "transitionQualifiers": {
-                "unsupported": true,
-                "type": "array",
                 "description": "A list of transition qualifiers.",
+                "type": "array",
+                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the navigation was committed, in milliseconds since the epoch."
+                "description": "The time when the navigation was committed, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onDOMContentLoaded",
-        "type": "function",
         "description": "Fired when the page\u0027s DOM is fully constructed, but the referenced resources may not finish loading.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the page\u0027s DOM was fully constructed, in milliseconds since the epoch."
+                "description": "The time when the page\u0027s DOM was fully constructed, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onCompleted",
-        "type": "function",
         "description": "Fired when a document, including the resources it refers to, is completely loaded and initialized.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the document finished loading, in milliseconds since the epoch."
+                "description": "The time when the document finished loading, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onErrorOccurred",
-        "type": "function",
         "description": "Fired when an error occurs and the navigation is aborted. This can happen if either a network error occurred, or the user aborted the navigation.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "error": {
-                "unsupported": true,
+                "description": "The error description.",
                 "type": "string",
-                "description": "The error description."
+                "unsupported": true
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the error occurred, in milliseconds since the epoch."
+                "description": "The time when the error occurred, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onCreatedNavigationTarget",
-        "type": "function",
         "description": "Fired when a new window, or a new tab in an existing window, is created to host a navigation.",
-        "parameters": [
-          {
-            "type": "object",
-            "name": "details",
-            "properties": {
-              "sourceTabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation is triggered."
-              },
-              "sourceProcessId": {
-                "type": "integer",
-                "description": "The ID of the process runs the renderer for the source tab."
-              },
-              "sourceFrameId": {
-                "type": "integer",
-                "description": "The ID of the frame with sourceTabId in which the navigation is triggered. 0 indicates the main frame."
-              },
-              "url": {
-                "type": "string",
-                "description": "The URL to be opened in the new window."
-              },
-              "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the url is opened"
-              },
-              "timeStamp": {
-                "type": "number",
-                "description": "The time when the browser was about to create a new view, in milliseconds since the epoch."
-              }
-            }
-          }
-        ],
         "extraParameters": [
           {
             "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
             "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "sourceTabId": {
+                "description": "The ID of the tab in which the navigation is triggered.",
+                "type": "integer"
+              },
+              "sourceProcessId": {
+                "description": "The ID of the process runs the renderer for the source tab.",
+                "type": "integer"
+              },
+              "sourceFrameId": {
+                "description": "The ID of the frame with sourceTabId in which the navigation is triggered. 0 indicates the main frame.",
+                "type": "integer"
+              },
+              "url": {
+                "description": "The URL to be opened in the new window.",
+                "type": "string"
+              },
+              "tabId": {
+                "description": "The ID of the tab in which the url is opened",
+                "type": "integer"
+              },
+              "timeStamp": {
+                "description": "The time when the browser was about to create a new view, in milliseconds since the epoch.",
+                "type": "number"
+              }
+            }
           }
         ]
       },
       {
         "name": "onReferenceFragmentUpdated",
-        "type": "function",
         "description": "Fired when the reference fragment of a frame was updated. All future events for that frame will use the updated URL.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "transitionType": {
-                "unsupported": true,
+                "description": "Cause of the navigation.",
                 "$ref": "TransitionType",
-                "description": "Cause of the navigation."
+                "unsupported": true
               },
               "transitionQualifiers": {
-                "unsupported": true,
-                "type": "array",
                 "description": "A list of transition qualifiers.",
+                "type": "array",
+                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the navigation was committed, in milliseconds since the epoch."
+                "description": "The time when the navigation was committed, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       },
       {
         "name": "onTabReplaced",
-        "type": "function",
         "description": "Fired when the contents of the tab is replaced by a different (usually previously pre-rendered) tab.",
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "replacedTabId": {
-                "type": "integer",
-                "description": "The ID of the tab that was replaced."
+                "description": "The ID of the tab that was replaced.",
+                "type": "integer"
               },
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab that replaced the old tab."
+                "description": "The ID of the tab that replaced the old tab.",
+                "type": "integer"
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the replacement happened, in milliseconds since the epoch."
+                "description": "The time when the replacement happened, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
           }
@@ -532,55 +532,55 @@
       },
       {
         "name": "onHistoryStateUpdated",
-        "type": "function",
         "description": "Fired when the frame\u0027s history was updated to a new URL. All future events for that frame will use the updated URL.",
+        "extraParameters": [
+          {
+            "name": "filters",
+            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event.",
+            "optional": true,
+            "$ref": "EventUrlFilters"
+          }
+        ],
+        "type": "function",
         "parameters": [
           {
-            "type": "object",
             "name": "details",
+            "type": "object",
             "properties": {
               "tabId": {
-                "type": "integer",
-                "description": "The ID of the tab in which the navigation occurs."
+                "description": "The ID of the tab in which the navigation occurs.",
+                "type": "integer"
               },
               "url": {
                 "type": "string"
               },
               "processId": {
-                "unsupported": true,
+                "description": "The ID of the process runs the renderer for this tab.",
                 "type": "integer",
-                "description": "The ID of the process runs the renderer for this tab."
+                "unsupported": true
               },
               "frameId": {
-                "type": "integer",
-                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab."
+                "description": "0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.",
+                "type": "integer"
               },
               "transitionType": {
-                "unsupported": true,
+                "description": "Cause of the navigation.",
                 "$ref": "TransitionType",
-                "description": "Cause of the navigation."
+                "unsupported": true
               },
               "transitionQualifiers": {
-                "unsupported": true,
-                "type": "array",
                 "description": "A list of transition qualifiers.",
+                "type": "array",
+                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }
               },
               "timeStamp": {
-                "type": "number",
-                "description": "The time when the navigation was committed, in milliseconds since the epoch."
+                "description": "The time when the navigation was committed, in milliseconds since the epoch.",
+                "type": "number"
               }
             }
-          }
-        ],
-        "extraParameters": [
-          {
-            "name": "filters",
-            "optional": true,
-            "$ref": "EventUrlFilters",
-            "description": "Conditions that the URL being navigated to must satisfy. The \u0027schemes\u0027 and \u0027ports\u0027 fields of UrlFilter are ignored for this event."
           }
         ]
       }

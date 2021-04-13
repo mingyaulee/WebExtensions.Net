@@ -1,23 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// Common properties for all manifest.json files
-    /// </summary>
+    // Type Class
+    /// <summary>Common properties for all manifest.json files</summary>
     public class ManifestBase : BaseObject
     {
-        
-        // Property Definition
         private int _manifest_version;
-        /// <summary>
-        /// 
-        /// </summary>
+        private object _applications;
+        private object _browser_specific_settings;
+        private string _name;
+        private string _short_name;
+        private string _description;
+        private string _author;
+        private string _version;
+        private string _homepage_url;
+
+        /// <summary></summary>
         [JsonPropertyName("manifest_version")]
         public int Manifest_version
         {
@@ -31,12 +30,8 @@ namespace WebExtension.Net.Manifest
                 _manifest_version = value;
             }
         }
-        
-        // Property Definition
-        private object _applications;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("applications")]
         public object Applications
         {
@@ -50,12 +45,8 @@ namespace WebExtension.Net.Manifest
                 _applications = value;
             }
         }
-        
-        // Property Definition
-        private object _browser_specific_settings;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("browser_specific_settings")]
         public object Browser_specific_settings
         {
@@ -69,12 +60,8 @@ namespace WebExtension.Net.Manifest
                 _browser_specific_settings = value;
             }
         }
-        
-        // Property Definition
-        private string _name;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("name")]
         public string Name
         {
@@ -88,12 +75,8 @@ namespace WebExtension.Net.Manifest
                 _name = value;
             }
         }
-        
-        // Property Definition
-        private string _short_name;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("short_name")]
         public string Short_name
         {
@@ -107,12 +90,8 @@ namespace WebExtension.Net.Manifest
                 _short_name = value;
             }
         }
-        
-        // Property Definition
-        private string _description;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("description")]
         public string Description
         {
@@ -126,12 +105,8 @@ namespace WebExtension.Net.Manifest
                 _description = value;
             }
         }
-        
-        // Property Definition
-        private string _author;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("author")]
         public string Author
         {
@@ -145,12 +120,8 @@ namespace WebExtension.Net.Manifest
                 _author = value;
             }
         }
-        
-        // Property Definition
-        private string _version;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("version")]
         public string Version
         {
@@ -164,12 +135,8 @@ namespace WebExtension.Net.Manifest
                 _version = value;
             }
         }
-        
-        // Property Definition
-        private string _homepage_url;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("homepage_url")]
         public string Homepage_url
         {
@@ -185,4 +152,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

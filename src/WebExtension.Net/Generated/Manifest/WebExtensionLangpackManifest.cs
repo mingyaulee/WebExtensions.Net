@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// Represents a WebExtension language pack manifest.json file
-    /// </summary>
+    // Type Class
+    /// <summary>Represents a WebExtension language pack manifest.json file</summary>
     public class WebExtensionLangpackManifest : BaseObject
     {
-        
-        // Property Definition
         private string _homepage_url;
-        /// <summary>
-        /// 
-        /// </summary>
+        private string _langpack_id;
+        private object _languages;
+        private object _sources;
+
+        /// <summary></summary>
         [JsonPropertyName("homepage_url")]
         public string Homepage_url
         {
@@ -31,12 +25,8 @@ namespace WebExtension.Net.Manifest
                 _homepage_url = value;
             }
         }
-        
-        // Property Definition
-        private string _langpack_id;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("langpack_id")]
         public string Langpack_id
         {
@@ -50,12 +40,8 @@ namespace WebExtension.Net.Manifest
                 _langpack_id = value;
             }
         }
-        
-        // Property Definition
-        private object _languages;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("languages")]
         public object Languages
         {
@@ -69,12 +55,8 @@ namespace WebExtension.Net.Manifest
                 _languages = value;
             }
         }
-        
-        // Property Definition
-        private object _sources;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("sources")]
         public object Sources
         {
@@ -90,4 +72,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

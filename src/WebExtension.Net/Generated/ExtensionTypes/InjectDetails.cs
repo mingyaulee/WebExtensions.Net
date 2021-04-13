@@ -1,26 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.ExtensionTypes
 {
-    // Class Definition
-    /// <summary>
-    /// Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.
-    /// </summary>
+    // Type Class
+    /// <summary>Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.</summary>
     public class InjectDetails : BaseObject
     {
-        
-        // Property Definition
         private string _code;
-        /// <summary>
-        /// JavaScript or CSS code to inject.
-        /// 
-        /// <b>Warning:</b>
-        /// Be careful using the <c>code</c> parameter. Incorrect use of it may open your extension to <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">cross site scripting</a> attacks.
-        /// </summary>
+        private string _file;
+        private bool? _allFrames;
+        private bool? _matchAboutBlank;
+        private int? _frameId;
+        private RunAt _runAt;
+        private CSSOrigin _cssOrigin;
+
+        /// <summary>JavaScript or CSS code to inject.<br /><br />'b'Warning:'/b'<br />Be careful using the <c>code</c> parameter. Incorrect use of it may open your extension to <see href="https://en.wikipedia.org/wiki/Cross-site_scripting">cross site scripting</see> attacks.</summary>
         [JsonPropertyName("code")]
         public string Code
         {
@@ -34,12 +28,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _code = value;
             }
         }
-        
-        // Property Definition
-        private string _file;
-        /// <summary>
-        /// JavaScript or CSS file to inject.
-        /// </summary>
+
+        /// <summary>JavaScript or CSS file to inject.</summary>
         [JsonPropertyName("file")]
         public string File
         {
@@ -53,12 +43,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _file = value;
             }
         }
-        
-        // Property Definition
-        private bool? _allFrames;
-        /// <summary>
-        /// If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.
-        /// </summary>
+
+        /// <summary>If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.</summary>
         [JsonPropertyName("allFrames")]
         public bool? AllFrames
         {
@@ -72,12 +58,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _allFrames = value;
             }
         }
-        
-        // Property Definition
-        private bool? _matchAboutBlank;
-        /// <summary>
-        /// If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is <c>false</c>.
-        /// </summary>
+
+        /// <summary>If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is <c>false</c>.</summary>
         [JsonPropertyName("matchAboutBlank")]
         public bool? MatchAboutBlank
         {
@@ -91,12 +73,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _matchAboutBlank = value;
             }
         }
-        
-        // Property Definition
-        private int? _frameId;
-        /// <summary>
-        /// The ID of the frame to inject the script into. This may not be used in combination with <c>allFrames</c>.
-        /// </summary>
+
+        /// <summary>The ID of the frame to inject the script into. This may not be used in combination with <c>allFrames</c>.</summary>
         [JsonPropertyName("frameId")]
         public int? FrameId
         {
@@ -110,12 +88,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _frameId = value;
             }
         }
-        
-        // Property Definition
-        private RunAt _runAt;
-        /// <summary>
-        /// The soonest that the JavaScript or CSS will be injected into the tab. Defaults to "document_idle".
-        /// </summary>
+
+        /// <summary>The soonest that the JavaScript or CSS will be injected into the tab. Defaults to "document_idle".</summary>
         [JsonPropertyName("runAt")]
         public RunAt RunAt
         {
@@ -129,12 +103,8 @@ namespace WebExtension.Net.ExtensionTypes
                 _runAt = value;
             }
         }
-        
-        // Property Definition
-        private CSSOrigin _cssOrigin;
-        /// <summary>
-        /// The css origin of the stylesheet to inject. Defaults to "author".
-        /// </summary>
+
+        /// <summary>The css origin of the stylesheet to inject. Defaults to "author".</summary>
         [JsonPropertyName("cssOrigin")]
         public CSSOrigin CssOrigin
         {
@@ -150,4 +120,3 @@ namespace WebExtension.Net.ExtensionTypes
         }
     }
 }
-

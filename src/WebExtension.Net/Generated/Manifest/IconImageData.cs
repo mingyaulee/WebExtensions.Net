@@ -1,32 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
 namespace WebExtension.Net.Manifest
 {
-    // MultiType Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Multitype Class
+    /// <summary></summary>
     public class IconImageData
     {
         private readonly object currentValue = null;
-    
-        /// <summary>Creates a new instance of IconImageData.</summary>
-        public IconImageData(object valueobject)
+
+        /// <summary>Creates a new instance of <see cref="IconImageData" />.</summary>
+        public IconImageData()
         {
-            currentValue = valueobject;
         }
-        
-        /// <summary>Creates a new instance of IconImageData.</summary>
-        public IconImageData(ImageData valueImageData)
+
+        /// <summary>Creates a new instance of <see cref="IconImageData" />.</summary>
+        /// <param name="value">The value.</param>
+        public IconImageData(object value)
         {
-            currentValue = valueImageData;
+            currentValue = value;
         }
-        
-    
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -34,4 +25,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

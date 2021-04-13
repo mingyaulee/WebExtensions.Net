@@ -1,23 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Manifest
 {
-    // Class Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Type Class
+    /// <summary></summary>
     public class ThemeIcons : BaseObject
     {
-        
-        // Property Definition
         private ExtensionURL _light;
-        /// <summary>
-        /// A light icon to use for dark themes
-        /// </summary>
+        private ExtensionURL _dark;
+        private int _size;
+
+        /// <summary>A light icon to use for dark themes</summary>
         [JsonPropertyName("light")]
         public ExtensionURL Light
         {
@@ -31,12 +24,8 @@ namespace WebExtension.Net.Manifest
                 _light = value;
             }
         }
-        
-        // Property Definition
-        private ExtensionURL _dark;
-        /// <summary>
-        /// The dark icon to use for light themes
-        /// </summary>
+
+        /// <summary>The dark icon to use for light themes</summary>
         [JsonPropertyName("dark")]
         public ExtensionURL Dark
         {
@@ -50,12 +39,8 @@ namespace WebExtension.Net.Manifest
                 _dark = value;
             }
         }
-        
-        // Property Definition
-        private int _size;
-        /// <summary>
-        /// The size of the icons
-        /// </summary>
+
+        /// <summary>The size of the icons</summary>
         [JsonPropertyName("size")]
         public int Size
         {
@@ -71,4 +56,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-

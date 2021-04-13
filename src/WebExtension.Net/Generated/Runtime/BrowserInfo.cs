@@ -1,23 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.Runtime
 {
-    // Class Definition
-    /// <summary>
-    /// An object containing information about the current browser.
-    /// </summary>
+    // Type Class
+    /// <summary>An object containing information about the current browser.</summary>
     public class BrowserInfo : BaseObject
     {
-        
-        // Property Definition
         private string _name;
-        /// <summary>
-        /// The name of the browser, for example 'Firefox'.
-        /// </summary>
+        private string _vendor;
+        private string _version;
+        private string _buildID;
+
+        /// <summary>The name of the browser, for example 'Firefox'.</summary>
         [JsonPropertyName("name")]
         public string Name
         {
@@ -31,12 +25,8 @@ namespace WebExtension.Net.Runtime
                 _name = value;
             }
         }
-        
-        // Property Definition
-        private string _vendor;
-        /// <summary>
-        /// The name of the browser vendor, for example 'Mozilla'.
-        /// </summary>
+
+        /// <summary>The name of the browser vendor, for example 'Mozilla'.</summary>
         [JsonPropertyName("vendor")]
         public string Vendor
         {
@@ -50,12 +40,8 @@ namespace WebExtension.Net.Runtime
                 _vendor = value;
             }
         }
-        
-        // Property Definition
-        private string _version;
-        /// <summary>
-        /// The browser's version, for example '42.0.0' or '0.8.1pre'.
-        /// </summary>
+
+        /// <summary>The browser's version, for example '42.0.0' or '0.8.1pre'.</summary>
         [JsonPropertyName("version")]
         public string Version
         {
@@ -69,12 +55,8 @@ namespace WebExtension.Net.Runtime
                 _version = value;
             }
         }
-        
-        // Property Definition
-        private string _buildID;
-        /// <summary>
-        /// The browser's build ID/date, for example '20160101'.
-        /// </summary>
+
+        /// <summary>The browser's build ID/date, for example '20160101'.</summary>
         [JsonPropertyName("buildID")]
         public string BuildID
         {
@@ -90,4 +72,3 @@ namespace WebExtension.Net.Runtime
         }
     }
 }
-

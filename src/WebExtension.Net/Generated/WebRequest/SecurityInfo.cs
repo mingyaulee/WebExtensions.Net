@@ -1,23 +1,29 @@
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebRequest
 {
-    // Class Definition
-    /// <summary>
-    /// Contains the security properties of the request (ie. SSL/TLS information).
-    /// </summary>
+    // Type Class
+    /// <summary>Contains the security properties of the request (ie. SSL/TLS information).</summary>
     public class SecurityInfo : BaseObject
     {
-        
-        // Property Definition
         private string _state;
-        /// <summary>
-        /// 
-        /// </summary>
+        private string _errorMessage;
+        private string _protocolVersion;
+        private string _cipherSuite;
+        private string _keaGroupName;
+        private string _signatureSchemeName;
+        private IEnumerable<CertificateInfo> _certificates;
+        private bool? _isDomainMismatch;
+        private bool? _isExtendedValidation;
+        private bool? _isNotValidAtThisTime;
+        private bool? _isUntrusted;
+        private CertificateTransparencyStatus _certificateTransparencyStatus;
+        private bool? _hsts;
+        private string _hpkp;
+        private IEnumerable<TransportWeaknessReasons> _weaknessReasons;
+
+        /// <summary></summary>
         [JsonPropertyName("state")]
         public string State
         {
@@ -31,12 +37,8 @@ namespace WebExtension.Net.WebRequest
                 _state = value;
             }
         }
-        
-        // Property Definition
-        private string _errorMessage;
-        /// <summary>
-        /// Error message if state is "broken"
-        /// </summary>
+
+        /// <summary>Error message if state is "broken"</summary>
         [JsonPropertyName("errorMessage")]
         public string ErrorMessage
         {
@@ -50,12 +52,8 @@ namespace WebExtension.Net.WebRequest
                 _errorMessage = value;
             }
         }
-        
-        // Property Definition
-        private string _protocolVersion;
-        /// <summary>
-        /// Protocol version if state is "secure"
-        /// </summary>
+
+        /// <summary>Protocol version if state is "secure"</summary>
         [JsonPropertyName("protocolVersion")]
         public string ProtocolVersion
         {
@@ -69,12 +67,8 @@ namespace WebExtension.Net.WebRequest
                 _protocolVersion = value;
             }
         }
-        
-        // Property Definition
-        private string _cipherSuite;
-        /// <summary>
-        /// The cipher suite used in this request if state is "secure".
-        /// </summary>
+
+        /// <summary>The cipher suite used in this request if state is "secure".</summary>
         [JsonPropertyName("cipherSuite")]
         public string CipherSuite
         {
@@ -88,12 +82,8 @@ namespace WebExtension.Net.WebRequest
                 _cipherSuite = value;
             }
         }
-        
-        // Property Definition
-        private string _keaGroupName;
-        /// <summary>
-        /// The key exchange algorithm used in this request if state is "secure".
-        /// </summary>
+
+        /// <summary>The key exchange algorithm used in this request if state is "secure".</summary>
         [JsonPropertyName("keaGroupName")]
         public string KeaGroupName
         {
@@ -107,12 +97,8 @@ namespace WebExtension.Net.WebRequest
                 _keaGroupName = value;
             }
         }
-        
-        // Property Definition
-        private string _signatureSchemeName;
-        /// <summary>
-        /// The signature scheme used in this request if state is "secure".
-        /// </summary>
+
+        /// <summary>The signature scheme used in this request if state is "secure".</summary>
         [JsonPropertyName("signatureSchemeName")]
         public string SignatureSchemeName
         {
@@ -126,12 +112,8 @@ namespace WebExtension.Net.WebRequest
                 _signatureSchemeName = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<CertificateInfo> _certificates;
-        /// <summary>
-        /// Certificate data if state is "secure".  Will only contain one entry unless <c>certificateChain</c> is passed as an option.
-        /// </summary>
+
+        /// <summary>Certificate data if state is "secure".  Will only contain one entry unless <c>certificateChain</c> is passed as an option.</summary>
         [JsonPropertyName("certificates")]
         public IEnumerable<CertificateInfo> Certificates
         {
@@ -145,12 +127,8 @@ namespace WebExtension.Net.WebRequest
                 _certificates = value;
             }
         }
-        
-        // Property Definition
-        private bool? _isDomainMismatch;
-        /// <summary>
-        /// The domain name does not match the certificate domain.
-        /// </summary>
+
+        /// <summary>The domain name does not match the certificate domain.</summary>
         [JsonPropertyName("isDomainMismatch")]
         public bool? IsDomainMismatch
         {
@@ -164,12 +142,8 @@ namespace WebExtension.Net.WebRequest
                 _isDomainMismatch = value;
             }
         }
-        
-        // Property Definition
-        private bool? _isExtendedValidation;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("isExtendedValidation")]
         public bool? IsExtendedValidation
         {
@@ -183,12 +157,8 @@ namespace WebExtension.Net.WebRequest
                 _isExtendedValidation = value;
             }
         }
-        
-        // Property Definition
-        private bool? _isNotValidAtThisTime;
-        /// <summary>
-        /// The certificate is either expired or is not yet valid.  See <c>CertificateInfo.validity</c> for start and end dates.
-        /// </summary>
+
+        /// <summary>The certificate is either expired or is not yet valid.  See <c>CertificateInfo.validity</c> for start and end dates.</summary>
         [JsonPropertyName("isNotValidAtThisTime")]
         public bool? IsNotValidAtThisTime
         {
@@ -202,12 +172,8 @@ namespace WebExtension.Net.WebRequest
                 _isNotValidAtThisTime = value;
             }
         }
-        
-        // Property Definition
-        private bool? _isUntrusted;
-        /// <summary>
-        /// 
-        /// </summary>
+
+        /// <summary></summary>
         [JsonPropertyName("isUntrusted")]
         public bool? IsUntrusted
         {
@@ -221,12 +187,8 @@ namespace WebExtension.Net.WebRequest
                 _isUntrusted = value;
             }
         }
-        
-        // Property Definition
-        private CertificateTransparencyStatus _certificateTransparencyStatus;
-        /// <summary>
-        /// Certificate transparency compliance per RFC 6962.  See <c>https://www.certificate-transparency.org/what-is-ct</c> for more information.
-        /// </summary>
+
+        /// <summary>Certificate transparency compliance per RFC 6962.  See <c>https://www.certificate-transparency.org/what-is-ct</c> for more information.</summary>
         [JsonPropertyName("certificateTransparencyStatus")]
         public CertificateTransparencyStatus CertificateTransparencyStatus
         {
@@ -240,12 +202,8 @@ namespace WebExtension.Net.WebRequest
                 _certificateTransparencyStatus = value;
             }
         }
-        
-        // Property Definition
-        private bool? _hsts;
-        /// <summary>
-        /// True if host uses Strict Transport Security and state is "secure".
-        /// </summary>
+
+        /// <summary>True if host uses Strict Transport Security and state is "secure".</summary>
         [JsonPropertyName("hsts")]
         public bool? Hsts
         {
@@ -259,12 +217,8 @@ namespace WebExtension.Net.WebRequest
                 _hsts = value;
             }
         }
-        
-        // Property Definition
-        private string _hpkp;
-        /// <summary>
-        /// True if host uses Public Key Pinning and state is "secure".
-        /// </summary>
+
+        /// <summary>True if host uses Public Key Pinning and state is "secure".</summary>
         [JsonPropertyName("hpkp")]
         public string Hpkp
         {
@@ -278,12 +232,8 @@ namespace WebExtension.Net.WebRequest
                 _hpkp = value;
             }
         }
-        
-        // Property Definition
-        private IEnumerable<TransportWeaknessReasons> _weaknessReasons;
-        /// <summary>
-        /// list of reasons that cause the request to be considered weak, if state is "weak"
-        /// </summary>
+
+        /// <summary>list of reasons that cause the request to be considered weak, if state is "weak"</summary>
         [JsonPropertyName("weaknessReasons")]
         public IEnumerable<TransportWeaknessReasons> WeaknessReasons
         {
@@ -299,4 +249,3 @@ namespace WebExtension.Net.WebRequest
         }
     }
 }
-

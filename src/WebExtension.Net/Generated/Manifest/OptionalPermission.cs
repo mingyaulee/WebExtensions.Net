@@ -1,52 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
 namespace WebExtension.Net.Manifest
 {
-    // MultiType Definition
-    /// <summary>
-    /// 
-    /// </summary>
+    // Multitype Class
+    /// <summary></summary>
     public class OptionalPermission
     {
+        private readonly string valueString;
         private readonly object currentValue = null;
-    
-        private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
-        /// <summary>Creates a new instance of OptionalPermission.</summary>
-        public OptionalPermission(OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt)
+
+        /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
+        public OptionalPermission()
         {
-            this.valueOptionalPermissionNoPrompt = valueOptionalPermissionNoPrompt;
-            currentValue = valueOptionalPermissionNoPrompt;
         }
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator OptionalPermissionNoPrompt(OptionalPermission value) => value.valueOptionalPermissionNoPrompt;
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator OptionalPermission(OptionalPermissionNoPrompt value) => new(value);
-        
-        private readonly string valuestring;
-        /// <summary>Creates a new instance of OptionalPermission.</summary>
-        public OptionalPermission(string valuestring)
+
+        /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
+        /// <param name="value">The value.</param>
+        public OptionalPermission(string value)
         {
-            this.valuestring = valuestring;
-            currentValue = valuestring;
+            valueString = value;
+            currentValue = value;
         }
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
-        public static implicit operator string(OptionalPermission value) => value.valuestring;
-        
-        /// <summary></summary>
-        /// <param name="value"></param>
+
+        /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="string" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator string(OptionalPermission value) => value.valueString;
+
+        /// <summary>Converts from <see cref="string" /> to <see cref="OptionalPermission" />.</summary>
+        /// <param name="value">The value to convert from.</param>
         public static implicit operator OptionalPermission(string value) => new(value);
-        
-    
+
         /// <inheritdoc />
         public override string ToString()
         {
@@ -54,4 +35,3 @@ namespace WebExtension.Net.Manifest
         }
     }
 }
-
