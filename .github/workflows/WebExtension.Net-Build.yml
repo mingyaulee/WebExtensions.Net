@@ -5,7 +5,28 @@ on:
     branches: [ main ]
 
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      SemVer: ${{ steps.gitversion.outputs.SemVer }}
+      FullSemVer: ${{ steps.gitversion.outputs.FullSemVer }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: 5.x
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
+
   buildAndTest:
+    needs: version
     runs-on: windows-latest
     steps:
     - name: Set up JDK 11
@@ -52,35 +73,24 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"mingyaulee_WebExtension.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="src/Tests/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="src/Tests/TestResults/**/*.opencover.xml"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"mingyaulee_WebExtension.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.FullSemVer }}" /d:sonar.cs.vstest.reportsPaths="src/Tests/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="src/Tests/TestResults/**/*.opencover.xml"
         dotnet build ./src --configuration Release
         .\.coverlet\console\coverlet ./src/Tests/WebExtension.Net.BrowserExtensionIntegrationTest/bin/Release/net5.0/wwwroot/framework --include "[WebExtension.Net]*" --target "dotnet" --targetargs "test ./src --no-build --no-restore --configuration Release" --format opencover --output ./src/Tests/TestResults/coverage --verbosity detailed
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   tag:
-    needs: buildAndTest
+    needs: [version, buildAndTest]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.7
-      with:
-        versionSpec: 5.x
-    - name: Determine Version
-      id: gitversion
-      uses: gittools/actions/gitversion/execute@v0.9.7
-      with:
-        useConfigFile: true
     - name: Check if tag exists
       id: tagExistsCheck
       shell: bash
-      run: git show-ref --tags --verify --quiet -- "refs/tags/v${{ steps.gitversion.outputs.SemVer }}" && echo "::set-output name=tagExists::1" || echo "::set-output name=tagExists::0"
+      run: git show-ref --tags --verify --quiet -- "refs/tags/v${{ needs.version.outputs.SemVer }}" && echo "::set-output name=tagExists::1" || echo "::set-output name=tagExists::0"
     - name: Create tag
       if: steps.tagExistsCheck.outputs.tagExists == 0
       uses: negz/create-tag@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        version: v${{ steps.gitversion.outputs.SemVer }}
+        version: v${{ needs.version.outputs.SemVer }}
