@@ -4,9 +4,10 @@
 
 A package for consuming WebExtensions API in a browser extension.
 
-These API classes are generated from these Mozilla schema files:
-- [toolkit](https://hg.mozilla.org/integration/autoland/raw-file/tip/toolkit/components/extensions/schemas/)
-- [browser](https://hg.mozilla.org/integration/autoland/raw-file/tip/browser/components/extensions/schemas/)
+These API classes are generated based on the [Mozilla documentation for WebExtension API](https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html).
+
+- [toolkit](https://searchfox.org/mozilla-central/source/toolkit/components/extensions/ext-toolkit.json)
+- [browser](https://searchfox.org/mozilla-central/source/browser/components/extensions/ext-browser.json)
 
 ## How to use this package
 This package can be consumed in two methods.
