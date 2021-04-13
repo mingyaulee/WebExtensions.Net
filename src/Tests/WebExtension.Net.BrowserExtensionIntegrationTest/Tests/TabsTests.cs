@@ -16,7 +16,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public TabsTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
-            testTabUrl = "https://developer.chrome.com/?testId=" + Guid.NewGuid().ToString();
+            testTabUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtension.Net/main/README.md?testId=" + Guid.NewGuid().ToString();
         }
 
         [Fact]

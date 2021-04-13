@@ -52,10 +52,17 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 await WriteResultsToFile(trxFilePath, resultsXML);
                 Console.WriteLine($"Results file: {trxFilePath}");
 
-                // Test coverage
-                var testCoverage = await GetTestCoverageHits(webDriver);
-                TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
-                Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
+                var collectCodeCoverage = true;
+#if DEBUG
+                collectCodeCoverage = false;
+#endif
+                if (collectCodeCoverage)
+                {
+                    // Test coverage
+                    var testCoverage = await GetTestCoverageHits(webDriver);
+                    TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
+                    Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
+                }
             }
             catch (TestRunnerException testRunnerException)
             {
@@ -137,8 +144,10 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
 
-            Assert.IsNotNull(testRunResult);
-            Assert.IsNotNull(testRunResult.Tests);
+            if (testRunResult?.Tests is null)
+            {
+                throw new TestRunnerException("Failed to get test run results.");
+            }
 
             // Initialize ID properties
             testRunResult.TestRunId = Guid.NewGuid().ToString();
@@ -175,8 +184,15 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 await Task.Delay(interval);
             }
 
-            Assert.IsNotNull(testCoverage);
-            Assert.IsNotNull(testCoverage.HitsFilePath);
+            if (testCoverage is null)
+            {
+                throw new TestRunnerException("Failed to get test coverage results.");
+            }
+
+            if (testCoverage.HitsFilePath is null)
+            {
+                throw new TestRunnerException("Failed to get test coverage hits file path.");
+            }
 
             return testCoverage;
         }
