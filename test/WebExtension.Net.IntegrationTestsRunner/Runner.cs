@@ -17,16 +17,16 @@ namespace WebExtension.Net.IntegrationTestsRunner
         public async Task RunTests()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
-            var solutionDirectory = currentDirectory.Substring(0, currentDirectory.IndexOf("\\Tests"));
+            var solutionDirectory = currentDirectory.Substring(0, currentDirectory.IndexOf("\\test"));
             var driverPath = "C:\\SeleniumWebDrivers\\ChromeDriver";
-            var resultsPath = $"{solutionDirectory}\\Tests\\TestResults";
+            var resultsPath = $"{solutionDirectory}\\test\\TestResults";
 #if DEBUG
             var configuration = "debug";
 #else
             var configuration = "release";
 #endif
 
-            var extensionPath = $"{solutionDirectory}\\Tests\\WebExtension.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\wwwroot";
+            var extensionPath = $"{solutionDirectory}\\test\\WebExtension.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\wwwroot";
 
             if (!Directory.Exists(resultsPath))
             {
