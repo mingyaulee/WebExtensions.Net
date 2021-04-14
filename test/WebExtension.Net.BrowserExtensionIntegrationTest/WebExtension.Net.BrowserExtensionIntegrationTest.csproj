@@ -39,8 +39,8 @@
 
   <!-- Import project reference and build props and targets as if we are referencing the built NuGet package -->
   <ItemGroup>
-    <ProjectReference Include="..\..\WebExtension.Net\WebExtension.Net.csproj" />
+    <ProjectReference Include="..\..\src\WebExtension.Net\WebExtension.Net.csproj" />
   </ItemGroup>
-  <Import Project="..\..\WebExtension.Net\build\WebExtension.Net.props" />
-  <Import Project="..\..\WebExtension.Net\build\WebExtension.Net.targets" />
+  <Import Project="..\..\src\WebExtension.Net\build\WebExtension.Net.props" />
+  <Import Project="..\..\src\WebExtension.Net\build\WebExtension.Net.targets" />
 </Project>

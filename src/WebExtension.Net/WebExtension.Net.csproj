@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Build properties. -->
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
@@ -7,12 +8,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
     <HasReferenceAssembly>false</HasReferenceAssembly>
-    <OutDir>BuildOutput\$(TargetFramework)</OutDir>
   </PropertyGroup>
 
+  <!-- Package properties. -->
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <PackageOutputPath>PackageOutput</PackageOutputPath>
+    <PackageOutputPath>..\PackageOutput</PackageOutputPath>
     <Authors>mingyaulee</Authors>
     <Description>A package for consuming WebExtensions API in a browser extension.</Description>
     <RepositoryUrl>https://github.com/mingyaulee/WebExtension.Net</RepositoryUrl>
@@ -34,22 +35,10 @@
       <Pack>true</Pack>
       <PackagePath></PackagePath>
 	</Content>
-    <Compile Remove="BuildOutput\**" />
-    <EmbeddedResource Remove="BuildOutput\**" />
-    <None Remove="BuildOutput\**" />
-    <Compile Remove="PackageOutput\**" />
-    <EmbeddedResource Remove="PackageOutput\**" />
-    <None Remove="PackageOutput\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.JSInterop" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="content\WebExtensionScripts\WebExtensionNet.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
