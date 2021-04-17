@@ -15,12 +15,12 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
             return testTypes.Select(GetTestClassInfoFromType).Where(classInfo => classInfo != null).ToArray();
         }
 
-        private string GetTestNamespace()
+        private static string GetTestNamespace()
         {
             return "WebExtension.Net.BrowserExtensionIntegrationTest.Tests";
         }
 
-        private Assembly GetTestAssembly()
+        private static Assembly GetTestAssembly()
         {
             return typeof(TestFactory).Assembly;
         }

@@ -2,7 +2,7 @@
 
 namespace WebExtension.Net.Generator.Models
 {
-    public class RegistrationOption
+    public class RegistrationOptions
     {
 #pragma warning disable CS8618 // Properties are initialized when created
         public string RootApiClassName { get; init; }

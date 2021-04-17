@@ -21,7 +21,7 @@ namespace WebExtension.Net.Generator.CodeGeneration
         private readonly CodeSectionWriter publicMethodsSectionWriter;
         private readonly CodeSectionWriter declarationSectionWriter;
 
-        public CodeWriter(CodeWriterOptions codeWriterOptions)
+        protected CodeWriter(CodeWriterOptions codeWriterOptions)
         {
             DeclarationSection = new CodeSection();
             ConstructorsSection = new CodeSection();

@@ -10,7 +10,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
         protected PropertyDefinition PropertyDefinition { get; }
         protected string PropertyType { get; }
 
-        public BasePropertyCodeConverter(PropertyDefinition propertyDefinition)
+        protected BasePropertyCodeConverter(PropertyDefinition propertyDefinition)
         {
             var usingNamespaces = new HashSet<string>();
             var propertyType = propertyDefinition.ToTypeName(usingNamespaces, makeNullable: propertyDefinition.IsOptional);

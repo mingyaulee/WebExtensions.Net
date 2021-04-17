@@ -26,15 +26,12 @@ namespace WebExtension.Net.Generator.Repositories
 
             var entity = new TypeEntity(typeId, namespaceQualifiedId, namespaceEntity, typeDefinition);
 
-            // check for any type extension that was registered before this type
-            if (typeExtensions.ContainsKey(namespaceQualifiedId))
+            if (typeExtensions.ContainsKey(namespaceQualifiedId) && typeExtensions.Remove(namespaceQualifiedId, out var extensions))
             {
-                if (typeExtensions.Remove(namespaceQualifiedId, out var extensions))
+                // register all the type extensions that was registered before this type
+                foreach (var extension in extensions)
                 {
-                    foreach (var extension in extensions)
-                    {
-                        entity.Extensions.Add(extension);
-                    }
+                    entity.Extensions.Add(extension);
                 }
             }
 

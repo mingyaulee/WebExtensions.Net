@@ -16,13 +16,13 @@ namespace WebExtension.Net.Generator
     {
         private readonly EntitiesContext entitiesContext;
         private readonly ILogger logger;
-        private readonly RegistrationOption registrationOption;
+        private readonly RegistrationOptions registrationOption;
 
-        public EntitiesRegistrationManager(EntitiesContext entitiesContext, ILogger logger, RegistrationOption registrationOption)
+        public EntitiesRegistrationManager(EntitiesContext entitiesContext, ILogger logger, RegistrationOptions registrationOptions)
         {
             this.entitiesContext = entitiesContext;
             this.logger = logger;
-            this.registrationOption = registrationOption;
+            this.registrationOption = registrationOptions;
         }
 
         public void RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
@@ -125,38 +125,42 @@ namespace WebExtension.Net.Generator
             {
                 foreach (var propertyDefinitionPair in namespaceDefinition.Properties)
                 {
-                    if (!propertyDefinitionPair.Value.IsConstant)
-                    {
-                        // If this is not a constant property, convert it to a function
-                        var propertyDefinition = propertyDefinitionPair.Value;
-                        classEntity.Functions.Add(new FunctionDefinition()
-                        {
-                            Name = propertyDefinitionPair.Key,
-                            Type = ObjectType.PropertyGetterFunction,
-                            Async = "true",
-                            FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
-                        });
-                    }
-                    else
-                    {
-                        var propertyDefinition = SerializationHelper.DeserializeTo<PropertyDefinition>(propertyDefinitionPair.Value);
-                        if (propertyDefinition.ConstantValue.HasValue)
-                        {
-                            propertyDefinition.Type = propertyDefinition.ConstantValue.Value.ValueKind switch
-                            {
-                                JsonValueKind.Number => propertyDefinition.ConstantValue.Value.ToString()?.Contains('.') ?? false ? ObjectType.Number : ObjectType.Integer,
-                                JsonValueKind.False => ObjectType.Boolean,
-                                JsonValueKind.True => ObjectType.Boolean,
-                                JsonValueKind.String => ObjectType.String,
-                                _ => ObjectType.Object
-                            };
-                        }
-                        classEntity.Properties.Add(propertyDefinitionPair.Key, propertyDefinition);
-                    }
+                    RegisterNamespacePropertyToClassEntity(propertyDefinitionPair.Key, propertyDefinitionPair.Value, classEntity);
                 }
             }
 
             return classEntity;
+        }
+
+        private static void RegisterNamespacePropertyToClassEntity(string propertyName, PropertyDefinition propertyDefinition, ClassEntity classEntity)
+        {
+            if (!propertyDefinition.IsConstant)
+            {
+                // If this is not a constant property, convert it to a function
+                classEntity.Functions.Add(new FunctionDefinition()
+                {
+                    Name = propertyName,
+                    Type = ObjectType.PropertyGetterFunction,
+                    Async = "true",
+                    FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
+                });
+            }
+            else
+            {
+                var clonePropertyDefinition = SerializationHelper.DeserializeTo<PropertyDefinition>(propertyDefinition);
+                if (clonePropertyDefinition.ConstantValue.HasValue)
+                {
+                    clonePropertyDefinition.Type = clonePropertyDefinition.ConstantValue.Value.ValueKind switch
+                    {
+                        JsonValueKind.Number => clonePropertyDefinition.ConstantValue.Value.ToString()?.Contains('.') ?? false ? ObjectType.Number : ObjectType.Integer,
+                        JsonValueKind.False => ObjectType.Boolean,
+                        JsonValueKind.True => ObjectType.Boolean,
+                        JsonValueKind.String => ObjectType.String,
+                        _ => ObjectType.Object
+                    };
+                }
+                classEntity.Properties.Add(propertyName, clonePropertyDefinition);
+            }
         }
 
         private static void RegisterFunctionsToClassEntity(IEnumerable<FunctionDefinition> functionDefinitions, ClassEntity classEntity)

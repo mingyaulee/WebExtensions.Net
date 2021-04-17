@@ -5,32 +5,32 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
     public class ApiCodeConverterFactory : ICodeConverterFactory<ClassEntity>
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(classEntity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
 
-            foreach (var propertyDefinitionPair in classEntity.Properties)
+            foreach (var propertyDefinitionPair in entity.Properties)
             {
                 codeFile.Properties.Add(new ApiInterfacePropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
             }
 
-            foreach (var functionDefinition in classEntity.Functions)
+            foreach (var functionDefinition in entity.Functions)
             {
                 codeFile.Methods.Add(new ApiInterfaceMethodCodeConverter(functionDefinition));
             }
         }
 
-        public void AddConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentInheritDocCodeConverter());
-            codeFile.Constructors.Add(new ApiConstructorCodeConverter(classEntity.FormattedName, classEntity.NamespaceEntity.Name));
+            codeFile.Constructors.Add(new ApiConstructorCodeConverter(entity.FormattedName, entity.NamespaceEntity.Name));
 
-            foreach (var propertyDefinitionPair in classEntity.Properties)
+            foreach (var propertyDefinitionPair in entity.Properties)
             {
                 codeFile.Properties.Add(new ApiPropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
             }
 
-            foreach (var functionDefinition in classEntity.Functions)
+            foreach (var functionDefinition in entity.Functions)
             {
                 codeFile.Methods.Add(new ApiMethodCodeConverter(functionDefinition));
             }

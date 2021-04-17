@@ -6,23 +6,23 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
     public class EnumCodeConverterFactory : ICodeConverterFactory<EnumEntity>
     {
-        public void AddInterfaceConvertersToCodeFile(EnumEntity classEntity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(EnumEntity entity, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(EnumEntity enumEntity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(EnumEntity entity, CodeFile codeFile)
         {
             codeFile.UsingNamespaces.Add("System.Text.Json.Serialization");
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(enumEntity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
 
-            if (enumEntity.IsDeprecated)
+            if (entity.IsDeprecated)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(enumEntity.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.Deprecated));
             }
-            codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(EnumStringConverter<{enumEntity.FormattedName}>))"));
+            codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(EnumStringConverter<{entity.FormattedName}>))"));
 
-            foreach (var enumValueDefinition in enumEntity.EnumValues)
+            foreach (var enumValueDefinition in entity.EnumValues)
             {
                 codeFile.Properties.Add(new EnumPropertyCodeConverter(enumValueDefinition));
             }

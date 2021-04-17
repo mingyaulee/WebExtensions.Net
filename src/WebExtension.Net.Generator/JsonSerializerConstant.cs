@@ -5,14 +5,13 @@ namespace WebExtension.Net.Generator
 {
     public static class JsonSerializerConstant
     {
-        public static readonly JsonSerializerOptions Options;
+        public static readonly JsonSerializerOptions Options = new()
+        {
+            ReadCommentHandling = JsonCommentHandling.Skip
+        };
 
         static JsonSerializerConstant()
         {
-            Options = new JsonSerializerOptions()
-            {
-                ReadCommentHandling = JsonCommentHandling.Skip
-            };
             Options.Converters.Add(new EnumValueDefinitionConverter());
         }
     }

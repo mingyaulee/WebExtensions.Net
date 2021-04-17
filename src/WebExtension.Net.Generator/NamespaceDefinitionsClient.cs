@@ -26,7 +26,12 @@ namespace WebExtension.Net.Generator
 
         public void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
             ((IDisposable)httpClient).Dispose();
         }
 
@@ -37,7 +42,7 @@ namespace WebExtension.Net.Generator
             namespaceSourceDefinitions.AddRange(additionalNamespaceSourceDefinitions);
             if (runInParallel)
             {
-                var result = Parallel.ForEach(namespaceSourceDefinitions, namespaceSourceDefinition =>
+                Parallel.ForEach(namespaceSourceDefinitions, namespaceSourceDefinition =>
                 {
                     namespaceDefinitions.AddRange(GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult());
                 });
@@ -125,7 +130,6 @@ namespace WebExtension.Net.Generator
                     {
                         throw;
                     }
-                    continue;
                 }
             }
             throw new TimeoutException();

@@ -4,7 +4,7 @@ using WebExtension.Net.IntegrationTestsRunner.Models;
 
 namespace WebExtension.Net.IntegrationTestsRunner
 {
-    public class TestCoverageWriter
+    public static class TestCoverageWriter
     {
         public static void Write(string hitsFilePath, int[] hitsArray)
         {

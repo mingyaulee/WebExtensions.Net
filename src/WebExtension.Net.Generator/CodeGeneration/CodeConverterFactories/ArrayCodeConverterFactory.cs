@@ -7,28 +7,28 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
     public class ArrayCodeConverterFactory : ICodeConverterFactory<ClassEntity>
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            if (classEntity.TypeDefinition is null || classEntity.TypeDefinition.ArrayItems is null)
+            if (entity.TypeDefinition is null || entity.TypeDefinition.ArrayItems is null)
             {
                 return;
             }
 
             codeFile.UsingNamespaces.Add("System.Collections.Generic");
 
-            codeFile.Declaration = codeFile.Declaration.Replace("$arrayItemTypeName", classEntity.TypeDefinition.ArrayItems.ToTypeName(codeFile.UsingNamespaces));
+            codeFile.Declaration = codeFile.Declaration.Replace("$arrayItemTypeName", entity.TypeDefinition.ArrayItems.ToTypeName(codeFile.UsingNamespaces));
 
             codeFile.Comments.Add(new CommentCodeConverter("Array Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(classEntity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
 
-            if (classEntity.TypeDefinition.IsDeprecated)
+            if (entity.TypeDefinition.IsDeprecated)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(classEntity.TypeDefinition.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.TypeDefinition.Deprecated));
             }
         }
     }

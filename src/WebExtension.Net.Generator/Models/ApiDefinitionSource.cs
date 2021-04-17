@@ -2,15 +2,10 @@
 {
     public class ApiDefinitionSource
     {
-        public ApiDefinitionSource(string baseUrl, string fileName, string schemaBaseUrl)
-        {
-            BaseUrl = baseUrl;
-            FileName = fileName;
-            SchemaBaseUrl = schemaBaseUrl;
-        }
-
-        public string BaseUrl { get; }
-        public string FileName { get; }
-        public string SchemaBaseUrl { get; }
+#pragma warning disable CS8618 // Properties are initialized when created
+        public string BaseUrl { get; set; }
+        public string FileName { get; set; }
+        public string SchemaBaseUrl { get; set; }
+#pragma warning restore CS8618
     }
 }

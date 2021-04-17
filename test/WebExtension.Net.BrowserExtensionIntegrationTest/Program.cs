@@ -7,7 +7,7 @@ using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtension.Net.BrowserExtensionIntegrationTest
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {

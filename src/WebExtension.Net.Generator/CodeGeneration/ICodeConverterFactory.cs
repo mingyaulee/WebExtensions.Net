@@ -1,8 +1,8 @@
 ﻿namespace WebExtension.Net.Generator.CodeGeneration
 {
-    public interface ICodeConverterFactory<EntityType>
+    public interface ICodeConverterFactory<in EntityType>
     {
-        void AddInterfaceConvertersToCodeFile(EntityType classEntity, CodeFile codeFile);
-        void AddConvertersToCodeFile(EntityType classEntity, CodeFile codeFile);
+        void AddInterfaceConvertersToCodeFile(EntityType entity, CodeFile codeFile);
+        void AddConvertersToCodeFile(EntityType entity, CodeFile codeFile);
     }
 }

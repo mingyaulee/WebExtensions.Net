@@ -16,13 +16,45 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
         protected string ClientMethodInvoke { get; }
         protected string ClientMethodInvokeArguments { get; }
 
-        public BaseMethodCodeConverter(FunctionDefinition functionDefinition)
+        protected BaseMethodCodeConverter(FunctionDefinition functionDefinition)
         {
             var usingNamespaces = new HashSet<string>()
             {
                 "System.Threading.Tasks"
             };
+            UsingNamespaces = usingNamespaces;
+
             var parameterDefinitions = functionDefinition.FunctionParameters?.ToList() ?? new List<ParameterDefinition>();
+            ParameterDefinitions = parameterDefinitions;
+
+            ReturnDefinition = GetReturnDefinition(functionDefinition, parameterDefinitions);
+            var methodReturnType = "ValueTask";
+            var clientMethodInvoke = "InvokeVoidAsync";
+            if (ReturnDefinition is not null)
+            {
+                var returnTypeName = GetReturnTypeName(ReturnDefinition, usingNamespaces);
+
+                methodReturnType = $"ValueTask<{returnTypeName}>";
+                if (functionDefinition.Type == ObjectType.PropertyGetterFunction)
+                {
+                    clientMethodInvoke = $"GetPropertyAsync<{returnTypeName}>";
+                }
+                else
+                {
+                    clientMethodInvoke = $"InvokeAsync<{returnTypeName}>";
+                }
+            }
+            MethodReturnType = methodReturnType;
+            ClientMethodInvoke = clientMethodInvoke;
+
+            MethodArguments = string.Join(", ", parameterDefinitions.Select(parameterDefinition => $"{parameterDefinition.ToTypeName(usingNamespaces)} {parameterDefinition.Name}"));
+            ClientMethodInvokeArguments = string.Join(string.Empty, parameterDefinitions.Select(parameterDefinition => $", {parameterDefinition.Name}"));
+        }
+
+        public abstract void WriteTo(CodeWriter codeWriter, CodeWriterOptions options);
+
+        private static FunctionReturnDefinition? GetReturnDefinition(FunctionDefinition functionDefinition, List<ParameterDefinition> parameterDefinitions)
+        {
             var returnDefinition = functionDefinition.FunctionReturns;
             if (returnDefinition is null && !string.IsNullOrEmpty(functionDefinition.Async))
             {
@@ -45,37 +77,18 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                     }
                 }
             }
-            var methodReturnType = "ValueTask";
-            var clientMethodInvoke = "InvokeVoidAsync";
-            if (returnDefinition is not null)
-            {
-                var returnTypeName = returnDefinition.ToTypeName(usingNamespaces);
-                if (returnTypeName == "object")
-                {
-                    usingNamespaces.Add("System.Text.Json");
-                    returnTypeName = "JsonElement";
-                }
-
-                methodReturnType = $"ValueTask<{returnTypeName}>";
-                if (functionDefinition.Type == ObjectType.PropertyGetterFunction)
-                {
-                    clientMethodInvoke = $"GetPropertyAsync<{returnTypeName}>";
-                }
-                else
-                {
-                    clientMethodInvoke = $"InvokeAsync<{returnTypeName}>";
-                }
-            }
-
-            UsingNamespaces = usingNamespaces;
-            ParameterDefinitions = parameterDefinitions;
-            ReturnDefinition = returnDefinition;
-            MethodReturnType = methodReturnType;
-            MethodArguments = string.Join(", ", parameterDefinitions.Select(parameterDefinition => $"{parameterDefinition.ToTypeName(usingNamespaces)} {parameterDefinition.Name}"));
-            ClientMethodInvoke = clientMethodInvoke;
-            ClientMethodInvokeArguments = string.Join(string.Empty, parameterDefinitions.Select(parameterDefinition => $", {parameterDefinition.Name}"));
+            return returnDefinition;
         }
 
-        public abstract void WriteTo(CodeWriter codeWriter, CodeWriterOptions options);
+        private static string GetReturnTypeName(FunctionReturnDefinition returnDefinition, ISet<string> usingNamespaces)
+        {
+            var returnTypeName = returnDefinition.ToTypeName(usingNamespaces);
+            if (returnTypeName == "object")
+            {
+                usingNamespaces.Add("System.Text.Json");
+                returnTypeName = "JsonElement";
+            }
+            return returnTypeName;
+        }
     }
 }

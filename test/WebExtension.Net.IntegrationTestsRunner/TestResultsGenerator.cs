@@ -7,7 +7,7 @@ using WebExtension.Net.IntegrationTestsRunner.Models;
 
 namespace WebExtension.Net.IntegrationTestsRunner
 {
-    public class TestResultsGenerator
+    public static class TestResultsGenerator
     {
         private const string TestListId = "8c84fa94-04c1-424b-9868-57a2d4851a1d";
         private const string TestTypeId = "13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b";

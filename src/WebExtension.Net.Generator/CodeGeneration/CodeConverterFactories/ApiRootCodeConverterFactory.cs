@@ -5,33 +5,33 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
     public class ApiRootCodeConverterFactory : ICodeConverterFactory<ClassEntity>
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            foreach (var relativeNamespace in classEntity.UsingRelativeNamespaces)
+            foreach (var relativeNamespace in entity.UsingRelativeNamespaces)
             {
                 codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
             }
 
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(classEntity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
             // Api Root has properties and no functions or events
-            foreach (var propertyDefinitionPair in classEntity.Properties)
+            foreach (var propertyDefinitionPair in entity.Properties)
             {
                 codeFile.Properties.Add(new ApiRootInterfacePropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
             }
         }
 
-        public void AddConvertersToCodeFile(ClassEntity classEntity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            foreach (var relativeNamespace in classEntity.UsingRelativeNamespaces)
+            foreach (var relativeNamespace in entity.UsingRelativeNamespaces)
             {
                 codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
             }
 
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(classEntity.Description));
-            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(classEntity.FormattedName));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(entity.FormattedName));
 
             // Api Root has properties and no functions or events
-            foreach (var propertyDefinitionPair in classEntity.Properties)
+            foreach (var propertyDefinitionPair in entity.Properties)
             {
                 codeFile.Properties.Add(new ApiRootPropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
             }

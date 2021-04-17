@@ -52,17 +52,10 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 await WriteResultsToFile(trxFilePath, resultsXML);
                 Console.WriteLine($"Results file: {trxFilePath}");
 
-                var collectCodeCoverage = true;
-#if DEBUG
-                collectCodeCoverage = false;
-#endif
-                if (collectCodeCoverage)
-                {
-                    // Test coverage
-                    var testCoverage = await GetTestCoverageHits(webDriver);
-                    TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
-                    Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
-                }
+                // Test coverage
+                var testCoverage = await GetTestCoverageHits(webDriver);
+                TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
+                Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
             }
             catch (TestRunnerException testRunnerException)
             {
@@ -184,6 +177,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 await Task.Delay(interval);
             }
 
+#if DEBUG
             if (testCoverage is null)
             {
                 throw new TestRunnerException("Failed to get test coverage results.");
@@ -193,6 +187,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             {
                 throw new TestRunnerException("Failed to get test coverage hits file path.");
             }
+#endif
 
             return testCoverage;
         }
