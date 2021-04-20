@@ -7,39 +7,24 @@ namespace WebExtension.Net.Events
     /// <summary>Description of a declarative rule for handling events.</summary>
     public class Rule : BaseObject
     {
-        private string _id;
-        private IEnumerable<string> _tags;
-        private IEnumerable<object> _conditions;
         private IEnumerable<object> _actions;
+        private IEnumerable<object> _conditions;
+        private string _id;
         private int? _priority;
+        private IEnumerable<string> _tags;
 
-        /// <summary>Optional identifier that allows referencing this rule.</summary>
-        [JsonPropertyName("id")]
-        public string Id
+        /// <summary>List of actions that are triggered if one of the condtions is fulfilled.</summary>
+        [JsonPropertyName("actions")]
+        public IEnumerable<object> Actions
         {
             get
             {
-                InitializeProperty("id", _id);
-                return _id;
+                InitializeProperty("actions", _actions);
+                return _actions;
             }
             set
             {
-                _id = value;
-            }
-        }
-
-        /// <summary>Tags can be used to annotate rules and perform operations on sets of rules.</summary>
-        [JsonPropertyName("tags")]
-        public IEnumerable<string> Tags
-        {
-            get
-            {
-                InitializeProperty("tags", _tags);
-                return _tags;
-            }
-            set
-            {
-                _tags = value;
+                _actions = value;
             }
         }
 
@@ -58,18 +43,18 @@ namespace WebExtension.Net.Events
             }
         }
 
-        /// <summary>List of actions that are triggered if one of the condtions is fulfilled.</summary>
-        [JsonPropertyName("actions")]
-        public IEnumerable<object> Actions
+        /// <summary>Optional identifier that allows referencing this rule.</summary>
+        [JsonPropertyName("id")]
+        public string Id
         {
             get
             {
-                InitializeProperty("actions", _actions);
-                return _actions;
+                InitializeProperty("id", _id);
+                return _id;
             }
             set
             {
-                _actions = value;
+                _id = value;
             }
         }
 
@@ -85,6 +70,21 @@ namespace WebExtension.Net.Events
             set
             {
                 _priority = value;
+            }
+        }
+
+        /// <summary>Tags can be used to annotate rules and perform operations on sets of rules.</summary>
+        [JsonPropertyName("tags")]
+        public IEnumerable<string> Tags
+        {
+            get
+            {
+                InitializeProperty("tags", _tags);
+                return _tags;
+            }
+            set
+            {
+                _tags = value;
             }
         }
     }

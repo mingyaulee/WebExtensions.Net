@@ -13,15 +13,15 @@ namespace WebExtension.Net.Notifications
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> Create(string notificationId, CreateNotificationOptions options)
-        {
-            return InvokeAsync<string>("create", notificationId, options);
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<bool> Clear(string notificationId)
         {
             return InvokeAsync<bool>("clear", notificationId);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<string> Create(string notificationId, CreateNotificationOptions options)
+        {
+            return InvokeAsync<string>("create", notificationId, options);
         }
 
         /// <inheritdoc />

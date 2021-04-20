@@ -6,24 +6,9 @@ namespace WebExtension.Net.Manifest
     /// <summary></summary>
     public class ThemeType : BaseObject
     {
-        private object _images;
         private object _colors;
+        private object _images;
         private object _properties;
-
-        /// <summary></summary>
-        [JsonPropertyName("images")]
-        public object Images
-        {
-            get
-            {
-                InitializeProperty("images", _images);
-                return _images;
-            }
-            set
-            {
-                _images = value;
-            }
-        }
 
         /// <summary></summary>
         [JsonPropertyName("colors")]
@@ -37,6 +22,21 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _colors = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("images")]
+        public object Images
+        {
+            get
+            {
+                InitializeProperty("images", _images);
+                return _images;
+            }
+            set
+            {
+                _images = value;
             }
         }
 

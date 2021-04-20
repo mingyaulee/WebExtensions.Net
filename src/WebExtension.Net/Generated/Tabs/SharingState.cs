@@ -6,24 +6,9 @@ namespace WebExtension.Net.Tabs
     /// <summary>Tab sharing state for screen, microphone and camera.</summary>
     public class SharingState : BaseObject
     {
-        private string _screen;
         private bool _camera;
         private bool _microphone;
-
-        /// <summary>If the tab is sharing the screen the value will be one of "Screen", "Window", or "Application", or undefined if not screen sharing.</summary>
-        [JsonPropertyName("screen")]
-        public string Screen
-        {
-            get
-            {
-                InitializeProperty("screen", _screen);
-                return _screen;
-            }
-            set
-            {
-                _screen = value;
-            }
-        }
+        private string _screen;
 
         /// <summary>True if the tab is using the camera.</summary>
         [JsonPropertyName("camera")]
@@ -52,6 +37,21 @@ namespace WebExtension.Net.Tabs
             set
             {
                 _microphone = value;
+            }
+        }
+
+        /// <summary>If the tab is sharing the screen the value will be one of "Screen", "Window", or "Application", or undefined if not screen sharing.</summary>
+        [JsonPropertyName("screen")]
+        public string Screen
+        {
+            get
+            {
+                InitializeProperty("screen", _screen);
+                return _screen;
+            }
+            set
+            {
+                _screen = value;
             }
         }
     }

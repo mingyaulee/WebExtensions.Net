@@ -6,23 +6,8 @@ namespace WebExtension.Net.Runtime
     /// <summary>An object containing information about the current platform.</summary>
     public class PlatformInfo : BaseObject
     {
-        private PlatformOs _os;
         private PlatformArch _arch;
-
-        /// <summary>The operating system the browser is running on.</summary>
-        [JsonPropertyName("os")]
-        public PlatformOs Os
-        {
-            get
-            {
-                InitializeProperty("os", _os);
-                return _os;
-            }
-            set
-            {
-                _os = value;
-            }
-        }
+        private PlatformOs _os;
 
         /// <summary>The machine's processor architecture.</summary>
         [JsonPropertyName("arch")]
@@ -36,6 +21,21 @@ namespace WebExtension.Net.Runtime
             set
             {
                 _arch = value;
+            }
+        }
+
+        /// <summary>The operating system the browser is running on.</summary>
+        [JsonPropertyName("os")]
+        public PlatformOs Os
+        {
+            get
+            {
+                InitializeProperty("os", _os);
+                return _os;
+            }
+            set
+            {
+                _os = value;
             }
         }
     }

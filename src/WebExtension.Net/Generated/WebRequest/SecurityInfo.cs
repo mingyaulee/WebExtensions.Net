@@ -7,64 +7,49 @@ namespace WebExtension.Net.WebRequest
     /// <summary>Contains the security properties of the request (ie. SSL/TLS information).</summary>
     public class SecurityInfo : BaseObject
     {
-        private string _state;
-        private string _errorMessage;
-        private string _protocolVersion;
-        private string _cipherSuite;
-        private string _keaGroupName;
-        private string _signatureSchemeName;
         private IEnumerable<CertificateInfo> _certificates;
+        private CertificateTransparencyStatus _certificateTransparencyStatus;
+        private string _cipherSuite;
+        private string _errorMessage;
+        private string _hpkp;
+        private bool? _hsts;
         private bool? _isDomainMismatch;
         private bool? _isExtendedValidation;
         private bool? _isNotValidAtThisTime;
         private bool? _isUntrusted;
-        private CertificateTransparencyStatus _certificateTransparencyStatus;
-        private bool? _hsts;
-        private string _hpkp;
+        private string _keaGroupName;
+        private string _protocolVersion;
+        private string _signatureSchemeName;
+        private string _state;
         private IEnumerable<TransportWeaknessReasons> _weaknessReasons;
 
-        /// <summary></summary>
-        [JsonPropertyName("state")]
-        public string State
+        /// <summary>Certificate data if state is "secure".  Will only contain one entry unless <c>certificateChain</c> is passed as an option.</summary>
+        [JsonPropertyName("certificates")]
+        public IEnumerable<CertificateInfo> Certificates
         {
             get
             {
-                InitializeProperty("state", _state);
-                return _state;
+                InitializeProperty("certificates", _certificates);
+                return _certificates;
             }
             set
             {
-                _state = value;
+                _certificates = value;
             }
         }
 
-        /// <summary>Error message if state is "broken"</summary>
-        [JsonPropertyName("errorMessage")]
-        public string ErrorMessage
+        /// <summary>Certificate transparency compliance per RFC 6962.  See <c>https://www.certificate-transparency.org/what-is-ct</c> for more information.</summary>
+        [JsonPropertyName("certificateTransparencyStatus")]
+        public CertificateTransparencyStatus CertificateTransparencyStatus
         {
             get
             {
-                InitializeProperty("errorMessage", _errorMessage);
-                return _errorMessage;
+                InitializeProperty("certificateTransparencyStatus", _certificateTransparencyStatus);
+                return _certificateTransparencyStatus;
             }
             set
             {
-                _errorMessage = value;
-            }
-        }
-
-        /// <summary>Protocol version if state is "secure"</summary>
-        [JsonPropertyName("protocolVersion")]
-        public string ProtocolVersion
-        {
-            get
-            {
-                InitializeProperty("protocolVersion", _protocolVersion);
-                return _protocolVersion;
-            }
-            set
-            {
-                _protocolVersion = value;
+                _certificateTransparencyStatus = value;
             }
         }
 
@@ -83,48 +68,48 @@ namespace WebExtension.Net.WebRequest
             }
         }
 
-        /// <summary>The key exchange algorithm used in this request if state is "secure".</summary>
-        [JsonPropertyName("keaGroupName")]
-        public string KeaGroupName
+        /// <summary>Error message if state is "broken"</summary>
+        [JsonPropertyName("errorMessage")]
+        public string ErrorMessage
         {
             get
             {
-                InitializeProperty("keaGroupName", _keaGroupName);
-                return _keaGroupName;
+                InitializeProperty("errorMessage", _errorMessage);
+                return _errorMessage;
             }
             set
             {
-                _keaGroupName = value;
+                _errorMessage = value;
             }
         }
 
-        /// <summary>The signature scheme used in this request if state is "secure".</summary>
-        [JsonPropertyName("signatureSchemeName")]
-        public string SignatureSchemeName
+        /// <summary>True if host uses Public Key Pinning and state is "secure".</summary>
+        [JsonPropertyName("hpkp")]
+        public string Hpkp
         {
             get
             {
-                InitializeProperty("signatureSchemeName", _signatureSchemeName);
-                return _signatureSchemeName;
+                InitializeProperty("hpkp", _hpkp);
+                return _hpkp;
             }
             set
             {
-                _signatureSchemeName = value;
+                _hpkp = value;
             }
         }
 
-        /// <summary>Certificate data if state is "secure".  Will only contain one entry unless <c>certificateChain</c> is passed as an option.</summary>
-        [JsonPropertyName("certificates")]
-        public IEnumerable<CertificateInfo> Certificates
+        /// <summary>True if host uses Strict Transport Security and state is "secure".</summary>
+        [JsonPropertyName("hsts")]
+        public bool? Hsts
         {
             get
             {
-                InitializeProperty("certificates", _certificates);
-                return _certificates;
+                InitializeProperty("hsts", _hsts);
+                return _hsts;
             }
             set
             {
-                _certificates = value;
+                _hsts = value;
             }
         }
 
@@ -188,48 +173,63 @@ namespace WebExtension.Net.WebRequest
             }
         }
 
-        /// <summary>Certificate transparency compliance per RFC 6962.  See <c>https://www.certificate-transparency.org/what-is-ct</c> for more information.</summary>
-        [JsonPropertyName("certificateTransparencyStatus")]
-        public CertificateTransparencyStatus CertificateTransparencyStatus
+        /// <summary>The key exchange algorithm used in this request if state is "secure".</summary>
+        [JsonPropertyName("keaGroupName")]
+        public string KeaGroupName
         {
             get
             {
-                InitializeProperty("certificateTransparencyStatus", _certificateTransparencyStatus);
-                return _certificateTransparencyStatus;
+                InitializeProperty("keaGroupName", _keaGroupName);
+                return _keaGroupName;
             }
             set
             {
-                _certificateTransparencyStatus = value;
+                _keaGroupName = value;
             }
         }
 
-        /// <summary>True if host uses Strict Transport Security and state is "secure".</summary>
-        [JsonPropertyName("hsts")]
-        public bool? Hsts
+        /// <summary>Protocol version if state is "secure"</summary>
+        [JsonPropertyName("protocolVersion")]
+        public string ProtocolVersion
         {
             get
             {
-                InitializeProperty("hsts", _hsts);
-                return _hsts;
+                InitializeProperty("protocolVersion", _protocolVersion);
+                return _protocolVersion;
             }
             set
             {
-                _hsts = value;
+                _protocolVersion = value;
             }
         }
 
-        /// <summary>True if host uses Public Key Pinning and state is "secure".</summary>
-        [JsonPropertyName("hpkp")]
-        public string Hpkp
+        /// <summary>The signature scheme used in this request if state is "secure".</summary>
+        [JsonPropertyName("signatureSchemeName")]
+        public string SignatureSchemeName
         {
             get
             {
-                InitializeProperty("hpkp", _hpkp);
-                return _hpkp;
+                InitializeProperty("signatureSchemeName", _signatureSchemeName);
+                return _signatureSchemeName;
             }
             set
             {
-                _hpkp = value;
+                _signatureSchemeName = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("state")]
+        public string State
+        {
+            get
+            {
+                InitializeProperty("state", _state);
+                return _state;
+            }
+            set
+            {
+                _state = value;
             }
         }
 

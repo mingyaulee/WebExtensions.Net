@@ -12,12 +12,6 @@ namespace WebExtension.Net.Storage
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<StorageAreaSync> GetSync()
-        {
-            return GetPropertyAsync<StorageAreaSync>("sync");
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<StorageArea> GetLocal()
         {
             return GetPropertyAsync<StorageArea>("local");
@@ -27,6 +21,12 @@ namespace WebExtension.Net.Storage
         public virtual ValueTask<StorageArea> GetManaged()
         {
             return GetPropertyAsync<StorageArea>("managed");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<StorageAreaSync> GetSync()
+        {
+            return GetPropertyAsync<StorageAreaSync>("sync");
         }
     }
 }

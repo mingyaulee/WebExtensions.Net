@@ -6,107 +6,32 @@ namespace WebExtension.Net.Tabs
     /// <summary></summary>
     public class Tab : BaseObject
     {
-        private int? _id;
-        private int _index;
-        private int? _windowId;
-        private int? _openerTabId;
-        private bool _highlighted;
         private bool _active;
-        private bool _pinned;
-        private int? _lastAccessed;
+        private bool? _attention;
         private bool? _audible;
-        private MutedInfo _mutedInfo;
-        private string _url;
-        private string _title;
-        private string _favIconUrl;
-        private string _status;
+        private string _cookieStoreId;
         private bool? _discarded;
-        private bool _incognito;
-        private int? _width;
+        private string _favIconUrl;
         private int? _height;
         private bool? _hidden;
-        private string _sessionId;
-        private string _cookieStoreId;
+        private bool _highlighted;
+        private int? _id;
+        private bool _incognito;
+        private int _index;
         private bool? _isArticle;
         private bool? _isInReaderMode;
+        private int? _lastAccessed;
+        private MutedInfo _mutedInfo;
+        private int? _openerTabId;
+        private bool _pinned;
+        private string _sessionId;
         private SharingState _sharingState;
-        private bool? _attention;
+        private string _status;
         private int? _successorTabId;
-
-        /// <summary>The ID of the tab. Tab IDs are unique within a browser session. Under some circumstances a Tab may not be assigned an ID, for example when querying foreign tabs using the $(ref:sessions) API, in which case a session ID may be present. Tab ID can also be set to $(ref:tabs.TAB_ID_NONE) for apps and devtools windows.</summary>
-        [JsonPropertyName("id")]
-        public int? Id
-        {
-            get
-            {
-                InitializeProperty("id", _id);
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
-
-        /// <summary>The zero-based index of the tab within its window.</summary>
-        [JsonPropertyName("index")]
-        public int Index
-        {
-            get
-            {
-                InitializeProperty("index", _index);
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
-        }
-
-        /// <summary>The ID of the window the tab is contained within.</summary>
-        [JsonPropertyName("windowId")]
-        public int? WindowId
-        {
-            get
-            {
-                InitializeProperty("windowId", _windowId);
-                return _windowId;
-            }
-            set
-            {
-                _windowId = value;
-            }
-        }
-
-        /// <summary>The ID of the tab that opened this tab, if any. This property is only present if the opener tab still exists.</summary>
-        [JsonPropertyName("openerTabId")]
-        public int? OpenerTabId
-        {
-            get
-            {
-                InitializeProperty("openerTabId", _openerTabId);
-                return _openerTabId;
-            }
-            set
-            {
-                _openerTabId = value;
-            }
-        }
-
-        /// <summary>Whether the tab is highlighted. Works as an alias of active</summary>
-        [JsonPropertyName("highlighted")]
-        public bool Highlighted
-        {
-            get
-            {
-                InitializeProperty("highlighted", _highlighted);
-                return _highlighted;
-            }
-            set
-            {
-                _highlighted = value;
-            }
-        }
+        private string _title;
+        private string _url;
+        private int? _width;
+        private int? _windowId;
 
         /// <summary>Whether the tab is active in its window. (Does not necessarily mean the window is focused.)</summary>
         [JsonPropertyName("active")]
@@ -123,33 +48,18 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>Whether the tab is pinned.</summary>
-        [JsonPropertyName("pinned")]
-        public bool Pinned
+        /// <summary>Whether the tab is drawing attention.</summary>
+        [JsonPropertyName("attention")]
+        public bool? Attention
         {
             get
             {
-                InitializeProperty("pinned", _pinned);
-                return _pinned;
+                InitializeProperty("attention", _attention);
+                return _attention;
             }
             set
             {
-                _pinned = value;
-            }
-        }
-
-        /// <summary>The last time the tab was accessed as the number of milliseconds since epoch.</summary>
-        [JsonPropertyName("lastAccessed")]
-        public int? LastAccessed
-        {
-            get
-            {
-                InitializeProperty("lastAccessed", _lastAccessed);
-                return _lastAccessed;
-            }
-            set
-            {
-                _lastAccessed = value;
+                _attention = value;
             }
         }
 
@@ -168,78 +78,18 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>Current tab muted state and the reason for the last state change.</summary>
-        [JsonPropertyName("mutedInfo")]
-        public MutedInfo MutedInfo
+        /// <summary>The CookieStoreId used for the tab.</summary>
+        [JsonPropertyName("cookieStoreId")]
+        public string CookieStoreId
         {
             get
             {
-                InitializeProperty("mutedInfo", _mutedInfo);
-                return _mutedInfo;
+                InitializeProperty("cookieStoreId", _cookieStoreId);
+                return _cookieStoreId;
             }
             set
             {
-                _mutedInfo = value;
-            }
-        }
-
-        /// <summary>The URL the tab is displaying. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission.</summary>
-        [JsonPropertyName("url")]
-        public string Url
-        {
-            get
-            {
-                InitializeProperty("url", _url);
-                return _url;
-            }
-            set
-            {
-                _url = value;
-            }
-        }
-
-        /// <summary>The title of the tab. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission.</summary>
-        [JsonPropertyName("title")]
-        public string Title
-        {
-            get
-            {
-                InitializeProperty("title", _title);
-                return _title;
-            }
-            set
-            {
-                _title = value;
-            }
-        }
-
-        /// <summary>The URL of the tab's favicon. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission. It may also be an empty string if the tab is loading.</summary>
-        [JsonPropertyName("favIconUrl")]
-        public string FavIconUrl
-        {
-            get
-            {
-                InitializeProperty("favIconUrl", _favIconUrl);
-                return _favIconUrl;
-            }
-            set
-            {
-                _favIconUrl = value;
-            }
-        }
-
-        /// <summary>Either 'em'loading'/em' or 'em'complete'/em'.</summary>
-        [JsonPropertyName("status")]
-        public string Status
-        {
-            get
-            {
-                InitializeProperty("status", _status);
-                return _status;
-            }
-            set
-            {
-                _status = value;
+                _cookieStoreId = value;
             }
         }
 
@@ -258,33 +108,18 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>Whether the tab is in an incognito window.</summary>
-        [JsonPropertyName("incognito")]
-        public bool Incognito
+        /// <summary>The URL of the tab's favicon. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission. It may also be an empty string if the tab is loading.</summary>
+        [JsonPropertyName("favIconUrl")]
+        public string FavIconUrl
         {
             get
             {
-                InitializeProperty("incognito", _incognito);
-                return _incognito;
+                InitializeProperty("favIconUrl", _favIconUrl);
+                return _favIconUrl;
             }
             set
             {
-                _incognito = value;
-            }
-        }
-
-        /// <summary>The width of the tab in pixels.</summary>
-        [JsonPropertyName("width")]
-        public int? Width
-        {
-            get
-            {
-                InitializeProperty("width", _width);
-                return _width;
-            }
-            set
-            {
-                _width = value;
+                _favIconUrl = value;
             }
         }
 
@@ -318,33 +153,63 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>The session ID used to uniquely identify a Tab obtained from the $(ref:sessions) API.</summary>
-        [JsonPropertyName("sessionId")]
-        public string SessionId
+        /// <summary>Whether the tab is highlighted. Works as an alias of active</summary>
+        [JsonPropertyName("highlighted")]
+        public bool Highlighted
         {
             get
             {
-                InitializeProperty("sessionId", _sessionId);
-                return _sessionId;
+                InitializeProperty("highlighted", _highlighted);
+                return _highlighted;
             }
             set
             {
-                _sessionId = value;
+                _highlighted = value;
             }
         }
 
-        /// <summary>The CookieStoreId used for the tab.</summary>
-        [JsonPropertyName("cookieStoreId")]
-        public string CookieStoreId
+        /// <summary>The ID of the tab. Tab IDs are unique within a browser session. Under some circumstances a Tab may not be assigned an ID, for example when querying foreign tabs using the $(ref:sessions) API, in which case a session ID may be present. Tab ID can also be set to $(ref:tabs.TAB_ID_NONE) for apps and devtools windows.</summary>
+        [JsonPropertyName("id")]
+        public int? Id
         {
             get
             {
-                InitializeProperty("cookieStoreId", _cookieStoreId);
-                return _cookieStoreId;
+                InitializeProperty("id", _id);
+                return _id;
             }
             set
             {
-                _cookieStoreId = value;
+                _id = value;
+            }
+        }
+
+        /// <summary>Whether the tab is in an incognito window.</summary>
+        [JsonPropertyName("incognito")]
+        public bool Incognito
+        {
+            get
+            {
+                InitializeProperty("incognito", _incognito);
+                return _incognito;
+            }
+            set
+            {
+                _incognito = value;
+            }
+        }
+
+        /// <summary>The zero-based index of the tab within its window.</summary>
+        [JsonPropertyName("index")]
+        public int Index
+        {
+            get
+            {
+                InitializeProperty("index", _index);
+                return _index;
+            }
+            set
+            {
+                _index = value;
             }
         }
 
@@ -378,6 +243,81 @@ namespace WebExtension.Net.Tabs
             }
         }
 
+        /// <summary>The last time the tab was accessed as the number of milliseconds since epoch.</summary>
+        [JsonPropertyName("lastAccessed")]
+        public int? LastAccessed
+        {
+            get
+            {
+                InitializeProperty("lastAccessed", _lastAccessed);
+                return _lastAccessed;
+            }
+            set
+            {
+                _lastAccessed = value;
+            }
+        }
+
+        /// <summary>Current tab muted state and the reason for the last state change.</summary>
+        [JsonPropertyName("mutedInfo")]
+        public MutedInfo MutedInfo
+        {
+            get
+            {
+                InitializeProperty("mutedInfo", _mutedInfo);
+                return _mutedInfo;
+            }
+            set
+            {
+                _mutedInfo = value;
+            }
+        }
+
+        /// <summary>The ID of the tab that opened this tab, if any. This property is only present if the opener tab still exists.</summary>
+        [JsonPropertyName("openerTabId")]
+        public int? OpenerTabId
+        {
+            get
+            {
+                InitializeProperty("openerTabId", _openerTabId);
+                return _openerTabId;
+            }
+            set
+            {
+                _openerTabId = value;
+            }
+        }
+
+        /// <summary>Whether the tab is pinned.</summary>
+        [JsonPropertyName("pinned")]
+        public bool Pinned
+        {
+            get
+            {
+                InitializeProperty("pinned", _pinned);
+                return _pinned;
+            }
+            set
+            {
+                _pinned = value;
+            }
+        }
+
+        /// <summary>The session ID used to uniquely identify a Tab obtained from the $(ref:sessions) API.</summary>
+        [JsonPropertyName("sessionId")]
+        public string SessionId
+        {
+            get
+            {
+                InitializeProperty("sessionId", _sessionId);
+                return _sessionId;
+            }
+            set
+            {
+                _sessionId = value;
+            }
+        }
+
         /// <summary>Current tab sharing state for screen, microphone and camera.</summary>
         [JsonPropertyName("sharingState")]
         public SharingState SharingState
@@ -393,18 +333,18 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>Whether the tab is drawing attention.</summary>
-        [JsonPropertyName("attention")]
-        public bool? Attention
+        /// <summary>Either 'em'loading'/em' or 'em'complete'/em'.</summary>
+        [JsonPropertyName("status")]
+        public string Status
         {
             get
             {
-                InitializeProperty("attention", _attention);
-                return _attention;
+                InitializeProperty("status", _status);
+                return _status;
             }
             set
             {
-                _attention = value;
+                _status = value;
             }
         }
 
@@ -420,6 +360,66 @@ namespace WebExtension.Net.Tabs
             set
             {
                 _successorTabId = value;
+            }
+        }
+
+        /// <summary>The title of the tab. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission.</summary>
+        [JsonPropertyName("title")]
+        public string Title
+        {
+            get
+            {
+                InitializeProperty("title", _title);
+                return _title;
+            }
+            set
+            {
+                _title = value;
+            }
+        }
+
+        /// <summary>The URL the tab is displaying. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission.</summary>
+        [JsonPropertyName("url")]
+        public string Url
+        {
+            get
+            {
+                InitializeProperty("url", _url);
+                return _url;
+            }
+            set
+            {
+                _url = value;
+            }
+        }
+
+        /// <summary>The width of the tab in pixels.</summary>
+        [JsonPropertyName("width")]
+        public int? Width
+        {
+            get
+            {
+                InitializeProperty("width", _width);
+                return _width;
+            }
+            set
+            {
+                _width = value;
+            }
+        }
+
+        /// <summary>The ID of the window the tab is contained within.</summary>
+        [JsonPropertyName("windowId")]
+        public int? WindowId
+        {
+            get
+            {
+                InitializeProperty("windowId", _windowId);
+                return _windowId;
+            }
+            set
+            {
+                _windowId = value;
             }
         }
     }

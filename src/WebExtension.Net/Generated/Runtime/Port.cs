@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using WebExtension.Net.Events;
 
 namespace WebExtension.Net.Runtime
 {
@@ -7,27 +8,12 @@ namespace WebExtension.Net.Runtime
     /// <summary>An object which allows two way communication with other pages.</summary>
     public class Port : BaseObject
     {
-        private string _name;
         private Action _disconnect;
-        private Events.Event _onDisconnect;
-        private Events.Event _onMessage;
+        private string _name;
+        private Event _onDisconnect;
+        private Event _onMessage;
         private Action _postMessage;
         private MessageSender _sender;
-
-        /// <summary></summary>
-        [JsonPropertyName("name")]
-        public string Name
-        {
-            get
-            {
-                InitializeProperty("name", _name);
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
 
         /// <summary></summary>
         [JsonPropertyName("disconnect")]
@@ -45,8 +31,23 @@ namespace WebExtension.Net.Runtime
         }
 
         /// <summary></summary>
+        [JsonPropertyName("name")]
+        public string Name
+        {
+            get
+            {
+                InitializeProperty("name", _name);
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+
+        /// <summary></summary>
         [JsonPropertyName("onDisconnect")]
-        public Events.Event OnDisconnect
+        public Event OnDisconnect
         {
             get
             {
@@ -61,7 +62,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("onMessage")]
-        public Events.Event OnMessage
+        public Event OnMessage
         {
             get
             {

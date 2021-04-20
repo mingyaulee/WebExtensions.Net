@@ -6,15 +6,15 @@ namespace WebExtension.Net.Storage
     public interface IStorageApi
     {
         /// <summary></summary>
-        /// <returns>Items in the <c>sync</c> storage area are synced by the browser.</returns>
-        ValueTask<StorageAreaSync> GetSync();
-
-        /// <summary></summary>
         /// <returns>Items in the <c>local</c> storage area are local to each machine.</returns>
         ValueTask<StorageArea> GetLocal();
 
         /// <summary></summary>
         /// <returns>Items in the <c>managed</c> storage area are set by administrators or native applications, and are read-only for the extension; trying to modify this namespace results in an error.</returns>
         ValueTask<StorageArea> GetManaged();
+
+        /// <summary></summary>
+        /// <returns>Items in the <c>sync</c> storage area are synced by the browser.</returns>
+        ValueTask<StorageAreaSync> GetSync();
     }
 }

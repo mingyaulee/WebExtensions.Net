@@ -14,13 +14,6 @@ namespace WebExtension.Net.Events
             return InvokeVoidAsync("addListener", callback);
         }
 
-        /// <summary>Deregisters an event listener 'em'callback'/em' from an event.</summary>
-        /// <param name="callback">Listener that shall be unregistered.</param>
-        public virtual ValueTask RemoveListener(Action callback)
-        {
-            return InvokeVoidAsync("removeListener", callback);
-        }
-
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if 'em'callback'/em' is registered to the event.</returns>
@@ -34,6 +27,13 @@ namespace WebExtension.Net.Events
         public virtual ValueTask<bool> HasListeners()
         {
             return InvokeAsync<bool>("hasListeners");
+        }
+
+        /// <summary>Deregisters an event listener 'em'callback'/em' from an event.</summary>
+        /// <param name="callback">Listener that shall be unregistered.</param>
+        public virtual ValueTask RemoveListener(Action callback)
+        {
+            return InvokeVoidAsync("removeListener", callback);
         }
     }
 }

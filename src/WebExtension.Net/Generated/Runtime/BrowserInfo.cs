@@ -6,10 +6,25 @@ namespace WebExtension.Net.Runtime
     /// <summary>An object containing information about the current browser.</summary>
     public class BrowserInfo : BaseObject
     {
+        private string _buildID;
         private string _name;
         private string _vendor;
         private string _version;
-        private string _buildID;
+
+        /// <summary>The browser's build ID/date, for example '20160101'.</summary>
+        [JsonPropertyName("buildID")]
+        public string BuildID
+        {
+            get
+            {
+                InitializeProperty("buildID", _buildID);
+                return _buildID;
+            }
+            set
+            {
+                _buildID = value;
+            }
+        }
 
         /// <summary>The name of the browser, for example 'Firefox'.</summary>
         [JsonPropertyName("name")]
@@ -53,21 +68,6 @@ namespace WebExtension.Net.Runtime
             set
             {
                 _version = value;
-            }
-        }
-
-        /// <summary>The browser's build ID/date, for example '20160101'.</summary>
-        [JsonPropertyName("buildID")]
-        public string BuildID
-        {
-            get
-            {
-                InitializeProperty("buildID", _buildID);
-                return _buildID;
-            }
-            set
-            {
-                _buildID = value;
             }
         }
     }

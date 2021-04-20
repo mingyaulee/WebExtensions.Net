@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WebExtension.Net.ExtensionTypes;
+using WebExtension.Net.Manifest;
 
 namespace WebExtension.Net.ContentScripts
 {
@@ -7,34 +9,64 @@ namespace WebExtension.Net.ContentScripts
     /// <summary>Details of a content script registered programmatically</summary>
     public class RegisteredContentScriptOptions : BaseObject
     {
-        private IEnumerable<Manifest.MatchPattern> _matches;
-        private IEnumerable<Manifest.MatchPattern> _excludeMatches;
-        private IEnumerable<string> _includeGlobs;
-        private IEnumerable<string> _excludeGlobs;
-        private IEnumerable<ExtensionTypes.ExtensionFileOrCode> _css;
-        private IEnumerable<ExtensionTypes.ExtensionFileOrCode> _js;
         private bool? _allFrames;
+        private IEnumerable<ExtensionFileOrCode> _css;
+        private IEnumerable<string> _excludeGlobs;
+        private IEnumerable<MatchPattern> _excludeMatches;
+        private IEnumerable<string> _includeGlobs;
+        private IEnumerable<ExtensionFileOrCode> _js;
         private bool? _matchAboutBlank;
-        private ExtensionTypes.RunAt _runAt;
+        private IEnumerable<MatchPattern> _matches;
+        private RunAt _runAt;
 
-        /// <summary></summary>
-        [JsonPropertyName("matches")]
-        public IEnumerable<Manifest.MatchPattern> Matches
+        /// <summary>If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.</summary>
+        [JsonPropertyName("allFrames")]
+        public bool? AllFrames
         {
             get
             {
-                InitializeProperty("matches", _matches);
-                return _matches;
+                InitializeProperty("allFrames", _allFrames);
+                return _allFrames;
             }
             set
             {
-                _matches = value;
+                _allFrames = value;
+            }
+        }
+
+        /// <summary>The list of CSS files to inject</summary>
+        [JsonPropertyName("css")]
+        public IEnumerable<ExtensionFileOrCode> Css
+        {
+            get
+            {
+                InitializeProperty("css", _css);
+                return _css;
+            }
+            set
+            {
+                _css = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("excludeGlobs")]
+        public IEnumerable<string> ExcludeGlobs
+        {
+            get
+            {
+                InitializeProperty("excludeGlobs", _excludeGlobs);
+                return _excludeGlobs;
+            }
+            set
+            {
+                _excludeGlobs = value;
             }
         }
 
         /// <summary></summary>
         [JsonPropertyName("excludeMatches")]
-        public IEnumerable<Manifest.MatchPattern> ExcludeMatches
+        public IEnumerable<MatchPattern> ExcludeMatches
         {
             get
             {
@@ -62,39 +94,9 @@ namespace WebExtension.Net.ContentScripts
             }
         }
 
-        /// <summary></summary>
-        [JsonPropertyName("excludeGlobs")]
-        public IEnumerable<string> ExcludeGlobs
-        {
-            get
-            {
-                InitializeProperty("excludeGlobs", _excludeGlobs);
-                return _excludeGlobs;
-            }
-            set
-            {
-                _excludeGlobs = value;
-            }
-        }
-
-        /// <summary>The list of CSS files to inject</summary>
-        [JsonPropertyName("css")]
-        public IEnumerable<ExtensionTypes.ExtensionFileOrCode> Css
-        {
-            get
-            {
-                InitializeProperty("css", _css);
-                return _css;
-            }
-            set
-            {
-                _css = value;
-            }
-        }
-
         /// <summary>The list of JS files to inject</summary>
         [JsonPropertyName("js")]
-        public IEnumerable<ExtensionTypes.ExtensionFileOrCode> Js
+        public IEnumerable<ExtensionFileOrCode> Js
         {
             get
             {
@@ -104,21 +106,6 @@ namespace WebExtension.Net.ContentScripts
             set
             {
                 _js = value;
-            }
-        }
-
-        /// <summary>If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.</summary>
-        [JsonPropertyName("allFrames")]
-        public bool? AllFrames
-        {
-            get
-            {
-                InitializeProperty("allFrames", _allFrames);
-                return _allFrames;
-            }
-            set
-            {
-                _allFrames = value;
             }
         }
 
@@ -137,9 +124,24 @@ namespace WebExtension.Net.ContentScripts
             }
         }
 
+        /// <summary></summary>
+        [JsonPropertyName("matches")]
+        public IEnumerable<MatchPattern> Matches
+        {
+            get
+            {
+                InitializeProperty("matches", _matches);
+                return _matches;
+            }
+            set
+            {
+                _matches = value;
+            }
+        }
+
         /// <summary>The soonest that the JavaScript or CSS will be injected into the tab. Defaults to "document_idle".</summary>
         [JsonPropertyName("runAt")]
-        public ExtensionTypes.RunAt RunAt
+        public RunAt RunAt
         {
             get
             {

@@ -7,48 +7,18 @@ namespace WebExtension.Net.Notifications
     /// <summary></summary>
     public class CreateNotificationOptions : BaseObject
     {
-        private TemplateType _type;
-        private string _iconUrl;
         private string _appIconMaskUrl;
-        private string _title;
-        private string _message;
         private string _contextMessage;
-        private int? _priority;
         private double? _eventTime;
+        private string _iconUrl;
         private string _imageUrl;
-        private IEnumerable<NotificationItem> _items;
-        private int? _progress;
         private bool? _isClickable;
-
-        /// <summary>Which type of notification to display.</summary>
-        [JsonPropertyName("type")]
-        public TemplateType Type
-        {
-            get
-            {
-                InitializeProperty("type", _type);
-                return _type;
-            }
-            set
-            {
-                _type = value;
-            }
-        }
-
-        /// <summary>A URL to the sender's avatar, app icon, or a thumbnail for image notifications.</summary>
-        [JsonPropertyName("iconUrl")]
-        public string IconUrl
-        {
-            get
-            {
-                InitializeProperty("iconUrl", _iconUrl);
-                return _iconUrl;
-            }
-            set
-            {
-                _iconUrl = value;
-            }
-        }
+        private IEnumerable<NotificationItem> _items;
+        private string _message;
+        private int? _priority;
+        private int? _progress;
+        private string _title;
+        private TemplateType _type;
 
         /// <summary>A URL to the app icon mask.</summary>
         [JsonPropertyName("appIconMaskUrl")]
@@ -62,36 +32,6 @@ namespace WebExtension.Net.Notifications
             set
             {
                 _appIconMaskUrl = value;
-            }
-        }
-
-        /// <summary>Title of the notification (e.g. sender name for email).</summary>
-        [JsonPropertyName("title")]
-        public string Title
-        {
-            get
-            {
-                InitializeProperty("title", _title);
-                return _title;
-            }
-            set
-            {
-                _title = value;
-            }
-        }
-
-        /// <summary>Main notification content.</summary>
-        [JsonPropertyName("message")]
-        public string Message
-        {
-            get
-            {
-                InitializeProperty("message", _message);
-                return _message;
-            }
-            set
-            {
-                _message = value;
             }
         }
 
@@ -110,21 +50,6 @@ namespace WebExtension.Net.Notifications
             }
         }
 
-        /// <summary>Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.</summary>
-        [JsonPropertyName("priority")]
-        public int? Priority
-        {
-            get
-            {
-                InitializeProperty("priority", _priority);
-                return _priority;
-            }
-            set
-            {
-                _priority = value;
-            }
-        }
-
         /// <summary>A timestamp associated with the notification, in milliseconds past the epoch.</summary>
         [JsonPropertyName("eventTime")]
         public double? EventTime
@@ -137,6 +62,21 @@ namespace WebExtension.Net.Notifications
             set
             {
                 _eventTime = value;
+            }
+        }
+
+        /// <summary>A URL to the sender's avatar, app icon, or a thumbnail for image notifications.</summary>
+        [JsonPropertyName("iconUrl")]
+        public string IconUrl
+        {
+            get
+            {
+                InitializeProperty("iconUrl", _iconUrl);
+                return _iconUrl;
+            }
+            set
+            {
+                _iconUrl = value;
             }
         }
 
@@ -155,6 +95,21 @@ namespace WebExtension.Net.Notifications
             }
         }
 
+        /// <summary>Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.</summary>
+        [JsonPropertyName("isClickable")]
+        public bool? IsClickable
+        {
+            get
+            {
+                InitializeProperty("isClickable", _isClickable);
+                return _isClickable;
+            }
+            set
+            {
+                _isClickable = value;
+            }
+        }
+
         /// <summary>Items for multi-item notifications.</summary>
         [JsonPropertyName("items")]
         public IEnumerable<NotificationItem> Items
@@ -167,6 +122,36 @@ namespace WebExtension.Net.Notifications
             set
             {
                 _items = value;
+            }
+        }
+
+        /// <summary>Main notification content.</summary>
+        [JsonPropertyName("message")]
+        public string Message
+        {
+            get
+            {
+                InitializeProperty("message", _message);
+                return _message;
+            }
+            set
+            {
+                _message = value;
+            }
+        }
+
+        /// <summary>Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.</summary>
+        [JsonPropertyName("priority")]
+        public int? Priority
+        {
+            get
+            {
+                InitializeProperty("priority", _priority);
+                return _priority;
+            }
+            set
+            {
+                _priority = value;
             }
         }
 
@@ -185,18 +170,33 @@ namespace WebExtension.Net.Notifications
             }
         }
 
-        /// <summary>Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.</summary>
-        [JsonPropertyName("isClickable")]
-        public bool? IsClickable
+        /// <summary>Title of the notification (e.g. sender name for email).</summary>
+        [JsonPropertyName("title")]
+        public string Title
         {
             get
             {
-                InitializeProperty("isClickable", _isClickable);
-                return _isClickable;
+                InitializeProperty("title", _title);
+                return _title;
             }
             set
             {
-                _isClickable = value;
+                _title = value;
+            }
+        }
+
+        /// <summary>Which type of notification to display.</summary>
+        [JsonPropertyName("type")]
+        public TemplateType Type
+        {
+            get
+            {
+                InitializeProperty("type", _type);
+                return _type;
+            }
+            set
+            {
+                _type = value;
             }
         }
     }

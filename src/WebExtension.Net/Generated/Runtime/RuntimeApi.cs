@@ -13,42 +13,6 @@ namespace WebExtension.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetBackgroundPage()
-        {
-            return InvokeAsync<JsonElement>("getBackgroundPage");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask OpenOptionsPage()
-        {
-            return InvokeVoidAsync("openOptionsPage");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetManifest()
-        {
-            return InvokeAsync<JsonElement>("getManifest");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<string> GetURL(string path)
-        {
-            return InvokeAsync<string>("getURL", path);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask SetUninstallURL(string url)
-        {
-            return InvokeVoidAsync("setUninstallURL", url);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask Reload()
-        {
-            return InvokeVoidAsync("reload");
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<Port> Connect(string extensionId, object connectInfo)
         {
             return InvokeAsync<Port>("connect", extensionId, connectInfo);
@@ -58,6 +22,60 @@ namespace WebExtension.Net.Runtime
         public virtual ValueTask<Port> ConnectNative(string application)
         {
             return InvokeAsync<Port>("connectNative", application);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<JsonElement> GetBackgroundPage()
+        {
+            return InvokeAsync<JsonElement>("getBackgroundPage");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<BrowserInfo> GetBrowserInfo()
+        {
+            return InvokeAsync<BrowserInfo>("getBrowserInfo");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<JsonElement> GetManifest()
+        {
+            return InvokeAsync<JsonElement>("getManifest");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<PlatformInfo> GetPlatformInfo()
+        {
+            return InvokeAsync<PlatformInfo>("getPlatformInfo");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<string> GetURL(string path)
+        {
+            return InvokeAsync<string>("getURL", path);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<string> GetId()
+        {
+            return GetPropertyAsync<string>("id");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<JsonElement> GetLastError()
+        {
+            return GetPropertyAsync<JsonElement>("lastError");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask OpenOptionsPage()
+        {
+            return InvokeVoidAsync("openOptionsPage");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask Reload()
+        {
+            return InvokeVoidAsync("reload");
         }
 
         /// <inheritdoc />
@@ -73,27 +91,9 @@ namespace WebExtension.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<BrowserInfo> GetBrowserInfo()
+        public virtual ValueTask SetUninstallURL(string url)
         {
-            return InvokeAsync<BrowserInfo>("getBrowserInfo");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<PlatformInfo> GetPlatformInfo()
-        {
-            return InvokeAsync<PlatformInfo>("getPlatformInfo");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetLastError()
-        {
-            return GetPropertyAsync<JsonElement>("lastError");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<string> GetId()
-        {
-            return GetPropertyAsync<string>("id");
+            return InvokeVoidAsync("setUninstallURL", url);
         }
     }
 }

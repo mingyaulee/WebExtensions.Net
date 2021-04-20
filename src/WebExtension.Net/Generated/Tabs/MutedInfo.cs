@@ -6,9 +6,24 @@ namespace WebExtension.Net.Tabs
     /// <summary>Tab muted state and the reason for the last state change.</summary>
     public class MutedInfo : BaseObject
     {
+        private string _extensionId;
         private bool _muted;
         private MutedInfoReason _reason;
-        private string _extensionId;
+
+        /// <summary>The ID of the extension that changed the muted state. Not set if an extension was not the reason the muted state last changed.</summary>
+        [JsonPropertyName("extensionId")]
+        public string ExtensionId
+        {
+            get
+            {
+                InitializeProperty("extensionId", _extensionId);
+                return _extensionId;
+            }
+            set
+            {
+                _extensionId = value;
+            }
+        }
 
         /// <summary>Whether the tab is prevented from playing sound (but hasn't necessarily recently produced sound). Equivalent to whether the muted audio indicator is showing.</summary>
         [JsonPropertyName("muted")]
@@ -37,21 +52,6 @@ namespace WebExtension.Net.Tabs
             set
             {
                 _reason = value;
-            }
-        }
-
-        /// <summary>The ID of the extension that changed the muted state. Not set if an extension was not the reason the muted state last changed.</summary>
-        [JsonPropertyName("extensionId")]
-        public string ExtensionId
-        {
-            get
-            {
-                InitializeProperty("extensionId", _extensionId);
-                return _extensionId;
-            }
-            set
-            {
-                _extensionId = value;
             }
         }
     }

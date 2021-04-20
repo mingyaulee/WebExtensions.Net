@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WebExtension.Net.Events;
 
 namespace WebExtension.Net.WebNavigation
 {
@@ -7,11 +8,11 @@ namespace WebExtension.Net.WebNavigation
     /// <summary></summary>
     public class EventUrlFilters : BaseObject
     {
-        private IEnumerable<Events.UrlFilter> _url;
+        private IEnumerable<UrlFilter> _url;
 
         /// <summary></summary>
         [JsonPropertyName("url")]
-        public IEnumerable<Events.UrlFilter> Url
+        public IEnumerable<UrlFilter> Url
         {
             get
             {

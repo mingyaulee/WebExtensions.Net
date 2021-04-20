@@ -6,24 +6,9 @@ namespace WebExtension.Net.Manifest
     /// <summary></summary>
     public class ThemeIcons : BaseObject
     {
-        private ExtensionURL _light;
         private ExtensionURL _dark;
+        private ExtensionURL _light;
         private int _size;
-
-        /// <summary>A light icon to use for dark themes</summary>
-        [JsonPropertyName("light")]
-        public ExtensionURL Light
-        {
-            get
-            {
-                InitializeProperty("light", _light);
-                return _light;
-            }
-            set
-            {
-                _light = value;
-            }
-        }
 
         /// <summary>The dark icon to use for light themes</summary>
         [JsonPropertyName("dark")]
@@ -37,6 +22,21 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _dark = value;
+            }
+        }
+
+        /// <summary>A light icon to use for dark themes</summary>
+        [JsonPropertyName("light")]
+        public ExtensionURL Light
+        {
+            get
+            {
+                InitializeProperty("light", _light);
+                return _light;
+            }
+            set
+            {
+                _light = value;
             }
         }
 

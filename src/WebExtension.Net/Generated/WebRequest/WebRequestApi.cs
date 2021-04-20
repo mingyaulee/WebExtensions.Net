@@ -16,12 +16,6 @@ namespace WebExtension.Net.WebRequest
         public int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES => 20;
 
         /// <inheritdoc />
-        public virtual ValueTask HandlerBehaviorChanged()
-        {
-            return InvokeVoidAsync("handlerBehaviorChanged");
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<JsonElement> FilterResponseData(string requestId)
         {
             return InvokeAsync<JsonElement>("filterResponseData", requestId);
@@ -31,6 +25,12 @@ namespace WebExtension.Net.WebRequest
         public virtual ValueTask GetSecurityInfo(string requestId, object options)
         {
             return InvokeVoidAsync("getSecurityInfo", requestId, options);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask HandlerBehaviorChanged()
+        {
+            return InvokeVoidAsync("handlerBehaviorChanged");
         }
     }
 }

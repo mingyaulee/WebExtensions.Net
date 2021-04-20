@@ -6,23 +6,23 @@ namespace WebExtension.Net.Manifest
     /// <summary></summary>
     public class ThemeExperiment : BaseObject
     {
-        private ExtensionURL _stylesheet;
-        private object _images;
         private object _colors;
+        private object _images;
         private object _properties;
+        private ExtensionURL _stylesheet;
 
         /// <summary></summary>
-        [JsonPropertyName("stylesheet")]
-        public ExtensionURL Stylesheet
+        [JsonPropertyName("colors")]
+        public object Colors
         {
             get
             {
-                InitializeProperty("stylesheet", _stylesheet);
-                return _stylesheet;
+                InitializeProperty("colors", _colors);
+                return _colors;
             }
             set
             {
-                _stylesheet = value;
+                _colors = value;
             }
         }
 
@@ -42,21 +42,6 @@ namespace WebExtension.Net.Manifest
         }
 
         /// <summary></summary>
-        [JsonPropertyName("colors")]
-        public object Colors
-        {
-            get
-            {
-                InitializeProperty("colors", _colors);
-                return _colors;
-            }
-            set
-            {
-                _colors = value;
-            }
-        }
-
-        /// <summary></summary>
         [JsonPropertyName("properties")]
         public object Properties
         {
@@ -68,6 +53,21 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _properties = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("stylesheet")]
+        public ExtensionURL Stylesheet
+        {
+            get
+            {
+                InitializeProperty("stylesheet", _stylesheet);
+                return _stylesheet;
+            }
+            set
+            {
+                _stylesheet = value;
             }
         }
     }

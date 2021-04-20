@@ -6,26 +6,11 @@ namespace WebExtension.Net.Manifest
     /// <summary>Contents of manifest.json for a static theme</summary>
     public class ThemeManifest : BaseObject
     {
-        private ThemeType _theme;
         private ThemeType _dark_theme;
         private string _default_locale;
-        private ThemeExperiment _theme_experiment;
         private object _icons;
-
-        /// <summary></summary>
-        [JsonPropertyName("theme")]
-        public ThemeType Theme
-        {
-            get
-            {
-                InitializeProperty("theme", _theme);
-                return _theme;
-            }
-            set
-            {
-                _theme = value;
-            }
-        }
+        private ThemeType _theme;
+        private ThemeExperiment _theme_experiment;
 
         /// <summary></summary>
         [JsonPropertyName("dark_theme")]
@@ -58,21 +43,6 @@ namespace WebExtension.Net.Manifest
         }
 
         /// <summary></summary>
-        [JsonPropertyName("theme_experiment")]
-        public ThemeExperiment Theme_experiment
-        {
-            get
-            {
-                InitializeProperty("theme_experiment", _theme_experiment);
-                return _theme_experiment;
-            }
-            set
-            {
-                _theme_experiment = value;
-            }
-        }
-
-        /// <summary></summary>
         [JsonPropertyName("icons")]
         public object Icons
         {
@@ -84,6 +54,36 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _icons = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("theme")]
+        public ThemeType Theme
+        {
+            get
+            {
+                InitializeProperty("theme", _theme);
+                return _theme;
+            }
+            set
+            {
+                _theme = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("theme_experiment")]
+        public ThemeExperiment Theme_experiment
+        {
+            get
+            {
+                InitializeProperty("theme_experiment", _theme_experiment);
+                return _theme_experiment;
+            }
+            set
+            {
+                _theme_experiment = value;
             }
         }
     }

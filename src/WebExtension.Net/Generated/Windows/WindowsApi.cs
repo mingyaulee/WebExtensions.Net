@@ -13,15 +13,27 @@ namespace WebExtension.Net.Windows
         }
 
         /// <inheritdoc />
+        public int WINDOW_ID_CURRENT => -2;
+
+        /// <inheritdoc />
         public int WINDOW_ID_NONE => -1;
 
         /// <inheritdoc />
-        public int WINDOW_ID_CURRENT => -2;
+        public virtual ValueTask<Window> Create(object createData)
+        {
+            return InvokeAsync<Window>("create", createData);
+        }
 
         /// <inheritdoc />
         public virtual ValueTask<Window> Get(int windowId, GetInfo getInfo)
         {
             return InvokeAsync<Window>("get", windowId, getInfo);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<IEnumerable<Window>> GetAll(object getInfo)
+        {
+            return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
         }
 
         /// <inheritdoc />
@@ -37,27 +49,15 @@ namespace WebExtension.Net.Windows
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Window>> GetAll(object getInfo)
+        public virtual ValueTask Remove(int windowId)
         {
-            return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<Window> Create(object createData)
-        {
-            return InvokeAsync<Window>("create", createData);
+            return InvokeVoidAsync("remove", windowId);
         }
 
         /// <inheritdoc />
         public virtual ValueTask<Window> Update(int windowId, object updateInfo)
         {
             return InvokeAsync<Window>("update", windowId, updateInfo);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask Remove(int windowId)
-        {
-            return InvokeVoidAsync("remove", windowId);
         }
     }
 }

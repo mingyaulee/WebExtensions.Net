@@ -6,23 +6,8 @@ namespace WebExtension.Net.Manifest
     /// <summary>Represents a WebExtension dictionary manifest.json file</summary>
     public class WebExtensionDictionaryManifest : BaseObject
     {
-        private string _homepage_url;
         private object _dictionaries;
-
-        /// <summary></summary>
-        [JsonPropertyName("homepage_url")]
-        public string Homepage_url
-        {
-            get
-            {
-                InitializeProperty("homepage_url", _homepage_url);
-                return _homepage_url;
-            }
-            set
-            {
-                _homepage_url = value;
-            }
-        }
+        private string _homepage_url;
 
         /// <summary></summary>
         [JsonPropertyName("dictionaries")]
@@ -36,6 +21,21 @@ namespace WebExtension.Net.Manifest
             set
             {
                 _dictionaries = value;
+            }
+        }
+
+        /// <summary></summary>
+        [JsonPropertyName("homepage_url")]
+        public string Homepage_url
+        {
+            get
+            {
+                InitializeProperty("homepage_url", _homepage_url);
+                return _homepage_url;
+            }
+            set
+            {
+                _homepage_url = value;
             }
         }
     }

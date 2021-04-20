@@ -6,162 +6,42 @@ namespace WebExtension.Net.Tabs
     /// <summary>Defines the page settings to be used when saving a page as a pdf file.</summary>
     public class PageSettings : BaseObject
     {
-        private string _toFileName;
-        private int? _paperSizeUnit;
-        private double? _paperWidth;
-        private double? _paperHeight;
-        private int? _orientation;
-        private double? _scaling;
-        private bool? _shrinkToFit;
-        private bool? _showBackgroundColors;
-        private bool? _showBackgroundImages;
+        private double? _edgeBottom;
         private double? _edgeLeft;
         private double? _edgeRight;
         private double? _edgeTop;
-        private double? _edgeBottom;
+        private string _footerCenter;
+        private string _footerLeft;
+        private string _footerRight;
+        private string _headerCenter;
+        private string _headerLeft;
+        private string _headerRight;
+        private double? _marginBottom;
         private double? _marginLeft;
         private double? _marginRight;
         private double? _marginTop;
-        private double? _marginBottom;
-        private string _headerLeft;
-        private string _headerCenter;
-        private string _headerRight;
-        private string _footerLeft;
-        private string _footerCenter;
-        private string _footerRight;
+        private int? _orientation;
+        private double? _paperHeight;
+        private int? _paperSizeUnit;
+        private double? _paperWidth;
+        private double? _scaling;
+        private bool? _showBackgroundColors;
+        private bool? _showBackgroundImages;
+        private bool? _shrinkToFit;
+        private string _toFileName;
 
-        /// <summary>The name of the file. May include optional .pdf extension.</summary>
-        [JsonPropertyName("toFileName")]
-        public string ToFileName
+        /// <summary>The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.</summary>
+        [JsonPropertyName("edgeBottom")]
+        public double? EdgeBottom
         {
             get
             {
-                InitializeProperty("toFileName", _toFileName);
-                return _toFileName;
+                InitializeProperty("edgeBottom", _edgeBottom);
+                return _edgeBottom;
             }
             set
             {
-                _toFileName = value;
-            }
-        }
-
-        /// <summary>The page size unit: 0 = inches, 1 = millimeters. Default: 0.</summary>
-        [JsonPropertyName("paperSizeUnit")]
-        public int? PaperSizeUnit
-        {
-            get
-            {
-                InitializeProperty("paperSizeUnit", _paperSizeUnit);
-                return _paperSizeUnit;
-            }
-            set
-            {
-                _paperSizeUnit = value;
-            }
-        }
-
-        /// <summary>The paper width in paper size units. Default: 8.5.</summary>
-        [JsonPropertyName("paperWidth")]
-        public double? PaperWidth
-        {
-            get
-            {
-                InitializeProperty("paperWidth", _paperWidth);
-                return _paperWidth;
-            }
-            set
-            {
-                _paperWidth = value;
-            }
-        }
-
-        /// <summary>The paper height in paper size units. Default: 11.0.</summary>
-        [JsonPropertyName("paperHeight")]
-        public double? PaperHeight
-        {
-            get
-            {
-                InitializeProperty("paperHeight", _paperHeight);
-                return _paperHeight;
-            }
-            set
-            {
-                _paperHeight = value;
-            }
-        }
-
-        /// <summary>The page content orientation: 0 = portrait, 1 = landscape. Default: 0.</summary>
-        [JsonPropertyName("orientation")]
-        public int? Orientation
-        {
-            get
-            {
-                InitializeProperty("orientation", _orientation);
-                return _orientation;
-            }
-            set
-            {
-                _orientation = value;
-            }
-        }
-
-        /// <summary>The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0.</summary>
-        [JsonPropertyName("scaling")]
-        public double? Scaling
-        {
-            get
-            {
-                InitializeProperty("scaling", _scaling);
-                return _scaling;
-            }
-            set
-            {
-                _scaling = value;
-            }
-        }
-
-        /// <summary>Whether the page content should shrink to fit the page width (overrides scaling). Default: true.</summary>
-        [JsonPropertyName("shrinkToFit")]
-        public bool? ShrinkToFit
-        {
-            get
-            {
-                InitializeProperty("shrinkToFit", _shrinkToFit);
-                return _shrinkToFit;
-            }
-            set
-            {
-                _shrinkToFit = value;
-            }
-        }
-
-        /// <summary>Whether the page background colors should be shown. Default: false.</summary>
-        [JsonPropertyName("showBackgroundColors")]
-        public bool? ShowBackgroundColors
-        {
-            get
-            {
-                InitializeProperty("showBackgroundColors", _showBackgroundColors);
-                return _showBackgroundColors;
-            }
-            set
-            {
-                _showBackgroundColors = value;
-            }
-        }
-
-        /// <summary>Whether the page background images should be shown. Default: false.</summary>
-        [JsonPropertyName("showBackgroundImages")]
-        public bool? ShowBackgroundImages
-        {
-            get
-            {
-                InitializeProperty("showBackgroundImages", _showBackgroundImages);
-                return _showBackgroundImages;
-            }
-            set
-            {
-                _showBackgroundImages = value;
+                _edgeBottom = value;
             }
         }
 
@@ -210,18 +90,108 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>The spacing between the bottom of the footers and the bottom edge of the paper (inches). Default: 0.</summary>
-        [JsonPropertyName("edgeBottom")]
-        public double? EdgeBottom
+        /// <summary>The text for the page's center footer. Default: ''.</summary>
+        [JsonPropertyName("footerCenter")]
+        public string FooterCenter
         {
             get
             {
-                InitializeProperty("edgeBottom", _edgeBottom);
-                return _edgeBottom;
+                InitializeProperty("footerCenter", _footerCenter);
+                return _footerCenter;
             }
             set
             {
-                _edgeBottom = value;
+                _footerCenter = value;
+            }
+        }
+
+        /// <summary>The text for the page's left footer. Default: '&amp;PT'.</summary>
+        [JsonPropertyName("footerLeft")]
+        public string FooterLeft
+        {
+            get
+            {
+                InitializeProperty("footerLeft", _footerLeft);
+                return _footerLeft;
+            }
+            set
+            {
+                _footerLeft = value;
+            }
+        }
+
+        /// <summary>The text for the page's right footer. Default: '&amp;D'.</summary>
+        [JsonPropertyName("footerRight")]
+        public string FooterRight
+        {
+            get
+            {
+                InitializeProperty("footerRight", _footerRight);
+                return _footerRight;
+            }
+            set
+            {
+                _footerRight = value;
+            }
+        }
+
+        /// <summary>The text for the page's center header. Default: ''.</summary>
+        [JsonPropertyName("headerCenter")]
+        public string HeaderCenter
+        {
+            get
+            {
+                InitializeProperty("headerCenter", _headerCenter);
+                return _headerCenter;
+            }
+            set
+            {
+                _headerCenter = value;
+            }
+        }
+
+        /// <summary>The text for the page's left header. Default: '&amp;T'.</summary>
+        [JsonPropertyName("headerLeft")]
+        public string HeaderLeft
+        {
+            get
+            {
+                InitializeProperty("headerLeft", _headerLeft);
+                return _headerLeft;
+            }
+            set
+            {
+                _headerLeft = value;
+            }
+        }
+
+        /// <summary>The text for the page's right header. Default: '&amp;U'.</summary>
+        [JsonPropertyName("headerRight")]
+        public string HeaderRight
+        {
+            get
+            {
+                InitializeProperty("headerRight", _headerRight);
+                return _headerRight;
+            }
+            set
+            {
+                _headerRight = value;
+            }
+        }
+
+        /// <summary>The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.</summary>
+        [JsonPropertyName("marginBottom")]
+        public double? MarginBottom
+        {
+            get
+            {
+                InitializeProperty("marginBottom", _marginBottom);
+                return _marginBottom;
+            }
+            set
+            {
+                _marginBottom = value;
             }
         }
 
@@ -270,108 +240,138 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>The margin between the page content and the bottom edge of the paper (inches). Default: 0.5.</summary>
-        [JsonPropertyName("marginBottom")]
-        public double? MarginBottom
+        /// <summary>The page content orientation: 0 = portrait, 1 = landscape. Default: 0.</summary>
+        [JsonPropertyName("orientation")]
+        public int? Orientation
         {
             get
             {
-                InitializeProperty("marginBottom", _marginBottom);
-                return _marginBottom;
+                InitializeProperty("orientation", _orientation);
+                return _orientation;
             }
             set
             {
-                _marginBottom = value;
+                _orientation = value;
             }
         }
 
-        /// <summary>The text for the page's left header. Default: '&amp;T'.</summary>
-        [JsonPropertyName("headerLeft")]
-        public string HeaderLeft
+        /// <summary>The paper height in paper size units. Default: 11.0.</summary>
+        [JsonPropertyName("paperHeight")]
+        public double? PaperHeight
         {
             get
             {
-                InitializeProperty("headerLeft", _headerLeft);
-                return _headerLeft;
+                InitializeProperty("paperHeight", _paperHeight);
+                return _paperHeight;
             }
             set
             {
-                _headerLeft = value;
+                _paperHeight = value;
             }
         }
 
-        /// <summary>The text for the page's center header. Default: ''.</summary>
-        [JsonPropertyName("headerCenter")]
-        public string HeaderCenter
+        /// <summary>The page size unit: 0 = inches, 1 = millimeters. Default: 0.</summary>
+        [JsonPropertyName("paperSizeUnit")]
+        public int? PaperSizeUnit
         {
             get
             {
-                InitializeProperty("headerCenter", _headerCenter);
-                return _headerCenter;
+                InitializeProperty("paperSizeUnit", _paperSizeUnit);
+                return _paperSizeUnit;
             }
             set
             {
-                _headerCenter = value;
+                _paperSizeUnit = value;
             }
         }
 
-        /// <summary>The text for the page's right header. Default: '&amp;U'.</summary>
-        [JsonPropertyName("headerRight")]
-        public string HeaderRight
+        /// <summary>The paper width in paper size units. Default: 8.5.</summary>
+        [JsonPropertyName("paperWidth")]
+        public double? PaperWidth
         {
             get
             {
-                InitializeProperty("headerRight", _headerRight);
-                return _headerRight;
+                InitializeProperty("paperWidth", _paperWidth);
+                return _paperWidth;
             }
             set
             {
-                _headerRight = value;
+                _paperWidth = value;
             }
         }
 
-        /// <summary>The text for the page's left footer. Default: '&amp;PT'.</summary>
-        [JsonPropertyName("footerLeft")]
-        public string FooterLeft
+        /// <summary>The page content scaling factor: 1.0 = 100% = normal size. Default: 1.0.</summary>
+        [JsonPropertyName("scaling")]
+        public double? Scaling
         {
             get
             {
-                InitializeProperty("footerLeft", _footerLeft);
-                return _footerLeft;
+                InitializeProperty("scaling", _scaling);
+                return _scaling;
             }
             set
             {
-                _footerLeft = value;
+                _scaling = value;
             }
         }
 
-        /// <summary>The text for the page's center footer. Default: ''.</summary>
-        [JsonPropertyName("footerCenter")]
-        public string FooterCenter
+        /// <summary>Whether the page background colors should be shown. Default: false.</summary>
+        [JsonPropertyName("showBackgroundColors")]
+        public bool? ShowBackgroundColors
         {
             get
             {
-                InitializeProperty("footerCenter", _footerCenter);
-                return _footerCenter;
+                InitializeProperty("showBackgroundColors", _showBackgroundColors);
+                return _showBackgroundColors;
             }
             set
             {
-                _footerCenter = value;
+                _showBackgroundColors = value;
             }
         }
 
-        /// <summary>The text for the page's right footer. Default: '&amp;D'.</summary>
-        [JsonPropertyName("footerRight")]
-        public string FooterRight
+        /// <summary>Whether the page background images should be shown. Default: false.</summary>
+        [JsonPropertyName("showBackgroundImages")]
+        public bool? ShowBackgroundImages
         {
             get
             {
-                InitializeProperty("footerRight", _footerRight);
-                return _footerRight;
+                InitializeProperty("showBackgroundImages", _showBackgroundImages);
+                return _showBackgroundImages;
             }
             set
             {
-                _footerRight = value;
+                _showBackgroundImages = value;
+            }
+        }
+
+        /// <summary>Whether the page content should shrink to fit the page width (overrides scaling). Default: true.</summary>
+        [JsonPropertyName("shrinkToFit")]
+        public bool? ShrinkToFit
+        {
+            get
+            {
+                InitializeProperty("shrinkToFit", _shrinkToFit);
+                return _shrinkToFit;
+            }
+            set
+            {
+                _shrinkToFit = value;
+            }
+        }
+
+        /// <summary>The name of the file. May include optional .pdf extension.</summary>
+        [JsonPropertyName("toFileName")]
+        public string ToFileName
+        {
+            get
+            {
+                InitializeProperty("toFileName", _toFileName);
+                return _toFileName;
+            }
+            set
+            {
+                _toFileName = value;
             }
         }
     }

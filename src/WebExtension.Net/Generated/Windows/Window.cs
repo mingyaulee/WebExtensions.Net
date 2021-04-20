@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using WebExtension.Net.Tabs;
 
 namespace WebExtension.Net.Windows
 {
@@ -7,32 +8,32 @@ namespace WebExtension.Net.Windows
     /// <summary></summary>
     public class Window : BaseObject
     {
-        private int? _id;
-        private bool _focused;
-        private int? _top;
-        private int? _left;
-        private int? _width;
-        private int? _height;
-        private IEnumerable<Tabs.Tab> _tabs;
-        private bool _incognito;
-        private WindowType _type;
-        private WindowState _state;
         private bool _alwaysOnTop;
+        private bool _focused;
+        private int? _height;
+        private int? _id;
+        private bool _incognito;
+        private int? _left;
         private string _sessionId;
+        private WindowState _state;
+        private IEnumerable<Tab> _tabs;
         private string _title;
+        private int? _top;
+        private WindowType _type;
+        private int? _width;
 
-        /// <summary>The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.</summary>
-        [JsonPropertyName("id")]
-        public int? Id
+        /// <summary>Whether the window is set to be always on top.</summary>
+        [JsonPropertyName("alwaysOnTop")]
+        public bool AlwaysOnTop
         {
             get
             {
-                InitializeProperty("id", _id);
-                return _id;
+                InitializeProperty("alwaysOnTop", _alwaysOnTop);
+                return _alwaysOnTop;
             }
             set
             {
-                _id = value;
+                _alwaysOnTop = value;
             }
         }
 
@@ -51,51 +52,6 @@ namespace WebExtension.Net.Windows
             }
         }
 
-        /// <summary>The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.</summary>
-        [JsonPropertyName("top")]
-        public int? Top
-        {
-            get
-            {
-                InitializeProperty("top", _top);
-                return _top;
-            }
-            set
-            {
-                _top = value;
-            }
-        }
-
-        /// <summary>The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.</summary>
-        [JsonPropertyName("left")]
-        public int? Left
-        {
-            get
-            {
-                InitializeProperty("left", _left);
-                return _left;
-            }
-            set
-            {
-                _left = value;
-            }
-        }
-
-        /// <summary>The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.</summary>
-        [JsonPropertyName("width")]
-        public int? Width
-        {
-            get
-            {
-                InitializeProperty("width", _width);
-                return _width;
-            }
-            set
-            {
-                _width = value;
-            }
-        }
-
         /// <summary>The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("height")]
         public int? Height
@@ -111,18 +67,18 @@ namespace WebExtension.Net.Windows
             }
         }
 
-        /// <summary>Array of $(ref:tabs.Tab) objects representing the current tabs in the window.</summary>
-        [JsonPropertyName("tabs")]
-        public IEnumerable<Tabs.Tab> Tabs
+        /// <summary>The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.</summary>
+        [JsonPropertyName("id")]
+        public int? Id
         {
             get
             {
-                InitializeProperty("tabs", _tabs);
-                return _tabs;
+                InitializeProperty("id", _id);
+                return _id;
             }
             set
             {
-                _tabs = value;
+                _id = value;
             }
         }
 
@@ -141,48 +97,18 @@ namespace WebExtension.Net.Windows
             }
         }
 
-        /// <summary>The type of browser window this is.</summary>
-        [JsonPropertyName("type")]
-        public WindowType Type
+        /// <summary>The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.</summary>
+        [JsonPropertyName("left")]
+        public int? Left
         {
             get
             {
-                InitializeProperty("type", _type);
-                return _type;
+                InitializeProperty("left", _left);
+                return _left;
             }
             set
             {
-                _type = value;
-            }
-        }
-
-        /// <summary>The state of this browser window.</summary>
-        [JsonPropertyName("state")]
-        public WindowState State
-        {
-            get
-            {
-                InitializeProperty("state", _state);
-                return _state;
-            }
-            set
-            {
-                _state = value;
-            }
-        }
-
-        /// <summary>Whether the window is set to be always on top.</summary>
-        [JsonPropertyName("alwaysOnTop")]
-        public bool AlwaysOnTop
-        {
-            get
-            {
-                InitializeProperty("alwaysOnTop", _alwaysOnTop);
-                return _alwaysOnTop;
-            }
-            set
-            {
-                _alwaysOnTop = value;
+                _left = value;
             }
         }
 
@@ -201,6 +127,36 @@ namespace WebExtension.Net.Windows
             }
         }
 
+        /// <summary>The state of this browser window.</summary>
+        [JsonPropertyName("state")]
+        public WindowState State
+        {
+            get
+            {
+                InitializeProperty("state", _state);
+                return _state;
+            }
+            set
+            {
+                _state = value;
+            }
+        }
+
+        /// <summary>Array of $(ref:tabs.Tab) objects representing the current tabs in the window.</summary>
+        [JsonPropertyName("tabs")]
+        public IEnumerable<Tab> Tabs
+        {
+            get
+            {
+                InitializeProperty("tabs", _tabs);
+                return _tabs;
+            }
+            set
+            {
+                _tabs = value;
+            }
+        }
+
         /// <summary>The title of the window. Read-only.</summary>
         [JsonPropertyName("title")]
         public string Title
@@ -213,6 +169,51 @@ namespace WebExtension.Net.Windows
             set
             {
                 _title = value;
+            }
+        }
+
+        /// <summary>The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.</summary>
+        [JsonPropertyName("top")]
+        public int? Top
+        {
+            get
+            {
+                InitializeProperty("top", _top);
+                return _top;
+            }
+            set
+            {
+                _top = value;
+            }
+        }
+
+        /// <summary>The type of browser window this is.</summary>
+        [JsonPropertyName("type")]
+        public WindowType Type
+        {
+            get
+            {
+                InitializeProperty("type", _type);
+                return _type;
+            }
+            set
+            {
+                _type = value;
+            }
+        }
+
+        /// <summary>The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.</summary>
+        [JsonPropertyName("width")]
+        public int? Width
+        {
+            get
+            {
+                InitializeProperty("width", _width);
+                return _width;
+            }
+            set
+            {
+                _width = value;
             }
         }
     }

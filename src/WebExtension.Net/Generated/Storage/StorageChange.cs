@@ -6,23 +6,8 @@ namespace WebExtension.Net.Storage
     /// <summary></summary>
     public class StorageChange : BaseObject
     {
-        private object _oldValue;
         private object _newValue;
-
-        /// <summary>The old value of the item, if there was an old value.</summary>
-        [JsonPropertyName("oldValue")]
-        public object OldValue
-        {
-            get
-            {
-                InitializeProperty("oldValue", _oldValue);
-                return _oldValue;
-            }
-            set
-            {
-                _oldValue = value;
-            }
-        }
+        private object _oldValue;
 
         /// <summary>The new value of the item, if there is a new value.</summary>
         [JsonPropertyName("newValue")]
@@ -36,6 +21,21 @@ namespace WebExtension.Net.Storage
             set
             {
                 _newValue = value;
+            }
+        }
+
+        /// <summary>The old value of the item, if there was an old value.</summary>
+        [JsonPropertyName("oldValue")]
+        public object OldValue
+        {
+            get
+            {
+                InitializeProperty("oldValue", _oldValue);
+                return _oldValue;
+            }
+            set
+            {
+                _oldValue = value;
             }
         }
     }

@@ -27,7 +27,7 @@ namespace WebExtension.Net.Windows
         }
 
         /// <summary><c>windowTypes</c> is deprecated and ignored on Firefox.</summary>
-        [Obsolete]
+        [Obsolete("This has been marked as deprecated without a description message. Please refer to the summary comment or the official API documentation.")]
         [JsonPropertyName("windowTypes")]
         public IEnumerable<WindowType> WindowTypes
         {

@@ -14,15 +14,15 @@ namespace WebExtension.Net.WebNavigation
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetFrame(object details)
-        {
-            return InvokeAsync<JsonElement>("getFrame", details);
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<IEnumerable<object>> GetAllFrames(object details)
         {
             return InvokeAsync<IEnumerable<object>>("getAllFrames", details);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<JsonElement> GetFrame(object details)
+        {
+            return InvokeAsync<JsonElement>("getFrame", details);
         }
     }
 }

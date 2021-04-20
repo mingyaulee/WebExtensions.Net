@@ -6,13 +6,28 @@ namespace WebExtension.Net.ExtensionTypes
     /// <summary>Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.</summary>
     public class InjectDetails : BaseObject
     {
-        private string _code;
-        private string _file;
         private bool? _allFrames;
-        private bool? _matchAboutBlank;
-        private int? _frameId;
-        private RunAt _runAt;
+        private string _code;
         private CSSOrigin _cssOrigin;
+        private string _file;
+        private int? _frameId;
+        private bool? _matchAboutBlank;
+        private RunAt _runAt;
+
+        /// <summary>If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.</summary>
+        [JsonPropertyName("allFrames")]
+        public bool? AllFrames
+        {
+            get
+            {
+                InitializeProperty("allFrames", _allFrames);
+                return _allFrames;
+            }
+            set
+            {
+                _allFrames = value;
+            }
+        }
 
         /// <summary>JavaScript or CSS code to inject.<br /><br />'b'Warning:'/b'<br />Be careful using the <c>code</c> parameter. Incorrect use of it may open your extension to <see href="https://en.wikipedia.org/wiki/Cross-site_scripting">cross site scripting</see> attacks.</summary>
         [JsonPropertyName("code")]
@@ -26,6 +41,21 @@ namespace WebExtension.Net.ExtensionTypes
             set
             {
                 _code = value;
+            }
+        }
+
+        /// <summary>The css origin of the stylesheet to inject. Defaults to "author".</summary>
+        [JsonPropertyName("cssOrigin")]
+        public CSSOrigin CssOrigin
+        {
+            get
+            {
+                InitializeProperty("cssOrigin", _cssOrigin);
+                return _cssOrigin;
+            }
+            set
+            {
+                _cssOrigin = value;
             }
         }
 
@@ -44,18 +74,18 @@ namespace WebExtension.Net.ExtensionTypes
             }
         }
 
-        /// <summary>If allFrames is <c>true</c>, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it's <c>false</c> and is only injected into the top frame.</summary>
-        [JsonPropertyName("allFrames")]
-        public bool? AllFrames
+        /// <summary>The ID of the frame to inject the script into. This may not be used in combination with <c>allFrames</c>.</summary>
+        [JsonPropertyName("frameId")]
+        public int? FrameId
         {
             get
             {
-                InitializeProperty("allFrames", _allFrames);
-                return _allFrames;
+                InitializeProperty("frameId", _frameId);
+                return _frameId;
             }
             set
             {
-                _allFrames = value;
+                _frameId = value;
             }
         }
 
@@ -74,21 +104,6 @@ namespace WebExtension.Net.ExtensionTypes
             }
         }
 
-        /// <summary>The ID of the frame to inject the script into. This may not be used in combination with <c>allFrames</c>.</summary>
-        [JsonPropertyName("frameId")]
-        public int? FrameId
-        {
-            get
-            {
-                InitializeProperty("frameId", _frameId);
-                return _frameId;
-            }
-            set
-            {
-                _frameId = value;
-            }
-        }
-
         /// <summary>The soonest that the JavaScript or CSS will be injected into the tab. Defaults to "document_idle".</summary>
         [JsonPropertyName("runAt")]
         public RunAt RunAt
@@ -101,21 +116,6 @@ namespace WebExtension.Net.ExtensionTypes
             set
             {
                 _runAt = value;
-            }
-        }
-
-        /// <summary>The css origin of the stylesheet to inject. Defaults to "author".</summary>
-        [JsonPropertyName("cssOrigin")]
-        public CSSOrigin CssOrigin
-        {
-            get
-            {
-                InitializeProperty("cssOrigin", _cssOrigin);
-                return _cssOrigin;
-            }
-            set
-            {
-                _cssOrigin = value;
             }
         }
     }

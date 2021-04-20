@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using WebExtension.Net.Tabs;
 
 namespace WebExtension.Net.Runtime
 {
@@ -6,25 +7,10 @@ namespace WebExtension.Net.Runtime
     /// <summary>An object containing information about the script context that sent a message or request.</summary>
     public class MessageSender : BaseObject
     {
-        private Tabs.Tab _tab;
         private int? _frameId;
         private string _id;
+        private Tab _tab;
         private string _url;
-
-        /// <summary>The $(ref:tabs.Tab) which opened the connection, if any. This property will 'strong'only'/strong' be present when the connection was opened from a tab (including content scripts), and 'strong'only'/strong' if the receiver is an extension, not an app.</summary>
-        [JsonPropertyName("tab")]
-        public Tabs.Tab Tab
-        {
-            get
-            {
-                InitializeProperty("tab", _tab);
-                return _tab;
-            }
-            set
-            {
-                _tab = value;
-            }
-        }
 
         /// <summary>The $(topic:frame_ids)[frame] that opened the connection. 0 for top-level frames, positive for child frames. This will only be set when <c>tab</c> is set.</summary>
         [JsonPropertyName("frameId")]
@@ -53,6 +39,21 @@ namespace WebExtension.Net.Runtime
             set
             {
                 _id = value;
+            }
+        }
+
+        /// <summary>The $(ref:tabs.Tab) which opened the connection, if any. This property will 'strong'only'/strong' be present when the connection was opened from a tab (including content scripts), and 'strong'only'/strong' if the receiver is an extension, not an app.</summary>
+        [JsonPropertyName("tab")]
+        public Tab Tab
+        {
+            get
+            {
+                InitializeProperty("tab", _tab);
+                return _tab;
+            }
+            set
+            {
+                _tab = value;
             }
         }
 

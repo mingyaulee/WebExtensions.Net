@@ -6,12 +6,27 @@ namespace WebExtension.Net.WebRequest
     /// <summary>Returns value for event handlers that have the 'blocking' extraInfoSpec applied. Allows the event handler to modify network requests.</summary>
     public class BlockingResponse : BaseObject
     {
+        private object _authCredentials;
         private bool? _cancel;
         private string _redirectUrl;
-        private bool? _upgradeToSecure;
         private HttpHeaders _requestHeaders;
         private HttpHeaders _responseHeaders;
-        private object _authCredentials;
+        private bool? _upgradeToSecure;
+
+        /// <summary>Only used as a response to the onAuthRequired event. If set, the request is made using the supplied credentials.</summary>
+        [JsonPropertyName("authCredentials")]
+        public object AuthCredentials
+        {
+            get
+            {
+                InitializeProperty("authCredentials", _authCredentials);
+                return _authCredentials;
+            }
+            set
+            {
+                _authCredentials = value;
+            }
+        }
 
         /// <summary>If true, the request is cancelled. Used in onBeforeRequest, this prevents the request from being sent.</summary>
         [JsonPropertyName("cancel")]
@@ -40,21 +55,6 @@ namespace WebExtension.Net.WebRequest
             set
             {
                 _redirectUrl = value;
-            }
-        }
-
-        /// <summary>Only used as a response to the onBeforeRequest event. If set, the original request is prevented from being sent/completed and is instead upgraded to a secure request.  If any extension returns <c>redirectUrl</c> during onBeforeRequest, <c>upgradeToSecure</c> will have no affect.</summary>
-        [JsonPropertyName("upgradeToSecure")]
-        public bool? UpgradeToSecure
-        {
-            get
-            {
-                InitializeProperty("upgradeToSecure", _upgradeToSecure);
-                return _upgradeToSecure;
-            }
-            set
-            {
-                _upgradeToSecure = value;
             }
         }
 
@@ -88,18 +88,18 @@ namespace WebExtension.Net.WebRequest
             }
         }
 
-        /// <summary>Only used as a response to the onAuthRequired event. If set, the request is made using the supplied credentials.</summary>
-        [JsonPropertyName("authCredentials")]
-        public object AuthCredentials
+        /// <summary>Only used as a response to the onBeforeRequest event. If set, the original request is prevented from being sent/completed and is instead upgraded to a secure request.  If any extension returns <c>redirectUrl</c> during onBeforeRequest, <c>upgradeToSecure</c> will have no affect.</summary>
+        [JsonPropertyName("upgradeToSecure")]
+        public bool? UpgradeToSecure
         {
             get
             {
-                InitializeProperty("authCredentials", _authCredentials);
-                return _authCredentials;
+                InitializeProperty("upgradeToSecure", _upgradeToSecure);
+                return _upgradeToSecure;
             }
             set
             {
-                _authCredentials = value;
+                _upgradeToSecure = value;
             }
         }
     }

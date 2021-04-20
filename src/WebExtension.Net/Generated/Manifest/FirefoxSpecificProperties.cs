@@ -7,9 +7,9 @@ namespace WebExtension.Net.Manifest
     public class FirefoxSpecificProperties : BaseObject
     {
         private ExtensionID _id;
-        private string _update_url;
-        private string _strict_min_version;
         private string _strict_max_version;
+        private string _strict_min_version;
+        private string _update_url;
 
         /// <summary></summary>
         [JsonPropertyName("id")]
@@ -27,17 +27,17 @@ namespace WebExtension.Net.Manifest
         }
 
         /// <summary></summary>
-        [JsonPropertyName("update_url")]
-        public string Update_url
+        [JsonPropertyName("strict_max_version")]
+        public string Strict_max_version
         {
             get
             {
-                InitializeProperty("update_url", _update_url);
-                return _update_url;
+                InitializeProperty("strict_max_version", _strict_max_version);
+                return _strict_max_version;
             }
             set
             {
-                _update_url = value;
+                _strict_max_version = value;
             }
         }
 
@@ -57,17 +57,17 @@ namespace WebExtension.Net.Manifest
         }
 
         /// <summary></summary>
-        [JsonPropertyName("strict_max_version")]
-        public string Strict_max_version
+        [JsonPropertyName("update_url")]
+        public string Update_url
         {
             get
             {
-                InitializeProperty("strict_max_version", _strict_max_version);
-                return _strict_max_version;
+                InitializeProperty("update_url", _update_url);
+                return _update_url;
             }
             set
             {
-                _strict_max_version = value;
+                _update_url = value;
             }
         }
     }

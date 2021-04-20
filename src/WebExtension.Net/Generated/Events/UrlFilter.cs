@@ -11,22 +11,22 @@ namespace WebExtension.Net.Events
         private string _hostEquals;
         private string _hostPrefix;
         private string _hostSuffix;
+        private string _originAndPathMatches;
         private string _pathContains;
         private string _pathEquals;
         private string _pathPrefix;
         private string _pathSuffix;
+        private IEnumerable<object> _ports;
         private string _queryContains;
         private string _queryEquals;
         private string _queryPrefix;
         private string _querySuffix;
+        private IEnumerable<string> _schemes;
         private string _urlContains;
         private string _urlEquals;
         private string _urlMatches;
-        private string _originAndPathMatches;
         private string _urlPrefix;
         private string _urlSuffix;
-        private IEnumerable<string> _schemes;
-        private IEnumerable<object> _ports;
 
         /// <summary>Matches if the host name of the URL contains a specified string. To test whether a host name component has a prefix 'foo', use hostContains: '.foo'. This matches 'www.foobar.com' and 'foo.com', because an implicit dot is added at the beginning of the host name. Similarly, hostContains can be used to match against component suffix ('foo.') and to exactly match against components ('.foo.'). Suffix- and exact-matching for the last components need to be done separately using hostSuffix, because no implicit dot is added at the end of the host name.</summary>
         [JsonPropertyName("hostContains")]
@@ -85,6 +85,21 @@ namespace WebExtension.Net.Events
             set
             {
                 _hostSuffix = value;
+            }
+        }
+
+        /// <summary>Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the <see href="https://github.com/google/re2/blob/master/doc/syntax.txt">RE2 syntax</see>.</summary>
+        [JsonPropertyName("originAndPathMatches")]
+        public string OriginAndPathMatches
+        {
+            get
+            {
+                InitializeProperty("originAndPathMatches", _originAndPathMatches);
+                return _originAndPathMatches;
+            }
+            set
+            {
+                _originAndPathMatches = value;
             }
         }
 
@@ -148,6 +163,21 @@ namespace WebExtension.Net.Events
             }
         }
 
+        /// <summary>Matches if the port of the URL is contained in any of the specified port lists. For example <c>[80, 443, [1000, 1200]]</c> matches all requests on port 80, 443 and in the range 1000-1200.</summary>
+        [JsonPropertyName("ports")]
+        public IEnumerable<object> Ports
+        {
+            get
+            {
+                InitializeProperty("ports", _ports);
+                return _ports;
+            }
+            set
+            {
+                _ports = value;
+            }
+        }
+
         /// <summary>Matches if the query segment of the URL contains a specified string.</summary>
         [JsonPropertyName("queryContains")]
         public string QueryContains
@@ -208,6 +238,21 @@ namespace WebExtension.Net.Events
             }
         }
 
+        /// <summary>Matches if the scheme of the URL is equal to any of the schemes specified in the array.</summary>
+        [JsonPropertyName("schemes")]
+        public IEnumerable<string> Schemes
+        {
+            get
+            {
+                InitializeProperty("schemes", _schemes);
+                return _schemes;
+            }
+            set
+            {
+                _schemes = value;
+            }
+        }
+
         /// <summary>Matches if the URL (without fragment identifier) contains a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlContains")]
         public string UrlContains
@@ -253,21 +298,6 @@ namespace WebExtension.Net.Events
             }
         }
 
-        /// <summary>Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the <see href="https://github.com/google/re2/blob/master/doc/syntax.txt">RE2 syntax</see>.</summary>
-        [JsonPropertyName("originAndPathMatches")]
-        public string OriginAndPathMatches
-        {
-            get
-            {
-                InitializeProperty("originAndPathMatches", _originAndPathMatches);
-                return _originAndPathMatches;
-            }
-            set
-            {
-                _originAndPathMatches = value;
-            }
-        }
-
         /// <summary>Matches if the URL (without fragment identifier) starts with a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlPrefix")]
         public string UrlPrefix
@@ -295,36 +325,6 @@ namespace WebExtension.Net.Events
             set
             {
                 _urlSuffix = value;
-            }
-        }
-
-        /// <summary>Matches if the scheme of the URL is equal to any of the schemes specified in the array.</summary>
-        [JsonPropertyName("schemes")]
-        public IEnumerable<string> Schemes
-        {
-            get
-            {
-                InitializeProperty("schemes", _schemes);
-                return _schemes;
-            }
-            set
-            {
-                _schemes = value;
-            }
-        }
-
-        /// <summary>Matches if the port of the URL is contained in any of the specified port lists. For example <c>[80, 443, [1000, 1200]]</c> matches all requests on port 80, 443 and in the range 1000-1200.</summary>
-        [JsonPropertyName("ports")]
-        public IEnumerable<object> Ports
-        {
-            get
-            {
-                InitializeProperty("ports", _ports);
-                return _ports;
-            }
-            set
-            {
-                _ports = value;
             }
         }
     }

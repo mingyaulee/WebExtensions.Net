@@ -7,25 +7,10 @@ namespace WebExtension.Net.Tabs
     /// <summary>An object describing filters to apply to tabs.onUpdated events.</summary>
     public class UpdateFilter : BaseObject
     {
-        private IEnumerable<string> _urls;
         private IEnumerable<UpdatePropertyName> _properties;
         private int? _tabId;
+        private IEnumerable<string> _urls;
         private int? _windowId;
-
-        /// <summary>A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the <c>"tabs"</c> or  <c>"activeTab"</c> permission.</summary>
-        [JsonPropertyName("urls")]
-        public IEnumerable<string> Urls
-        {
-            get
-            {
-                InitializeProperty("urls", _urls);
-                return _urls;
-            }
-            set
-            {
-                _urls = value;
-            }
-        }
 
         /// <summary>A list of property names. Events that do not match any of the names will be filtered out.</summary>
         [JsonPropertyName("properties")]
@@ -54,6 +39,21 @@ namespace WebExtension.Net.Tabs
             set
             {
                 _tabId = value;
+            }
+        }
+
+        /// <summary>A list of URLs or URL patterns. Events that cannot match any of the URLs will be filtered out.  Filtering with urls requires the <c>"tabs"</c> or  <c>"activeTab"</c> permission.</summary>
+        [JsonPropertyName("urls")]
+        public IEnumerable<string> Urls
+        {
+            get
+            {
+                InitializeProperty("urls", _urls);
+                return _urls;
+            }
+            set
+            {
+                _urls = value;
             }
         }
 
