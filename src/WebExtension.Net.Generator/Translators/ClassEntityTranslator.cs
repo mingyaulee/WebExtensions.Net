@@ -32,11 +32,19 @@ namespace WebExtension.Net.Generator.Translators
 
         public void TranslateClassEntityToInterfaceCodeFile(ClassEntity classEntity, CodeFile codeFile)
         {
+            foreach (var relativeNamespace in classEntity.UsingRelativeNamespaces)
+            {
+                codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
+            }
             GetFactory(classEntity).AddInterfaceConvertersToCodeFile(classEntity, codeFile);
         }
 
         public void TranslateClassEntityToCodeFile(ClassEntity classEntity, CodeFile codeFile)
         {
+            foreach (var relativeNamespace in classEntity.UsingRelativeNamespaces)
+            {
+                codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
+            }
             GetFactory(classEntity).AddConvertersToCodeFile(classEntity, codeFile);
         }
 

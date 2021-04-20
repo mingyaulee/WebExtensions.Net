@@ -28,9 +28,9 @@ namespace WebExtension.Net.Generator.Models.Entities
         public string? BaseClassName { get; set; }
         public bool ImplementInterface { get; set; }
         public NamespaceEntity NamespaceEntity { get; }
-        public List<string> UsingRelativeNamespaces { get; }
+        public IList<string> UsingRelativeNamespaces { get; }
         public IDictionary<string, PropertyDefinition> Properties { get; }
-        public List<FunctionDefinition> Functions { get; }
+        public IList<FunctionDefinition> Functions { get; }
         public List<EventDefinition> Events { get; }
     }
 }

@@ -7,11 +7,6 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
     {
         public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            foreach (var relativeNamespace in entity.UsingRelativeNamespaces)
-            {
-                codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
-            }
-
             codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
             // Api Root has properties and no functions or events
             foreach (var propertyDefinitionPair in entity.Properties)
@@ -22,11 +17,6 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 
         public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
         {
-            foreach (var relativeNamespace in entity.UsingRelativeNamespaces)
-            {
-                codeFile.UsingRelativeNamespaces.Add(relativeNamespace);
-            }
-
             codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
             codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(entity.FormattedName));
 

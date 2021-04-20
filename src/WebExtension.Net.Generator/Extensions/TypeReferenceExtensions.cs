@@ -47,7 +47,7 @@ namespace WebExtension.Net.Generator.Extensions
         {
             if (reference.Contains('.'))
             {
-                return reference.ToCapitalCase();
+                return reference[(reference.LastIndexOf('.') + 1)..];
             }
             return reference;
         }

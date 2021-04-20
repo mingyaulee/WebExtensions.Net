@@ -10,6 +10,7 @@ using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
 using WebExtension.Net.Generator.Models.Schema;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using WebExtension.Net.Generator.EntityRegistrars;
 
 namespace WebExtension.Net.Generator
 {
@@ -71,6 +72,11 @@ namespace WebExtension.Net.Generator
             services.AddScoped<EntitiesRegistrationManager>();
             services.AddScoped<CodeGenerator>();
             services.AddScoped<FilesManager>();
+
+            // entity registrars
+            services.AddTransient<ClassEntityRegistrar>();
+            services.AddTransient<NamespaceEntityRegistrar>();
+            services.AddTransient<TypeEntityRegistrar>();
 
             // translators
             services.AddTransient<ClassEntityTranslator>();
