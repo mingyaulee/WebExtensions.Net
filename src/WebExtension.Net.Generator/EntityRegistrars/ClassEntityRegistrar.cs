@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Helpers;
 using WebExtension.Net.Generator.Models;
@@ -21,42 +21,33 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             this.registrationOptions = registrationOptions;
         }
 
-        public ClassEntity? RegisterNamespaceApi(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
+        public ClassEntity RegisterNamespaceApi(TypeDefinition namespaceApiTypeDefinition, NamespaceEntity namespaceEntity)
         {
-            if (namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null)
+            if (namespaceApiTypeDefinition.Id is null)
             {
-                return null;
+                throw new InvalidOperationException("Namespace Api should have an Id.");
             }
 
-            var apiClassName = namespaceEntity.FormattedName + registrationOptions.ApiClassNamePostfix;
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.ApiClass, apiClassName, namespaceEntity);
-            classEntity.Description = namespaceDefinition.Description;
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.ApiClass, namespaceApiTypeDefinition.Id, namespaceEntity);
+            classEntity.TypeDefinition = namespaceApiTypeDefinition;
+            classEntity.Description = namespaceApiTypeDefinition.Description;
             classEntity.BaseClassName = $"{registrationOptions.ApiClassBaseClassName}";
             classEntity.ImplementInterface = true;
 
-            var typeFunctions = new List<FunctionDefinition>();
-            var typeProperties = new List<KeyValuePair<string, PropertyDefinition>>();
-
-            if (namespaceDefinition.Events is not null)
+            if (namespaceApiTypeDefinition.ObjectEvents is not null)
             {
-                classEntity.Events.AddRange(namespaceDefinition.Events);
+                classEntity.Events.AddRange(namespaceApiTypeDefinition.ObjectEvents);
             }
 
-            if (namespaceDefinition.Functions is not null)
+            if (namespaceApiTypeDefinition.ObjectFunctions is not null)
             {
-                typeFunctions.AddRange(namespaceDefinition.Functions);
+                AddFunctionsToClassEntity(namespaceApiTypeDefinition.ObjectFunctions, classEntity);
             }
 
-            if (namespaceDefinition.Properties is not null)
+            if (namespaceApiTypeDefinition.ObjectProperties is not null)
             {
-                foreach (var propertyDefinitionPair in namespaceDefinition.Properties)
-                {
-                    ProcessNamespaceProperty(propertyDefinitionPair, typeFunctions, typeProperties);
-                }
+                AddPropertiesToClassEntity(namespaceApiTypeDefinition.ObjectProperties, classEntity);
             }
-
-            AddFunctionsToClassEntity(typeFunctions, classEntity);
-            AddPropertiesToClassEntity(typeProperties, classEntity);
 
             return classEntity;
         }
@@ -114,39 +105,6 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             else if (typeEntity.Definition.TypeChoices is not null)
             {
                 RegisterMultitypeClassEntity(typeEntity);
-            }
-        }
-
-        private static void ProcessNamespaceProperty(KeyValuePair<string, PropertyDefinition> propertyDefinitionPair, List<FunctionDefinition> typeFunctions, List<KeyValuePair<string, PropertyDefinition>> typeProperties)
-        {
-            var propertyName = propertyDefinitionPair.Key;
-            var propertyDefinition = propertyDefinitionPair.Value;
-            if (!propertyDefinition.IsConstant)
-            {
-                // If this is not a constant property, convert it to a function
-                typeFunctions.Add(new FunctionDefinition()
-                {
-                    Name = propertyName,
-                    Type = ObjectType.PropertyGetterFunction,
-                    Async = "true",
-                    FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
-                });
-            }
-            else
-            {
-                var clonePropertyDefinition = SerializationHelper.DeserializeTo<PropertyDefinition>(propertyDefinition);
-                if (clonePropertyDefinition.ConstantValue.HasValue)
-                {
-                    clonePropertyDefinition.Type = clonePropertyDefinition.ConstantValue.Value.ValueKind switch
-                    {
-                        JsonValueKind.Number => clonePropertyDefinition.ConstantValue.Value.ToString()?.Contains('.') ?? false ? ObjectType.Number : ObjectType.Integer,
-                        JsonValueKind.False => ObjectType.Boolean,
-                        JsonValueKind.True => ObjectType.Boolean,
-                        JsonValueKind.String => ObjectType.String,
-                        _ => ObjectType.Object
-                    };
-                }
-                typeProperties.Add(KeyValuePair.Create(propertyName, clonePropertyDefinition));
             }
         }
 

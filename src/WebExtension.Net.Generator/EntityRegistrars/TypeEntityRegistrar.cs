@@ -18,6 +18,22 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             this.logger = logger;
         }
 
+        public void RegisterNamespaceType(TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
+        {
+            if (!string.IsNullOrEmpty(typeDefinition.Id))
+            {
+                entitiesContext.Types.RegisterType(typeDefinition.Id, typeDefinition, namespaceEntity);
+            }
+            else if (!string.IsNullOrEmpty(typeDefinition.Extend))
+            {
+                entitiesContext.Types.RegisterTypeExtension(typeDefinition.Extend, typeDefinition, namespaceEntity);
+            }
+            else
+            {
+                logger.LogError($"Type definition in namespace '{namespaceEntity.Name}' must have an ID or extends another type. {JsonSerializer.Serialize(typeDefinition)}");
+            }
+        }
+
         public void RegisterNamespaceTypes(IEnumerable<TypeDefinition>? typeDefinitions, NamespaceEntity namespaceEntity)
         {
             if (typeDefinitions is null)
@@ -27,19 +43,13 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
             foreach (var typeDefinition in typeDefinitions)
             {
-                if (!string.IsNullOrEmpty(typeDefinition.Id))
-                {
-                    entitiesContext.Types.RegisterType(typeDefinition.Id, typeDefinition, namespaceEntity);
-                }
-                else if (!string.IsNullOrEmpty(typeDefinition.Extend))
-                {
-                    entitiesContext.Types.RegisterTypeExtension(typeDefinition.Extend, typeDefinition, namespaceEntity);
-                }
-                else
-                {
-                    logger.LogError($"Type definition in namespace '{namespaceEntity.Name}' must have an ID or extends another type. {JsonSerializer.Serialize(typeDefinition)}");
-                }
+                RegisterNamespaceType(typeDefinition, namespaceEntity);
             }
+        }
+
+        public TypeEntity GetTypeEntity(string typeId, NamespaceEntity namespaceEntity)
+        {
+            return entitiesContext.Types.GetTypeEntity(typeId, namespaceEntity);
         }
 
         public IEnumerable<TypeEntity> GetAllEntities()

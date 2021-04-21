@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -42,10 +43,12 @@ namespace WebExtension.Net.Generator
             namespaceSourceDefinitions.AddRange(additionalNamespaceSourceDefinitions);
             if (runInParallel)
             {
-                Parallel.ForEach(namespaceSourceDefinitions, namespaceSourceDefinition =>
+                var unorderedNamespaceDefinitions = new ConcurrentDictionary<long, IEnumerable<NamespaceDefinition>>();
+                Parallel.ForEach(namespaceSourceDefinitions, (namespaceSourceDefinition, _, i) =>
                 {
-                    namespaceDefinitions.AddRange(GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult());
+                    unorderedNamespaceDefinitions[i] = GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult();
                 });
+                namespaceDefinitions.AddRange(unorderedNamespaceDefinitions.OrderBy(item => item.Key).SelectMany(item => item.Value));
             }
             else
             {

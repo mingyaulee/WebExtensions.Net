@@ -22,5 +22,6 @@ namespace WebExtension.Net.Generator.Models.Entities
         public NamespaceEntity NamespaceEntity { get; }
         public TypeDefinition Definition { get; }
         public IList<TypeDefinition> Extensions { get; }
+        public bool IsReferenced { get; set; }
     }
 }
