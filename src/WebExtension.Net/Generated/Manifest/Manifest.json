@@ -3,6 +3,736 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "browserSettings"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "contextualIdentities"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "cookies"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "dns"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "downloads",
+              "downloads.open"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "activityLog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "default_locale": {
+            "optional": true,
+            "type": "string"
+          },
+          "l10n_resources": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "management"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "networkStatus"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "privacy"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "id": "ProtocolHandler",
+        "description": "Represents a protocol handler definition.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "A user-readable title string for the protocol handler. This will be displayed to the user in interface objects as needed.",
+            "type": "string"
+          },
+          "protocol": {
+            "description": "The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the \u0022sms\u0022 scheme.",
+            "choices": [
+              {
+                "type": "string",
+                "enum": [
+                  "bitcoin",
+                  "dat",
+                  "dweb",
+                  "ftp",
+                  "geo",
+                  "gopher",
+                  "im",
+                  "ipfs",
+                  "ipns",
+                  "irc",
+                  "ircs",
+                  "magnet",
+                  "mailto",
+                  "mms",
+                  "news",
+                  "nntp",
+                  "sip",
+                  "sms",
+                  "smsto",
+                  "ssb",
+                  "ssh",
+                  "tel",
+                  "urn",
+                  "webcal",
+                  "wtai",
+                  "xmpp"
+                ]
+              },
+              {
+                "type": "string",
+                "pattern": "^(ext|web)\\\u002B[a-z0-9.\u002B-]\u002B$"
+              }
+            ]
+          },
+          "uriTemplate": {
+            "description": "The URL of the handler, as a string. This string should include \u0022%s\u0022 as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.",
+            "choices": [
+              {
+                "$ref": "ExtensionURL"
+              },
+              {
+                "$ref": "HttpURL"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "protocol_handlers": {
+            "description": "A list of protocol handler definitions.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "ProtocolHandler"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "proxy"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "nativeMessaging"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "telemetry": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "ping_type": {
+                "type": "string"
+              },
+              "schemaNamespace": {
+                "type": "string"
+              },
+              "public_key": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "object",
+                    "properties": {
+                      "crv": {
+                        "optional": false,
+                        "type": "string"
+                      },
+                      "kty": {
+                        "optional": false,
+                        "type": "string"
+                      },
+                      "x": {
+                        "optional": false,
+                        "type": "string"
+                      },
+                      "y": {
+                        "optional": false,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "study_name": {
+                "optional": true,
+                "type": "string"
+              },
+              "pioneer_id": {
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "telemetry"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "theme"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ThemeColor",
+        "choices": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            }
+          },
+          {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "number"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ThemeExperiment",
+        "type": "object",
+        "properties": {
+          "stylesheet": {
+            "optional": true,
+            "$ref": "ExtensionURL"
+          },
+          "images": {
+            "optional": true,
+            "type": "object"
+          },
+          "colors": {
+            "optional": true,
+            "type": "object"
+          },
+          "properties": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      },
+      {
+        "id": "ThemeType",
+        "type": "object",
+        "properties": {
+          "images": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "additional_backgrounds": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "$ref": "ImageDataOrExtensionURL"
+                }
+              },
+              "headerURL": {
+                "optional": true,
+                "$ref": "ImageDataOrExtensionURL",
+                "deprecated": "Unsupported images property, use \u0027theme.images.theme_frame\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "theme_frame": {
+                "optional": true,
+                "$ref": "ImageDataOrExtensionURL"
+              }
+            }
+          },
+          "colors": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "tab_selected": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "accentcolor": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "Unsupported colors property, use \u0027theme.colors.frame\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "frame": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "frame_inactive": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "textcolor": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "Unsupported color property, use \u0027theme.colors.tab_background_text\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "tab_background_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_background_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_loading": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_line": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_text": {
+                "description": "This color property is an alias of \u0027bookmark_text\u0027.",
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "bookmark_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_separator": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "This color property is ignored in Firefox \u003E= 89."
+              },
+              "toolbar_top_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_bottom_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_vertical_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "icons": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "icons_attention": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "button_background_hover": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "button_background_active": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_text_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_border_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "ntp_background": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "ntp_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              }
+            }
+          },
+          "properties": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "additional_backgrounds_alignment": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "bottom",
+                    "center",
+                    "left",
+                    "right",
+                    "top",
+                    "center bottom",
+                    "center center",
+                    "center top",
+                    "left bottom",
+                    "left center",
+                    "left top",
+                    "right bottom",
+                    "right center",
+                    "right top"
+                  ]
+                }
+              },
+              "additional_backgrounds_tiling": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "no-repeat",
+                    "repeat",
+                    "repeat-x",
+                    "repeat-y"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "ThemeManifest",
+        "description": "Contents of manifest.json for a static theme",
+        "type": "object",
+        "properties": {
+          "theme": {
+            "$ref": "ThemeType"
+          },
+          "dark_theme": {
+            "optional": true,
+            "$ref": "ThemeType"
+          },
+          "default_locale": {
+            "optional": true,
+            "type": "string"
+          },
+          "theme_experiment": {
+            "optional": true,
+            "$ref": "ThemeExperiment"
+          },
+          "icons": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "theme_experiment": {
+            "optional": true,
+            "$ref": "ThemeExperiment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "user_scripts": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "api_script": {
+                "optional": true,
+                "$ref": "manifest.ExtensionURL"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "webNavigation"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
         "$extend": "OptionalPermissionNoPrompt",
         "choices": [
           {
@@ -26,47 +756,6 @@
             "type": "string",
             "enum": [
               "bookmarks"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "devtools_page": {
-            "optional": true,
-            "$ref": "ExtensionURL"
-          }
-        }
-      },
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "devtools"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "networkStatus"
             ]
           }
         ]
@@ -130,12 +819,12 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "OptionalPermissionNoPrompt",
+        "$extend": "OptionalPermission",
         "choices": [
           {
             "type": "string",
             "enum": [
-              "search"
+              "browsingData"
             ]
           }
         ]
@@ -151,7 +840,276 @@
           {
             "type": "string",
             "enum": [
-              "dns"
+              "captivePortal"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "chrome_settings_overrides": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "homepage": {
+                "optional": true,
+                "type": "string",
+                "format": "homepageUrl"
+              },
+              "search_provider": {
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "keyword": {
+                    "optional": true,
+                    "choices": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  },
+                  "search_url": {
+                    "type": "string",
+                    "format": "url",
+                    "pattern": "^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
+                  },
+                  "favicon_url": {
+                    "optional": true,
+                    "type": "string",
+                    "format": "relativeUrl"
+                  },
+                  "suggest_url": {
+                    "optional": true,
+                    "type": "string",
+                    "pattern": "^$|^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
+                  },
+                  "instant_url": {
+                    "optional": true,
+                    "type": "string",
+                    "deprecated": "Unsupported on Firefox at this time.",
+                    "format": "url"
+                  },
+                  "image_url": {
+                    "optional": true,
+                    "type": "string",
+                    "deprecated": "Unsupported on Firefox at this time.",
+                    "format": "url"
+                  },
+                  "search_url_get_params": {
+                    "description": "GET parameters to the search_url as a query string.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "search_url_post_params": {
+                    "description": "POST parameters to the search_url as a query string.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "suggest_url_get_params": {
+                    "description": "GET parameters to the suggest_url as a query string.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "suggest_url_post_params": {
+                    "description": "POST parameters to the suggest_url as a query string.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "instant_url_post_params": {
+                    "optional": true,
+                    "type": "string",
+                    "deprecated": "Unsupported on Firefox at this time."
+                  },
+                  "image_url_post_params": {
+                    "optional": true,
+                    "type": "string",
+                    "deprecated": "Unsupported on Firefox at this time."
+                  },
+                  "search_form": {
+                    "optional": true,
+                    "type": "string",
+                    "format": "url",
+                    "pattern": "^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
+                  },
+                  "alternate_urls": {
+                    "optional": true,
+                    "type": "array",
+                    "deprecated": "Unsupported on Firefox at this time.",
+                    "items": {
+                      "type": "string",
+                      "format": "url"
+                    }
+                  },
+                  "prepopulated_id": {
+                    "optional": true,
+                    "type": "integer",
+                    "deprecated": "Unsupported on Firefox."
+                  },
+                  "encoding": {
+                    "description": "Encoding of the search term.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "is_default": {
+                    "description": "Sets the default engine to a built-in engine only.",
+                    "optional": true,
+                    "type": "boolean"
+                  },
+                  "params": {
+                    "description": "A list of optional search url parameters. This allows the additon of search url parameters based on how the search is performed in Firefox.",
+                    "optional": true,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "description": "A url parameter name",
+                          "type": "string"
+                        },
+                        "condition": {
+                          "description": "The type of param can be either \u0022purpose\u0022 or \u0022pref\u0022.",
+                          "optional": true,
+                          "type": "string",
+                          "enum": [
+                            "purpose",
+                            "pref"
+                          ]
+                        },
+                        "pref": {
+                          "description": "The preference to retrieve the value from.",
+                          "optional": true,
+                          "type": "string"
+                        },
+                        "purpose": {
+                          "description": "The context that initiates a search, required if condition is \u0022purpose\u0022.",
+                          "optional": true,
+                          "type": "string",
+                          "enum": [
+                            "contextmenu",
+                            "searchbar",
+                            "homepage",
+                            "keyword",
+                            "newtab"
+                          ]
+                        },
+                        "value": {
+                          "description": "A url parameter value.",
+                          "optional": true,
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "id": "KeyName",
+        "type": "string",
+        "format": "manifestShortcutKey"
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "commands": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "devtools_page": {
+            "optional": true,
+            "$ref": "ExtensionURL"
+          }
+        }
+      },
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "devtools"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "find"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "history"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "identity"
             ]
           }
         ]
@@ -190,44 +1148,12 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "OptionalPermission",
+        "$extend": "PermissionNoPrompt",
         "choices": [
           {
             "type": "string",
             "enum": [
-              "sessions"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "browserSettings"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "privacy"
+              "normandyAddonStudy"
             ]
           }
         ]
@@ -240,50 +1166,17 @@
       {
         "$extend": "WebExtensionManifest",
         "properties": {
-          "sidebar_action": {
+          "omnibox": {
             "optional": true,
             "type": "object",
             "properties": {
-              "default_title": {
-                "optional": true,
-                "type": "string"
-              },
-              "default_icon": {
-                "optional": true,
-                "$ref": "IconPath"
-              },
-              "browser_style": {
-                "optional": true,
-                "type": "boolean"
-              },
-              "default_panel": {
+              "keyword": {
                 "type": "string",
-                "format": "strictRelativeUrl"
-              },
-              "open_at_install": {
-                "description": "Whether or not the sidebar is opened at install. Default is \u003Ccode\u003Etrue\u003C/code\u003E.",
-                "optional": true,
-                "type": "boolean"
+                "pattern": "^[^?\\s:][^\\s:]*$"
               }
             }
           }
         }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "normandyAddonStudy"
-            ]
-          }
-        ]
       }
     ]
   },
@@ -349,7 +1242,7 @@
           {
             "type": "string",
             "enum": [
-              "find"
+              "pkcs11"
             ]
           }
         ]
@@ -365,7 +1258,7 @@
           {
             "type": "string",
             "enum": [
-              "activityLog"
+              "geckoProfiler"
             ]
           }
         ]
@@ -381,10 +1274,153 @@
           {
             "type": "string",
             "enum": [
-              "cookies"
+              "search"
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "sessions"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "sidebar_action": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "default_title": {
+                "optional": true,
+                "type": "string"
+              },
+              "default_icon": {
+                "optional": true,
+                "$ref": "IconPath"
+              },
+              "browser_style": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "default_panel": {
+                "type": "string",
+                "format": "strictRelativeUrl"
+              },
+              "open_at_install": {
+                "description": "Whether or not the sidebar is opened at install. Default is \u003Ccode\u003Etrue\u003C/code\u003E.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "activeTab"
+            ]
+          }
+        ]
+      },
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "tabs",
+              "tabHide"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "topSites"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "urlbar"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "chrome_url_overrides": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "newtab": {
+                "optional": true,
+                "$ref": "ExtensionURL"
+              },
+              "bookmarks": {
+                "optional": true,
+                "$ref": "ExtensionURL",
+                "unsupported": true
+              },
+              "history": {
+                "optional": true,
+                "$ref": "ExtensionURL",
+                "unsupported": true
+              }
+            }
+          }
+        }
       }
     ]
   },
@@ -953,1041 +1989,6 @@
             "deprecated": "Event pages are not currently supported. This will run as a persistent background page.",
             "enum": [
               false
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "telemetry": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "ping_type": {
-                "type": "string"
-              },
-              "schemaNamespace": {
-                "type": "string"
-              },
-              "public_key": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "key": {
-                    "type": "object",
-                    "properties": {
-                      "crv": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "kty": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "x": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "y": {
-                        "optional": false,
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              },
-              "study_name": {
-                "optional": true,
-                "type": "string"
-              },
-              "pioneer_id": {
-                "optional": true,
-                "type": "boolean"
-              }
-            }
-          }
-        }
-      },
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "telemetry"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "downloads",
-              "downloads.open"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "id": "ProtocolHandler",
-        "description": "Represents a protocol handler definition.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "A user-readable title string for the protocol handler. This will be displayed to the user in interface objects as needed.",
-            "type": "string"
-          },
-          "protocol": {
-            "description": "The protocol the site wishes to handle, specified as a string. For example, you can register to handle SMS text message links by registering to handle the \u0022sms\u0022 scheme.",
-            "choices": [
-              {
-                "type": "string",
-                "enum": [
-                  "bitcoin",
-                  "dat",
-                  "dweb",
-                  "ftp",
-                  "geo",
-                  "gopher",
-                  "im",
-                  "ipfs",
-                  "ipns",
-                  "irc",
-                  "ircs",
-                  "magnet",
-                  "mailto",
-                  "mms",
-                  "news",
-                  "nntp",
-                  "sip",
-                  "sms",
-                  "smsto",
-                  "ssb",
-                  "ssh",
-                  "tel",
-                  "urn",
-                  "webcal",
-                  "wtai",
-                  "xmpp"
-                ]
-              },
-              {
-                "type": "string",
-                "pattern": "^(ext|web)\\\u002B[a-z0-9.\u002B-]\u002B$"
-              }
-            ]
-          },
-          "uriTemplate": {
-            "description": "The URL of the handler, as a string. This string should include \u0022%s\u0022 as a placeholder which will be replaced with the escaped URL of the document to be handled. This URL might be a true URL, or it could be a phone number, email address, or so forth.",
-            "choices": [
-              {
-                "$ref": "ExtensionURL"
-              },
-              {
-                "$ref": "HttpURL"
-              }
-            ]
-          }
-        }
-      },
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "protocol_handlers": {
-            "description": "A list of protocol handler definitions.",
-            "optional": true,
-            "type": "array",
-            "items": {
-              "$ref": "ProtocolHandler"
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "theme"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ThemeColor",
-        "choices": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "array",
-            "minItems": 3,
-            "maxItems": 3,
-            "items": {
-              "type": "integer",
-              "minimum": 0,
-              "maximum": 255
-            }
-          },
-          {
-            "type": "array",
-            "minItems": 4,
-            "maxItems": 4,
-            "items": {
-              "type": "number"
-            }
-          }
-        ]
-      },
-      {
-        "id": "ThemeExperiment",
-        "type": "object",
-        "properties": {
-          "stylesheet": {
-            "optional": true,
-            "$ref": "ExtensionURL"
-          },
-          "images": {
-            "optional": true,
-            "type": "object"
-          },
-          "colors": {
-            "optional": true,
-            "type": "object"
-          },
-          "properties": {
-            "optional": true,
-            "type": "object"
-          }
-        }
-      },
-      {
-        "id": "ThemeType",
-        "type": "object",
-        "properties": {
-          "images": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "additional_backgrounds": {
-                "optional": true,
-                "type": "array",
-                "maxItems": 15,
-                "items": {
-                  "$ref": "ImageDataOrExtensionURL"
-                }
-              },
-              "headerURL": {
-                "optional": true,
-                "$ref": "ImageDataOrExtensionURL",
-                "deprecated": "Unsupported images property, use \u0027theme.images.theme_frame\u0027, this alias is ignored in Firefox \u003E= 70."
-              },
-              "theme_frame": {
-                "optional": true,
-                "$ref": "ImageDataOrExtensionURL"
-              }
-            }
-          },
-          "colors": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "tab_selected": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "accentcolor": {
-                "optional": true,
-                "$ref": "ThemeColor",
-                "deprecated": "Unsupported colors property, use \u0027theme.colors.frame\u0027, this alias is ignored in Firefox \u003E= 70."
-              },
-              "frame": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "frame_inactive": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "textcolor": {
-                "optional": true,
-                "$ref": "ThemeColor",
-                "deprecated": "Unsupported color property, use \u0027theme.colors.tab_background_text\u0027, this alias is ignored in Firefox \u003E= 70."
-              },
-              "tab_background_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "tab_background_separator": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "tab_loading": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "tab_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "tab_line": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_text": {
-                "description": "This color property is an alias of \u0027bookmark_text\u0027.",
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "bookmark_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_border": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_separator": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_top_separator": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_bottom_separator": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_vertical_separator": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "icons": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "icons_attention": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "button_background_hover": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "button_background_active": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "popup": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "popup_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "popup_border": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_focus": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_text_focus": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_border_focus": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "popup_highlight": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "popup_highlight_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "ntp_background": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "ntp_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "sidebar": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "sidebar_border": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "sidebar_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "sidebar_highlight": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "sidebar_highlight_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_highlight": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              },
-              "toolbar_field_highlight_text": {
-                "optional": true,
-                "$ref": "ThemeColor"
-              }
-            }
-          },
-          "properties": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "additional_backgrounds_alignment": {
-                "optional": true,
-                "type": "array",
-                "maxItems": 15,
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "bottom",
-                    "center",
-                    "left",
-                    "right",
-                    "top",
-                    "center bottom",
-                    "center center",
-                    "center top",
-                    "left bottom",
-                    "left center",
-                    "left top",
-                    "right bottom",
-                    "right center",
-                    "right top"
-                  ]
-                }
-              },
-              "additional_backgrounds_tiling": {
-                "optional": true,
-                "type": "array",
-                "maxItems": 15,
-                "items": {
-                  "type": "string",
-                  "enum": [
-                    "no-repeat",
-                    "repeat",
-                    "repeat-x",
-                    "repeat-y"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      {
-        "id": "ThemeManifest",
-        "description": "Contents of manifest.json for a static theme",
-        "type": "object",
-        "properties": {
-          "theme": {
-            "$ref": "ThemeType"
-          },
-          "dark_theme": {
-            "optional": true,
-            "$ref": "ThemeType"
-          },
-          "default_locale": {
-            "optional": true,
-            "type": "string"
-          },
-          "theme_experiment": {
-            "optional": true,
-            "$ref": "ThemeExperiment"
-          },
-          "icons": {
-            "optional": true,
-            "type": "object"
-          }
-        }
-      },
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "theme_experiment": {
-            "optional": true,
-            "$ref": "ThemeExperiment"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "nativeMessaging"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "browsingData"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "topSites"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "history"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "pkcs11"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "default_locale": {
-            "optional": true,
-            "type": "string"
-          },
-          "l10n_resources": {
-            "optional": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "captivePortal"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "geckoProfiler"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "contextualIdentities"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "user_scripts": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "api_script": {
-                "optional": true,
-                "$ref": "manifest.ExtensionURL"
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "urlbar"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "omnibox": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "keyword": {
-                "type": "string",
-                "pattern": "^[^?\\s:][^\\s:]*$"
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "proxy"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "chrome_settings_overrides": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "homepage": {
-                "optional": true,
-                "type": "string",
-                "format": "homepageUrl"
-              },
-              "search_provider": {
-                "optional": true,
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "keyword": {
-                    "optional": true,
-                    "choices": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "array",
-                        "minItems": 1,
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    ]
-                  },
-                  "search_url": {
-                    "type": "string",
-                    "format": "url",
-                    "pattern": "^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
-                  },
-                  "favicon_url": {
-                    "optional": true,
-                    "type": "string",
-                    "format": "relativeUrl"
-                  },
-                  "suggest_url": {
-                    "optional": true,
-                    "type": "string",
-                    "pattern": "^$|^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
-                  },
-                  "instant_url": {
-                    "optional": true,
-                    "type": "string",
-                    "deprecated": "Unsupported on Firefox at this time.",
-                    "format": "url"
-                  },
-                  "image_url": {
-                    "optional": true,
-                    "type": "string",
-                    "deprecated": "Unsupported on Firefox at this time.",
-                    "format": "url"
-                  },
-                  "search_url_get_params": {
-                    "description": "GET parameters to the search_url as a query string.",
-                    "optional": true,
-                    "type": "string"
-                  },
-                  "search_url_post_params": {
-                    "description": "POST parameters to the search_url as a query string.",
-                    "optional": true,
-                    "type": "string"
-                  },
-                  "suggest_url_get_params": {
-                    "description": "GET parameters to the suggest_url as a query string.",
-                    "optional": true,
-                    "type": "string"
-                  },
-                  "suggest_url_post_params": {
-                    "description": "POST parameters to the suggest_url as a query string.",
-                    "optional": true,
-                    "type": "string"
-                  },
-                  "instant_url_post_params": {
-                    "optional": true,
-                    "type": "string",
-                    "deprecated": "Unsupported on Firefox at this time."
-                  },
-                  "image_url_post_params": {
-                    "optional": true,
-                    "type": "string",
-                    "deprecated": "Unsupported on Firefox at this time."
-                  },
-                  "search_form": {
-                    "optional": true,
-                    "type": "string",
-                    "format": "url",
-                    "pattern": "^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
-                  },
-                  "alternate_urls": {
-                    "optional": true,
-                    "type": "array",
-                    "deprecated": "Unsupported on Firefox at this time.",
-                    "items": {
-                      "type": "string",
-                      "format": "url"
-                    }
-                  },
-                  "prepopulated_id": {
-                    "optional": true,
-                    "type": "integer",
-                    "deprecated": "Unsupported on Firefox."
-                  },
-                  "encoding": {
-                    "description": "Encoding of the search term.",
-                    "optional": true,
-                    "type": "string"
-                  },
-                  "is_default": {
-                    "description": "Sets the default engine to a built-in engine only.",
-                    "optional": true,
-                    "type": "boolean"
-                  },
-                  "params": {
-                    "description": "A list of optional search url parameters. This allows the additon of search url parameters based on how the search is performed in Firefox.",
-                    "optional": true,
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "description": "A url parameter name",
-                          "type": "string"
-                        },
-                        "condition": {
-                          "description": "The type of param can be either \u0022purpose\u0022 or \u0022pref\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "purpose",
-                            "pref"
-                          ]
-                        },
-                        "pref": {
-                          "description": "The preference to retrieve the value from.",
-                          "optional": true,
-                          "type": "string"
-                        },
-                        "purpose": {
-                          "description": "The context that initiates a search, required if condition is \u0022purpose\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "contextmenu",
-                            "searchbar",
-                            "homepage",
-                            "keyword",
-                            "newtab"
-                          ]
-                        },
-                        "value": {
-                          "description": "A url parameter value.",
-                          "optional": true,
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "PermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "identity"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermissionNoPrompt",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "activeTab"
-            ]
-          }
-        ]
-      },
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "tabs",
-              "tabHide"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "chrome_url_overrides": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "newtab": {
-                "optional": true,
-                "$ref": "ExtensionURL"
-              },
-              "bookmarks": {
-                "optional": true,
-                "$ref": "ExtensionURL",
-                "unsupported": true
-              },
-              "history": {
-                "optional": true,
-                "$ref": "ExtensionURL",
-                "unsupported": true
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "id": "KeyName",
-        "type": "string",
-        "format": "manifestShortcutKey"
-      },
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "commands": {
-            "optional": true,
-            "type": "object"
-          }
-        }
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "management"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "OptionalPermission",
-        "choices": [
-          {
-            "type": "string",
-            "enum": [
-              "webNavigation"
             ]
           }
         ]
