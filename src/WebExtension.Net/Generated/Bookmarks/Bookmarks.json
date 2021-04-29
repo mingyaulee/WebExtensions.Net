@@ -1,0 +1,606 @@
+[
+  {
+    "namespace": "bookmarks",
+    "description": "Use the \u003Ccode\u003Ebrowser.bookmarks\u003C/code\u003E API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.",
+    "permissions": [
+      "bookmarks"
+    ],
+    "types": [
+      {
+        "id": "BookmarkTreeNodeUnmodifiable",
+        "description": "Indicates the reason why this node is unmodifiable. The \u003Cvar\u003Emanaged\u003C/var\u003E value indicates that this node was configured by the system administrator or by the custodian of a supervised user. Omitted if the node can be modified by the user and the extension (default).",
+        "type": "string",
+        "enum": [
+          "managed"
+        ]
+      },
+      {
+        "id": "BookmarkTreeNodeType",
+        "description": "Indicates the type of a BookmarkTreeNode, which can be one of bookmark, folder or separator.",
+        "type": "string",
+        "enum": [
+          "bookmark",
+          "folder",
+          "separator"
+        ]
+      },
+      {
+        "id": "BookmarkTreeNode",
+        "description": "A node (either a bookmark or a folder) in the bookmark tree.  Child nodes are ordered within their parent folder.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identifier for the node. IDs are unique within the current profile, and they remain valid even after the browser is restarted.",
+            "type": "string"
+          },
+          "parentId": {
+            "description": "The \u003Ccode\u003Eid\u003C/code\u003E of the parent folder.  Omitted for the root node.",
+            "optional": true,
+            "type": "string"
+          },
+          "index": {
+            "description": "The 0-based position of this node within its parent folder.",
+            "optional": true,
+            "type": "integer"
+          },
+          "url": {
+            "description": "The URL navigated to when a user clicks the bookmark. Omitted for folders.",
+            "optional": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "The text displayed for the node.",
+            "type": "string"
+          },
+          "dateAdded": {
+            "description": "When this node was created, in milliseconds since the epoch (\u003Ccode\u003Enew Date(dateAdded)\u003C/code\u003E).",
+            "optional": true,
+            "type": "number"
+          },
+          "dateGroupModified": {
+            "description": "When the contents of this folder last changed, in milliseconds since the epoch.",
+            "optional": true,
+            "type": "number"
+          },
+          "unmodifiable": {
+            "description": "Indicates the reason why this node is unmodifiable. The \u003Cvar\u003Emanaged\u003C/var\u003E value indicates that this node was configured by the system administrator or by the custodian of a supervised user. Omitted if the node can be modified by the user and the extension (default).",
+            "optional": true,
+            "$ref": "BookmarkTreeNodeUnmodifiable"
+          },
+          "type": {
+            "description": "Indicates the type of the BookmarkTreeNode, which can be one of bookmark, folder or separator.",
+            "optional": true,
+            "$ref": "BookmarkTreeNodeType"
+          },
+          "children": {
+            "description": "An ordered list of children of this node.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "BookmarkTreeNode"
+            }
+          }
+        }
+      },
+      {
+        "id": "CreateDetails",
+        "description": "Object passed to the create() function.",
+        "type": "object",
+        "properties": {
+          "parentId": {
+            "description": "Defaults to the Other Bookmarks folder.",
+            "optional": true,
+            "type": "string"
+          },
+          "index": {
+            "optional": true,
+            "type": "integer",
+            "minimum": 0
+          },
+          "title": {
+            "optional": true,
+            "type": "string"
+          },
+          "url": {
+            "optional": true,
+            "type": "string"
+          },
+          "type": {
+            "description": "Indicates the type of BookmarkTreeNode to create, which can be one of bookmark, folder or separator.",
+            "optional": true,
+            "$ref": "BookmarkTreeNodeType"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "get",
+        "description": "Retrieves the specified BookmarkTreeNode(s).",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "idOrIdList",
+            "description": "A single string-valued id, or an array of string-valued ids",
+            "choices": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getChildren",
+        "description": "Retrieves the children of the specified BookmarkTreeNode id.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getRecent",
+        "description": "Retrieves the recently added bookmarks.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "numberOfItems",
+            "description": "The maximum number of items to return.",
+            "type": "integer",
+            "minimum": 1
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getTree",
+        "description": "Retrieves the entire Bookmarks hierarchy.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getSubTree",
+        "description": "Retrieves part of the Bookmarks hierarchy, starting at the specified node.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The ID of the root of the subtree to retrieve.",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "search",
+        "description": "Searches for BookmarkTreeNodes matching the given query. Queries specified with an object produce BookmarkTreeNodes matching all specified properties.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "description": "Either a string of words that are matched against bookmark URLs and titles, or an object. If an object, the properties \u003Ccode\u003Equery\u003C/code\u003E, \u003Ccode\u003Eurl\u003C/code\u003E, and \u003Ccode\u003Etitle\u003C/code\u003E may be specified and bookmarks matching all specified properties will be produced.",
+            "choices": [
+              {
+                "description": "A string of words that are matched against bookmark URLs and titles.",
+                "type": "string"
+              },
+              {
+                "description": "An object specifying properties and values to match when searching. Produces bookmarks matching all properties.",
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "description": "A string of words that are matched against bookmark URLs and titles.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "The URL of the bookmark; matches verbatim. Note that folders have no URL.",
+                    "optional": true,
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "title": {
+                    "description": "The title of the bookmark; matches verbatim.",
+                    "optional": true,
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "BookmarkTreeNode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "create",
+        "description": "Creates a bookmark or folder under the specified parentId.  If url is NULL or missing, it will be a folder.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "bookmark",
+            "$ref": "CreateDetails"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "$ref": "BookmarkTreeNode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "move",
+        "description": "Moves the specified BookmarkTreeNode to the provided location.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "destination",
+            "type": "object",
+            "properties": {
+              "parentId": {
+                "optional": true,
+                "type": "string"
+              },
+              "index": {
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "$ref": "BookmarkTreeNode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Updates the properties of a bookmark or folder. Specify only the properties that you want to change; unspecified properties will be left unchanged.  \u003Cb\u003ENote:\u003C/b\u003E Currently, only \u0027title\u0027 and \u0027url\u0027 are supported.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "changes",
+            "type": "object",
+            "properties": {
+              "title": {
+                "optional": true,
+                "type": "string"
+              },
+              "url": {
+                "optional": true,
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "$ref": "BookmarkTreeNode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "description": "Removes a bookmark or an empty bookmark folder.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeTree",
+        "description": "Recursively removes a bookmark folder.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "import",
+        "description": "Imports bookmarks from an html bookmark file",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "export",
+        "description": "Exports bookmarks to an html bookmark file",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onCreated",
+        "description": "Fired when a bookmark or folder is created.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "bookmark",
+            "$ref": "BookmarkTreeNode"
+          }
+        ]
+      },
+      {
+        "name": "onRemoved",
+        "description": "Fired when a bookmark or folder is removed.  When a folder is removed recursively, a single notification is fired for the folder, and none for its contents.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "removeInfo",
+            "type": "object",
+            "properties": {
+              "parentId": {
+                "type": "string"
+              },
+              "index": {
+                "type": "integer"
+              },
+              "node": {
+                "$ref": "BookmarkTreeNode"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onChanged",
+        "description": "Fired when a bookmark or folder changes.  \u003Cb\u003ENote:\u003C/b\u003E Currently, only title and url changes trigger this.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "changeInfo",
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "url": {
+                "optional": true,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onMoved",
+        "description": "Fired when a bookmark or folder is moved to a different parent folder.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "moveInfo",
+            "type": "object",
+            "properties": {
+              "parentId": {
+                "type": "string"
+              },
+              "index": {
+                "type": "integer"
+              },
+              "oldParentId": {
+                "type": "string"
+              },
+              "oldIndex": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onChildrenReordered",
+        "description": "Fired when the children of a folder have changed their order due to the order being sorted in the UI.  This is not called as a result of a move().",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "reorderInfo",
+            "type": "object",
+            "properties": {
+              "childIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onImportBegan",
+        "description": "Fired when a bookmark import session is begun.  Expensive observers should ignore onCreated updates until onImportEnded is fired.  Observers should still handle other notifications immediately.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": []
+      },
+      {
+        "name": "onImportEnded",
+        "description": "Fired when a bookmark import session is ended.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": []
+      }
+    ]
+  }
+]
