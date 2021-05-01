@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtension.Net.ExtensionTypes;
 
 namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -30,6 +31,53 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             tab.Id.Should().NotBeNull();
         }
 
+        [Fact]
+        public async Task AccessAllTabsProperties()
+        {
+            // Arrange
+            var tab = await webExtensionApi.Tabs.GetCurrent();
+
+            // Act
+            Func<object[]> accessProperties = () => new object[]
+            {
+                tab.Active,
+                tab.Attention,
+                tab.Audible,
+                tab.CookieStoreId,
+                tab.Discarded,
+                tab.FavIconUrl,
+                tab.Height,
+                tab.Hidden,
+                tab.Highlighted,
+                tab.Id,
+                tab.Incognito,
+                tab.Index,
+                tab.IsArticle,
+                tab.IsInReaderMode,
+                tab.LastAccessed,
+                tab.MutedInfo,
+                tab.MutedInfo?.ExtensionId,
+                tab.MutedInfo?.Muted,
+                tab.MutedInfo?.Reason,
+                tab.OpenerTabId,
+                tab.Pinned,
+                tab.SessionId,
+                tab.SharingState,
+                tab.SharingState?.Camera,
+                tab.SharingState?.Microphone,
+                tab.SharingState?.Screen,
+                tab.Status,
+                tab.SuccessorTabId,
+                tab.Title,
+                tab.Url,
+                tab.Width,
+                tab.WindowId
+            };
+
+            // Assert
+            accessProperties.Should().NotThrow();
+        }
+
         [Fact(Order = 1)]
         public async Task Create()
         {
@@ -43,6 +91,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             tab.Should().NotBeNull();
             tab.Id.Should().HaveValue();
             tab.Id.Should().NotBe(webExtensionApi.Tabs.TAB_ID_NONE);
+
             testTabId = tab.Id;
         }
 
@@ -66,7 +115,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             tab.Status.Should().Be("complete");
         }
 
-        [Fact(Order = 3)]
+        [Fact(Order = 2)]
         public async Task Query()
         {
             // Act
@@ -81,7 +130,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             tabs.Single().Id.Should().Be(testTabId);
         }
 
-        [Fact(Order = 4)]
+        [Fact(Order = 3)]
         public async Task Update()
         {
             // Arrange
@@ -98,7 +147,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             tab.Status.Should().Be("loading");
         }
 
-        [Fact(Order = 5)]
+        [Fact(Order = 4)]
         public async Task Remove()
         {
             // Act
