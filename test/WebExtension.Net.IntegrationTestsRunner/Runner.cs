@@ -177,7 +177,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
                 await Task.Delay(interval);
             }
 
-#if DEBUG
+#if RELEASE
             if (testCoverage is null)
             {
                 throw new TestRunnerException("Failed to get test coverage results.");
