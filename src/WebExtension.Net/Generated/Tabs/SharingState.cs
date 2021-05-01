@@ -42,6 +42,7 @@ namespace WebExtension.Net.Tabs
 
         /// <summary>If the tab is sharing the screen the value will be one of "Screen", "Window", or "Application", or undefined if not screen sharing.</summary>
         [JsonPropertyName("screen")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Screen
         {
             get

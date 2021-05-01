@@ -11,6 +11,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Additional details about this item.</summary>
         [JsonPropertyName("message")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Message
         {
             get
@@ -26,6 +27,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Title of one item of a list notification.</summary>
         [JsonPropertyName("title")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Title
         {
             get

@@ -17,6 +17,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("disconnect")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Action Disconnect
         {
             get
@@ -32,6 +33,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("name")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Name
         {
             get
@@ -47,6 +49,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("onDisconnect")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Event OnDisconnect
         {
             get
@@ -62,6 +65,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("onMessage")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Event OnMessage
         {
             get
@@ -77,6 +81,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary></summary>
         [JsonPropertyName("postMessage")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Action PostMessage
         {
             get
@@ -92,6 +97,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary>This property will 'b'only'/b' be present on ports passed to onConnect/onConnectExternal listeners.</summary>
         [JsonPropertyName("sender")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public MessageSender Sender
         {
             get

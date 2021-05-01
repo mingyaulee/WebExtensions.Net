@@ -8,10 +8,11 @@ namespace WebExtension.Net.Tabs
     {
         private string _extensionId;
         private bool _muted;
-        private MutedInfoReason _reason;
+        private MutedInfoReason? _reason;
 
         /// <summary>The ID of the extension that changed the muted state. Not set if an extension was not the reason the muted state last changed.</summary>
         [JsonPropertyName("extensionId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ExtensionId
         {
             get
@@ -42,7 +43,8 @@ namespace WebExtension.Net.Tabs
 
         /// <summary>The reason the tab was muted or unmuted. Not set if the tab's mute state has never been changed.</summary>
         [JsonPropertyName("reason")]
-        public MutedInfoReason Reason
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public MutedInfoReason? Reason
         {
             get
             {

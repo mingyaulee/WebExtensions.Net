@@ -15,11 +15,11 @@ namespace WebExtension.Net.Windows
         private bool _incognito;
         private int? _left;
         private string _sessionId;
-        private WindowState _state;
+        private WindowState? _state;
         private IEnumerable<Tab> _tabs;
         private string _title;
         private int? _top;
-        private WindowType _type;
+        private WindowType? _type;
         private int? _width;
 
         /// <summary>Whether the window is set to be always on top.</summary>
@@ -54,6 +54,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("height")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Height
         {
             get
@@ -69,6 +70,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The ID of the window. Window IDs are unique within a browser session. Under some circumstances a Window may not be assigned an ID, for example when querying windows using the $(ref:sessions) API, in which case a session ID may be present.</summary>
         [JsonPropertyName("id")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Id
         {
             get
@@ -99,6 +101,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The offset of the window from the left edge of the screen in pixels. Under some circumstances a Window may not be assigned left property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("left")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Left
         {
             get
@@ -114,6 +117,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The session ID used to uniquely identify a Window obtained from the $(ref:sessions) API.</summary>
         [JsonPropertyName("sessionId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SessionId
         {
             get
@@ -129,7 +133,8 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The state of this browser window.</summary>
         [JsonPropertyName("state")]
-        public WindowState State
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public WindowState? State
         {
             get
             {
@@ -144,6 +149,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>Array of $(ref:tabs.Tab) objects representing the current tabs in the window.</summary>
         [JsonPropertyName("tabs")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<Tab> Tabs
         {
             get
@@ -159,6 +165,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The title of the window. Read-only.</summary>
         [JsonPropertyName("title")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Title
         {
             get
@@ -174,6 +181,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("top")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Top
         {
             get
@@ -189,7 +197,8 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The type of browser window this is.</summary>
         [JsonPropertyName("type")]
-        public WindowType Type
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public WindowType? Type
         {
             get
             {
@@ -204,6 +213,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>The width of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned width property, for example when querying closed windows from the $(ref:sessions) API.</summary>
         [JsonPropertyName("width")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Width
         {
             get

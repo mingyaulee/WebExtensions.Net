@@ -38,11 +38,11 @@ namespace WebExtension.Net.Runtime
         /// <returns>The fully-qualified URL to the resource.</returns>
         ValueTask<string> GetURL(string path);
 
-        /// <summary></summary>
+        /// <summary>Gets the 'id' property.</summary>
         /// <returns>The ID of the extension/app.</returns>
         ValueTask<string> GetId();
 
-        /// <summary></summary>
+        /// <summary>Gets the 'lastError' property.</summary>
         /// <returns>This will be defined during an API method callback if there was an error</returns>
         ValueTask<JsonElement> GetLastError();
 

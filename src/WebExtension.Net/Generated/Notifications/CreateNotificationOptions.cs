@@ -22,6 +22,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>A URL to the app icon mask.</summary>
         [JsonPropertyName("appIconMaskUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string AppIconMaskUrl
         {
             get
@@ -37,6 +38,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Alternate notification content with a lower-weight font.</summary>
         [JsonPropertyName("contextMessage")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ContextMessage
         {
             get
@@ -52,6 +54,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>A timestamp associated with the notification, in milliseconds past the epoch.</summary>
         [JsonPropertyName("eventTime")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public double? EventTime
         {
             get
@@ -67,6 +70,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>A URL to the sender's avatar, app icon, or a thumbnail for image notifications.</summary>
         [JsonPropertyName("iconUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string IconUrl
         {
             get
@@ -82,6 +86,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>A URL to the image thumbnail for image-type notifications.</summary>
         [JsonPropertyName("imageUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ImageUrl
         {
             get
@@ -97,6 +102,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.</summary>
         [JsonPropertyName("isClickable")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? IsClickable
         {
             get
@@ -112,6 +118,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Items for multi-item notifications.</summary>
         [JsonPropertyName("items")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<NotificationItem> Items
         {
             get
@@ -127,6 +134,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Main notification content.</summary>
         [JsonPropertyName("message")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Message
         {
             get
@@ -142,6 +150,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.</summary>
         [JsonPropertyName("priority")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Priority
         {
             get
@@ -157,6 +166,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Current progress ranges from 0 to 100.</summary>
         [JsonPropertyName("progress")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Progress
         {
             get
@@ -172,6 +182,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Title of the notification (e.g. sender name for email).</summary>
         [JsonPropertyName("title")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Title
         {
             get

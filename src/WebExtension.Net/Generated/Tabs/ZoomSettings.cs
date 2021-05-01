@@ -7,11 +7,12 @@ namespace WebExtension.Net.Tabs
     public class ZoomSettings : BaseObject
     {
         private double? _defaultZoomFactor;
-        private ZoomSettingsMode _mode;
-        private ZoomSettingsScope _scope;
+        private ZoomSettingsMode? _mode;
+        private ZoomSettingsScope? _scope;
 
         /// <summary>Used to return the default zoom level for the current tab in calls to tabs.getZoomSettings.</summary>
         [JsonPropertyName("defaultZoomFactor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public double? DefaultZoomFactor
         {
             get
@@ -27,7 +28,8 @@ namespace WebExtension.Net.Tabs
 
         /// <summary>Defines how zoom changes are handled, i.e. which entity is responsible for the actual scaling of the page; defaults to <c>automatic</c>.</summary>
         [JsonPropertyName("mode")]
-        public ZoomSettingsMode Mode
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ZoomSettingsMode? Mode
         {
             get
             {
@@ -42,7 +44,8 @@ namespace WebExtension.Net.Tabs
 
         /// <summary>Defines whether zoom changes will persist for the page's origin, or only take effect in this tab; defaults to <c>per-origin</c> when in <c>automatic</c> mode, and <c>per-tab</c> otherwise.</summary>
         [JsonPropertyName("scope")]
-        public ZoomSettingsScope Scope
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ZoomSettingsScope? Scope
         {
             get
             {
