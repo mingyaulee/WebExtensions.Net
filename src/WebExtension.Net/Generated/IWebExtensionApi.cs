@@ -1,3 +1,4 @@
+using WebExtension.Net.Bookmarks;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Notifications;
 using WebExtension.Net.Runtime;
@@ -12,6 +13,9 @@ namespace WebExtension.Net
     /// <summary>Web Extension Api</summary>
     public interface IWebExtensionApi
     {
+        /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.<br />Requires manifest permission bookmarks.</summary>
+        IBookmarksApi Bookmarks { get; }
+
         /// <summary></summary>
         IContentScriptsApi ContentScripts { get; }
 

@@ -1,3 +1,4 @@
+using WebExtension.Net.Bookmarks;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Notifications;
 using WebExtension.Net.Runtime;
@@ -13,6 +14,7 @@ namespace WebExtension.Net
     public class WebExtensionApi : IWebExtensionApi
     {
         private readonly WebExtensionJSRuntime webExtensionJSRuntime;
+        private IBookmarksApi _bookmarks;
         private IContentScriptsApi _contentScripts;
         private INotificationsApi _notifications;
         private IRuntimeApi _runtime;
@@ -26,6 +28,19 @@ namespace WebExtension.Net
         public WebExtensionApi(WebExtensionJSRuntime webExtensionJSRuntime)
         {
             this.webExtensionJSRuntime = webExtensionJSRuntime;
+        }
+
+        /// <inheritdoc />
+        public IBookmarksApi Bookmarks
+        {
+            get
+            {
+                if (_bookmarks is null)
+                {
+                    _bookmarks = new BookmarksApi(webExtensionJSRuntime);
+                }
+                return _bookmarks;
+            }
         }
 
         /// <inheritdoc />
