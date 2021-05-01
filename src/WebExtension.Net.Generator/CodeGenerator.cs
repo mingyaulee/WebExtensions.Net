@@ -45,7 +45,7 @@ namespace WebExtension.Net.Generator
         private CodeFileConverter GetClrTypeCodeConverter(ClrTypeInfo clrTypeInfo)
         {
             var relativeNamespace = clrTypeInfo.GeneratedNamespace ?? string.Empty;
-            var codeType = clrTypeInfo.IsInterface ? "interface" : clrTypeInfo.IsEnum ? "enum" : "class";
+            var codeType = GetCodeType(clrTypeInfo);
             var declaration = $"public {codeType} {clrTypeInfo.CSharpName}";
             if (!string.IsNullOrEmpty(clrTypeInfo.BaseTypeName))
             {
@@ -66,6 +66,19 @@ namespace WebExtension.Net.Generator
             }
             TranslateClrTypeToCodeFile(clrTypeInfo, codeFile);
             return new CodeFileConverter(codeFile);
+        }
+
+        private static string GetCodeType(ClrTypeInfo clrTypeInfo)
+        {
+            if (clrTypeInfo.IsInterface)
+            {
+                return "interface";
+            }
+            if (clrTypeInfo.IsEnum)
+            {
+                return "enum";
+            }
+            return "class";
         }
 
         private void TranslateClrTypeToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)

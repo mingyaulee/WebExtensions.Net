@@ -13,12 +13,12 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            WriteUsingStatements(codeWriter, options);
+            WriteUsingStatements(codeWriter);
             WriteCodeConverters(codeWriter, options);
-            WriteCodeFile((CodeFileWriter)codeWriter, options);
+            WriteCodeFile((CodeFileWriter)codeWriter);
         }
 
-        private void WriteUsingStatements(CodeWriter codeWriter, CodeWriterOptions options)
+        private void WriteUsingStatements(CodeWriter codeWriter)
         {
             codeWriter.WriteUsingStatement(CodeFile.UsingNamespaces);
         }
@@ -60,7 +60,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
             }
         }
 
-        private void WriteCodeFile(CodeFileWriter codeFileWriter, CodeWriterOptions options)
+        private void WriteCodeFile(CodeFileWriter codeFileWriter)
         {
             codeFileWriter.WriteUsingStatements();
             codeFileWriter.WriteNamespace(CodeFile.Namespace);

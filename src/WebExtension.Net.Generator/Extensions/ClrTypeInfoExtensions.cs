@@ -10,6 +10,7 @@ namespace WebExtension.Net.Generator.Extensions
         {
             var enumerableClrType = (ClrTypeInfo)clrTypeInfo.Clone();
             enumerableClrType.IsGenericType = true;
+            enumerableClrType.IsNullable = true;
             enumerableClrType.GenericTypeArguments = new[] { clrTypeInfo };
 #pragma warning disable CS8601 // Possible null reference assignment.
             enumerableClrType.FullName = typeof(IEnumerable<>).FullName;
