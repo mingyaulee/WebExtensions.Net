@@ -1,41 +1,41 @@
-﻿using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class TypePropertyCodeConverter : BasePropertyCodeConverter
+    public class TypePropertyCodeConverter : ICodeConverter
     {
-        private readonly string propertyName;
+        private readonly ClrPropertyInfo clrPropertyInfo;
 
-        public TypePropertyCodeConverter(string propertyName, PropertyDefinition propertyDefinition) : base(propertyDefinition)
+        public TypePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
         {
-            this.propertyName = propertyName;
+            this.clrPropertyInfo = clrPropertyInfo;
         }
 
-        public override void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.WriteUsingStatement(UsingNamespaces);
             codeWriter.WriteUsingStatement("System.Text.Json.Serialization");
 
+            var privatePropertyName = clrPropertyInfo.PrivateName;
             codeWriter.Properties
-                .WriteLine($"private {PropertyType} _{propertyName};");
+                .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
 
             codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(PropertyDefinition.Description))
-                .WriteWithConverter(PropertyDefinition.IsDeprecated ? new AttributeObsoleteCodeConverter(PropertyDefinition.Deprecated) : null)
-                .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{propertyName}\")"))
-                .WriteLine($"public {PropertyType} {propertyName.ToCapitalCase()}")
+                .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{privatePropertyName}\")"))
+                // TODO: .WriteWithConverter(clrPropertyInfo.PropertyType.IsNullable ? new AttributeCodeConverter($"JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)") : null)
+                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
                 // start property body
                 .WriteStartBlock()
                     .WriteLine($"get")
                     .WriteStartBlock()
-                        .WriteLine($"InitializeProperty(\"{propertyName}\", _{propertyName});")
-                        .WriteLine($"return _{propertyName};")
+                        .WriteLine($"InitializeProperty(\"{privatePropertyName}\", _{privatePropertyName});")
+                        .WriteLine($"return _{privatePropertyName};")
                     .WriteEndBlock()
 
                     .WriteLine($"set")
                     .WriteStartBlock()
-                        .WriteLine($"_{propertyName} = value;")
+                        .WriteLine($"_{privatePropertyName} = value;")
                     .WriteEndBlock()
                 // end property body
                 .WriteEndBlock();

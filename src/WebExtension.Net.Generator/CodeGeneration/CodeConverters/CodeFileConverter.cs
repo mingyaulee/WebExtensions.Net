@@ -20,15 +20,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 
         private void WriteUsingStatements(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            foreach (var usingNamespace in CodeFile.UsingNamespaces)
-            {
-                codeWriter.WriteUsingStatement(usingNamespace);
-            }
-
-            foreach (var usingNamespace in CodeFile.UsingRelativeNamespaces)
-            {
-                codeWriter.WriteUsingStatement($"{options.RootNamespace}.{usingNamespace}");
-            }
+            codeWriter.WriteUsingStatement(CodeFile.UsingNamespaces);
         }
 
         private void WriteCodeConverters(CodeWriter codeWriter, CodeWriterOptions options)
@@ -71,15 +63,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
         private void WriteCodeFile(CodeFileWriter codeFileWriter, CodeWriterOptions options)
         {
             codeFileWriter.WriteUsingStatements();
-
-            if (string.IsNullOrEmpty(CodeFile.RelativeNamespace))
-            {
-                codeFileWriter.WriteNamespace($"{options.RootNamespace}");
-            }
-            else
-            {
-                codeFileWriter.WriteNamespace($"{options.RootNamespace}.{CodeFile.RelativeNamespace}");
-            }
+            codeFileWriter.WriteNamespace(CodeFile.Namespace);
 
             // start namespace block
             codeFileWriter.WriteStartBlock();

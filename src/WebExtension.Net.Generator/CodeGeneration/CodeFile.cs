@@ -7,8 +7,8 @@ namespace WebExtension.Net.Generator.CodeGeneration
         public CodeFile(string fileName, string relativeNamespace, string declaration)
         {
             FileName = fileName;
-            UsingRelativeNamespaces = new HashSet<string>();
             UsingNamespaces = new HashSet<string>();
+            Namespace = string.IsNullOrEmpty(relativeNamespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{relativeNamespace}";
             RelativeNamespace = relativeNamespace;
             Comments = new List<ICodeConverter>();
             Attributes = new List<ICodeConverter>();
@@ -19,8 +19,8 @@ namespace WebExtension.Net.Generator.CodeGeneration
         }
 
         public string FileName { get; }
-        public ISet<string> UsingRelativeNamespaces { get; }
         public ISet<string> UsingNamespaces { get; }
+        public string Namespace { get; }
         public string RelativeNamespace { get; }
         public IList<ICodeConverter> Comments { get; }
         public IList<ICodeConverter> Attributes { get; }

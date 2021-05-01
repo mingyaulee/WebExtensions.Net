@@ -28,12 +28,15 @@ namespace WebExtension.Net.Generator
             this.classEntityRegistrar = classEntityRegistrar;
         }
 
-        public void RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
+        public EntityRegistrationResult RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
             var apiClassEntities = RegisterNamespaceTypesAndApi(namespaceDefinitions);
             RegisterApiRoot(apiClassEntities);
             MarkApiClassEntitiesTypeUsage(apiClassEntities);
             RegisterTypeEntitiesAsClassEntities();
+
+            var namespaceEntities = namespaceEntityRegistrar.GetAllNamespaceEntities().ToDictionary(namespaceEntity => namespaceEntity.FormattedName, namespaceEntity => namespaceEntity.NamespaceDefinitions);
+            return new EntityRegistrationResult(namespaceEntities, classEntityRegistrar.GetAllClassEntities());
         }
 
         private IEnumerable<ClassEntity> RegisterNamespaceTypesAndApi(IEnumerable<NamespaceDefinition> namespaceDefinitions)
@@ -104,6 +107,7 @@ namespace WebExtension.Net.Generator
                         functions.Add(new FunctionDefinition()
                         {
                             Name = propertyName,
+                            Description = "",//TODO: $"Gets the '{propertyName}' property.",
                             Type = ObjectType.PropertyGetterFunction,
                             Async = "true",
                             FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)

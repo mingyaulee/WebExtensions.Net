@@ -1,25 +1,22 @@
-﻿using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiRootInterfacePropertyCodeConverter : BasePropertyCodeConverter
+    public class ApiRootInterfacePropertyCodeConverter : ICodeConverter
     {
-        private readonly string propertyName;
+        private readonly ClrPropertyInfo clrPropertyInfo;
 
-        public ApiRootInterfacePropertyCodeConverter(string propertyName, PropertyDefinition propertyDefinition) : base(propertyDefinition)
+        public ApiRootInterfacePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
         {
-            this.propertyName = propertyName;
+            this.clrPropertyInfo = clrPropertyInfo;
         }
 
-        public override void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.WriteUsingStatement(UsingNamespaces);
-
             codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(PropertyDefinition.Description))
-                .WriteWithConverter(PropertyDefinition.IsDeprecated ? new AttributeObsoleteCodeConverter(PropertyDefinition.Deprecated) : null)
-                .WriteLine($"I{PropertyType} {propertyName.ToCapitalCase()} {{ get; }}");
+                .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
         }
     }
 }

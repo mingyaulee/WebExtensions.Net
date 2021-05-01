@@ -1,29 +1,26 @@
-﻿using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiPropertyCodeConverter : BasePropertyCodeConverter
+    public class ApiPropertyCodeConverter : ICodeConverter
     {
-        private readonly string propertyName;
+        private readonly ClrPropertyInfo clrPropertyInfo;
 
-        public ApiPropertyCodeConverter(string propertyName, PropertyDefinition propertyDefinition) : base(propertyDefinition)
+        public ApiPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
         {
-            this.propertyName = propertyName;
+            this.clrPropertyInfo = clrPropertyInfo;
         }
 
-        public override void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            if (!PropertyDefinition.IsConstant)
+            if (!clrPropertyInfo.IsConstant)
             {
                 return;
             }
 
-            codeWriter.WriteUsingStatement(UsingNamespaces);
-
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentInheritDocCodeConverter())
-                .WriteLine($"public {PropertyType} {propertyName.ToCapitalCase()} => {PropertyDefinition.ConstantValue};");
+                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
         }
     }
 }

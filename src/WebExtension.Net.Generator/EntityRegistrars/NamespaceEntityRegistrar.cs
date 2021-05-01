@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
 using WebExtension.Net.Generator.Repositories;
@@ -14,6 +15,11 @@ namespace WebExtension.Net.Generator.EntityRegistrars
         {
             this.entitiesContext = entitiesContext;
             this.logger = logger;
+        }
+
+        public IEnumerable<NamespaceEntity> GetAllNamespaceEntities()
+        {
+            return entitiesContext.Namespaces.GetAllNamespaceEntities();
         }
 
         public NamespaceEntity? RegisterNamespace(NamespaceDefinition namespaceDefinition)

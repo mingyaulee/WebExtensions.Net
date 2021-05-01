@@ -1,40 +1,40 @@
 ﻿using System.Linq;
-using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class TypeMethodCodeConverter : BaseMethodCodeConverter
+    public class TypeMethodCodeConverter : ICodeConverter
     {
-        private readonly FunctionDefinition functionDefinition;
+        private readonly ClrMethodInfo clrMethodInfo;
 
-        public TypeMethodCodeConverter(FunctionDefinition functionDefinition) : base(functionDefinition)
+        public TypeMethodCodeConverter(ClrMethodInfo clrMethodInfo)
         {
-            this.functionDefinition = functionDefinition;
+            this.clrMethodInfo = clrMethodInfo;
         }
 
-        public override void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            if (functionDefinition.Name is null)
-            {
-                return;
-            }
+            codeWriter.WriteUsingStatement("System.Threading.Tasks");
 
-            if (functionDefinition.Name is null)
+            var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter => $"{parameter.ParameterType.CSharpName} {parameter.Name}"));
+            var clientMethodInvokeArguments = string.Join("", clrMethodInfo.Parameters.Select(parameter => $", {parameter.Name}"));
+            var clientMethodInvoke = "InvokeVoidAsync";
+            var methodReturnType = "ValueTask";
+            if (clrMethodInfo.Return.HasReturnType)
             {
-                return;
+                var returnTypeName = clrMethodInfo.Return.ReturnType?.CSharpName;
+                methodReturnType = $"ValueTask<{returnTypeName}>";
+                clientMethodInvoke = $"InvokeAsync<{returnTypeName}>";
             }
-
-            codeWriter.WriteUsingStatement(UsingNamespaces);
 
             codeWriter.PublicMethods
-                .WriteWithConverter(new CommentSummaryCodeConverter(functionDefinition.Description))
-                .WriteWithConverters(ParameterDefinitions.Select(parameterDefinition => new CommentParamCodeSectionConverter(parameterDefinition.Name, parameterDefinition.Description)))
-                .WriteWithConverter(ReturnDefinition is not null ? new CommentReturnsCodeConverter(ReturnDefinition.Description) : null)
-                .WriteWithConverter(functionDefinition.IsDeprecated ? new AttributeObsoleteCodeConverter(functionDefinition.Deprecated) : null)
-                .WriteLine($"public virtual {MethodReturnType} {functionDefinition.Name.ToCapitalCase()}({MethodArguments})")
+                .WriteWithConverter(new CommentSummaryCodeConverter(clrMethodInfo.Description))
+                .WriteWithConverters(clrMethodInfo.Parameters.Select(parameterInfo => new CommentParamCodeSectionConverter(parameterInfo.Name, parameterInfo.Description)))
+                .WriteWithConverter(clrMethodInfo.Return.HasReturnType ? new CommentReturnsCodeConverter(clrMethodInfo.Return.Description) : null)
+                .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
+                .WriteLine($"public virtual {methodReturnType} {clrMethodInfo.PublicName}({methodArguments})")
                 .WriteStartBlock()
-                .WriteLine($"return {ClientMethodInvoke}(\"{functionDefinition.Name}\"{ClientMethodInvokeArguments});")
+                .WriteLine($"return {clientMethodInvoke}(\"{clrMethodInfo.Name}\"{clientMethodInvokeArguments});")
                 .WriteEndBlock();
         }
     }

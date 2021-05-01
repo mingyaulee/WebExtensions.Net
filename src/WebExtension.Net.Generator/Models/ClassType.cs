@@ -1,10 +1,11 @@
-﻿namespace WebExtension.Net.Generator.Models.Entities
+﻿namespace WebExtension.Net.Generator.Models
 {
-    public enum ClassEntityType
+    public enum ClassType
     {
         ApiRootClass,
         ApiClass,
         TypeClass,
+        EnumClass,
         StringFormatClass,
         ArrayClass,
         MultitypeClass

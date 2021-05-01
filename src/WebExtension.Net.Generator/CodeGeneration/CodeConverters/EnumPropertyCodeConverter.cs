@@ -1,34 +1,22 @@
-﻿using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
     public class EnumPropertyCodeConverter : ICodeConverter
     {
-        private readonly EnumValueDefinition enumValueDefinition;
+        private readonly ClrEnumValueInfo clrEnumValueInfo;
 
-        public EnumPropertyCodeConverter(EnumValueDefinition enumValueDefinition)
+        public EnumPropertyCodeConverter(ClrEnumValueInfo clrEnumValueInfo)
         {
-            this.enumValueDefinition = enumValueDefinition;
+            this.clrEnumValueInfo = clrEnumValueInfo;
         }
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            if (enumValueDefinition.Name is null)
-            {
-                return;
-            }
-
-            var sanitizedValueName = SanitizeValueName(enumValueDefinition.Name.ToCapitalCase());
             codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(enumValueDefinition.Description ?? enumValueDefinition.Name))
-                .WriteLine($"[EnumValue(\"{enumValueDefinition.Name}\")]")
-                .WriteLine($"{sanitizedValueName},");
-        }
-
-        private static string SanitizeValueName(string valueName)
-        {
-            return valueName.Replace("-", "_");
+                .WriteWithConverter(new CommentSummaryCodeConverter(clrEnumValueInfo.Description ?? clrEnumValueInfo.Name))
+                .WriteLine($"[EnumValue(\"{clrEnumValueInfo.Name}\")]")
+                .WriteLine($"{clrEnumValueInfo.CSharpName},");
         }
     }
 }

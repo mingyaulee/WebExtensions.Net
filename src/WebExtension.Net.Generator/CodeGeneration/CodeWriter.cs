@@ -5,7 +5,6 @@ namespace WebExtension.Net.Generator.CodeGeneration
     public abstract class CodeWriter
     {
         protected abstract ISet<string> UsingNamespaces { get; }
-        protected abstract ISet<string> UsingRelativeNamespaces { get; }
 
         protected CodeSection DeclarationSection { get; }
         protected CodeSection ConstructorsSection { get; }
@@ -56,11 +55,6 @@ namespace WebExtension.Net.Generator.CodeGeneration
             {
                 WriteUsingStatement(@namespace);
             }
-        }
-
-        public void WriteRelativeUsingStatement(string relativeNamespace)
-        {
-            UsingRelativeNamespaces.Add(relativeNamespace);
         }
     }
 }

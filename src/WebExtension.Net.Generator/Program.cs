@@ -5,7 +5,7 @@ using WebExtension.Net.Generator.Models;
 using WebExtension.Net.Generator.CodeGeneration;
 using WebExtension.Net.Generator.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using WebExtension.Net.Generator.Translators;
+using WebExtension.Net.Generator.ClrTypeTranslators;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
 using WebExtension.Net.Generator.Models.Schema;
 using Microsoft.Extensions.Configuration;
@@ -38,10 +38,13 @@ namespace WebExtension.Net.Generator
             var namespaceDefinitions = namespaceDefinitionsClient.GetNamespaceDefinitions(sources, additionalNamespaceSourceDefinitions, runInParallel).GetAwaiter().GetResult();
 
             var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
-            entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
+            var entityRegistrationResult = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
+
+            var clrTypeManager = scope.ServiceProvider.GetRequiredService<ClrTypeManager>();
+            var clrTypes = clrTypeManager.TranslateToClrType(entityRegistrationResult.ClassEntities);
 
             var codeGenerator = scope.ServiceProvider.GetRequiredService<CodeGenerator>();
-            var codeConverters = codeGenerator.GetCodeFileConverters();
+            var codeConverters = codeGenerator.GetCodeFileConverters(clrTypes);
 
             var filesManager = scope.ServiceProvider.GetRequiredService<FilesManager>();
             filesManager.CleanDirectory();
@@ -70,6 +73,7 @@ namespace WebExtension.Net.Generator
             services.AddScoped<NamespaceDefinitionsClient>();
             services.AddScoped<EntitiesContext>();
             services.AddScoped<EntitiesRegistrationManager>();
+            services.AddScoped<ClrTypeManager>();
             services.AddScoped<CodeGenerator>();
             services.AddScoped<FilesManager>();
 
@@ -78,9 +82,11 @@ namespace WebExtension.Net.Generator
             services.AddTransient<NamespaceEntityRegistrar>();
             services.AddTransient<TypeEntityRegistrar>();
 
-            // translators
+            // clr type translators
             services.AddTransient<ClassEntityTranslator>();
-            services.AddTransient<EnumEntityTranslator>();
+            services.AddScoped<ClrTypeStore>();
+            services.AddTransient<FunctionDefinitionTranslator>();
+            services.AddTransient<PropertyDefinitionTranslator>();
 
             // code converter factories
             services.AddTransient<ApiCodeConverterFactory>();

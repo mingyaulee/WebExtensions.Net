@@ -21,6 +21,11 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             this.registrationOptions = registrationOptions;
         }
 
+        public IEnumerable<ClassEntity> GetAllClassEntities()
+        {
+            return entitiesContext.Classes.GetAllClassEntities();
+        }
+
         public ClassEntity RegisterNamespaceApi(TypeDefinition namespaceApiTypeDefinition, NamespaceEntity namespaceEntity)
         {
             if (namespaceApiTypeDefinition.Id is null)
@@ -28,7 +33,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
                 throw new InvalidOperationException("Namespace Api should have an Id.");
             }
 
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.ApiClass, namespaceApiTypeDefinition.Id, namespaceEntity);
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.ApiClass, namespaceApiTypeDefinition.Id, namespaceEntity);
             classEntity.TypeDefinition = namespaceApiTypeDefinition;
             classEntity.Description = namespaceApiTypeDefinition.Description;
             classEntity.BaseClassName = $"{registrationOptions.ApiClassBaseClassName}";
@@ -55,7 +60,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
         public void RegisterRootApi(IEnumerable<ClassEntity> classEntities)
         {
             var namespaceEntity = new NamespaceEntity(string.Empty);
-            var rootClassEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.ApiRootClass, registrationOptions.RootApiClassName, namespaceEntity);
+            var rootClassEntity = entitiesContext.Classes.RegisterClass(ClassType.ApiRootClass, registrationOptions.RootApiClassName, namespaceEntity);
             rootClassEntity.Description = registrationOptions.RootApiClassDescription;
             rootClassEntity.ImplementInterface = true;
 
@@ -92,7 +97,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             }
             else if (typeEntity.Definition.Type == ObjectType.String && typeEntity.Definition.EnumValues is not null)
             {
-                RegisterEnumEntity(typeEntity);
+                RegisterEnumClassEntity(typeEntity);
             }
             else if (typeEntity.Definition.Type == ObjectType.String && !string.IsNullOrEmpty(typeEntity.Definition.StringFormat))
             {
@@ -110,7 +115,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
         private void RegisterTypeClassEntity(TypeEntity typeEntity)
         {
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.TypeClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.TypeClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
             classEntity.TypeDefinition = typeEntity.Definition;
             classEntity.Description = typeEntity.Definition.Description;
             classEntity.BaseClassName = registrationOptions.ObjectTypeClassBaseClassName;
@@ -145,25 +150,31 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             AddPropertiesToClassEntity(typeProperties, classEntity);
         }
 
-        private void RegisterEnumEntity(TypeEntity typeEntity)
+        private void RegisterEnumClassEntity(TypeEntity typeEntity)
         {
-            var enumEntity = entitiesContext.Enums.RegisterEnum(typeEntity.FormattedName, typeEntity.NamespaceEntity);
-            enumEntity.Description = typeEntity.Definition.Description;
-            enumEntity.Deprecated = typeEntity.Definition.Deprecated;
-            enumEntity.IsDeprecated = typeEntity.Definition.IsDeprecated;
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.EnumClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            classEntity.Description = typeEntity.Definition.Description;
 
             if (typeEntity.Definition.EnumValues is not null)
             {
                 foreach (var enumValueDefinition in typeEntity.Definition.EnumValues)
                 {
-                    enumEntity.EnumValues.Add(enumValueDefinition);
+                    if (enumValueDefinition.Name is null)
+                    {
+                        throw new InvalidOperationException("Enum value definition should have a name property.");
+                    }
+
+                    classEntity.Properties.Add(enumValueDefinition.Name, new PropertyDefinition()
+                    {
+                        Description = enumValueDefinition.Description
+                    });
                 }
             }
         }
 
         private void RegisterStringFormatClassEntity(TypeEntity typeEntity)
         {
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.StringFormatClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.StringFormatClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
             classEntity.TypeDefinition = typeEntity.Definition;
             classEntity.Description = typeEntity.Definition.Description;
             classEntity.BaseClassName = registrationOptions.StringFormatClassBaseClassName;
@@ -171,7 +182,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
         private void RegisterArrayClassEntity(TypeEntity typeEntity)
         {
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.ArrayClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.ArrayClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
             classEntity.TypeDefinition = typeEntity.Definition;
             classEntity.Description = typeEntity.Definition.Description;
             classEntity.BaseClassName = registrationOptions.ArrayClassBaseClassName;
@@ -179,7 +190,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
         private void RegisterMultitypeClassEntity(TypeEntity typeEntity)
         {
-            var classEntity = entitiesContext.Classes.RegisterClass(ClassEntityType.MultitypeClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.MultitypeClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
             classEntity.TypeDefinition = typeEntity.Definition;
             classEntity.Description = typeEntity.Definition.Description;
         }
@@ -210,7 +221,6 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
             foreach (var function in functions)
             {
-                ProcessTypeReferenceRelativeNamespace(function, classEntity);
                 classEntity.Functions.Add(function);
             }
         }
@@ -263,43 +273,8 @@ namespace WebExtension.Net.Generator.EntityRegistrars
                     continue;
                 }
 
-                ProcessTypeReferenceRelativeNamespace(propertyDefinitionPair.Value, classEntity);
                 classEntity.Properties.Add(propertyDefinitionPair);
             }
-        }
-
-        private static void ProcessTypeReferencesRelativeNamespace(IEnumerable<TypeReference?>? typeReferences, ClassEntity classEntity)
-        {
-            if (typeReferences is null)
-            {
-                return;
-            }
-
-            foreach (var typeReference in typeReferences)
-            {
-                ProcessTypeReferenceRelativeNamespace(typeReference, classEntity);
-            }
-        }
-
-        private static void ProcessTypeReferenceRelativeNamespace(TypeReference? typeReference, ClassEntity classEntity)
-        {
-            if (typeReference is null)
-            {
-                return;
-            }
-
-            if (typeReference.Ref is not null && typeReference.Ref.Contains('.'))
-            {
-                var namespaceSeparatorIndex = typeReference.Ref.LastIndexOf('.');
-                classEntity.UsingRelativeNamespaces.Add(typeReference.Ref[..namespaceSeparatorIndex].ToCapitalCase());
-            }
-
-            ProcessTypeReferenceRelativeNamespace(typeReference.ArrayItems, classEntity);
-            ProcessTypeReferencesRelativeNamespace(typeReference.FunctionParameters, classEntity);
-            ProcessTypeReferenceRelativeNamespace(typeReference.FunctionReturns, classEntity);
-            ProcessTypeReferencesRelativeNamespace(typeReference.ObjectFunctions, classEntity);
-            ProcessTypeReferencesRelativeNamespace(typeReference.ObjectProperties?.Select(property => property.Value), classEntity);
-            ProcessTypeReferencesRelativeNamespace(typeReference.TypeChoices, classEntity);
         }
     }
 }

@@ -1,37 +1,37 @@
-﻿using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiRootPropertyCodeConverter : BasePropertyCodeConverter
+    public class ApiRootPropertyCodeConverter : ICodeConverter
     {
-        private readonly string propertyName;
+        private readonly ClrPropertyInfo clrPropertyInfo;
 
-        public ApiRootPropertyCodeConverter(string propertyName, PropertyDefinition propertyDefinition) : base(propertyDefinition)
+        public ApiRootPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
         {
-            this.propertyName = propertyName;
+            this.clrPropertyInfo = clrPropertyInfo;
         }
 
-        public override void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.WriteUsingStatement(UsingNamespaces);
+            var propertyType = clrPropertyInfo.PropertyType.CSharpName;
+            var privatePropertyName = clrPropertyInfo.PrivateName;
 
             codeWriter.Properties
-                .WriteLine($"private I{PropertyType} _{propertyName};");
+                .WriteLine($"private I{clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
 
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentInheritDocCodeConverter())
-                .WriteLine($"public I{PropertyType} {propertyName.ToCapitalCase()}")
+                .WriteLine($"public I{propertyType} {clrPropertyInfo.PublicName}")
                 // start property body
                 .WriteStartBlock()
                     .WriteLine($"get")
                     // start property get
                     .WriteStartBlock()
-                        .WriteLine($"if (_{propertyName} is null)")
+                        .WriteLine($"if (_{privatePropertyName} is null)")
                         .WriteStartBlock()
-                            .WriteLine($"_{propertyName} = new {PropertyType}(webExtensionJSRuntime);")
+                            .WriteLine($"_{privatePropertyName} = new {propertyType}(webExtensionJSRuntime);")
                         .WriteEndBlock()
-                        .WriteLine($"return _{propertyName};")
+                        .WriteLine($"return _{privatePropertyName};")
                     // end property get
                     .WriteEndBlock()
                 // end property body

@@ -9,27 +9,34 @@ namespace WebExtension.Net.Generator.CodeGeneration
     {
         private const int INDENTATION = 4;
         private readonly string filePath;
+        private readonly CodeFile codeFile;
+        private readonly CodeWriterOptions codeWriterOptions;
         private readonly StringBuilder fileContent;
         private int currentIndentation = 0;
         private bool appendLine = false;
 
         protected override ISet<string> UsingNamespaces { get; }
-        protected override ISet<string> UsingRelativeNamespaces { get; }
 
         public CodeFileWriter(string filePath, CodeFile codeFile, CodeWriterOptions codeWriterOptions) : base(codeWriterOptions)
         {
             this.filePath = filePath;
+            this.codeFile = codeFile;
+            this.codeWriterOptions = codeWriterOptions;
             UsingNamespaces = codeFile.UsingNamespaces;
-            UsingRelativeNamespaces = codeFile.UsingRelativeNamespaces;
             fileContent = new StringBuilder();
         }
 
         public void WriteUsingStatements()
         {
-            if (UsingNamespaces.Any())
+            var usingNamespaces = UsingNamespaces
+                .Where(usingNamespace => codeFile.Namespace != usingNamespace)
+                .Select(usingNamespace => usingNamespace.Replace(Constants.RelativeNamespaceToken, codeWriterOptions.RootNamespace))
+                .OrderBy(usingNamespace => usingNamespace)
+                .ToArray();
+            if (usingNamespaces.Any())
             {
                 AppendLineIfNeeded();
-                foreach (var usingNamespace in UsingNamespaces.OrderBy(usingNamespace => usingNamespace))
+                foreach (var usingNamespace in usingNamespaces)
                 {
                     WriteIndentation();
                     Write($"using {usingNamespace};");
@@ -43,6 +50,7 @@ namespace WebExtension.Net.Generator.CodeGeneration
         {
             AppendLineIfNeeded();
             WriteIndentation();
+            @namespace = @namespace.Replace(Constants.RelativeNamespaceToken, codeWriterOptions.RootNamespace);
             Write($"namespace {@namespace}");
             WriteNewLine();
         }

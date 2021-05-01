@@ -1,84 +1,100 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using WebExtension.Net.Generator.CodeGeneration;
+using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Repositories;
-using WebExtension.Net.Generator.Translators;
+using WebExtension.Net.Generator.Models;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator
 {
     public class CodeGenerator
     {
-        private readonly EntitiesContext entitiesContext;
-        private readonly ClassEntityTranslator classEntityTranslator;
-        private readonly EnumEntityTranslator enumEntityTranslator;
-        private readonly List<CodeFileConverter> codeFiles;
+        private readonly ApiRootCodeConverterFactory apiRootCodeConverterFactory;
+        private readonly ApiCodeConverterFactory apiCodeConverterFactory;
+        private readonly TypeCodeConverterFactory typeCodeConverterFactory;
+        private readonly EnumCodeConverterFactory enumCodeConverterFactory;
+        private readonly StringFormatCodeConverterFactory stringFormatCodeConverterFactory;
+        private readonly ArrayCodeConverterFactory arrayCodeConverterFactory;
+        private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory;
 
-        public CodeGenerator(EntitiesContext entitiesContext, ClassEntityTranslator classEntityTranslator, EnumEntityTranslator enumEntityTranslator)
+        public CodeGenerator(
+            ApiRootCodeConverterFactory apiRootCodeConverterFactory,
+            ApiCodeConverterFactory apiCodeConverterFactory,
+            TypeCodeConverterFactory typeCodeConverterFactory,
+            EnumCodeConverterFactory enumCodeConverterFactory,
+            StringFormatCodeConverterFactory stringFormatCodeConverterFactory,
+            ArrayCodeConverterFactory arrayCodeConverterFactory,
+            MultitypeCodeConverterFactory multitypeCodeConverterFactory)
         {
-            this.entitiesContext = entitiesContext;
-            this.classEntityTranslator = classEntityTranslator;
-            this.enumEntityTranslator = enumEntityTranslator;
-            codeFiles = new List<CodeFileConverter>();
+            this.apiRootCodeConverterFactory = apiRootCodeConverterFactory;
+            this.apiCodeConverterFactory = apiCodeConverterFactory;
+            this.typeCodeConverterFactory = typeCodeConverterFactory;
+            this.enumCodeConverterFactory = enumCodeConverterFactory;
+            this.stringFormatCodeConverterFactory = stringFormatCodeConverterFactory;
+            this.arrayCodeConverterFactory = arrayCodeConverterFactory;
+            this.multitypeCodeConverterFactory = multitypeCodeConverterFactory;
         }
 
-        public IEnumerable<CodeFileConverter> GetCodeFileConverters()
+        public IEnumerable<CodeFileConverter> GetCodeFileConverters(IEnumerable<ClrTypeInfo> clrTypes)
         {
-            var classEntities = entitiesContext.Classes.GetAllClassEntities();
-            foreach (var classEntity in classEntities)
-            {
-                codeFiles.AddRange(GetClassEntityCodeConverters(classEntity)) ;
-            }
-            var enumEntities = entitiesContext.Enums.GetAllEnumEntities();
-            foreach (var enumEntity in enumEntities)
-            {
-                codeFiles.Add(GetEnumEntityCodeConverter(enumEntity)) ;
-            }
-            return codeFiles;
+            return clrTypes.Select(GetClrTypeCodeConverter).ToArray();
         }
 
-        private IEnumerable<CodeFileConverter> GetClassEntityCodeConverters(ClassEntity classEntity)
+        private CodeFileConverter GetClrTypeCodeConverter(ClrTypeInfo clrTypeInfo)
         {
-            if (classEntity.ImplementInterface)
+            var relativeNamespace = clrTypeInfo.GeneratedNamespace ?? string.Empty;
+            var codeType = clrTypeInfo.IsInterface ? "interface" : clrTypeInfo.IsEnum ? "enum" : "class";
+            var declaration = $"public {codeType} {clrTypeInfo.CSharpName}";
+            if (!string.IsNullOrEmpty(clrTypeInfo.BaseTypeName))
             {
-                yield return GetClassEntityInterfaceCodeConverter(classEntity);
+                declaration += $" : {clrTypeInfo.BaseTypeName}";
+                if (clrTypeInfo.Interfaces.Any())
+                {
+                    declaration += $", {string.Join(", ", clrTypeInfo.Interfaces)}";
+                }
             }
-            yield return GetClassEntityCodeConverter(classEntity);
-        }
-
-        private CodeFileConverter GetClassEntityInterfaceCodeConverter(ClassEntity classEntity)
-        {
-            var relativeNamespace = classEntity.NamespaceEntity.FormattedName;
-            var declaration = $"public interface I{classEntity.FormattedName}";
-            var codeFile = new CodeFile($"I{classEntity.FormattedName}", relativeNamespace, declaration);
-            classEntityTranslator.TranslateClassEntityToInterfaceCodeFile(classEntity, codeFile);
+            else if (clrTypeInfo.Interfaces.Any())
+            {
+                declaration += $" : {string.Join(", ", clrTypeInfo.Interfaces)}";
+            }
+            var codeFile = new CodeFile(clrTypeInfo.CSharpName, relativeNamespace, declaration);
+            foreach (var usingNamespace in clrTypeInfo.RequiredNamespaces)
+            {
+                codeFile.UsingNamespaces.Add(usingNamespace);
+            }
+            TranslateClrTypeToCodeFile(clrTypeInfo, codeFile);
             return new CodeFileConverter(codeFile);
         }
 
-        private CodeFileConverter GetClassEntityCodeConverter(ClassEntity classEntity)
+        private void TranslateClrTypeToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            var relativeNamespace = classEntity.NamespaceEntity.FormattedName;
-            var declaration = $"public class {classEntity.FormattedName}";
-            if (!string.IsNullOrEmpty(classEntity.BaseClassName))
+            var classType = (ClassType)clrTypeInfo.Metadata[Constants.TypeMetadata.ClassType];
+            var factory = GetFactory(classType);
+            if (clrTypeInfo.IsInterface)
             {
-                declaration += $" : {classEntity.BaseClassName}" + (classEntity.ImplementInterface ? $", I{classEntity.FormattedName}" : string.Empty);
+                factory.AddInterfaceConvertersToCodeFile(clrTypeInfo, codeFile);
             }
-            else if (classEntity.ImplementInterface)
+            else
             {
-                declaration += $" : I{classEntity.FormattedName}";
+                factory.AddConvertersToCodeFile(clrTypeInfo, codeFile);
             }
-            var codeFile = new CodeFile(classEntity.FormattedName, relativeNamespace, declaration);
-            classEntityTranslator.TranslateClassEntityToCodeFile(classEntity, codeFile);
-            return new CodeFileConverter(codeFile);
         }
 
-        private CodeFileConverter GetEnumEntityCodeConverter(EnumEntity enumEntity)
+        private ICodeConverterFactory GetFactory(ClassType classType)
         {
-            var relativeNamespace = enumEntity.NamespaceEntity.FormattedName;
-            var declaration = $"public enum {enumEntity.FormattedName}";
-            var codeFile = new CodeFile(enumEntity.FormattedName, relativeNamespace, declaration);
-            enumEntityTranslator.TranslateEnumEntityToCodeFile(enumEntity, codeFile);
-            return new CodeFileConverter(codeFile);
+            return classType switch
+            {
+                ClassType.ApiRootClass => apiRootCodeConverterFactory,
+                ClassType.ApiClass => apiCodeConverterFactory,
+                ClassType.TypeClass => typeCodeConverterFactory,
+                ClassType.EnumClass => enumCodeConverterFactory,
+                ClassType.StringFormatClass => stringFormatCodeConverterFactory,
+                ClassType.ArrayClass => arrayCodeConverterFactory,
+                ClassType.MultitypeClass => multitypeCodeConverterFactory,
+                _ => throw new NotImplementedException()
+            };
         }
     }
 }

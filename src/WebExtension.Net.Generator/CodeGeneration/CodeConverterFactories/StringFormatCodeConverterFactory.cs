@@ -1,32 +1,28 @@
 ﻿using System;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class StringFormatCodeConverterFactory : ICodeConverterFactory<ClassEntity>
+    public class StringFormatCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            if (entity.TypeDefinition is null || entity.TypeDefinition.StringFormat is null)
-            {
-                return;
-            }
-
             codeFile.Comments.Add(new CommentCodeConverter("String Format Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
-            if (entity.TypeDefinition.IsDeprecated)
+            if (clrTypeInfo.IsObsolete)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.TypeDefinition.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
             }
 
-            codeFile.Constructors.Add(new StringFormatConstructorCodeConverter(entity.FormattedName, entity.TypeDefinition.StringFormat));
+            var stringFormat = (string)clrTypeInfo.Metadata[Constants.TypeMetadata.StringFormat];
+            codeFile.Constructors.Add(new StringFormatConstructorCodeConverter(clrTypeInfo.CSharpName, stringFormat));
         }
     }
 }

@@ -27,16 +27,24 @@ namespace WebExtension.Net.Generator
         {
             if (File.Exists(Path.Combine(options.RootDirectory, GENERATED_FILE_NAME)))
             {
-                foreach (var directory in Directory.GetDirectories(options.RootDirectory))
+                try
                 {
-                    logger.LogWarning($"Deleting directory {directory}");
-                    Directory.Delete(directory, true);
-                }
+                    foreach (var directory in Directory.GetDirectories(options.RootDirectory))
+                    {
+                        logger.LogWarning($"Deleting directory {directory}");
+                        Directory.Delete(directory, true);
+                    }
 
-                foreach (var file in Directory.GetFiles(options.RootDirectory))
+                    foreach (var file in Directory.GetFiles(options.RootDirectory))
+                    {
+                        logger.LogWarning($"Deleting file {file}");
+                        File.Delete(file);
+                    }
+                }
+                catch
                 {
-                    logger.LogWarning($"Deleting file {file}");
-                    File.Delete(file);
+                    logger.LogError("Failed to clean directory.");
+                    throw;
                 }
             }
         }

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 {
     public class MultitypeConstructorCodeConverter : ICodeConverter
     {
         private readonly string className;
-        private readonly IEnumerable<TypeDefinition> typeChoices;
+        private readonly IEnumerable<ClrTypeInfo> typeChoices;
 
-        public MultitypeConstructorCodeConverter(string className, IEnumerable<TypeDefinition> typeChoices)
+        public MultitypeConstructorCodeConverter(string className, IEnumerable<ClrTypeInfo> typeChoices)
         {
             this.className = className;
             this.typeChoices = typeChoices;
@@ -20,17 +21,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
         {
             var usingNamespaces = new HashSet<string>();
             var typeNames = new HashSet<string>();
-            bool writeParameterlessConstructor = false;
-
-            foreach (var typeDefinition in typeChoices)
-            {
-                if (typeDefinition.Type == ObjectType.Null)
-                {
-                    writeParameterlessConstructor = true;
-                    continue;
-                }
-                typeNames.Add(typeDefinition.ToTypeName(usingNamespaces));
-            }
+            bool writeParameterlessConstructor = typeChoices.Any(clrTypeInfo => clrTypeInfo.IsNullType);
 
             codeWriter.WriteUsingStatement(usingNamespaces);
             
@@ -43,20 +34,25 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                     .WriteEndBlock();
             }
 
-            foreach (var typeName in typeNames)
+            foreach (var clrTypeInfo in typeChoices)
             {
-                string? privateField = null;
-                // Rely on the convention that interface name starts with the letter I
-                // object and interface implicit conversion is not allowed in C#
-                if (typeName != "object" && !typeName.StartsWith("I"))
+                if (typeNames.Contains(clrTypeInfo.CSharpName))
                 {
-                    privateField = $"value{SanitizeVariableName(typeName).ToCapitalCase()}";
+                    continue;
+                }
+                typeNames.Add(clrTypeInfo.CSharpName);
+
+                string? privateField = null;
+                // object and interface implicit conversion is not allowed in C#
+                if (clrTypeInfo.FullName != typeof(object).FullName && !clrTypeInfo.IsInterface)
+                {
+                    privateField = $"value{SanitizeVariableName(clrTypeInfo.CSharpName).ToCapitalCase()}";
                 }
 
                 codeWriter.Constructors
                     .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
                     .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value."))
-                    .WriteLine($"public {className}({typeName} value)")
+                    .WriteLine($"public {className}({clrTypeInfo.CSharpName} value)")
                     .WriteStartBlock()
                     .WriteLine(privateField is null ? null : $"{privateField} = value;")
                     .WriteLine($"currentValue = value;")
@@ -65,17 +61,17 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                 if (privateField is not null)
                 {
                     codeWriter.Properties
-                        .WriteLine($"private readonly {typeName} {privateField};");
+                        .WriteLine($"private readonly {clrTypeInfo.CSharpName} {privateField};");
 
                     codeWriter.PublicMethods
-                        .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{className}\" /> to <see cref=\"{typeName}\" />."))
+                        .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{className}\" /> to <see cref=\"{clrTypeInfo.CSharpName}\" />."))
                         .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value to convert from."))
-                        .WriteLine($"public static implicit operator {typeName}({className} value) => value.{privateField};");
+                        .WriteLine($"public static implicit operator {clrTypeInfo.CSharpName}({className} value) => value.{privateField};");
 
                     codeWriter.PublicMethods
-                        .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{typeName}\" /> to <see cref=\"{className}\" />."))
+                        .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{clrTypeInfo.CSharpName}\" /> to <see cref=\"{className}\" />."))
                         .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value to convert from."))
-                        .WriteLine($"public static implicit operator {className}({typeName} value) => new(value);");
+                        .WriteLine($"public static implicit operator {className}({clrTypeInfo.CSharpName} value) => new(value);");
                 }
             }
         }

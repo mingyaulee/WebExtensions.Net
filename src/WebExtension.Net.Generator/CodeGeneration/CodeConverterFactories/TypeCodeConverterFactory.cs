@@ -1,34 +1,34 @@
 ﻿using System;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class TypeCodeConverterFactory : ICodeConverterFactory<ClassEntity>
+    public class TypeCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentCodeConverter("Type Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
-            if (entity.TypeDefinition is not null && entity.TypeDefinition.IsDeprecated)
+            if (clrTypeInfo.IsObsolete)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.TypeDefinition.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
             }
 
-            foreach (var propertyDefinitionPair in entity.Properties)
+            foreach (var property in clrTypeInfo.Properties)
             {
-                codeFile.Properties.Add(new TypePropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
+                codeFile.Properties.Add(new TypePropertyCodeConverter(property));
             }
 
-            foreach (var functionDefinition in entity.Functions)
+            foreach (var method in clrTypeInfo.Methods)
             {
-                codeFile.Methods.Add(new TypeMethodCodeConverter(functionDefinition));
+                codeFile.Methods.Add(new TypeMethodCodeConverter(method));
             }
         }
     }

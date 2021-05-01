@@ -1,8 +1,10 @@
-﻿namespace WebExtension.Net.Generator.CodeGeneration
+﻿using WebExtension.Net.Generator.Models.ClrTypes;
+
+namespace WebExtension.Net.Generator.CodeGeneration
 {
-    public interface ICodeConverterFactory<in EntityType>
+    public interface ICodeConverterFactory
     {
-        void AddInterfaceConvertersToCodeFile(EntityType entity, CodeFile codeFile);
-        void AddConvertersToCodeFile(EntityType entity, CodeFile codeFile);
+        void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile);
+        void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile);
     }
 }

@@ -1,34 +1,24 @@
 ﻿using System;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class ArrayCodeConverterFactory : ICodeConverterFactory<ClassEntity>
+    public class ArrayCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            if (entity.TypeDefinition is null || entity.TypeDefinition.ArrayItems is null)
-            {
-                return;
-            }
-
-            codeFile.UsingNamespaces.Add("System.Collections.Generic");
-
-            codeFile.Declaration = codeFile.Declaration.Replace("$arrayItemTypeName", entity.TypeDefinition.ArrayItems.ToTypeName(codeFile.UsingNamespaces));
-
             codeFile.Comments.Add(new CommentCodeConverter("Array Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
-            if (entity.TypeDefinition.IsDeprecated)
+            if (clrTypeInfo.IsObsolete)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.TypeDefinition.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
             }
         }
     }

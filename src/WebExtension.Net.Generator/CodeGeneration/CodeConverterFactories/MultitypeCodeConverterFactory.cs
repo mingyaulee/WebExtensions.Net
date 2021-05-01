@@ -1,34 +1,34 @@
 ﻿using System;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class MultitypeCodeConverterFactory : ICodeConverterFactory<ClassEntity>
+    public class MultitypeCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            if (entity.TypeDefinition is null || entity.TypeDefinition.TypeChoices is null)
+            if (clrTypeInfo.TypeChoices is null)
             {
-                return;
+                throw new InvalidOperationException("Multitype type must have type choices.");
             }
 
             codeFile.Comments.Add(new CommentCodeConverter("Multitype Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
-            if (entity.TypeDefinition.IsDeprecated)
+            if (clrTypeInfo.IsObsolete)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.TypeDefinition.Deprecated));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
             }
 
             codeFile.Properties.Add(new MultitypeCurrentValuePropertyCodeConverter());
 
-            codeFile.Constructors.Add(new MultitypeConstructorCodeConverter(entity.FormattedName, entity.TypeDefinition.TypeChoices));
+            codeFile.Constructors.Add(new MultitypeConstructorCodeConverter(clrTypeInfo.CSharpName, clrTypeInfo.TypeChoices));
 
             codeFile.Methods.Add(new MultitypeToStringMethodCodeConverter());
         }

@@ -1,30 +1,35 @@
 ﻿using System;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class EnumCodeConverterFactory : ICodeConverterFactory<EnumEntity>
+    public class EnumCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(EnumEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             throw new NotImplementedException();
         }
 
-        public void AddConvertersToCodeFile(EnumEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            codeFile.UsingNamespaces.Add("System.Text.Json.Serialization");
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
-
-            if (entity.IsDeprecated)
+            if (clrTypeInfo.EnumValues is null)
             {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(entity.Deprecated));
+                throw new InvalidOperationException("Enum type must have enum values.");
             }
-            codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(EnumStringConverter<{entity.FormattedName}>))"));
 
-            foreach (var enumValueDefinition in entity.EnumValues)
+            codeFile.UsingNamespaces.Add("System.Text.Json.Serialization");
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
+
+            if (clrTypeInfo.IsObsolete)
             {
-                codeFile.Properties.Add(new EnumPropertyCodeConverter(enumValueDefinition));
+                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
+            }
+            codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(EnumStringConverter<{clrTypeInfo.CSharpName}>))"));
+
+            foreach (var enumValue in clrTypeInfo.EnumValues)
+            {
+                codeFile.Properties.Add(new EnumPropertyCodeConverter(enumValue));
             }
         }
     }

@@ -1,29 +1,29 @@
 ﻿using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtension.Net.Generator.Models.ClrTypes;
 
 namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
 {
-    public class ApiRootCodeConverterFactory : ICodeConverterFactory<ClassEntity>
+    public class ApiRootCodeConverterFactory : ICodeConverterFactory
     {
-        public void AddInterfaceConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
             // Api Root has properties and no functions or events
-            foreach (var propertyDefinitionPair in entity.Properties)
+            foreach (var property in clrTypeInfo.Properties)
             {
-                codeFile.Properties.Add(new ApiRootInterfacePropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
+                codeFile.Properties.Add(new ApiRootInterfacePropertyCodeConverter(property));
             }
         }
 
-        public void AddConvertersToCodeFile(ClassEntity entity, CodeFile codeFile)
+        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(entity.Description));
-            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(entity.FormattedName));
+            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
+            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(clrTypeInfo.CSharpName));
 
             // Api Root has properties and no functions or events
-            foreach (var propertyDefinitionPair in entity.Properties)
+            foreach (var property in clrTypeInfo.Properties)
             {
-                codeFile.Properties.Add(new ApiRootPropertyCodeConverter(propertyDefinitionPair.Key, propertyDefinitionPair.Value));
+                codeFile.Properties.Add(new ApiRootPropertyCodeConverter(property));
             }
         }
     }

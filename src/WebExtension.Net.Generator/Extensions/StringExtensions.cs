@@ -4,6 +4,15 @@ namespace WebExtension.Net.Generator.Extensions
 {
     public static class StringExtensions
     {
+        public static string ToCamelCase(this string name)
+        {
+            if (name.Length > 1)
+            {
+                return name[0].ToString().ToLowerInvariant() + name[1..];
+            }
+            return name.ToUpperInvariant();
+        }
+
         public static string ToCapitalCase(this string name)
         {
             if (name.Length > 1)
