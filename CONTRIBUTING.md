@@ -73,6 +73,9 @@ The browser specific extensions and types should be defined in a directory under
 If the directory does not exist, you should create one.
 Refer to WebExtension.Net/Chrome/INotificationsApiExtension.cs for example.
 
+### In case of conflicts in the file generated.txt
+It is best to do a rebase and run the generator again to make sure the changes in the generated files are not overwritten by your pull request.
+
 ### Use a Consistent Coding Style
 - 4 spaces (C#) or 2 spaces (XML/JSON/JS) for indentation rather than tabs.
 - Every `if`, `else`, `for`, `foreach`, `while` etc should have its own opening and closing bracket, even if it is a single line statement.
