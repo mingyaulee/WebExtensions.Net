@@ -31,7 +31,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 Name = classEntity.Name,
                 FullName = $"{@namespace}.{classEntity.FormattedName}",
                 CSharpName = classEntity.FormattedName,
-                IsNullable = true,// TODO: classEntity.Type != ClassType.EnumClass,
+                IsNullable = classEntity.Type != ClassType.EnumClass,
                 IsEnum = classEntity.Type == ClassType.EnumClass,
                 EnumValues = classEntity.Type == ClassType.EnumClass ? classEntity.Properties.Select(EnumPropertyDefinitionTranslator.TranslatePropertyDefinition).ToArray() : null,
                 IsInterface = false,
