@@ -107,7 +107,7 @@ namespace WebExtension.Net.Generator
                         functions.Add(new FunctionDefinition()
                         {
                             Name = propertyName,
-                            Description = "",//TODO: $"Gets the '{propertyName}' property.",
+                            Description = $"Gets the '{propertyName}' property.",
                             Type = ObjectType.PropertyGetterFunction,
                             Async = "true",
                             FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
