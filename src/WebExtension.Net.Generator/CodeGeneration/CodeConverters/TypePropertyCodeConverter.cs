@@ -23,7 +23,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
                 .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
                 .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{privatePropertyName}\")"))
-                // TODO: .WriteWithConverter(clrPropertyInfo.PropertyType.IsNullable ? new AttributeCodeConverter($"JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)") : null)
+                .WriteWithConverter(clrPropertyInfo.PropertyType.IsNullable ? new AttributeCodeConverter($"JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)") : null)
                 .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
                 // start property body
                 .WriteStartBlock()
