@@ -43,7 +43,7 @@ namespace WebExtension.Net
         /// </summary>
         /// <param name="propertyName">The property name to get.</param>
         /// <returns>An instance of TValue obtained by JSON-deserializing the return value.</returns>
-        protected ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName)
+        internal ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? propertyName : $"{accessPath}.{propertyName}";
             return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
@@ -55,7 +55,7 @@ namespace WebExtension.Net
         /// <param name="function">The function to invoke.</param>
         /// <param name="args">JSON-serializable arguments.</param>
         /// <returns>An instance of TValue obtained by JSON-deserializing the return value.</returns>
-        protected ValueTask<TValue> InvokeAsync<TValue>(string function, params object[] args)
+        internal ValueTask<TValue> InvokeAsync<TValue>(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
             return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
@@ -67,7 +67,7 @@ namespace WebExtension.Net
         /// <param name="function">The function to invoke.</param>
         /// <param name="args">JSON-serializable arguments.</param>
         /// <returns>A System.Threading.Tasks.ValueTask that represents the asynchronous invocation operation.</returns>
-        protected ValueTask InvokeVoidAsync(string function, params object[] args)
+        internal ValueTask InvokeVoidAsync(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
             return webExtensionJSRuntime.InvokeVoidAsync("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
