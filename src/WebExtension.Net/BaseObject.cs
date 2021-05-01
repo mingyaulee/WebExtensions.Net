@@ -27,8 +27,8 @@ namespace WebExtension.Net
         /// <summary>
         /// Initialize property if it is a base object
         /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="propertyValue"></param>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="propertyValue">The property value.</param>
         protected void InitializeProperty(string propertyName, object propertyValue)
         {
             if (propertyValue is BaseObject baseObject && !baseObject.IsInitialized)
@@ -39,15 +39,14 @@ namespace WebExtension.Net
         }
 
         /// <summary>
-        /// Invokes the specified JavaScript function asynchronously.
+        /// Gets the property from the object asynchronously.
         /// </summary>
-        /// <param name="propertyName">The function to invoke.</param>
-        /// <param name="args">JSON-serializable arguments.</param>
+        /// <param name="propertyName">The property name to get.</param>
         /// <returns>An instance of TValue obtained by JSON-deserializing the return value.</returns>
-        protected ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName, params object[] args)
+        protected ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? propertyName : $"{accessPath}.{propertyName}";
-            return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, false), args);
+            return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
         }
 
         /// <summary>
