@@ -126,7 +126,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             var parameterType = clrTypeStore.GetClrType(parameterDefinition, namespaceEntity);
             if (parameterDefinition.IsOptional && !parameterType.IsNullable)
             {
-                //TODO: parameterType = parameterType.MakeNullable();
+                parameterType = parameterType.MakeNullable();
             }
 
             return new ClrParameterInfo()
