@@ -1,4 +1,5 @@
-﻿using WebExtension.Net.Generator.Extensions;
+﻿using System;
+using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Models.ClrTypes;
 using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
@@ -22,6 +23,12 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 propertyType = propertyType.MakeNullable();
             }
             clrTypeInfo.AddRequiredNamespaces(propertyType.ReferenceNamespaces);
+
+            if (propertyName.Equals(clrTypeInfo.CSharpName, StringComparison.OrdinalIgnoreCase))
+            {
+                // Property name cannot be the same as declaring type, prefer to change the type name instead of the property name
+                clrTypeInfo.CSharpName = $"{clrTypeInfo.CSharpName}Type";
+            }
 
             return new ClrPropertyInfo()
             {

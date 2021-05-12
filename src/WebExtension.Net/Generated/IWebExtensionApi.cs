@@ -1,6 +1,7 @@
 using WebExtension.Net.Bookmarks;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Notifications;
+using WebExtension.Net.Permissions;
 using WebExtension.Net.Runtime;
 using WebExtension.Net.Storage;
 using WebExtension.Net.Tabs;
@@ -21,6 +22,9 @@ namespace WebExtension.Net
 
         /// <summary><br />Requires manifest permission notifications.</summary>
         INotificationsApi Notifications { get; }
+
+        /// <summary><br />Requires manifest permission manifest:optional_permissions.</summary>
+        IPermissionsApi Permissions { get; }
 
         /// <summary>Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.</summary>
         IRuntimeApi Runtime { get; }

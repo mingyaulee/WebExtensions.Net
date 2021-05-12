@@ -892,8 +892,16 @@
                   },
                   "favicon_url": {
                     "optional": true,
-                    "type": "string",
-                    "format": "relativeUrl"
+                    "choices": [
+                      {
+                        "type": "string",
+                        "format": "relativeUrl"
+                      },
+                      {
+                        "type": "string",
+                        "format": "strictRelativeUrl"
+                      }
+                    ]
                   },
                   "suggest_url": {
                     "optional": true,

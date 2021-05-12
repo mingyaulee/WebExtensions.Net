@@ -1,6 +1,7 @@
 using WebExtension.Net.Bookmarks;
 using WebExtension.Net.ContentScripts;
 using WebExtension.Net.Notifications;
+using WebExtension.Net.Permissions;
 using WebExtension.Net.Runtime;
 using WebExtension.Net.Storage;
 using WebExtension.Net.Tabs;
@@ -17,6 +18,7 @@ namespace WebExtension.Net
         private IBookmarksApi _bookmarks;
         private IContentScriptsApi _contentScripts;
         private INotificationsApi _notifications;
+        private IPermissionsApi _permissions;
         private IRuntimeApi _runtime;
         private IStorageApi _storage;
         private ITabsApi _tabs;
@@ -66,6 +68,19 @@ namespace WebExtension.Net
                     _notifications = new NotificationsApi(webExtensionJSRuntime);
                 }
                 return _notifications;
+            }
+        }
+
+        /// <inheritdoc />
+        public IPermissionsApi Permissions
+        {
+            get
+            {
+                if (_permissions is null)
+                {
+                    _permissions = new PermissionsApi(webExtensionJSRuntime);
+                }
+                return _permissions;
             }
         }
 

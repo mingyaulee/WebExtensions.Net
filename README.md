@@ -38,7 +38,7 @@ var manifest = await webExtensionApi.Runtime.GetManifest();
 
 - For callback functions with more than one parameter, only the first callback parameter is returned right now.
 - Parameter callback is not supported.
-- The browser extension API namespaces that are enabled at the moment is 11 out of a total of 60.
+- The browser extension API namespaces that are enabled at the moment is 13 out of a total of 60.
 - Event listener is not supported.
 - ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__
 
