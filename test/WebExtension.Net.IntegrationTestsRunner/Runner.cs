@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
@@ -54,8 +54,11 @@ namespace WebExtension.Net.IntegrationTestsRunner
 
                 // Test coverage
                 var testCoverage = await GetTestCoverageHits(webDriver);
-                TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
-                Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
+                if (testCoverage is not null)
+                {
+                    TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
+                    Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
+                }
             }
             catch (TestRunnerException testRunnerException)
             {
