@@ -34,6 +34,9 @@ var manifest = await webExtensionApi.Runtime.GetManifest();
 - [Chrome Extensions API Reference](https://developer.chrome.com/docs/extensions/reference/)
 - [Firefox Browser Extensions JavaScript API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
 
+### Using browser specific APIs
+Additional APIs may be available for specific browsers, and can be accessed via extension methods once the respective namespace is added with using directive. For example, adding `using WebExtension.Net.Chrome;` allows you to use additional APIs that are only available to the Chrome browser.
+
 ## Limitations
 
 - For callback functions with more than one parameter, only the first callback parameter is returned right now.
