@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WebExtension.Net.Generator.Models.Schema;
 
 namespace WebExtension.Net.Generator.Models.Entities
 {
     public class EntityRegistrationResult
     {
-        public EntityRegistrationResult(IDictionary<string, IList<NamespaceDefinition>> namespaces, IEnumerable<ClassEntity> classEntities)
+        public EntityRegistrationResult(IEnumerable<NamespaceEntity> namespaceEntities, IEnumerable<ClassEntity> classEntities)
         {
-            Namespaces = namespaces;
+            Namespaces = namespaceEntities.ToDictionary(namespaceEntity => namespaceEntity.FormattedName, namespaceEntity => namespaceEntity.NamespaceDefinitions);
             ClassEntities = classEntities;
         }
 

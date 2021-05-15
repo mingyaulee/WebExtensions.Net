@@ -1,16 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.CodeGeneration;
-using WebExtension.Net.Generator.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using WebExtension.Net.Generator.ClrTypeTranslators;
-using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
-using WebExtension.Net.Generator.Models.Schema;
-using Microsoft.Extensions.Configuration;
+﻿using System;
 using System.Collections.Generic;
-using WebExtension.Net.Generator.EntityRegistrars;
+using System.IO;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using WebExtension.Net.Generator.ClrTypeTranslators;
+using WebExtension.Net.Generator.CodeGeneration;
+using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
+using WebExtension.Net.Generator.EntitiesRegistration;
+using WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
+using WebExtension.Net.Generator.Models;
+using WebExtension.Net.Generator.Models.Schema;
+using WebExtension.Net.Generator.Repositories;
 
 namespace WebExtension.Net.Generator
 {
@@ -78,10 +79,23 @@ namespace WebExtension.Net.Generator
             services.AddScoped<FilesManager>();
 
             // entity registrars
+            services.AddTransient<ApiClassEntityRegistrar>();
+            services.AddTransient<ApiRootClassEntityRegistrar>();
+            services.AddTransient<ArrayClassEntityRegistrar>();
+            services.AddTransient<ClassEntityRegistrarFactory>();
+            services.AddTransient<EnumClassEntityRegistrar>();
+            services.AddTransient<EventTypeClassEntityRegistrar>();
+            services.AddTransient<MultiTypeClassEntityRegistrar>();
+            services.AddTransient<StringFormatClassEntityRegistrar>();
+            services.AddTransient<TypeClassEntityRegistrar>();
+
             services.AddTransient<ClassEntityRegistrar>();
             services.AddTransient<EventRegistrar>();
+            services.AddTransient<NamespaceApiToTypeDefinitionConverter>();
             services.AddTransient<NamespaceEntityRegistrar>();
+            services.AddTransient<NamespaceRegistrationFilter>();
             services.AddTransient<TypeEntityRegistrar>();
+            services.AddTransient<TypeUsageProcessor>();
 
             // clr type translators
             services.AddTransient<ClassEntityTranslator>();

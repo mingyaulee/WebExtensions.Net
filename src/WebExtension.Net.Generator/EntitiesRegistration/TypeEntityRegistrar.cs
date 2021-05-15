@@ -5,7 +5,7 @@ using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
 using WebExtension.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator.EntityRegistrars
+namespace WebExtension.Net.Generator.EntitiesRegistration
 {
     public class TypeEntityRegistrar
     {

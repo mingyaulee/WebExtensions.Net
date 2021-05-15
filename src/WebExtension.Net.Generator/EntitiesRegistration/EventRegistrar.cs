@@ -6,7 +6,7 @@ using WebExtension.Net.Generator.Helpers;
 using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.EntityRegistrars
+namespace WebExtension.Net.Generator.EntitiesRegistration
 {
     public class EventRegistrar
     {
