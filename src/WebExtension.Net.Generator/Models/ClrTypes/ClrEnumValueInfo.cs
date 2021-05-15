@@ -1,5 +1,8 @@
-﻿namespace WebExtension.Net.Generator.Models.ClrTypes
+﻿using System.Diagnostics;
+
+namespace WebExtension.Net.Generator.Models.ClrTypes
 {
+    [DebuggerDisplay("{CSharpName}")]
     public class ClrEnumValueInfo
     {
 #pragma warning disable CS8618 // Properties are initialized when created

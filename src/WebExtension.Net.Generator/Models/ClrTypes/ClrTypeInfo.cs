@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace WebExtension.Net.Generator.Models.ClrTypes
 {
+    [DebuggerDisplay("{FullName}")]
     public class ClrTypeInfo : ICloneable
     {
 #pragma warning disable CS8618 // Properties are initialized when created

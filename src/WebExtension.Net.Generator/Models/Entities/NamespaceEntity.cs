@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Models.Schema;
 
 namespace WebExtension.Net.Generator.Models.Entities
 {
+    [DebuggerDisplay("{Name}")]
     public class NamespaceEntity
     {
         public NamespaceEntity(string name)

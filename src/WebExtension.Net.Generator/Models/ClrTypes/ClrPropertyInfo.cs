@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 
 namespace WebExtension.Net.Generator.Models.ClrTypes
 {
+    [DebuggerDisplay("{Name}")]
     public class ClrPropertyInfo
     {
 #pragma warning disable CS8618 // Properties are initialized when created
