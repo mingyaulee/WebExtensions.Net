@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateDependencyFile>false</GenerateDependencyFile>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
     <HasReferenceAssembly>false</HasReferenceAssembly>
@@ -26,15 +26,15 @@
     <Content Include="build\**">
       <Pack>true</Pack>
       <PackagePath>build</PackagePath>
-	</Content>
+    </Content>
     <Content Include="content\**">
       <Pack>true</Pack>
       <PackagePath>content</PackagePath>
-	</Content>
+    </Content>
     <Content Include="icon.png">
       <Pack>true</Pack>
       <PackagePath></PackagePath>
-	</Content>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
