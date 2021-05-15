@@ -119,7 +119,7 @@ namespace WebExtension.Net.Generator
 
         private async Task<T?> GetFromHttpWithRetry<T>(string? url)
         {
-            int attempt = 5;
+            var attempt = 5;
             while (attempt > 0)
             {
                 try

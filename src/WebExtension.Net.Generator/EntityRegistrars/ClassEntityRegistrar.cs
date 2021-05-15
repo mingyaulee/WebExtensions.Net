@@ -39,11 +39,6 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             classEntity.BaseClassName = $"{registrationOptions.ApiClassBaseClassName}";
             classEntity.ImplementInterface = true;
 
-            if (namespaceApiTypeDefinition.ObjectEvents is not null)
-            {
-                classEntity.Events.AddRange(namespaceApiTypeDefinition.ObjectEvents);
-            }
-
             if (namespaceApiTypeDefinition.ObjectFunctions is not null)
             {
                 AddFunctionsToClassEntity(namespaceApiTypeDefinition.ObjectFunctions, classEntity);
@@ -53,7 +48,7 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             {
                 AddPropertiesToClassEntity(namespaceApiTypeDefinition.ObjectProperties, classEntity);
             }
-
+            
             return classEntity;
         }
 
@@ -94,6 +89,10 @@ namespace WebExtension.Net.Generator.EntityRegistrars
             if (typeEntity.Definition.Type == ObjectType.Object)
             {
                 RegisterTypeClassEntity(typeEntity);
+            }
+            else if (typeEntity.Definition.Type == ObjectType.EventTypeObject)
+            {
+                RegisterEventTypeClassEntity(typeEntity);
             }
             else if (typeEntity.Definition.Type == ObjectType.String && typeEntity.Definition.EnumValues is not null)
             {
@@ -148,6 +147,24 @@ namespace WebExtension.Net.Generator.EntityRegistrars
 
             AddFunctionsToClassEntity(typeFunctions, classEntity);
             AddPropertiesToClassEntity(typeProperties, classEntity);
+        }
+
+        private void RegisterEventTypeClassEntity(TypeEntity typeEntity)
+        {
+            var classEntity = entitiesContext.Classes.RegisterClass(ClassType.TypeClass, typeEntity.FormattedName, typeEntity.NamespaceEntity);
+            classEntity.TypeDefinition = typeEntity.Definition;
+            classEntity.Description = typeEntity.Definition.Description;
+            classEntity.BaseClassName = $"{Constants.RelativeNamespaceToken}.Events.Event";
+
+            if (typeEntity.Definition.ObjectFunctions is not null)
+            {
+                AddFunctionsToClassEntity(typeEntity.Definition.ObjectFunctions, classEntity);
+            }
+
+            if (typeEntity.Definition.ObjectProperties is not null)
+            {
+                AddPropertiesToClassEntity(typeEntity.Definition.ObjectProperties, classEntity);
+            }
         }
 
         private void RegisterEnumClassEntity(TypeEntity typeEntity)

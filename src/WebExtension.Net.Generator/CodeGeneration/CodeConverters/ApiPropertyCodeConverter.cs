@@ -13,14 +13,39 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            if (!clrPropertyInfo.IsConstant)
+            if (clrPropertyInfo.IsConstant)
             {
-                return;
+                codeWriter.PublicProperties
+                    .WriteWithConverter(new CommentInheritDocCodeConverter())
+                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
             }
+            else
+            {
+                // Event property
+                var privatePropertyName = clrPropertyInfo.PrivateName;
+                codeWriter.Properties
+                    .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
 
-            codeWriter.PublicProperties
-                .WriteWithConverter(new CommentInheritDocCodeConverter())
-                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
+                codeWriter.PublicProperties
+                    .WriteWithConverter(new CommentInheritDocCodeConverter())
+                    .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
+                    // start property body
+                    .WriteStartBlock()
+                        .WriteLine($"get")
+                        // start property get
+                        .WriteStartBlock()
+                            .WriteLine($"if (_{privatePropertyName} is null)")
+                            .WriteStartBlock()
+                                .WriteLine($"_{privatePropertyName} = new {clrPropertyInfo.PropertyType.CSharpName}();")
+                                .WriteLine($"InitializeProperty(\"{privatePropertyName}\", _{privatePropertyName});")
+                            .WriteEndBlock()
+                            .WriteLine($"return _{privatePropertyName};")
+                        // end property get
+                        .WriteEndBlock()
+                    // end property body
+                    .WriteEndBlock();
+            }
         }
     }
 }

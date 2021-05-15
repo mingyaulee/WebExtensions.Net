@@ -79,6 +79,7 @@ namespace WebExtension.Net.Generator
 
             // entity registrars
             services.AddTransient<ClassEntityRegistrar>();
+            services.AddTransient<EventRegistrar>();
             services.AddTransient<NamespaceEntityRegistrar>();
             services.AddTransient<TypeEntityRegistrar>();
 

@@ -18,19 +18,22 @@ namespace WebExtension.Net.Generator
         private readonly NamespaceEntityRegistrar namespaceEntityRegistrar;
         private readonly TypeEntityRegistrar typeEntityRegistrar;
         private readonly ClassEntityRegistrar classEntityRegistrar;
+        private readonly EventRegistrar eventRegistrar;
 
-        public EntitiesRegistrationManager(ILogger logger, RegistrationOptions registrationOptions, NamespaceEntityRegistrar namespaceEntityRegistrar, TypeEntityRegistrar typeEntityRegistrar, ClassEntityRegistrar classEntityRegistrar)
+        public EntitiesRegistrationManager(ILogger logger, RegistrationOptions registrationOptions, NamespaceEntityRegistrar namespaceEntityRegistrar, TypeEntityRegistrar typeEntityRegistrar, ClassEntityRegistrar classEntityRegistrar, EventRegistrar eventRegistrar)
         {
             this.logger = logger;
             this.registrationOptions = registrationOptions;
             this.namespaceEntityRegistrar = namespaceEntityRegistrar;
             this.typeEntityRegistrar = typeEntityRegistrar;
             this.classEntityRegistrar = classEntityRegistrar;
+            this.eventRegistrar = eventRegistrar;
         }
 
         public EntityRegistrationResult RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
-            var apiClassEntities = RegisterNamespaceTypesAndApi(namespaceDefinitions);
+            var apiNamespaceDefinitions = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
+            var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceDefinitions);
             RegisterApiRoot(apiClassEntities);
             MarkApiClassEntitiesTypeUsage(apiClassEntities);
             RegisterTypeEntitiesAsClassEntities();
@@ -39,9 +42,9 @@ namespace WebExtension.Net.Generator
             return new EntityRegistrationResult(namespaceEntities, classEntityRegistrar.GetAllClassEntities());
         }
 
-        private IEnumerable<ClassEntity> RegisterNamespaceTypesAndApi(IEnumerable<NamespaceDefinition> namespaceDefinitions)
+        private IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
-            var apiClassEntities = new List<ClassEntity>();
+            var apiNamespaceDefinitions = new List<KeyValuePair<NamespaceDefinition, NamespaceEntity>>();
 
             foreach (var namespaceDefinition in namespaceDefinitions)
             {
@@ -67,13 +70,20 @@ namespace WebExtension.Net.Generator
 
                 if (ShouldRegisterNamespaceApi(namespaceDefinition))
                 {
-                    var namespaceApiTypeDefinition = GetNamespaceApiTypeDefinition(namespaceDefinition, namespaceEntity);
-                    var classEntity = classEntityRegistrar.RegisterNamespaceApi(namespaceApiTypeDefinition, namespaceEntity);
-                    apiClassEntities.Add(classEntity);
+                    apiNamespaceDefinitions.Add(KeyValuePair.Create(namespaceDefinition, namespaceEntity));
                 }
             }
 
-            return apiClassEntities;
+            return apiNamespaceDefinitions;
+        }
+
+        private IEnumerable<ClassEntity> RegisterNamespaceDefinitionsAsClassEntities(IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> namespaceDefinitions)
+        {
+            return namespaceDefinitions.Select(namespaceDefinitionPair =>
+            {
+                var namespaceApiTypeDefinition = GetNamespaceApiTypeDefinition(namespaceDefinitionPair.Key, namespaceDefinitionPair.Value);
+                return classEntityRegistrar.RegisterNamespaceApi(namespaceApiTypeDefinition, namespaceDefinitionPair.Value);
+            }).ToArray();
         }
 
         private static bool ShouldRegisterNamespaceApi(NamespaceDefinition namespaceDefinition)
@@ -116,6 +126,20 @@ namespace WebExtension.Net.Generator
                 }
             }
 
+            if (namespaceDefinition.Events is not null)
+            {
+                foreach (var eventDefinition in namespaceDefinition.Events)
+                {
+                    if (eventDefinition.Name is null)
+                    {
+                        throw new InvalidOperationException("Event definition should have a Name.");
+                    }
+
+                    var propertyDefinition = eventRegistrar.ConvertEventDefinitionToPropertyDefinition(eventDefinition.Name, eventDefinition, namespaceEntity);
+                    properties.Add(eventDefinition.Name, propertyDefinition);
+                }
+            }
+
             return new TypeDefinition()
             {
                 Id = namespaceEntity.FormattedName + registrationOptions.ApiClassNamePostfix,
@@ -123,7 +147,6 @@ namespace WebExtension.Net.Generator
                 Type = ObjectType.Object,
                 ObjectFunctions = functions.Any() ? functions : null,
                 ObjectProperties = properties.Any() ? properties : null,
-                ObjectEvents = namespaceDefinition.Events
             };
         }
 
@@ -157,7 +180,8 @@ namespace WebExtension.Net.Generator
                 {
                     throw new InvalidOperationException("Class entity should have type definition.");
                 }
-                MarkTypeUsage(classEntity.TypeDefinition, classEntity.NamespaceEntity);
+                MarkTypeUsage(classEntity.Functions, classEntity.NamespaceEntity);
+                MarkTypeUsage(classEntity.Properties.Select(property => property.Value), classEntity.NamespaceEntity);
             }
         }
 

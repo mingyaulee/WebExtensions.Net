@@ -17,7 +17,6 @@ namespace WebExtension.Net.Generator.Models.Entities
             NamespaceEntity = namespaceEntity;
             Properties = new Dictionary<string, PropertyDefinition>();
             Functions = new List<FunctionDefinition>();
-            Events = new List<EventDefinition>();
         }
 
         public ClassType Type { get; }
@@ -31,6 +30,5 @@ namespace WebExtension.Net.Generator.Models.Entities
         public NamespaceEntity NamespaceEntity { get; }
         public IDictionary<string, PropertyDefinition> Properties { get; }
         public IList<FunctionDefinition> Functions { get; }
-        public List<EventDefinition> Events { get; }
     }
 }

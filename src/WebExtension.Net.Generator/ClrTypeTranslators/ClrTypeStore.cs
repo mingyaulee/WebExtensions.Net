@@ -21,7 +21,6 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
         {
             clrTypeStore.Clear();
             CreateClrTypeFromSystemType(typeof(bool));
-            CreateClrTypeFromSystemType(typeof(Action));
             CreateClrTypeFromSystemType(typeof(int));
             CreateClrTypeFromSystemType(typeof(double));
             CreateClrTypeFromSystemType(typeof(string));
@@ -54,6 +53,11 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             if (typeReference.Ref is null && typeReference.TypeChoices is not null)
             {
                 return GetClrType(typeof(JsonElement));
+            }
+
+            if (typeReference.Type == ObjectType.Function)
+            {
+                return GetFunctionClrType(typeReference, namespaceEntity);
             }
 
             var typeId = GetTypeId(typeReference, namespaceEntity);
@@ -123,7 +127,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 TypeChoices = null
             };
 #pragma warning restore CS8601, CS8604
-            
+
             if (type.IsGenericType)
             {
                 clrTypeInfo.CSharpName = clrTypeInfo.CSharpName[..clrTypeInfo.CSharpName.IndexOf('`')];
@@ -163,7 +167,48 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             return clrTypeInfo;
         }
 
-        public string GetTypeId(TypeReference? typeReference, NamespaceEntity namespaceEntity)
+        private ClrTypeInfo GetFunctionClrType(TypeReference typeReference, NamespaceEntity namespaceEntity)
+        {
+            if ((typeReference.FunctionParameters is null || !typeReference.FunctionParameters.Any()) && typeReference.FunctionReturns is null)
+            {
+                return GetClrType(typeof(Action));
+            }
+
+            var functionType = typeof(Action<>);
+            var genericTypeArguments = new List<ClrTypeInfo>();
+
+            if (typeReference.FunctionParameters is not null)
+            {
+                var parameterTypes = typeReference.FunctionParameters.Select(parameterDefinition =>
+                {
+                    var parameterType = GetClrType(parameterDefinition, namespaceEntity);
+                    if (parameterDefinition.IsOptional && !parameterType.IsNullable)
+                    {
+                        parameterType = parameterType.MakeNullable();
+                    }
+
+                    return parameterType;
+                });
+                genericTypeArguments.AddRange(parameterTypes);
+            }
+
+            if (typeReference.FunctionReturns is not null)
+            {
+                var functionReturnClrType = GetClrType(typeReference.FunctionReturns, namespaceEntity);
+                if (functionReturnClrType.FullName != typeof(void).FullName)
+                {
+                    functionType = typeof(Func<>);
+                    genericTypeArguments.Add(functionReturnClrType);
+                }
+            }
+
+            var clrType = GetClrTypeFromSystemType(functionType);
+            clrType.GenericTypeArguments = genericTypeArguments;
+            clrType.CSharpName = $"{clrType.CSharpName}<{string.Join(", ", genericTypeArguments.Select(genericTypeArgument => genericTypeArgument.CSharpName))}>";
+            return clrType;
+        }
+
+        private string GetTypeId(TypeReference? typeReference, NamespaceEntity namespaceEntity)
         {
             if (typeReference is null)
             {
@@ -183,7 +228,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             {
                 ObjectType.Array => GetTypeId(typeReference.ArrayItems, namespaceEntity) + "Array",
                 ObjectType.Boolean => "System.Boolean",
-                ObjectType.Function => "System.Action",
+                ObjectType.Function => throw new InvalidOperationException($"Functions should be handled by the method '{nameof(GetFunctionClrType)}'."),
                 ObjectType.Integer => "System.Int32",
                 ObjectType.Number => "System.Double",
                 ObjectType.String => "System.String",

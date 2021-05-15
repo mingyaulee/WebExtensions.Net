@@ -77,6 +77,13 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
 
         public void DeepTranslate(ClassEntity classEntity, ClrTypeInfo clrTypeInfo)
         {
+            if (clrTypeInfo.BaseTypeName is not null && clrTypeInfo.BaseTypeName.Contains('.'))
+            {
+                var namespaceSeparatorIndex = clrTypeInfo.BaseTypeName.LastIndexOf('.');
+                clrTypeInfo.RequiredNamespaces.Add(clrTypeInfo.BaseTypeName[..namespaceSeparatorIndex]);
+                clrTypeInfo.BaseTypeName = clrTypeInfo.BaseTypeName[(namespaceSeparatorIndex + 1)..];
+            }
+
             clrTypeInfo.Methods = classEntity.Functions.Select(functionDefinition => functionDefinitionTranslator.TranslateFunctionDefinition(functionDefinition, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
             clrTypeInfo.Properties = classEntity.Properties.Select(propertyDefinitionPair => propertyDefinitionTranslator.TranslatePropertyDefinition(propertyDefinitionPair.Key, propertyDefinitionPair.Value, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
 
@@ -84,7 +91,6 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             {
                 var arrayItemClrType = clrTypeStore.GetClrType(classEntity.TypeDefinition?.ArrayItems, classEntity.NamespaceEntity);
                 clrTypeInfo.BaseTypeName = clrTypeInfo.BaseTypeName?.Replace(Constants.ArrayTypeToken, arrayItemClrType.CSharpName);
-                clrTypeInfo.RequiredNamespaces.Add("System.Collections.Generic");
                 clrTypeInfo.AddRequiredNamespaces(arrayItemClrType.ReferenceNamespaces);
             }
 

@@ -79,9 +79,6 @@ namespace WebExtension.Net.Generator.Models.Schema
         [JsonPropertyName("functions")]
         public IEnumerable<FunctionDefinition>? ObjectFunctions { get; set; }
 
-        [JsonIgnore]
-        public IEnumerable<EventDefinition>? ObjectEvents { get; set; }
-
         #endregion
 
         #region Function information

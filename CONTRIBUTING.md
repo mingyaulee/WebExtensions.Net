@@ -49,6 +49,7 @@ The code generation process is summarised as follows:
     - The types are checked for reference/usage
     - The unused or unsupported types are filtered out
     - The non-constant properties in the namespace is registered as a property getter function definition
+    - The events in the namespace is registered as property definitions
     - The root namespace is registered as an ApiRoot Class Entity
 0. The Class Entities are translated into Clr Types by the ClrTypeManager. In this stage:
     - The class entity is converted to ClrTypeInfo

@@ -61,6 +61,9 @@ namespace WebExtension.Net.Generator.Extensions
                     // change variable code to inline code
                     "<var>" => "<c>",
                     "</var>" => "</c>",
+                    // allow <em>
+                    "<em>" => "<em>",
+                    "</em>" => "</em>",
                     // change line break to self closing line break
                     "<br>" => "<br />",
                     // convert paragraphs to line break
