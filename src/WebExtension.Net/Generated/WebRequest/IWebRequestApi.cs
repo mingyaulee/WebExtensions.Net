@@ -9,6 +9,33 @@ namespace WebExtension.Net.WebRequest
         /// <summary>The maximum number of times that <c>handlerBehaviorChanged</c> can be called per 10 minute sustained interval. <c>handlerBehaviorChanged</c> is an expensive function call that shouldn't be called often.</summary>
         int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES { get; }
 
+        /// <summary>Fired when an authentication failure is received. The listener has three options: it can provide authentication credentials, it can cancel the request and display the error page, or it can take no action on the challenge. If bad user credentials are provided, this may be called multiple times for the same request.</summary>
+        OnAuthRequiredEvent OnAuthRequired { get; }
+
+        /// <summary>Fired when a server-initiated redirect is about to occur.</summary>
+        OnBeforeRedirectEvent OnBeforeRedirect { get; }
+
+        /// <summary>Fired when a request is about to occur.</summary>
+        OnBeforeRequestEvent OnBeforeRequest { get; }
+
+        /// <summary>Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any HTTP data is sent. </summary>
+        OnBeforeSendHeadersEvent OnBeforeSendHeaders { get; }
+
+        /// <summary>Fired when a request is completed.</summary>
+        OnCompletedEvent OnCompleted { get; }
+
+        /// <summary>Fired when an error occurs.</summary>
+        OnErrorOccurredEvent OnErrorOccurred { get; }
+
+        /// <summary>Fired when HTTP response headers of a request have been received.</summary>
+        OnHeadersReceivedEvent OnHeadersReceived { get; }
+
+        /// <summary>Fired when the first byte of the response body is received. For HTTP requests, this means that the status line and response headers are available.</summary>
+        OnResponseStartedEvent OnResponseStarted { get; }
+
+        /// <summary>Fired just before a request is going to be sent to the server (modifications of previous onBeforeSendHeaders callbacks are visible by the time onSendHeaders is fired).</summary>
+        OnSendHeadersEvent OnSendHeaders { get; }
+
         /// <summary>...</summary>
         /// <param name="requestId"></param>
         /// <returns></returns>

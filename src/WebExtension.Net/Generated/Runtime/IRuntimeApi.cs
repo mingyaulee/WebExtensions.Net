@@ -1,11 +1,33 @@
 using System.Text.Json;
 using System.Threading.Tasks;
+using WebExtension.Net.Events;
 
 namespace WebExtension.Net.Runtime
 {
     /// <summary>Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.</summary>
     public interface IRuntimeApi
     {
+        /// <summary>Fired when a connection is made from either an extension process or a content script.</summary>
+        OnConnectEvent OnConnect { get; }
+
+        /// <summary>Fired when a connection is made from another extension.</summary>
+        OnConnectExternalEvent OnConnectExternal { get; }
+
+        /// <summary>Fired when the extension is first installed, when the extension is updated to a new version, and when the browser is updated to a new version.</summary>
+        OnInstalledEvent OnInstalled { get; }
+
+        /// <summary>Fired when a message is sent from either an extension process or a content script.</summary>
+        OnMessageEvent OnMessage { get; }
+
+        /// <summary>Fired when a message is sent from another extension/app. Cannot be used in a content script.</summary>
+        OnMessageExternalEvent OnMessageExternal { get; }
+
+        /// <summary>Fired when a profile that has this extension installed first starts up. This event is not fired for incognito profiles.</summary>
+        Event OnStartup { get; }
+
+        /// <summary>Fired when an update is available, but isn't installed immediately because the app is currently running. If you do nothing, the update will be installed the next time the background page gets unloaded, if you want it to be installed sooner you can explicitly call $(ref:runtime.reload). If your extension is using a persistent background page, the background page of course never gets unloaded, so unless you call $(ref:runtime.reload) manually in response to this event the update will not get installed until the next time the browser itself restarts. If no handlers are listening for this event, and your extension has a persistent background page, it behaves as if $(ref:runtime.reload) is called in response to this event.</summary>
+        OnUpdateAvailableEvent OnUpdateAvailable { get; }
+
         /// <summary>Attempts to connect to connect listeners within an extension/app (such as the background page), or other extensions/apps. This is useful for content scripts connecting to their extension processes, inter-app/extension communication, and $(topic:manifest/externally_connectable)[web messaging]. Note that this does not connect to any listeners in a content script. Extensions may connect to content scripts embedded in tabs via $(ref:tabs.connect).</summary>
         /// <param name="extensionId">The ID of the extension or app to connect to. If omitted, a connection will be attempted with your own extension. Required if sending messages from a web page for $(topic:manifest/externally_connectable)[web messaging].</param>
         /// <param name="connectInfo"></param>

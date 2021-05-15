@@ -10,6 +10,36 @@ namespace WebExtension.Net.Tabs
     /// <summary>Use the <c>browser.tabs</c> API to interact with the browser's tab system. You can use this API to create, modify, and rearrange tabs in the browser.</summary>
     public interface ITabsApi
     {
+        /// <summary>Fires when the active tab in a window changes. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</summary>
+        OnActivatedEvent OnActivated { get; }
+
+        /// <summary>Fired when a tab is attached to a window, for example because it was moved between windows.</summary>
+        OnAttachedEvent OnAttached { get; }
+
+        /// <summary>Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</summary>
+        OnCreatedEvent OnCreated { get; }
+
+        /// <summary>Fired when a tab is detached from a window, for example because it is being moved between windows.</summary>
+        OnDetachedEvent OnDetached { get; }
+
+        /// <summary>Fired when the highlighted or selected tabs in a window changes.</summary>
+        OnHighlightedEvent OnHighlighted { get; }
+
+        /// <summary>Fired when a tab is moved within a window. Only one move event is fired, representing the tab the user directly moved. Move events are not fired for the other tabs that must move in response. This event is not fired when a tab is moved between windows. For that, see $(ref:tabs.onDetached).</summary>
+        OnMovedEvent OnMoved { get; }
+
+        /// <summary>Fired when a tab is closed.</summary>
+        OnRemovedEvent OnRemoved { get; }
+
+        /// <summary>Fired when a tab is replaced with another tab due to prerendering or instant.</summary>
+        OnReplacedEvent OnReplaced { get; }
+
+        /// <summary>Fired when a tab is updated.</summary>
+        OnUpdatedEvent OnUpdated { get; }
+
+        /// <summary>Fired when a tab is zoomed.</summary>
+        OnZoomChangeEvent OnZoomChange { get; }
+
         /// <summary>An ID which represents the absence of a browser tab.</summary>
         int TAB_ID_NONE { get; }
 

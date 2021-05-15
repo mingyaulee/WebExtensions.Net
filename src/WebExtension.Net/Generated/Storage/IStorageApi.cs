@@ -5,6 +5,9 @@ namespace WebExtension.Net.Storage
     /// <summary>Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.</summary>
     public interface IStorageApi
     {
+        /// <summary>Fired when one or more items change.</summary>
+        OnChangedEvent OnChanged { get; }
+
         /// <summary>Gets the 'local' property.</summary>
         /// <returns>Items in the <c>local</c> storage area are local to each machine.</returns>
         ValueTask<StorageArea> GetLocal();

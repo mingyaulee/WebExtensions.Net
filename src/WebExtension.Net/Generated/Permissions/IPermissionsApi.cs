@@ -5,6 +5,12 @@ namespace WebExtension.Net.Permissions
     /// <summary></summary>
     public interface IPermissionsApi
     {
+        /// <summary>Fired when the extension acquires new permissions.</summary>
+        OnAddedEvent OnAdded { get; }
+
+        /// <summary>Fired when permissions are removed from the extension.</summary>
+        OnRemovedEvent OnRemoved { get; }
+
         /// <summary>Check if the extension has the given permissions.</summary>
         /// <param name="permissions"></param>
         /// <returns></returns>

@@ -6,6 +6,18 @@ namespace WebExtension.Net.Notifications
     /// <summary></summary>
     public interface INotificationsApi
     {
+        /// <summary>Fired when the  user pressed a button in the notification.</summary>
+        OnButtonClickedEvent OnButtonClicked { get; }
+
+        /// <summary>Fired when the user clicked in a non-button area of the notification.</summary>
+        OnClickedEvent OnClicked { get; }
+
+        /// <summary>Fired when the notification closed, either by the system or by user action.</summary>
+        OnClosedEvent OnClosed { get; }
+
+        /// <summary>Fired when the notification is shown.</summary>
+        OnShownEvent OnShown { get; }
+
         /// <summary>Clears an existing notification.</summary>
         /// <param name="notificationId">The id of the notification to be updated.</param>
         /// <returns>Indicates whether a matching notification existed.</returns>

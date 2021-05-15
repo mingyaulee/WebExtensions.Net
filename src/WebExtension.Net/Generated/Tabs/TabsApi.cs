@@ -10,10 +10,161 @@ namespace WebExtension.Net.Tabs
     /// <inheritdoc />
     public class TabsApi : BaseApi, ITabsApi
     {
+        private OnActivatedEvent _onActivated;
+        private OnAttachedEvent _onAttached;
+        private OnCreatedEvent _onCreated;
+        private OnDetachedEvent _onDetached;
+        private OnHighlightedEvent _onHighlighted;
+        private OnMovedEvent _onMoved;
+        private OnRemovedEvent _onRemoved;
+        private OnReplacedEvent _onReplaced;
+        private OnUpdatedEvent _onUpdated;
+        private OnZoomChangeEvent _onZoomChange;
+
         /// <summary>Creates a new instance of <see cref="TabsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
         public TabsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "tabs")
         {
+        }
+
+        /// <inheritdoc />
+        public OnActivatedEvent OnActivated
+        {
+            get
+            {
+                if (_onActivated is null)
+                {
+                    _onActivated = new OnActivatedEvent();
+                    InitializeProperty("onActivated", _onActivated);
+                }
+                return _onActivated;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnAttachedEvent OnAttached
+        {
+            get
+            {
+                if (_onAttached is null)
+                {
+                    _onAttached = new OnAttachedEvent();
+                    InitializeProperty("onAttached", _onAttached);
+                }
+                return _onAttached;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnCreatedEvent OnCreated
+        {
+            get
+            {
+                if (_onCreated is null)
+                {
+                    _onCreated = new OnCreatedEvent();
+                    InitializeProperty("onCreated", _onCreated);
+                }
+                return _onCreated;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnDetachedEvent OnDetached
+        {
+            get
+            {
+                if (_onDetached is null)
+                {
+                    _onDetached = new OnDetachedEvent();
+                    InitializeProperty("onDetached", _onDetached);
+                }
+                return _onDetached;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnHighlightedEvent OnHighlighted
+        {
+            get
+            {
+                if (_onHighlighted is null)
+                {
+                    _onHighlighted = new OnHighlightedEvent();
+                    InitializeProperty("onHighlighted", _onHighlighted);
+                }
+                return _onHighlighted;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnMovedEvent OnMoved
+        {
+            get
+            {
+                if (_onMoved is null)
+                {
+                    _onMoved = new OnMovedEvent();
+                    InitializeProperty("onMoved", _onMoved);
+                }
+                return _onMoved;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnRemovedEvent OnRemoved
+        {
+            get
+            {
+                if (_onRemoved is null)
+                {
+                    _onRemoved = new OnRemovedEvent();
+                    InitializeProperty("onRemoved", _onRemoved);
+                }
+                return _onRemoved;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnReplacedEvent OnReplaced
+        {
+            get
+            {
+                if (_onReplaced is null)
+                {
+                    _onReplaced = new OnReplacedEvent();
+                    InitializeProperty("onReplaced", _onReplaced);
+                }
+                return _onReplaced;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnUpdatedEvent OnUpdated
+        {
+            get
+            {
+                if (_onUpdated is null)
+                {
+                    _onUpdated = new OnUpdatedEvent();
+                    InitializeProperty("onUpdated", _onUpdated);
+                }
+                return _onUpdated;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnZoomChangeEvent OnZoomChange
+        {
+            get
+            {
+                if (_onZoomChange is null)
+                {
+                    _onZoomChange = new OnZoomChangeEvent();
+                    InitializeProperty("onZoomChange", _onZoomChange);
+                }
+                return _onZoomChange;
+            }
         }
 
         /// <inheritdoc />

@@ -5,10 +5,26 @@ namespace WebExtension.Net.Storage
     /// <inheritdoc />
     public class StorageApi : BaseApi, IStorageApi
     {
+        private OnChangedEvent _onChanged;
+
         /// <summary>Creates a new instance of <see cref="StorageApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
         public StorageApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
         {
+        }
+
+        /// <inheritdoc />
+        public OnChangedEvent OnChanged
+        {
+            get
+            {
+                if (_onChanged is null)
+                {
+                    _onChanged = new OnChangedEvent();
+                    InitializeProperty("onChanged", _onChanged);
+                }
+                return _onChanged;
+            }
         }
 
         /// <inheritdoc />

@@ -6,6 +6,18 @@ namespace WebExtension.Net.Bookmarks
     /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.</summary>
     public interface IBookmarksApi
     {
+        /// <summary>Fired when a bookmark or folder changes.  'b'Note:'/b' Currently, only title and url changes trigger this.</summary>
+        OnChangedEvent OnChanged { get; }
+
+        /// <summary>Fired when a bookmark or folder is created.</summary>
+        OnCreatedEvent OnCreated { get; }
+
+        /// <summary>Fired when a bookmark or folder is moved to a different parent folder.</summary>
+        OnMovedEvent OnMoved { get; }
+
+        /// <summary>Fired when a bookmark or folder is removed.  When a folder is removed recursively, a single notification is fired for the folder, and none for its contents.</summary>
+        OnRemovedEvent OnRemoved { get; }
+
         /// <summary>Creates a bookmark or folder under the specified parentId.  If url is NULL or missing, it will be a folder.</summary>
         /// <param name="bookmark"></param>
         /// <returns></returns>

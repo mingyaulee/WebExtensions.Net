@@ -7,7 +7,7 @@ namespace WebExtension.Net.Events
     /// <summary>An object which allows the addition and removal of listeners for a Chrome event.</summary>
     public class Event : BaseObject
     {
-        /// <summary>Registers an event listener 'em'callback'/em' to an event.</summary>
+        /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Called when an event occurs. The parameters of this function depend on the type of event.</param>
         public virtual ValueTask AddListener(Action callback)
         {
@@ -16,7 +16,7 @@ namespace WebExtension.Net.Events
 
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
-        /// <returns>True if 'em'callback'/em' is registered to the event.</returns>
+        /// <returns>True if <em>callback</em> is registered to the event.</returns>
         public virtual ValueTask<bool> HasListener(Action callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -29,7 +29,7 @@ namespace WebExtension.Net.Events
             return InvokeAsync<bool>("hasListeners");
         }
 
-        /// <summary>Deregisters an event listener 'em'callback'/em' from an event.</summary>
+        /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         public virtual ValueTask RemoveListener(Action callback)
         {

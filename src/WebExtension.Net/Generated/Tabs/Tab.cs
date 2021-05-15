@@ -348,7 +348,7 @@ namespace WebExtension.Net.Tabs
             }
         }
 
-        /// <summary>Either 'em'loading'/em' or 'em'complete'/em'.</summary>
+        /// <summary>Either <em>loading</em> or <em>complete</em>.</summary>
         [JsonPropertyName("status")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Status

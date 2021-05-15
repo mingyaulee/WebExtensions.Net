@@ -6,10 +6,56 @@ namespace WebExtension.Net.Windows
     /// <inheritdoc />
     public class WindowsApi : BaseApi, IWindowsApi
     {
+        private OnCreatedEvent _onCreated;
+        private OnFocusChangedEvent _onFocusChanged;
+        private OnRemovedEvent _onRemoved;
+
         /// <summary>Creates a new instance of <see cref="WindowsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
         public WindowsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
         {
+        }
+
+        /// <inheritdoc />
+        public OnCreatedEvent OnCreated
+        {
+            get
+            {
+                if (_onCreated is null)
+                {
+                    _onCreated = new OnCreatedEvent();
+                    InitializeProperty("onCreated", _onCreated);
+                }
+                return _onCreated;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnFocusChangedEvent OnFocusChanged
+        {
+            get
+            {
+                if (_onFocusChanged is null)
+                {
+                    _onFocusChanged = new OnFocusChangedEvent();
+                    InitializeProperty("onFocusChanged", _onFocusChanged);
+                }
+                return _onFocusChanged;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnRemovedEvent OnRemoved
+        {
+            get
+            {
+                if (_onRemoved is null)
+                {
+                    _onRemoved = new OnRemovedEvent();
+                    InitializeProperty("onRemoved", _onRemoved);
+                }
+                return _onRemoved;
+            }
         }
 
         /// <inheritdoc />

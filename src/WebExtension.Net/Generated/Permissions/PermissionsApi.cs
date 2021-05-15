@@ -5,10 +5,41 @@ namespace WebExtension.Net.Permissions
     /// <inheritdoc />
     public class PermissionsApi : BaseApi, IPermissionsApi
     {
+        private OnAddedEvent _onAdded;
+        private OnRemovedEvent _onRemoved;
+
         /// <summary>Creates a new instance of <see cref="PermissionsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
         public PermissionsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "permissions")
         {
+        }
+
+        /// <inheritdoc />
+        public OnAddedEvent OnAdded
+        {
+            get
+            {
+                if (_onAdded is null)
+                {
+                    _onAdded = new OnAddedEvent();
+                    InitializeProperty("onAdded", _onAdded);
+                }
+                return _onAdded;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnRemovedEvent OnRemoved
+        {
+            get
+            {
+                if (_onRemoved is null)
+                {
+                    _onRemoved = new OnRemovedEvent();
+                    InitializeProperty("onRemoved", _onRemoved);
+                }
+                return _onRemoved;
+            }
         }
 
         /// <inheritdoc />

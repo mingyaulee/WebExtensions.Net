@@ -6,10 +6,71 @@ namespace WebExtension.Net.Bookmarks
     /// <inheritdoc />
     public class BookmarksApi : BaseApi, IBookmarksApi
     {
+        private OnChangedEvent _onChanged;
+        private OnCreatedEvent _onCreated;
+        private OnMovedEvent _onMoved;
+        private OnRemovedEvent _onRemoved;
+
         /// <summary>Creates a new instance of <see cref="BookmarksApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
         public BookmarksApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "bookmarks")
         {
+        }
+
+        /// <inheritdoc />
+        public OnChangedEvent OnChanged
+        {
+            get
+            {
+                if (_onChanged is null)
+                {
+                    _onChanged = new OnChangedEvent();
+                    InitializeProperty("onChanged", _onChanged);
+                }
+                return _onChanged;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnCreatedEvent OnCreated
+        {
+            get
+            {
+                if (_onCreated is null)
+                {
+                    _onCreated = new OnCreatedEvent();
+                    InitializeProperty("onCreated", _onCreated);
+                }
+                return _onCreated;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnMovedEvent OnMoved
+        {
+            get
+            {
+                if (_onMoved is null)
+                {
+                    _onMoved = new OnMovedEvent();
+                    InitializeProperty("onMoved", _onMoved);
+                }
+                return _onMoved;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnRemovedEvent OnRemoved
+        {
+            get
+            {
+                if (_onRemoved is null)
+                {
+                    _onRemoved = new OnRemovedEvent();
+                    InitializeProperty("onRemoved", _onRemoved);
+                }
+                return _onRemoved;
+            }
         }
 
         /// <inheritdoc />

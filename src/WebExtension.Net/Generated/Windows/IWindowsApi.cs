@@ -6,6 +6,15 @@ namespace WebExtension.Net.Windows
     /// <summary>Use the <c>browser.windows</c> API to interact with browser windows. You can use this API to create, modify, and rearrange windows in the browser.</summary>
     public interface IWindowsApi
     {
+        /// <summary>Fired when a window is created.</summary>
+        OnCreatedEvent OnCreated { get; }
+
+        /// <summary>Fired when the currently focused window changes. Will be $(ref:windows.WINDOW_ID_NONE) if all browser windows have lost focus. Note: On some Linux window managers, WINDOW_ID_NONE will always be sent immediately preceding a switch from one browser window to another.</summary>
+        OnFocusChangedEvent OnFocusChanged { get; }
+
+        /// <summary>Fired when a window is removed (closed).</summary>
+        OnRemovedEvent OnRemoved { get; }
+
         /// <summary>The windowId value that represents the $(topic:current-window)[current window].</summary>
         int WINDOW_ID_CURRENT { get; }
 
