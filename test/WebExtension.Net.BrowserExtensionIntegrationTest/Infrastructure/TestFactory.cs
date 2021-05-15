@@ -8,16 +8,13 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     public class TestFactory : ITestFactory
     {
+        private const string TestNamespace = "WebExtension.Net.BrowserExtensionIntegrationTest.Tests";
+
         public IEnumerable<TestClassInfo> GetAllTests()
         {
-            var testNamespace = GetTestNamespace();
+            var testNamespace = TestNamespace;
             var testTypes = GetTestAssembly().GetTypes().Where(type => type.Namespace != null && type.Namespace.Contains(testNamespace));
             return testTypes.Select(GetTestClassInfoFromType).Where(classInfo => classInfo != null).ToArray();
-        }
-
-        private static string GetTestNamespace()
-        {
-            return "WebExtension.Net.BrowserExtensionIntegrationTest.Tests";
         }
 
         private static Assembly GetTestAssembly()

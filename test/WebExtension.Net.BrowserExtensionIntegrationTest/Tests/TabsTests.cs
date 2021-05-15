@@ -13,11 +13,13 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         private readonly IWebExtensionApi webExtensionApi;
         private int? testTabId;
         private readonly string testTabUrl;
+        private readonly string testTabUpdateUrl;
 
         public TabsTests(IWebExtensionApi webExtensionApi)
         {
             this.webExtensionApi = webExtensionApi;
             testTabUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtension.Net/main/README.md?testId=" + Guid.NewGuid().ToString();
+            testTabUpdateUrl = testTabUrl + "&update=true";
         }
 
         [Fact]
@@ -134,7 +136,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Update()
         {
             // Arrange
-            var url = "https://developer.chrome.com/?testId=" + Guid.NewGuid().ToString();
+            var url = testTabUpdateUrl;
 
             // Act
             var tab = await webExtensionApi.Tabs.Update(testTabId.Value, new
