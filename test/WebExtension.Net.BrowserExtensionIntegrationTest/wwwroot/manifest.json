@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Integration Test Plugin",
-  "description": "A plugin for WebExtension.Net integration tests",
+  "name": "WebExtension.Net Integration Test",
+  "description": "A browser extension for integration test of WebExtension.Net",
   "version": "1.0",
   "background": {
     "page": "index.html?path=background",
