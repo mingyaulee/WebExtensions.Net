@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebExtension.Net
@@ -12,6 +14,10 @@ namespace WebExtension.Net
         private WebExtensionJSRuntime webExtensionJSRuntime;
         private string referenceId;
         private string accessPath;
+
+        /// <summary>Contains any additional data within this object instance.</summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalData { get; set; }
 
         internal void Initialize(WebExtensionJSRuntime webExtensionJSRuntime, string referenceId, string accessPath)
         {
