@@ -10,6 +10,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
     public class SanityTests
     {
         private readonly IWebExtensionApi webExtensionApi;
+        private string testStorageArea;
 
         public SanityTests(IWebExtensionApi webExtensionApi)
         {
@@ -86,6 +87,53 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             storageValue.Should().NotBeNull();
             storageValue.TryGetProperty("test", out var actualTestValue).Should().BeTrue();
             actualTestValue.GetString().Should().Be(testValue);
+        }
+
+        [Fact(Description = "Event listener can be added to event", Order = 1)]
+        public async Task EventListenerCanBeAddedToEvent()
+        {
+            // Act
+            Func<Task> action = async () => await webExtensionApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
+
+            // Assert
+            await action.Should().NotThrowAsync();
+        }
+
+        [Fact(Description = "Event listener can be checked if event has the listener", Order = 2)]
+        public async Task EventListenerCanBeCheckedIfTheEventHasTheListener()
+        {
+            // Act
+            var isRegistered = await webExtensionApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
+
+            // Assert
+            isRegistered.Should().BeTrue();
+        }
+
+        [Fact(Description = "Event listener is invoked when the event is fired", Order = 2)]
+        public async Task EventListenerIsInvokedWhenTheEventIsFired()
+        {
+            // Arrange
+            var localStorage = await webExtensionApi.Storage.GetLocal();
+            await localStorage.Set(new { test = 1234 });
+            await localStorage.Clear();
+
+            // Assert
+            testStorageArea.Should().Be("local");
+        }
+
+        [Fact(Description = "Event listener can be removed from event", Order = 3)]
+        public async Task EventListenerCanBeRemovedFromEvent()
+        {
+            // Act
+            Func<Task> action = async () => await webExtensionApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
+
+            // Assert
+            await action.Should().NotThrowAsync();
+        }
+
+        private void HandleOnStorageChange(object storageItem, string storageArea)
+        {
+            testStorageArea = storageArea;
         }
     }
 }

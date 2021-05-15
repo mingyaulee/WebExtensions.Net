@@ -91,9 +91,7 @@ namespace WebExtension.Net
             // Cleanup
             if (!string.IsNullOrEmpty(referenceId) && webExtensionJSRuntime != null)
             {
-#pragma warning disable CA2012 // Use ValueTasks correctly - Waiting is not supported in runtime
-                webExtensionJSRuntime.InvokeVoidAsync("WebExtensionNet.RemoveObjectReference", new InvokeObjectReferenceOption(referenceId));
-#pragma warning restore CA2012 // Use ValueTasks correctly
+                webExtensionJSRuntime.InvokeVoid("WebExtensionNet.RemoveObjectReference", new RemoveObjectReferenceOption(referenceId));
                 referenceId = null;
             }
         }

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IncludeWebExtensionAssets)' == 'true'">
-    <None Include="$(WebExtensionAssetsContentsPath)\WebExtensionNet.js" Link="$(WebExtensionAssetsTargetPath)\WebExtensionNet.js">
+    <None Include="$(WebExtensionAssetsContentsPath)\**\*.*" Link="$(WebExtensionAssetsTargetPath)\%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

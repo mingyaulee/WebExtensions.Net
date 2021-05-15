@@ -1,14 +1,10 @@
 ﻿namespace WebExtension.Net
 {
     /// <summary>
-    /// Invoke JavaScript object options.
+    /// Invoke JavaScript object reference options.
     /// </summary>
     public class InvokeObjectReferenceOption : InvokeOption
     {
-        internal InvokeObjectReferenceOption(string referenceId) : this(referenceId, null) { }
-
-        internal InvokeObjectReferenceOption(string referenceId, string targetPath) : this(referenceId, targetPath, false) { }
-
         internal InvokeObjectReferenceOption(string referenceId, string targetPath, bool isFunction)
         {
             ReferenceId = referenceId;
@@ -17,7 +13,7 @@
         }
 
         /// <summary>
-        /// Reference ID of the JavaScript object.
+        /// The identifier of the JavaScript object.
         /// </summary>
         public string ReferenceId { get; set; }
 
