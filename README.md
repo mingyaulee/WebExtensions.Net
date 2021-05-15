@@ -1,6 +1,8 @@
 # WebExtension.Net
 ![Nuget](https://img.shields.io/nuget/v/WebExtension.Net?style=flat-square&color=blue)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtension.Net/Build?style=flat-square&color=blue)
+![Sonar Tests](https://img.shields.io/sonar/tests/WebExtension.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)
+![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtension.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)
 
 A package for consuming WebExtensions API in a browser extension.
 
@@ -40,9 +42,9 @@ Additional APIs may be available for specific browsers, and can be accessed via 
 ## Limitations
 
 - For callback functions with more than one parameter, only the first callback parameter is returned right now.
-- Parameter callback is not supported.
 - The browser extension API namespaces that are enabled at the moment is 13 out of a total of 60.
-- Event listener is not supported.
+- ~~Parameter callback is not supported.~~ __Since v0.4.*__
+- ~~Event listener is not supported.~~ __Since v0.4.*__
 - ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__
 
 ## Customize build
