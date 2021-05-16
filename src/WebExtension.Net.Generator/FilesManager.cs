@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 using WebExtension.Net.Generator.CodeGeneration;
 using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
 using WebExtension.Net.Generator.Repositories;
@@ -32,13 +33,13 @@ namespace WebExtension.Net.Generator
                     foreach (var directory in Directory.GetDirectories(options.RootDirectory))
                     {
                         logger.LogWarning($"Deleting directory {directory}");
-                        Directory.Delete(directory, true);
+                        DeleteDirectory(directory);
                     }
 
                     foreach (var file in Directory.GetFiles(options.RootDirectory))
                     {
                         logger.LogWarning($"Deleting file {file}");
-                        File.Delete(file);
+                        DeleteFile(file);
                     }
                 }
                 catch
@@ -76,6 +77,50 @@ namespace WebExtension.Net.Generator
                     var filePath = Path.Combine(directoryPath, $"{namespaceEntity.FormattedName}.json");
                     File.WriteAllText(filePath, JsonSerializer.Serialize(namespaceEntity.OriginalNamepaceDefinitions, jsonSerializerOptions));
                 }
+            }
+        }
+
+        private static void DeleteDirectory(string directory)
+        {
+            var attemptCount = 0;
+            while (true)
+            {
+                try
+                {
+                    attemptCount++;
+                    Directory.Delete(directory, true);
+                    break;
+                }
+                catch (IOException)
+                {
+                    if (attemptCount == 3)
+                    {
+                        throw;
+                    }
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        private static void DeleteFile(string file)
+        {
+            var attemptCount = 0;
+            while (true)
+            {
+                try
+                {
+                    attemptCount++;
+                    File.Delete(file);
+                    break;
+                }
+                catch (IOException)
+                {
+                    if (attemptCount == 3)
+                    {
+                        throw;
+                    }
+                }
+                Thread.Sleep(1000);
             }
         }
 
