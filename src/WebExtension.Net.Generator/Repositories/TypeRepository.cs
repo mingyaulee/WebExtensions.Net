@@ -60,6 +60,13 @@ namespace WebExtension.Net.Generator.Repositories
             }
         }
 
+        public bool HasTypeEntity(string typeId, NamespaceEntity namespaceEntity)
+        {
+            var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);
+            var entity = Entities.Find(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId));
+            return entity is not null;
+        }
+
         public TypeEntity GetTypeEntity(string typeId, NamespaceEntity namespaceEntity)
         {
             var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);

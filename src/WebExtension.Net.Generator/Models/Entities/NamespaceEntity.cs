@@ -13,10 +13,12 @@ namespace WebExtension.Net.Generator.Models.Entities
             Name = name;
             FormattedName = name.ToCapitalCase();
             NamespaceDefinitions = new List<NamespaceDefinition>();
+            OriginalNamepaceDefinitions = new List<NamespaceDefinition>();
         }
 
         public string Name { get; }
         public string FormattedName { get; }
         public IList<NamespaceDefinition> NamespaceDefinitions { get; }
+        public IList<NamespaceDefinition> OriginalNamepaceDefinitions { get; }
     }
 }

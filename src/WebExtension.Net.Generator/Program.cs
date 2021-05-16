@@ -39,10 +39,10 @@ namespace WebExtension.Net.Generator
             var namespaceDefinitions = namespaceDefinitionsClient.GetNamespaceDefinitions(sources, additionalNamespaceSourceDefinitions, runInParallel).GetAwaiter().GetResult();
 
             var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
-            var entityRegistrationResult = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
+            var classEntities = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
 
             var clrTypeManager = scope.ServiceProvider.GetRequiredService<ClrTypeManager>();
-            var clrTypes = clrTypeManager.TranslateToClrType(entityRegistrationResult.ClassEntities);
+            var clrTypes = clrTypeManager.TranslateToClrType(classEntities);
 
             var codeGenerator = scope.ServiceProvider.GetRequiredService<CodeGenerator>();
             var codeConverters = codeGenerator.GetCodeFileConverters(clrTypes);
@@ -89,8 +89,10 @@ namespace WebExtension.Net.Generator
             services.AddTransient<StringFormatClassEntityRegistrar>();
             services.AddTransient<TypeClassEntityRegistrar>();
 
+            services.AddTransient<AnonymousTypeProcessor>();
+            services.AddTransient<AnonymousTypeRegistrar>();
             services.AddTransient<ClassEntityRegistrar>();
-            services.AddTransient<EventRegistrar>();
+            services.AddTransient<EventDefinitionToPropertyDefinitionConverter>();
             services.AddTransient<NamespaceApiToTypeDefinitionConverter>();
             services.AddTransient<NamespaceEntityRegistrar>();
             services.AddTransient<NamespaceRegistrationFilter>();

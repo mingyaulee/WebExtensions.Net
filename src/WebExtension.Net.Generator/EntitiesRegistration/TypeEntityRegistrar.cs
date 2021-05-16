@@ -47,6 +47,11 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
             }
         }
 
+        public bool HasTypeEntity(string typeId, NamespaceEntity namespaceEntity)
+        {
+            return entitiesContext.Types.HasTypeEntity(typeId, namespaceEntity);
+        }
+
         public TypeEntity GetTypeEntity(string typeId, NamespaceEntity namespaceEntity)
         {
             return entitiesContext.Types.GetTypeEntity(typeId, namespaceEntity);

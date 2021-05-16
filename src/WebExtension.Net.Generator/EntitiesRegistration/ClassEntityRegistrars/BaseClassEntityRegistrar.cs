@@ -46,9 +46,7 @@ namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 
         protected virtual ClassEntity RegisterClassInternal(TypeEntity typeEntity)
         {
-            var classEntity = entitiesContext.Classes.RegisterClass(GetClassType(), typeEntity.FormattedName, typeEntity.NamespaceEntity);
-            classEntity.TypeDefinition = typeEntity.Definition;
-            classEntity.Description = typeEntity.Definition.Description;
+            var classEntity = entitiesContext.Classes.RegisterClass(GetClassType(), typeEntity.FormattedName, typeEntity.Definition, typeEntity.NamespaceEntity);
             classEntity.BaseClassName = GetBaseClassName();
             classEntity.ImplementInterface = ShouldImplementInterface();
             return classEntity;

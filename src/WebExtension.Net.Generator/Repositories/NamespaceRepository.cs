@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WebExtension.Net.Generator.Helpers;
 using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
 
@@ -16,6 +17,7 @@ namespace WebExtension.Net.Generator.Repositories
                 Entities.Add(entity);
             }
             entity.NamespaceDefinitions.Add(namespaceDefinition);
+            entity.OriginalNamepaceDefinitions.Add(SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition));
             return entity;
         }
 

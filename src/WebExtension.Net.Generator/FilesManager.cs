@@ -74,7 +74,7 @@ namespace WebExtension.Net.Generator
                 if (Directory.Exists(directoryPath))
                 {
                     var filePath = Path.Combine(directoryPath, $"{namespaceEntity.FormattedName}.json");
-                    File.WriteAllText(filePath, JsonSerializer.Serialize(namespaceEntity.NamespaceDefinitions, jsonSerializerOptions));
+                    File.WriteAllText(filePath, JsonSerializer.Serialize(namespaceEntity.OriginalNamepaceDefinitions, jsonSerializerOptions));
                 }
             }
         }

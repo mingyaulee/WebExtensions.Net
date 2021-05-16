@@ -11,12 +11,12 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
 {
     public class NamespaceApiToTypeDefinitionConverter
     {
-        private readonly EventRegistrar eventRegistrar;
+        private readonly EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter;
         private readonly RegistrationOptions registrationOptions;
 
-        public NamespaceApiToTypeDefinitionConverter(EventRegistrar eventRegistrar, RegistrationOptions registrationOptions)
+        public NamespaceApiToTypeDefinitionConverter(EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter, RegistrationOptions registrationOptions)
         {
-            this.eventRegistrar = eventRegistrar;
+            this.eventDefinitionToPropertyDefinitionConverter = eventDefinitionToPropertyDefinitionConverter;
             this.registrationOptions = registrationOptions;
         }
 
@@ -93,7 +93,7 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
                         throw new InvalidOperationException("Event definition should have a Name.");
                     }
 
-                    var propertyDefinition = eventRegistrar.ConvertEventDefinitionToPropertyDefinition(eventDefinition.Name, eventDefinition, namespaceEntity);
+                    var propertyDefinition = eventDefinitionToPropertyDefinitionConverter.Convert(eventDefinition.Name, eventDefinition, namespaceEntity);
                     properties.Add(eventDefinition.Name, propertyDefinition);
                 }
             }

@@ -15,6 +15,7 @@ namespace WebExtension.Net.Generator
         private readonly NamespaceEntityRegistrar namespaceEntityRegistrar;
         private readonly TypeEntityRegistrar typeEntityRegistrar;
         private readonly NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter;
+        private readonly AnonymousTypeProcessor anonymousTypeProcessor;
         private readonly TypeUsageProcessor typeUsageProcessor;
         private readonly ClassEntityRegistrar classEntityRegistrar;
 
@@ -24,6 +25,7 @@ namespace WebExtension.Net.Generator
             NamespaceEntityRegistrar namespaceEntityRegistrar,
             TypeEntityRegistrar typeEntityRegistrar,
             NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter,
+            AnonymousTypeProcessor anonymousTypeProcessor,
             TypeUsageProcessor typeUsageProcessor,
             ClassEntityRegistrar classEntityRegistrar)
         {
@@ -32,19 +34,21 @@ namespace WebExtension.Net.Generator
             this.namespaceEntityRegistrar = namespaceEntityRegistrar;
             this.typeEntityRegistrar = typeEntityRegistrar;
             this.namespaceApiToTypeDefinitionConverter = namespaceApiToTypeDefinitionConverter;
+            this.anonymousTypeProcessor = anonymousTypeProcessor;
             this.typeUsageProcessor = typeUsageProcessor;
             this.classEntityRegistrar = classEntityRegistrar;
         }
 
-        public EntityRegistrationResult RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
+        public IEnumerable<ClassEntity> RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
             var apiNamespaceDefinitions = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
             var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceDefinitions);
             RegisterApiRoot(apiClassEntities);
+            RegisterAnonymousTypesAsTypeEntities(apiClassEntities);
             MarkApiClassEntitiesTypeUsage(apiClassEntities);
             RegisterTypeEntitiesAsClassEntities();
 
-            return new EntityRegistrationResult(namespaceEntityRegistrar.GetAllNamespaceEntities(), classEntityRegistrar.GetAllClassEntities());
+            return classEntityRegistrar.GetAllClassEntities();
         }
 
         private IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
@@ -89,14 +93,20 @@ namespace WebExtension.Net.Generator
             classEntityRegistrar.RegisterRootApi(apiClassEntities);
         }
 
+        private void RegisterAnonymousTypesAsTypeEntities(IEnumerable<ClassEntity> apiClassEntities)
+        {
+            anonymousTypeProcessor.Reset();
+            foreach (var classEntity in apiClassEntities)
+            {
+                anonymousTypeProcessor.ProcessTypeDefinition(classEntity.FormattedName, classEntity.TypeDefinition, classEntity.NamespaceEntity);
+            }
+            anonymousTypeProcessor.Complete();
+        }
+
         private void MarkApiClassEntitiesTypeUsage(IEnumerable<ClassEntity> apiClassEntities)
         {
             foreach (var classEntity in apiClassEntities)
             {
-                if (classEntity.TypeDefinition is null)
-                {
-                    throw new InvalidOperationException("Class entity should have type definition.");
-                }
                 typeUsageProcessor.MarkTypeUsage(classEntity.Functions, classEntity.NamespaceEntity);
                 typeUsageProcessor.MarkTypeUsage(classEntity.Properties.Select(property => property.Value), classEntity.NamespaceEntity);
             }

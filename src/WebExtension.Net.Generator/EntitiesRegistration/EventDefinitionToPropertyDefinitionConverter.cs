@@ -1,62 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Helpers;
+using WebExtension.Net.Generator.Models;
 using WebExtension.Net.Generator.Models.Entities;
 using WebExtension.Net.Generator.Models.Schema;
 
 namespace WebExtension.Net.Generator.EntitiesRegistration
 {
-    public class EventRegistrar
+    public class EventDefinitionToPropertyDefinitionConverter
     {
+        private readonly RegistrationOptions registrationOptions;
         private readonly TypeEntityRegistrar typeEntityRegistrar;
 
-        public EventRegistrar(TypeEntityRegistrar typeEntityRegistrar)
+        public EventDefinitionToPropertyDefinitionConverter(RegistrationOptions registrationOptions, TypeEntityRegistrar typeEntityRegistrar)
         {
+            this.registrationOptions = registrationOptions;
             this.typeEntityRegistrar = typeEntityRegistrar;
         }
 
-        public PropertyDefinition ConvertEventDefinitionToPropertyDefinition(string eventName, EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+        public PropertyDefinition Convert(string eventName, EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
         {
-            var eventTypeName = "events.Event";
             if (eventDefinition.FunctionParameters is not null || eventDefinition.ExtraParameters is not null)
             {
-                // Register event as a new class
-                eventTypeName = $"{eventName.ToCapitalCase()}Event";
-                RegisterEventTypeEntity(eventTypeName, eventDefinition, namespaceEntity);
+                return new PropertyDefinition()
+                {
+                    Type = ObjectType.EventTypeObject,
+                    Description = eventDefinition.Description,
+                    IsUnsupported = eventDefinition.IsUnsupported,
+                    Deprecated = eventDefinition.Deprecated,
+                    ObjectFunctions = GetEventFunctions(eventDefinition, namespaceEntity)
+                };
             }
 
             return new PropertyDefinition()
             {
-                Ref = eventTypeName,
+                Ref = registrationOptions.BaseEventTypeName,
                 Description = eventDefinition.Description,
                 IsUnsupported = eventDefinition.IsUnsupported,
                 Deprecated = eventDefinition.Deprecated
             };
         }
 
-        private void RegisterEventTypeEntity(string className, EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+        private IEnumerable<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
         {
             var functionDefinitions = new List<FunctionDefinition>();
-            var eventTypeEntity = typeEntityRegistrar.GetTypeEntity("events.Event", namespaceEntity);
+            var baseEventTypeEntity = typeEntityRegistrar.GetTypeEntity(registrationOptions.BaseEventTypeName, namespaceEntity);
 
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, eventTypeEntity, "addListener"));
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, eventTypeEntity, "hasListener"));
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, eventTypeEntity, "removeListener"));
+            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "addListener", false));
+            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "hasListener", true));
+            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "removeListener", true));
 
-            var typeDefinition = new TypeDefinition()
-            {
-                Id = className,
-                Description = eventDefinition.Description,
-                Type = ObjectType.EventTypeObject,
-                ObjectFunctions = functionDefinitions
-            };
-
-            typeEntityRegistrar.RegisterNamespaceType(typeDefinition, namespaceEntity);
+            return functionDefinitions;
         }
 
-        private static IEnumerable<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName)
+        private static IEnumerable<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
         {
             var eventFunctionDefinitions = new List<FunctionDefinition>();
             var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName);
@@ -75,7 +73,7 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
             var functionParameter = SerializationHelper.DeserializeTo<ParameterDefinition>(eventDefinition);
 
             functionParameter.Name = baseEventFunctionParameter.Name;
-            if (functionName != "addListener")
+            if (useBaseFunctionDescription)
             {
                 functionParameter.Description = baseEventFunctionParameter.Description;
             }
