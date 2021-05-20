@@ -101,7 +101,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                     var choiceClrTypeInfo = clrTypeStore.GetClrType(typeChoice, classEntity.NamespaceEntity);
                     clrTypeInfo.AddRequiredNamespaces(choiceClrTypeInfo.ReferenceNamespaces);
                     return choiceClrTypeInfo;
-                });
+                }).ToArray();
             }
 
             if (classEntity.Type == ClassType.StringFormatClass)

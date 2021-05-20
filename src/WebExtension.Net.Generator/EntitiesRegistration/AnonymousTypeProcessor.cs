@@ -49,6 +49,24 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
 
         private void ProcessNamespaceGroupAnonymousTypes(IEnumerable<AnonymousTypeEntityRegistrationInfo> namespaceGroupAnonymousTypes)
         {
+            ResolveDuplicateNamesInNamespaceGroup(namespaceGroupAnonymousTypes);
+            var namespaceAnonymousTypes = namespaceGroupAnonymousTypes
+                .OrderBy(typeRegistrationInfo => typeRegistrationInfo.NameHierarchy.Count())
+                .ToList();
+
+            foreach (var anonymousTypeRegistrationInfo in namespaceAnonymousTypes)
+            {
+                if (!IsObjectType(anonymousTypeRegistrationInfo.TypeReference))
+                {
+                    anonymousTypeRegistrationInfo.TypeReference.Type = ObjectType.Object;
+                }
+                anonymousTypeRegistrationInfo.TypeReference.Ref = anonymousTypeRegistrar.RegisterType(anonymousTypeRegistrationInfo);
+                ClearTypeReferenceProperties(anonymousTypeRegistrationInfo.TypeReference);
+            }
+        }
+
+        private static void ResolveDuplicateNamesInNamespaceGroup(IEnumerable<AnonymousTypeEntityRegistrationInfo> namespaceGroupAnonymousTypes)
+        {
             while (true)
             {
                 var duplicateNameTypes = namespaceGroupAnonymousTypes.GroupBy(typeRegistrationInfo => typeRegistrationInfo.NameHierarchy.Last())
@@ -65,19 +83,24 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
                     duplicateNameType.NameHierarchy = SetNameSuffix(duplicateNameType.NameHierarchy.SkipLast(1), duplicateNameType.NameHierarchy.Last());
                 }
             }
-            var namespaceAnonymousTypes = namespaceGroupAnonymousTypes
-                .OrderBy(typeRegistrationInfo => typeRegistrationInfo.NameHierarchy.Count())
-                .ToList();
+        }
 
-            foreach (var anonymousTypeRegistrationInfo in namespaceAnonymousTypes)
-            {
-                // only register anonymous event type for now
-                if (anonymousTypeRegistrationInfo.TypeReference.Type != ObjectType.EventTypeObject)
-                {
-                    continue;
-                }
-                anonymousTypeRegistrationInfo.TypeReference.Ref = anonymousTypeRegistrar.RegisterType(anonymousTypeRegistrationInfo);
-            }
+        private static void ClearTypeReferenceProperties(TypeReference typeReference)
+        {
+            typeReference.ArrayItems = null;
+            typeReference.ArrayMaximumItems = null;
+            typeReference.ArrayMinumumItems = null;
+            typeReference.EnumValues = null;
+            typeReference.Extend = null;
+            typeReference.FunctionParameters = null;
+            typeReference.FunctionReturns = null;
+            typeReference.IntegerMaximum = null;
+            typeReference.IntegerMinimum = null;
+            typeReference.ObjectFunctions = null;
+            typeReference.ObjectProperties = null;
+            typeReference.StringFormat = null;
+            typeReference.StringPattern = null;
+            typeReference.TypeChoices = null;
         }
 
         private void ProcessFunctions(IEnumerable<string> nameHierarchy, IEnumerable<FunctionDefinition>? functionDefinitions, NamespaceEntity namespaceEntity)
@@ -102,7 +125,8 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
 
             var functionName = functionDefinition.Name.ToCapitalCase();
             ProcessFunctionParameters(ConcatName(nameHierarchy, functionName), functionDefinition.FunctionParameters, namespaceEntity);
-            Process(ConcatName(nameHierarchy, functionName + "ReturnType"), functionDefinition.FunctionReturns, namespaceEntity);
+            var functionReturnTypeName = functionDefinition.Type == ObjectType.PropertyGetterFunction ? functionName : functionName + registrationOptions.FunctionReturnTypeNameSuffix;
+            Process(ConcatName(nameHierarchy, functionReturnTypeName), functionDefinition.FunctionReturns, namespaceEntity);
         }
 
         private void ProcessFunctionParameters(IEnumerable<string> nameHierarchy, IEnumerable<ParameterDefinition>? parameterDefinitions, NamespaceEntity namespaceEntity)
@@ -161,6 +185,12 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
 
             if (typeReference.Ref is null && IsObjectType(typeReference) && ShouldRegisterObjectType(typeReference))
             {
+                if (typeReference.TypeChoices is not null && IsBooleanTypeChoices(typeReference.TypeChoices))
+                {
+                    UpdateTypeReferenceAsBoolean(typeReference);
+                    return;
+                }
+
                 if (typeReference.Type == ObjectType.EventTypeObject)
                 {
                     nameHierarchy = SetNameSuffix(nameHierarchy, registrationOptions.EventTypeNameSuffix);
@@ -180,28 +210,43 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
                 typesToRegister.Add(typeReference, new AnonymousTypeEntityRegistrationInfo(nameHierarchy, typeReference, namespaceEntity));
             }
 
-            Process(SetNameSuffix(nameHierarchy, "ArrayItem"), typeReference.ArrayItems, namespaceEntity);
+            Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
             ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
-            Process(SetNameSuffix(nameHierarchy, "ReturnType"), typeReference.FunctionReturns, namespaceEntity);
+            var functionReturnTypeName = typeReference.Type == ObjectType.PropertyGetterFunction ? nameHierarchy : SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix);
+            Process(functionReturnTypeName, typeReference.FunctionReturns, namespaceEntity);
             ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity);
             ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
             if (typeReference.TypeChoices is not null)
             {
                 foreach (var typeChoice in typeReference.TypeChoices)
                 {
-                    Process(SetNameSuffix(nameHierarchy, "Type"), typeChoice, namespaceEntity);
+                    Process(SetNameSuffix(nameHierarchy, registrationOptions.TypeChoicesTypeNameSuffix), typeChoice, namespaceEntity);
                 }
             }
         }
 
         private static bool IsObjectType(TypeReference typeReference)
         {
-            return typeReference.Type == ObjectType.Object || typeReference.Type == ObjectType.EventTypeObject;
+            return typeReference.Type == ObjectType.Object || typeReference.Type == ObjectType.EventTypeObject || typeReference.TypeChoices != null;
         }
 
         private static bool ShouldRegisterObjectType(TypeReference typeReference)
         {
-            return typeReference.ObjectProperties?.Any() ?? typeReference.ObjectFunctions?.Any() ?? false;
+            return typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
+                typeReference.ObjectFunctions?.Any(functionDefinition => !functionDefinition.IsUnsupported) ??
+                typeReference.TypeChoices?.Any(typeChoice => !typeChoice.IsUnsupported) ??
+                false;
+        }
+
+        private static bool IsBooleanTypeChoices(IEnumerable<TypeDefinition> typeChoices)
+        {
+            return typeChoices.All(typeChoice => typeChoice.Type == ObjectType.Boolean);
+        }
+
+        private static void UpdateTypeReferenceAsBoolean(TypeReference typeReference)
+        {
+            typeReference.Type = ObjectType.Boolean;
+            typeReference.TypeChoices = null;
         }
 
         private static IEnumerable<string> SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)

@@ -16,6 +16,9 @@ namespace WebExtension.Net.Generator.Models
         public IEnumerable<string> ExcludeNamespaces { get; init; }
         public string BaseEventTypeName { get; init; }
         public string EventTypeNameSuffix { get; init; }
+        public string TypeChoicesTypeNameSuffix { get; init; }
+        public string ArrayItemTypeNameSuffix { get; init; }
+        public string FunctionReturnTypeNameSuffix { get; init; }
 #pragma warning restore CS8618
     }
 }
