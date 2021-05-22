@@ -12,16 +12,24 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
         private readonly ClrTypeStore clrTypeStore;
         private readonly FunctionDefinitionTranslator functionDefinitionTranslator;
         private readonly PropertyDefinitionTranslator propertyDefinitionTranslator;
+        private readonly ClassTranslationOptions classTranslationOptions;
 
-        public ClassEntityTranslator(ClrTypeStore clrTypeStore, FunctionDefinitionTranslator functionDefinitionTranslator, PropertyDefinitionTranslator propertyDefinitionTranslator)
+        public ClassEntityTranslator(ClrTypeStore clrTypeStore, FunctionDefinitionTranslator functionDefinitionTranslator, PropertyDefinitionTranslator propertyDefinitionTranslator, ClassTranslationOptions classTranslationOptions)
         {
             this.clrTypeStore = clrTypeStore;
             this.functionDefinitionTranslator = functionDefinitionTranslator;
             this.propertyDefinitionTranslator = propertyDefinitionTranslator;
+            this.classTranslationOptions = classTranslationOptions;
         }
 
         public IEnumerable<ClrTypeInfo> ShallowTranslate(ClassEntity classEntity)
         {
+            var classEntityName = classEntity.FormattedName;
+            if (classTranslationOptions.Aliases.ContainsKey(classEntityName))
+            {
+                classEntityName = classTranslationOptions.Aliases[classEntityName];
+            }
+
             var @namespace = string.IsNullOrEmpty(classEntity.NamespaceEntity.FormattedName) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{classEntity.NamespaceEntity.FormattedName}";
             var clrTypeInfo = new ClrTypeInfo()
             {
@@ -29,7 +37,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 Namespace = @namespace,
                 Name = classEntity.Name,
                 FullName = $"{@namespace}.{classEntity.FormattedName}",
-                CSharpName = classEntity.FormattedName,
+                CSharpName = classEntityName,
                 IsNullable = classEntity.Type != ClassType.EnumClass,
                 IsEnum = classEntity.Type == ClassType.EnumClass,
                 EnumValues = classEntity.Type == ClassType.EnumClass ? classEntity.Properties.Select(EnumPropertyDefinitionTranslator.TranslatePropertyDefinition).ToArray() : null,
@@ -61,7 +69,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 interfaceClrTypeInfo.Id = $"{@namespace}.{interfaceTypeName}";
                 interfaceClrTypeInfo.Name = interfaceTypeName;
                 interfaceClrTypeInfo.FullName = $"{@namespace}.{interfaceTypeName}";
-                interfaceClrTypeInfo.CSharpName = interfaceTypeName;
+                interfaceClrTypeInfo.CSharpName = $"I{classEntityName}";
                 interfaceClrTypeInfo.IsInterface = true;
                 interfaceClrTypeInfo.Interfaces = new HashSet<string>();
                 interfaceClrTypeInfo.BaseTypeName = null;

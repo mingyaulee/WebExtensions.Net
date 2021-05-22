@@ -12,6 +12,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
     public class ClrTypeStore
     {
         private readonly IDictionary<string, ClrTypeInfo> clrTypeStore;
+
         public ClrTypeStore()
         {
             clrTypeStore = new Dictionary<string, ClrTypeInfo>();
@@ -70,7 +71,7 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             return clrTypeStore[typeId];
         }
 
-        public ClrTypeInfo GetClrType(Type type)
+        private ClrTypeInfo GetClrType(Type type)
         {
             if (type.FullName is null)
             {

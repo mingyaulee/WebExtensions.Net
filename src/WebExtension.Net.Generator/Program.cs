@@ -26,11 +26,13 @@ namespace WebExtension.Net.Generator
             var codeWriterOptions = configuration.GetSection("codeWriterOptions").Get<CodeWriterOptions>();
             codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, codeWriterOptions.RootDirectory));
             var registrationOptions = configuration.GetSection("registrationOptions").Get<RegistrationOptions>();
+            var classTranslationOptions = configuration.GetSection("classTranslationOptions").Get<ClassTranslationOptions>();
 
             var services = new ServiceCollection();
             RegisterServices(services);
-            services.AddSingleton(registrationOptions);
             services.AddSingleton(codeWriterOptions);
+            services.AddSingleton(registrationOptions);
+            services.AddSingleton(classTranslationOptions);
 
             var serviceProvicer = services.BuildServiceProvider();
             using var scope = serviceProvicer.CreateScope();
