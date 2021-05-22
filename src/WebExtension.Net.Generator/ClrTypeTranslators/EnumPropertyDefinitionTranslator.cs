@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Models.ClrTypes;
 using WebExtension.Net.Generator.Models.Schema;
@@ -12,14 +14,22 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
             return new ClrEnumValueInfo()
             {
                 Name = propertyDefinitionPair.Key,
-                CSharpName = SanitizeValueName(propertyDefinitionPair.Key.ToCapitalCase()),
+                CSharpName = TranslateValueName(propertyDefinitionPair.Key),
                 Description = propertyDefinitionPair.Value.Description
             };
         }
 
-        private static string SanitizeValueName(string valueName)
+        private static string TranslateValueName(string valueName)
         {
-            return valueName.Replace("-", "_");
+            var tokenizedNameSegments = valueName.Split(new[] { '-', '_' });
+            return string.Join("", tokenizedNameSegments.Select(tokenizedNameSegment =>
+            {
+                if (Regex.IsMatch(tokenizedNameSegment, "^[a-zA-Z]"))
+                {
+                    return tokenizedNameSegment.ToCapitalCase();
+                }
+                return $"_{tokenizedNameSegment}";
+            }));
         }
     }
 }
