@@ -12,6 +12,7 @@ namespace WebExtension.Net.Generator.Models
         public string ObjectTypeClassBaseClassName { get; init; }
         public string StringFormatClassBaseClassName { get; init; }
         public string ArrayClassBaseClassName { get; init; }
+        public string MultiTypeClassBaseClassName { get; init; }
         public IEnumerable<string> IncludeNamespaces { get; init; }
         public IEnumerable<string> ExcludeNamespaces { get; init; }
         public string BaseEventTypeName { get; init; }

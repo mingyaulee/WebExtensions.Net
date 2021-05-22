@@ -11,9 +11,9 @@ namespace WebExtension.Net
     public class BaseObject : IDisposable
     {
         internal bool IsInitialized;
-        private WebExtensionJSRuntime webExtensionJSRuntime;
-        private string referenceId;
-        private string accessPath;
+        internal WebExtensionJSRuntime webExtensionJSRuntime;
+        internal string referenceId;
+        internal string accessPath;
 
         /// <summary>Contains any additional data within this object instance.</summary>
         [JsonExtensionData]

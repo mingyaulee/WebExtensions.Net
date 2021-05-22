@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets the WebExtensionJsRuntime instance.
         /// </summary>
-        protected WebExtensionJSRuntime webExtensionJSRuntime;
+        protected new WebExtensionJSRuntime webExtensionJSRuntime;
 
         internal BaseApi(WebExtensionJSRuntime webExtensionJSRuntime, string apiNamespace)
         {

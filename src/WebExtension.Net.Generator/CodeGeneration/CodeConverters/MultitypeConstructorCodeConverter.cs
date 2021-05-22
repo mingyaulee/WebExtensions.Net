@@ -52,10 +52,9 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                 codeWriter.Constructors
                     .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
                     .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value."))
-                    .WriteLine($"public {className}({clrTypeInfo.CSharpName} value)")
+                    .WriteLine($"public {className}({clrTypeInfo.CSharpName} value) : base(value, typeof({clrTypeInfo.CSharpName}))")
                     .WriteStartBlock()
                     .WriteLine(privateField is null ? null : $"{privateField} = value;")
-                    .WriteLine($"currentValue = value;")
                     .WriteEndBlock();
 
                 if (privateField is not null)

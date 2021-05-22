@@ -18,6 +18,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
                 throw new InvalidOperationException("Multitype type must have type choices.");
             }
 
+            codeFile.UsingNamespaces.Add("System.Text.Json.Serialization");
             codeFile.Comments.Add(new CommentCodeConverter("Multitype Class"));
             codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
@@ -25,12 +26,9 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories
             {
                 codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
             }
-
-            codeFile.Properties.Add(new MultitypeCurrentValuePropertyCodeConverter());
+            codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(MultiTypeJsonConverter<{clrTypeInfo.CSharpName}>))"));
 
             codeFile.Constructors.Add(new MultitypeConstructorCodeConverter(clrTypeInfo.CSharpName, clrTypeInfo.TypeChoices));
-
-            codeFile.Methods.Add(new MultitypeToStringMethodCodeConverter());
         }
     }
 }
