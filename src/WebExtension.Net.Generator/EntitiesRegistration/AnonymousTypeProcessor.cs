@@ -27,8 +27,7 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
 
         public void ProcessTypeDefinition(string className, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
         {
-            ProcessFunctions(new[] { className }, typeDefinition.ObjectFunctions, namespaceEntity);
-            ProcessProperties(new[] { className }, typeDefinition.ObjectProperties, namespaceEntity);
+            Process(new[] { className }, typeDefinition, namespaceEntity);
         }
 
         public void Reset()
@@ -103,6 +102,112 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
             typeReference.TypeChoices = null;
         }
 
+        private void Process(IEnumerable<string> nameHierarchy, TypeReference? typeReference, NamespaceEntity namespaceEntity)
+        {
+            if (typeReference is null || typeReference.IsUnsupported)
+            {
+                return;
+            }
+
+            if (typeReference.Ref is not null)
+            {
+                var typeEntity = typeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
+                if (typeReferencesProcessed.Add(typeEntity.NamespaceQualifiedId))
+                {
+                    ProcessTypeDefinition(typeEntity.FormattedName, typeEntity.Definition, typeEntity.NamespaceEntity);
+                }
+                return;
+            }
+
+            TryHandleSingleTypeChoice(typeReference);
+
+            if (typeReference.Ref is null && IsObjectType(typeReference) && ShouldRegisterObjectType(typeReference))
+            {
+                if (typeReference.Type == ObjectType.EventTypeObject)
+                {
+                    nameHierarchy = SetNameSuffix(nameHierarchy, registrationOptions.EventTypeNameSuffix);
+                }
+
+                if (typesToRegister.ContainsKey(typeReference))
+                {
+                    var currentNamePaths = string.Join(',', nameHierarchy);
+                    var registeredNamePaths = string.Join(',', typesToRegister[typeReference].NameHierarchy);
+                    if (registeredNamePaths != currentNamePaths)
+                    {
+                        throw new InvalidOperationException($"A registered type reference has more than one name hierarchy, [{registeredNamePaths}] and [{currentNamePaths}].");
+                    }
+                    return;
+                }
+
+                typesToRegister.Add(typeReference, new AnonymousTypeEntityRegistrationInfo(nameHierarchy, typeReference, namespaceEntity));
+            }
+
+            Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
+            ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
+            var functionReturnTypeName = typeReference.Type == ObjectType.PropertyGetterFunction ? nameHierarchy : SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix);
+            Process(functionReturnTypeName, typeReference.FunctionReturns, namespaceEntity);
+            ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity);
+            ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
+            ProcessTypeChoices(nameHierarchy, typeReference.TypeChoices, namespaceEntity);
+        }
+
+        private static bool IsObjectType(TypeReference typeReference)
+        {
+            return typeReference.Type == ObjectType.Object || typeReference.Type == ObjectType.EventTypeObject || typeReference.TypeChoices != null;
+        }
+
+        private static bool ShouldRegisterObjectType(TypeReference typeReference)
+        {
+            if (typeReference is TypeDefinition typeDefinition && !string.IsNullOrEmpty(typeDefinition.Id))
+            {
+                return false;
+            }
+
+            return
+                typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
+                typeReference.ObjectFunctions?.Any(functionDefinition => !functionDefinition.IsUnsupported) ??
+                typeReference.TypeChoices?.Any(typeChoice => !typeChoice.IsUnsupported) ??
+                false;
+        }
+
+        private static void TryHandleSingleTypeChoice(TypeReference typeReference)
+        {
+            if (typeReference.TypeChoices is null)
+            {
+                return;
+            }
+
+            if (typeReference.TypeChoices.All(typeChoice => typeChoice.Type == ObjectType.Boolean))
+            {
+                typeReference.Type = ObjectType.Boolean;
+                typeReference.TypeChoices = null;
+                return;
+            }
+
+            if (typeReference.TypeChoices.Count() == 1)
+            {
+                var typeChoice = typeReference.TypeChoices.Single();
+                typeReference.TypeChoices = null;
+                typeReference.Type = typeChoice.Type;
+                typeReference.ArrayItems = typeChoice.ArrayItems;
+                typeReference.ArrayMaximumItems = typeChoice.ArrayMaximumItems;
+                typeReference.ArrayMinumumItems = typeChoice.ArrayMinumumItems;
+                typeReference.Deprecated ??= typeChoice.Deprecated;
+                typeReference.EnumValues = typeChoice.EnumValues;
+                typeReference.Extend = typeChoice.Extend;
+                typeReference.FunctionParameters = typeChoice.FunctionParameters;
+                typeReference.FunctionReturns = typeChoice.FunctionReturns;
+                typeReference.IntegerMaximum = typeChoice.IntegerMaximum;
+                typeReference.IntegerMinimum = typeChoice.IntegerMinimum;
+                typeReference.IsUnsupported = typeChoice.IsUnsupported;
+                typeReference.ObjectFunctions = typeChoice.ObjectFunctions;
+                typeReference.ObjectProperties = typeChoice.ObjectProperties;
+                typeReference.Ref = typeChoice.Ref;
+                typeReference.StringFormat = typeChoice.StringFormat;
+                typeReference.StringPattern = typeChoice.StringPattern;
+            }
+        }
+
         private void ProcessFunctions(IEnumerable<string> nameHierarchy, IEnumerable<FunctionDefinition>? functionDefinitions, NamespaceEntity namespaceEntity)
         {
             if (functionDefinitions is null)
@@ -166,87 +271,18 @@ namespace WebExtension.Net.Generator.EntitiesRegistration
             Process(ConcatName(nameHierarchy, propertyName.ToCapitalCase()), propertyDefinition, namespaceEntity);
         }
 
-        private void Process(IEnumerable<string> nameHierarchy, TypeReference? typeReference, NamespaceEntity namespaceEntity)
+        private void ProcessTypeChoices(IEnumerable<string> nameHierarchy, IEnumerable<TypeDefinition>? typeChoices, NamespaceEntity namespaceEntity)
         {
-            if (typeReference is null || typeReference.IsUnsupported)
+            if (typeChoices is null)
             {
                 return;
             }
 
-            if (typeReference.Ref is not null)
+            var typeChoiceIndex = 1;
+            foreach (var typeChoice in typeChoices)
             {
-                var typeEntity = typeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
-                if (typeReferencesProcessed.Add(typeEntity.NamespaceQualifiedId))
-                {
-                    ProcessTypeDefinition(typeEntity.FormattedName, typeEntity.Definition, typeEntity.NamespaceEntity);
-                }
-                return;
+                Process(SetNameSuffix(nameHierarchy, registrationOptions.TypeChoicesTypeNameSuffix + typeChoiceIndex++), typeChoice, namespaceEntity);
             }
-
-            if (typeReference.Ref is null && IsObjectType(typeReference) && ShouldRegisterObjectType(typeReference))
-            {
-                if (typeReference.TypeChoices is not null && IsBooleanTypeChoices(typeReference.TypeChoices))
-                {
-                    UpdateTypeReferenceAsBoolean(typeReference);
-                    return;
-                }
-
-                if (typeReference.Type == ObjectType.EventTypeObject)
-                {
-                    nameHierarchy = SetNameSuffix(nameHierarchy, registrationOptions.EventTypeNameSuffix);
-                }
-
-                if (typesToRegister.ContainsKey(typeReference))
-                {
-                    var currentNamePaths = string.Join(',', nameHierarchy);
-                    var registeredNamePaths = string.Join(',', typesToRegister[typeReference].NameHierarchy);
-                    if (registeredNamePaths != currentNamePaths)
-                    {
-                        throw new InvalidOperationException($"A registered type reference has more than one name hierarchy, [{registeredNamePaths}] and [{currentNamePaths}].");
-                    }
-                    return;
-                }
-
-                typesToRegister.Add(typeReference, new AnonymousTypeEntityRegistrationInfo(nameHierarchy, typeReference, namespaceEntity));
-            }
-
-            Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
-            ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
-            var functionReturnTypeName = typeReference.Type == ObjectType.PropertyGetterFunction ? nameHierarchy : SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix);
-            Process(functionReturnTypeName, typeReference.FunctionReturns, namespaceEntity);
-            ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity);
-            ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
-            if (typeReference.TypeChoices is not null)
-            {
-                foreach (var typeChoice in typeReference.TypeChoices)
-                {
-                    Process(SetNameSuffix(nameHierarchy, registrationOptions.TypeChoicesTypeNameSuffix), typeChoice, namespaceEntity);
-                }
-            }
-        }
-
-        private static bool IsObjectType(TypeReference typeReference)
-        {
-            return typeReference.Type == ObjectType.Object || typeReference.Type == ObjectType.EventTypeObject || typeReference.TypeChoices != null;
-        }
-
-        private static bool ShouldRegisterObjectType(TypeReference typeReference)
-        {
-            return typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
-                typeReference.ObjectFunctions?.Any(functionDefinition => !functionDefinition.IsUnsupported) ??
-                typeReference.TypeChoices?.Any(typeChoice => !typeChoice.IsUnsupported) ??
-                false;
-        }
-
-        private static bool IsBooleanTypeChoices(IEnumerable<TypeDefinition> typeChoices)
-        {
-            return typeChoices.All(typeChoice => typeChoice.Type == ObjectType.Boolean);
-        }
-
-        private static void UpdateTypeReferenceAsBoolean(TypeReference typeReference)
-        {
-            typeReference.Type = ObjectType.Boolean;
-            typeReference.TypeChoices = null;
         }
 
         private static IEnumerable<string> SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)
