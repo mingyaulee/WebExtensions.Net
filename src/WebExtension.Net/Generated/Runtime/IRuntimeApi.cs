@@ -32,7 +32,7 @@ namespace WebExtension.Net.Runtime
         /// <param name="extensionId">The ID of the extension or app to connect to. If omitted, a connection will be attempted with your own extension. Required if sending messages from a web page for $(topic:manifest/externally_connectable)[web messaging].</param>
         /// <param name="connectInfo"></param>
         /// <returns>Port through which messages can be sent and received. The port's $(ref:runtime.Port onDisconnect) event is fired if the extension/app does not exist. </returns>
-        ValueTask<Port> Connect(string extensionId, object connectInfo);
+        ValueTask<Port> Connect(string extensionId, ConnectInfo connectInfo);
 
         /// <summary>Connects to a native application in the host machine.</summary>
         /// <param name="application">The name of the registered application to connect to.</param>
@@ -66,7 +66,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary>Gets the 'lastError' property.</summary>
         /// <returns>This will be defined during an API method callback if there was an error</returns>
-        ValueTask<JsonElement> GetLastError();
+        ValueTask<LastError> GetLastError();
 
         /// <summary>Open your Extension's options page, if possible.<br />The precise behavior may depend on your manifest's <c>$(topic:optionsV2)[options_ui]</c> or <c>$(topic:options)[options_page]</c> key, or what the browser happens to support at the time.<br />If your Extension does not declare an options page, or the browser failed to create one for some other reason, the callback will set $(ref:lastError).<br /></summary>
         ValueTask OpenOptionsPage();

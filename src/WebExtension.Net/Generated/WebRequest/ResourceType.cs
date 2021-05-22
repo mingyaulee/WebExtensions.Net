@@ -8,11 +8,11 @@ namespace WebExtension.Net.WebRequest
     {
         /// <summary>main_frame</summary>
         [EnumValue("main_frame")]
-        Main_frame,
+        MainFrame,
 
         /// <summary>sub_frame</summary>
         [EnumValue("sub_frame")]
-        Sub_frame,
+        SubFrame,
 
         /// <summary>stylesheet</summary>
         [EnumValue("stylesheet")]
@@ -32,7 +32,7 @@ namespace WebExtension.Net.WebRequest
 
         /// <summary>object_subrequest</summary>
         [EnumValue("object_subrequest")]
-        Object_subrequest,
+        ObjectSubrequest,
 
         /// <summary>xmlhttprequest</summary>
         [EnumValue("xmlhttprequest")]
@@ -52,7 +52,7 @@ namespace WebExtension.Net.WebRequest
 
         /// <summary>xml_dtd</summary>
         [EnumValue("xml_dtd")]
-        Xml_dtd,
+        XmlDtd,
 
         /// <summary>font</summary>
         [EnumValue("font")]
@@ -68,7 +68,7 @@ namespace WebExtension.Net.WebRequest
 
         /// <summary>csp_report</summary>
         [EnumValue("csp_report")]
-        Csp_report,
+        CspReport,
 
         /// <summary>imageset</summary>
         [EnumValue("imageset")]
@@ -76,7 +76,7 @@ namespace WebExtension.Net.WebRequest
 
         /// <summary>web_manifest</summary>
         [EnumValue("web_manifest")]
-        Web_manifest,
+        WebManifest,
 
         /// <summary>speculative</summary>
         [EnumValue("speculative")]

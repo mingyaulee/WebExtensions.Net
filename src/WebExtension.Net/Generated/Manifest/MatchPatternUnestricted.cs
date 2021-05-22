@@ -1,32 +1,26 @@
+using System.Text.Json.Serialization;
+
 namespace WebExtension.Net.Manifest
 {
-    // Multitype Class
+    // String Format Class
     /// <summary>Mostly unrestricted match patterns for privileged add-ons. This should technically be rejected for unprivileged add-ons, but, reasons. The MatchPattern class will still refuse privileged schemes for those extensions.</summary>
-    public class MatchPatternUnestricted
+    [JsonConverter(typeof(StringFormatJsonConverter<MatchPatternUnestricted>))]
+    public class MatchPatternUnestricted : BaseStringFormat
     {
-        private readonly string valueString;
-        private readonly object currentValue = null;
+        private const string FORMAT = "";
+        private const string PATTERN = "^resource://(\\*|\\*\\.[^*/]+|[^*/]+)/.*$|^about:";
 
         /// <summary>Creates a new instance of <see cref="MatchPatternUnestricted" />.</summary>
-        /// <param name="value">The value.</param>
-        public MatchPatternUnestricted(string value)
+        public MatchPatternUnestricted(string value) : base(value, FORMAT, PATTERN)
         {
-            valueString = value;
-            currentValue = value;
         }
 
         /// <summary>Converts from <see cref="MatchPatternUnestricted" /> to <see cref="string" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator string(MatchPatternUnestricted value) => value.valueString;
+        public static implicit operator string(MatchPatternUnestricted value) => value.Value;
 
         /// <summary>Converts from <see cref="string" /> to <see cref="MatchPatternUnestricted" />.</summary>
         /// <param name="value">The value to convert from.</param>
         public static implicit operator MatchPatternUnestricted(string value) => new(value);
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return currentValue?.ToString();
-        }
     }
 }

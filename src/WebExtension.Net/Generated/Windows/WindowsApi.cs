@@ -65,7 +65,7 @@ namespace WebExtension.Net.Windows
         public int WINDOW_ID_NONE => -1;
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> Create(object createData)
+        public virtual ValueTask<Window> Create(CreateData createData)
         {
             return InvokeAsync<Window>("create", createData);
         }
@@ -77,7 +77,7 @@ namespace WebExtension.Net.Windows
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Window>> GetAll(object getInfo)
+        public virtual ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo)
         {
             return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
         }
@@ -101,7 +101,7 @@ namespace WebExtension.Net.Windows
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> Update(int windowId, object updateInfo)
+        public virtual ValueTask<Window> Update(int windowId, UpdateInfo updateInfo)
         {
             return InvokeAsync<Window>("update", windowId, updateInfo);
         }

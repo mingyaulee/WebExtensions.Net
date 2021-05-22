@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -17,23 +16,7 @@ namespace WebExtension.Net.Storage
         /// <summary>Gets one or more items from storage.</summary>
         /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
         /// <returns>Object with items in their key-value mappings.</returns>
-        public virtual ValueTask<JsonElement> Get(string keys)
-        {
-            return InvokeAsync<JsonElement>("get", keys);
-        }
-
-        /// <summary>Gets one or more items from storage.</summary>
-        /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
-        /// <returns>Object with items in their key-value mappings.</returns>
-        public virtual ValueTask<JsonElement> Get(IEnumerable<string> keys)
-        {
-            return InvokeAsync<JsonElement>("get", keys);
-        }
-
-        /// <summary>Gets one or more items from storage.</summary>
-        /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
-        /// <returns>Object with items in their key-value mappings.</returns>
-        public virtual ValueTask<JsonElement> Get(object keys)
+        public virtual ValueTask<JsonElement> Get(StorageAreaSyncGetKeys keys)
         {
             return InvokeAsync<JsonElement>("get", keys);
         }
@@ -41,29 +24,14 @@ namespace WebExtension.Net.Storage
         /// <summary>Gets the amount of space (in bytes) being used by one or more items.</summary>
         /// <param name="keys">A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</param>
         /// <returns>Amount of space being used in storage, in bytes.</returns>
-        public virtual ValueTask<int> GetBytesInUse(string keys)
-        {
-            return InvokeAsync<int>("getBytesInUse", keys);
-        }
-
-        /// <summary>Gets the amount of space (in bytes) being used by one or more items.</summary>
-        /// <param name="keys">A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</param>
-        /// <returns>Amount of space being used in storage, in bytes.</returns>
-        public virtual ValueTask<int> GetBytesInUse(IEnumerable<string> keys)
+        public virtual ValueTask<int> GetBytesInUse(StorageAreaSyncGetBytesInUseKeys keys)
         {
             return InvokeAsync<int>("getBytesInUse", keys);
         }
 
         /// <summary>Removes one or more items from storage.</summary>
         /// <param name="keys">A single key or a list of keys for items to remove.</param>
-        public virtual ValueTask Remove(string keys)
-        {
-            return InvokeVoidAsync("remove", keys);
-        }
-
-        /// <summary>Removes one or more items from storage.</summary>
-        /// <param name="keys">A single key or a list of keys for items to remove.</param>
-        public virtual ValueTask Remove(IEnumerable<string> keys)
+        public virtual ValueTask Remove(StorageAreaSyncRemoveKeys keys)
         {
             return InvokeVoidAsync("remove", keys);
         }

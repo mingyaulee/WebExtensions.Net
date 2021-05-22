@@ -8,7 +8,7 @@ namespace WebExtension.Net.ExtensionTypes
     {
         private ImageFormat? _format;
         private int? _quality;
-        private object _rect;
+        private Rect _rect;
         private double? _scale;
 
         /// <summary>The format of the resulting image.  Default is <c>"jpeg"</c>.</summary>
@@ -46,7 +46,7 @@ namespace WebExtension.Net.ExtensionTypes
         /// <summary>The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.</summary>
         [JsonPropertyName("rect")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object Rect
+        public Rect Rect
         {
             get
             {

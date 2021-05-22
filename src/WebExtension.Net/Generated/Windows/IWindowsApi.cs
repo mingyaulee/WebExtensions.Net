@@ -24,7 +24,7 @@ namespace WebExtension.Net.Windows
         /// <summary>Creates (opens) a new browser with any optional sizing, position or default URL provided.</summary>
         /// <param name="createData"></param>
         /// <returns>Contains details about the created window.</returns>
-        ValueTask<Window> Create(object createData);
+        ValueTask<Window> Create(CreateData createData);
 
         /// <summary>Gets details about a window.</summary>
         /// <param name="windowId"></param>
@@ -35,7 +35,7 @@ namespace WebExtension.Net.Windows
         /// <summary>Gets all windows.</summary>
         /// <param name="getInfo">Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.</param>
         /// <returns></returns>
-        ValueTask<IEnumerable<Window>> GetAll(object getInfo);
+        ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo);
 
         /// <summary>Gets the $(topic:current-window)[current window].</summary>
         /// <param name="getInfo"></param>
@@ -55,6 +55,6 @@ namespace WebExtension.Net.Windows
         /// <param name="windowId"></param>
         /// <param name="updateInfo"></param>
         /// <returns></returns>
-        ValueTask<Window> Update(int windowId, object updateInfo);
+        ValueTask<Window> Update(int windowId, UpdateInfo updateInfo);
     }
 }

@@ -10,7 +10,7 @@ namespace WebExtension.Net.WebNavigation
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a new window, or a new tab in an existing window, is created to host a navigation.</param>
-        public virtual ValueTask AddListener(Action<object> callback)
+        public virtual ValueTask AddListener(Action<OnCreatedNavigationTargetEventAddListenerCallbackDetails> callback)
         {
             return InvokeVoidAsync("addListener", callback);
         }
@@ -18,7 +18,7 @@ namespace WebExtension.Net.WebNavigation
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a new window, or a new tab in an existing window, is created to host a navigation.</param>
         /// <param name="filters">Conditions that the URL being navigated to must satisfy. The 'schemes' and 'ports' fields of UrlFilter are ignored for this event.</param>
-        public virtual ValueTask AddListener(Action<object> callback, EventUrlFilters filters)
+        public virtual ValueTask AddListener(Action<OnCreatedNavigationTargetEventAddListenerCallbackDetails> callback, EventUrlFilters filters)
         {
             return InvokeVoidAsync("addListener", callback, filters);
         }
@@ -26,7 +26,7 @@ namespace WebExtension.Net.WebNavigation
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Action<object> callback)
+        public virtual ValueTask<bool> HasListener(Action<OnCreatedNavigationTargetEventHasListenerCallbackDetails> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
@@ -35,14 +35,14 @@ namespace WebExtension.Net.WebNavigation
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <param name="filters">Conditions that the URL being navigated to must satisfy. The 'schemes' and 'ports' fields of UrlFilter are ignored for this event.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Action<object> callback, EventUrlFilters filters)
+        public virtual ValueTask<bool> HasListener(Action<OnCreatedNavigationTargetEventHasListenerCallbackDetails> callback, EventUrlFilters filters)
         {
             return InvokeAsync<bool>("hasListener", callback, filters);
         }
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
-        public virtual ValueTask RemoveListener(Action<object> callback)
+        public virtual ValueTask RemoveListener(Action<OnCreatedNavigationTargetEventRemoveListenerCallbackDetails> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
         }
@@ -50,7 +50,7 @@ namespace WebExtension.Net.WebNavigation
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         /// <param name="filters">Conditions that the URL being navigated to must satisfy. The 'schemes' and 'ports' fields of UrlFilter are ignored for this event.</param>
-        public virtual ValueTask RemoveListener(Action<object> callback, EventUrlFilters filters)
+        public virtual ValueTask RemoveListener(Action<OnCreatedNavigationTargetEventRemoveListenerCallbackDetails> callback, EventUrlFilters filters)
         {
             return InvokeVoidAsync("removeListener", callback, filters);
         }

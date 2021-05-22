@@ -11,7 +11,7 @@ namespace WebExtension.Net.WebRequest
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any HTTP data is sent. </param>
-        public virtual ValueTask AddListener(Func<object, BlockingResponse> callback)
+        public virtual ValueTask AddListener(Func<OnBeforeSendHeadersEventAddListenerCallbackDetails, BlockingResponse> callback)
         {
             return InvokeVoidAsync("addListener", callback);
         }
@@ -20,7 +20,7 @@ namespace WebExtension.Net.WebRequest
         /// <param name="callback">Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any HTTP data is sent. </param>
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
-        public virtual ValueTask AddListener(Func<object, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
+        public virtual ValueTask AddListener(Func<OnBeforeSendHeadersEventAddListenerCallbackDetails, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
         {
             return InvokeVoidAsync("addListener", callback, filter, extraInfoSpec);
         }
@@ -28,7 +28,7 @@ namespace WebExtension.Net.WebRequest
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Func<object, BlockingResponse> callback)
+        public virtual ValueTask<bool> HasListener(Func<OnBeforeSendHeadersEventHasListenerCallbackDetails, BlockingResponse> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
@@ -38,14 +38,14 @@ namespace WebExtension.Net.WebRequest
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Func<object, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
+        public virtual ValueTask<bool> HasListener(Func<OnBeforeSendHeadersEventHasListenerCallbackDetails, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
         {
             return InvokeAsync<bool>("hasListener", callback, filter, extraInfoSpec);
         }
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
-        public virtual ValueTask RemoveListener(Func<object, BlockingResponse> callback)
+        public virtual ValueTask RemoveListener(Func<OnBeforeSendHeadersEventRemoveListenerCallbackDetails, BlockingResponse> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
         }
@@ -54,7 +54,7 @@ namespace WebExtension.Net.WebRequest
         /// <param name="callback">Listener that shall be unregistered.</param>
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
-        public virtual ValueTask RemoveListener(Func<object, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
+        public virtual ValueTask RemoveListener(Func<OnBeforeSendHeadersEventRemoveListenerCallbackDetails, BlockingResponse> callback, RequestFilter filter, IEnumerable<OnBeforeSendHeadersOptions> extraInfoSpec)
         {
             return InvokeVoidAsync("removeListener", callback, filter, extraInfoSpec);
         }

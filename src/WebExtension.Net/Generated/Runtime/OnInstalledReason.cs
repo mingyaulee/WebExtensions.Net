@@ -16,6 +16,6 @@ namespace WebExtension.Net.Runtime
 
         /// <summary>browser_update</summary>
         [EnumValue("browser_update")]
-        Browser_update,
+        BrowserUpdate,
     }
 }

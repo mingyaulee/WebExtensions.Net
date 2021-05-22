@@ -1,27 +1,27 @@
+using System.Text.Json.Serialization;
+
 namespace WebExtension.Net.Manifest
 {
     // Multitype Class
     /// <summary></summary>
-    public class OptionalPermission
+    [JsonConverter(typeof(MultiTypeJsonConverter<OptionalPermission>))]
+    public class OptionalPermission : BaseMultiTypeObject
     {
         private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
         private readonly string valueString;
-        private readonly object currentValue = null;
 
         /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value.</param>
-        public OptionalPermission(OptionalPermissionNoPrompt value)
+        public OptionalPermission(OptionalPermissionNoPrompt value) : base(value, typeof(OptionalPermissionNoPrompt))
         {
             valueOptionalPermissionNoPrompt = value;
-            currentValue = value;
         }
 
         /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value.</param>
-        public OptionalPermission(string value)
+        public OptionalPermission(string value) : base(value, typeof(string))
         {
             valueString = value;
-            currentValue = value;
         }
 
         /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="OptionalPermissionNoPrompt" />.</summary>
@@ -39,11 +39,5 @@ namespace WebExtension.Net.Manifest
         /// <summary>Converts from <see cref="string" /> to <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value to convert from.</param>
         public static implicit operator OptionalPermission(string value) => new(value);
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return currentValue?.ToString();
-        }
     }
 }

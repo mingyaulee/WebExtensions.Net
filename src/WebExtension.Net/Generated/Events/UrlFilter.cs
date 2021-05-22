@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace WebExtension.Net.Events
@@ -17,7 +16,7 @@ namespace WebExtension.Net.Events
         private string _pathEquals;
         private string _pathPrefix;
         private string _pathSuffix;
-        private IEnumerable<JsonElement> _ports;
+        private IEnumerable<PortsArrayItem> _ports;
         private string _queryContains;
         private string _queryEquals;
         private string _queryPrefix;
@@ -176,7 +175,7 @@ namespace WebExtension.Net.Events
         /// <summary>Matches if the port of the URL is contained in any of the specified port lists. For example <c>[80, 443, [1000, 1200]]</c> matches all requests on port 80, 443 and in the range 1000-1200.</summary>
         [JsonPropertyName("ports")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<JsonElement> Ports
+        public IEnumerable<PortsArrayItem> Ports
         {
             get
             {

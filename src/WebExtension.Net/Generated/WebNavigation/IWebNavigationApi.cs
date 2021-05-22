@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebNavigation
@@ -20,7 +19,7 @@ namespace WebExtension.Net.WebNavigation
         OnCreatedNavigationTargetEvent OnCreatedNavigationTarget { get; }
 
         /// <summary>Fired when the page's DOM is fully constructed, but the referenced resources may not finish loading.</summary>
-        OnDOMContentLoadedEvent OnDOMContentLoaded { get; }
+        OnDomContentLoadedEvent OnDOMContentLoaded { get; }
 
         /// <summary>Fired when an error occurs and the navigation is aborted. This can happen if either a network error occurred, or the user aborted the navigation.</summary>
         OnErrorOccurredEvent OnErrorOccurred { get; }
@@ -37,11 +36,11 @@ namespace WebExtension.Net.WebNavigation
         /// <summary>Retrieves information about all frames of a given tab.</summary>
         /// <param name="details">Information about the tab to retrieve all frames from.</param>
         /// <returns>A list of frames in the given tab, null if the specified tab ID is invalid.</returns>
-        ValueTask<IEnumerable<object>> GetAllFrames(object details);
+        ValueTask<IEnumerable<DetailsArrayItem>> GetAllFrames(GetAllFramesDetails details);
 
         /// <summary>Retrieves information about the given frame. A frame refers to an &amp;lt;iframe&amp;gt; or a &amp;lt;frame&amp;gt; of a web page and is identified by a tab ID and a frame ID.</summary>
         /// <param name="details">Information about the frame to retrieve information about.</param>
         /// <returns>Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.</returns>
-        ValueTask<JsonElement> GetFrame(object details);
+        ValueTask<GetFrameCallbackDetails> GetFrame(GetFrameDetails details);
     }
 }

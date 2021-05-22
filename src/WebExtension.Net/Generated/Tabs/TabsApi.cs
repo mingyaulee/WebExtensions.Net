@@ -183,13 +183,13 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> Connect(int tabId, object connectInfo)
+        public virtual ValueTask<Port> Connect(int tabId, ConnectInfo connectInfo)
         {
             return InvokeAsync<Port>("connect", tabId, connectInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Tab> Create(object createProperties)
+        public virtual ValueTask<Tab> Create(CreateProperties createProperties)
         {
             return InvokeAsync<Tab>("create", createProperties);
         }
@@ -213,7 +213,7 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Tab> Duplicate(int tabId, object duplicateProperties)
+        public virtual ValueTask<Tab> Duplicate(int tabId, DuplicateProperties duplicateProperties)
         {
             return InvokeAsync<Tab>("duplicate", tabId, duplicateProperties);
         }
@@ -273,7 +273,7 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> Highlight(object highlightInfo)
+        public virtual ValueTask<Window> Highlight(HighlightHighlightInfo highlightInfo)
         {
             return InvokeAsync<Window>("highlight", highlightInfo);
         }
@@ -285,19 +285,19 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> Move(int tabIds, object moveProperties)
+        public virtual ValueTask<CallbackTabs> Move(int tabIds, MoveProperties moveProperties)
         {
-            return InvokeAsync<JsonElement>("move", tabIds, moveProperties);
+            return InvokeAsync<CallbackTabs>("move", tabIds, moveProperties);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> Move(IEnumerable<int> tabIds, object moveProperties)
+        public virtual ValueTask<CallbackTabs> Move(IEnumerable<int> tabIds, MoveProperties moveProperties)
         {
-            return InvokeAsync<JsonElement>("move", tabIds, moveProperties);
+            return InvokeAsync<CallbackTabs>("move", tabIds, moveProperties);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId, object options)
+        public virtual ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId, MoveInSuccessionOptions options)
         {
             return InvokeVoidAsync("moveInSuccession", tabIds, tabId, options);
         }
@@ -315,13 +315,13 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Tab>> Query(object queryInfo)
+        public virtual ValueTask<IEnumerable<Tab>> Query(QueryInfo queryInfo)
         {
             return InvokeAsync<IEnumerable<Tab>>("query", queryInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Reload(int? tabId, object reloadProperties)
+        public virtual ValueTask Reload(int? tabId, ReloadProperties reloadProperties)
         {
             return InvokeVoidAsync("reload", tabId, reloadProperties);
         }
@@ -351,7 +351,7 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> SendMessage(int tabId, object message, object options)
+        public virtual ValueTask<JsonElement> SendMessage(int tabId, object message, SendMessageOptions options)
         {
             return InvokeAsync<JsonElement>("sendMessage", tabId, message, options);
         }
@@ -387,7 +387,7 @@ namespace WebExtension.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Tab> Update(int? tabId, object updateProperties)
+        public virtual ValueTask<Tab> Update(int? tabId, UpdateProperties updateProperties)
         {
             return InvokeAsync<Tab>("update", tabId, updateProperties);
         }

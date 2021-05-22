@@ -6,7 +6,7 @@ namespace WebExtension.Net.WebRequest
     /// <summary>Returns value for event handlers that have the 'blocking' extraInfoSpec applied. Allows the event handler to modify network requests.</summary>
     public class BlockingResponse : BaseObject
     {
-        private object _authCredentials;
+        private AuthCredentials _authCredentials;
         private bool? _cancel;
         private string _redirectUrl;
         private HttpHeaders _requestHeaders;
@@ -16,7 +16,7 @@ namespace WebExtension.Net.WebRequest
         /// <summary>Only used as a response to the onAuthRequired event. If set, the request is made using the supplied credentials.</summary>
         [JsonPropertyName("authCredentials")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object AuthCredentials
+        public AuthCredentials AuthCredentials
         {
             get
             {

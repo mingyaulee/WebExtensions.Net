@@ -8,14 +8,14 @@ namespace WebExtension.Net.ExtensionTypes
     {
         /// <summary>document_start</summary>
         [EnumValue("document_start")]
-        Document_start,
+        DocumentStart,
 
         /// <summary>document_end</summary>
         [EnumValue("document_end")]
-        Document_end,
+        DocumentEnd,
 
         /// <summary>document_idle</summary>
         [EnumValue("document_idle")]
-        Document_idle,
+        DocumentIdle,
     }
 }

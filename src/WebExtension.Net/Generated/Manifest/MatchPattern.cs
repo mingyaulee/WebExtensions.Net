@@ -1,36 +1,35 @@
+using System.Text.Json.Serialization;
+
 namespace WebExtension.Net.Manifest
 {
     // Multitype Class
     /// <summary></summary>
-    public class MatchPattern
+    [JsonConverter(typeof(MultiTypeJsonConverter<MatchPattern>))]
+    public class MatchPattern : BaseMultiTypeObject
     {
         private readonly string valueString;
         private readonly MatchPatternRestricted valueMatchPatternRestricted;
         private readonly MatchPatternUnestricted valueMatchPatternUnestricted;
-        private readonly object currentValue = null;
 
         /// <summary>Creates a new instance of <see cref="MatchPattern" />.</summary>
         /// <param name="value">The value.</param>
-        public MatchPattern(string value)
+        public MatchPattern(string value) : base(value, typeof(string))
         {
             valueString = value;
-            currentValue = value;
         }
 
         /// <summary>Creates a new instance of <see cref="MatchPattern" />.</summary>
         /// <param name="value">The value.</param>
-        public MatchPattern(MatchPatternRestricted value)
+        public MatchPattern(MatchPatternRestricted value) : base(value, typeof(MatchPatternRestricted))
         {
             valueMatchPatternRestricted = value;
-            currentValue = value;
         }
 
         /// <summary>Creates a new instance of <see cref="MatchPattern" />.</summary>
         /// <param name="value">The value.</param>
-        public MatchPattern(MatchPatternUnestricted value)
+        public MatchPattern(MatchPatternUnestricted value) : base(value, typeof(MatchPatternUnestricted))
         {
             valueMatchPatternUnestricted = value;
-            currentValue = value;
         }
 
         /// <summary>Converts from <see cref="MatchPattern" /> to <see cref="string" />.</summary>
@@ -56,11 +55,5 @@ namespace WebExtension.Net.Manifest
         /// <summary>Converts from <see cref="MatchPatternUnestricted" /> to <see cref="MatchPattern" />.</summary>
         /// <param name="value">The value to convert from.</param>
         public static implicit operator MatchPattern(MatchPatternUnestricted value) => new(value);
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return currentValue?.ToString();
-        }
     }
 }

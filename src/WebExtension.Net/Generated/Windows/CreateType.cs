@@ -20,6 +20,6 @@ namespace WebExtension.Net.Windows
 
         /// <summary>detached_panel</summary>
         [EnumValue("detached_panel")]
-        Detached_panel,
+        DetachedPanel,
     }
 }

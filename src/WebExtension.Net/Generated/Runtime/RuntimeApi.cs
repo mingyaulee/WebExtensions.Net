@@ -120,7 +120,7 @@ namespace WebExtension.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> Connect(string extensionId, object connectInfo)
+        public virtual ValueTask<Port> Connect(string extensionId, ConnectInfo connectInfo)
         {
             return InvokeAsync<Port>("connect", extensionId, connectInfo);
         }
@@ -168,9 +168,9 @@ namespace WebExtension.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetLastError()
+        public virtual ValueTask<LastError> GetLastError()
         {
-            return GetPropertyAsync<JsonElement>("lastError");
+            return GetPropertyAsync<LastError>("lastError");
         }
 
         /// <inheritdoc />

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WebExtension.Net.WebNavigation
@@ -11,7 +10,7 @@ namespace WebExtension.Net.WebNavigation
         private OnCommittedEvent _onCommitted;
         private OnCompletedEvent _onCompleted;
         private OnCreatedNavigationTargetEvent _onCreatedNavigationTarget;
-        private OnDOMContentLoadedEvent _onDOMContentLoaded;
+        private OnDomContentLoadedEvent _onDOMContentLoaded;
         private OnErrorOccurredEvent _onErrorOccurred;
         private OnHistoryStateUpdatedEvent _onHistoryStateUpdated;
         private OnReferenceFragmentUpdatedEvent _onReferenceFragmentUpdated;
@@ -80,13 +79,13 @@ namespace WebExtension.Net.WebNavigation
         }
 
         /// <inheritdoc />
-        public OnDOMContentLoadedEvent OnDOMContentLoaded
+        public OnDomContentLoadedEvent OnDOMContentLoaded
         {
             get
             {
                 if (_onDOMContentLoaded is null)
                 {
-                    _onDOMContentLoaded = new OnDOMContentLoadedEvent();
+                    _onDOMContentLoaded = new OnDomContentLoadedEvent();
                     InitializeProperty("onDOMContentLoaded", _onDOMContentLoaded);
                 }
                 return _onDOMContentLoaded;
@@ -150,15 +149,15 @@ namespace WebExtension.Net.WebNavigation
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<object>> GetAllFrames(object details)
+        public virtual ValueTask<IEnumerable<DetailsArrayItem>> GetAllFrames(GetAllFramesDetails details)
         {
-            return InvokeAsync<IEnumerable<object>>("getAllFrames", details);
+            return InvokeAsync<IEnumerable<DetailsArrayItem>>("getAllFrames", details);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetFrame(object details)
+        public virtual ValueTask<GetFrameCallbackDetails> GetFrame(GetFrameDetails details)
         {
-            return InvokeAsync<JsonElement>("getFrame", details);
+            return InvokeAsync<GetFrameCallbackDetails>("getFrame", details);
         }
     }
 }

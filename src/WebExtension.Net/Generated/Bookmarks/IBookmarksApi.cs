@@ -56,7 +56,7 @@ namespace WebExtension.Net.Bookmarks
         /// <param name="id"></param>
         /// <param name="destination"></param>
         /// <returns></returns>
-        ValueTask<BookmarkTreeNode> Move(string id, object destination);
+        ValueTask<BookmarkTreeNode> Move(string id, Destination destination);
 
         /// <summary>Removes a bookmark or an empty bookmark folder.</summary>
         /// <param name="id"></param>
@@ -80,6 +80,6 @@ namespace WebExtension.Net.Bookmarks
         /// <param name="id"></param>
         /// <param name="changes"></param>
         /// <returns></returns>
-        ValueTask<BookmarkTreeNode> Update(string id, object changes);
+        ValueTask<BookmarkTreeNode> Update(string id, Changes changes);
     }
 }

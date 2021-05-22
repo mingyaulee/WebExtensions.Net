@@ -116,7 +116,7 @@ namespace WebExtension.Net.Bookmarks
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<BookmarkTreeNode> Move(string id, object destination)
+        public virtual ValueTask<BookmarkTreeNode> Move(string id, Destination destination)
         {
             return InvokeAsync<BookmarkTreeNode>("move", id, destination);
         }
@@ -146,7 +146,7 @@ namespace WebExtension.Net.Bookmarks
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<BookmarkTreeNode> Update(string id, object changes)
+        public virtual ValueTask<BookmarkTreeNode> Update(string id, Changes changes)
         {
             return InvokeAsync<BookmarkTreeNode>("update", id, changes);
         }
