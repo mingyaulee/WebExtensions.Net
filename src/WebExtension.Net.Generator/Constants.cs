@@ -10,6 +10,7 @@
             public const string ClassType = nameof(ClassType);
             public const string ApiNamespace = nameof(ApiNamespace);
             public const string StringFormat = nameof(StringFormat);
+            public const string StringPattern = nameof(StringPattern);
         }
 
         public static class MethodMetadata

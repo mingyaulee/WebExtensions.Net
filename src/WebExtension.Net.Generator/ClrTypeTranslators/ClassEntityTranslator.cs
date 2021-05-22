@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WebExtension.Net.Generator.Extensions;
 using WebExtension.Net.Generator.Models;
@@ -38,8 +37,8 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
                 IsNullType = false,
                 IsGenericType = false,
                 GenericTypeArguments = Enumerable.Empty<ClrTypeInfo>(),
-                IsObsolete = classEntity.TypeDefinition?.IsDeprecated ?? false,
-                ObsoleteMessage = classEntity.TypeDefinition?.Deprecated,
+                IsObsolete = classEntity.TypeDefinition.IsDeprecated,
+                ObsoleteMessage = classEntity.TypeDefinition.Deprecated,
                 IsGenerated = true,
                 GeneratedNamespace = classEntity.NamespaceEntity.FormattedName,
                 RequiredNamespaces = new HashSet<string>(),
@@ -89,14 +88,14 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
 
             if (classEntity.Type == ClassType.ArrayClass)
             {
-                var arrayItemClrType = clrTypeStore.GetClrType(classEntity.TypeDefinition?.ArrayItems, classEntity.NamespaceEntity);
+                var arrayItemClrType = clrTypeStore.GetClrType(classEntity.TypeDefinition.ArrayItems, classEntity.NamespaceEntity);
                 clrTypeInfo.BaseTypeName = clrTypeInfo.BaseTypeName?.Replace(Constants.ArrayTypeToken, arrayItemClrType.CSharpName);
                 clrTypeInfo.AddRequiredNamespaces(arrayItemClrType.ReferenceNamespaces);
             }
 
             if (classEntity.Type == ClassType.MultitypeClass)
             {
-                clrTypeInfo.TypeChoices = classEntity.TypeDefinition?.TypeChoices?.Select(typeChoice =>
+                clrTypeInfo.TypeChoices = classEntity.TypeDefinition.TypeChoices?.Select(typeChoice =>
                 {
                     var choiceClrTypeInfo = clrTypeStore.GetClrType(typeChoice, classEntity.NamespaceEntity);
                     clrTypeInfo.AddRequiredNamespaces(choiceClrTypeInfo.ReferenceNamespaces);
@@ -106,11 +105,15 @@ namespace WebExtension.Net.Generator.ClrTypeTranslators
 
             if (classEntity.Type == ClassType.StringFormatClass)
             {
-                if (classEntity.TypeDefinition?.StringFormat is null)
+                if (classEntity.TypeDefinition.StringFormat is not null)
                 {
-                    throw new InvalidOperationException("String format class should have string format value.");
+                    clrTypeInfo.Metadata.Add(Constants.TypeMetadata.StringFormat, classEntity.TypeDefinition.StringFormat);
                 }
-                clrTypeInfo.Metadata.Add(Constants.TypeMetadata.StringFormat, classEntity.TypeDefinition.StringFormat);
+
+                if (classEntity.TypeDefinition.StringPattern is not null)
+                {
+                    clrTypeInfo.Metadata.Add(Constants.TypeMetadata.StringPattern, classEntity.TypeDefinition.StringPattern);
+                }
             }
         }
     }

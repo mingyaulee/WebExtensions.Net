@@ -41,7 +41,7 @@ namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             {
                 return enumClassEntityRegistrar;
             }
-            else if (typeDefinition.Type == ObjectType.String && !string.IsNullOrEmpty(typeDefinition.StringFormat))
+            else if (typeDefinition.Type == ObjectType.String && (!string.IsNullOrEmpty(typeDefinition.StringFormat) || !string.IsNullOrEmpty(typeDefinition.StringPattern)))
             {
                 return stringFormatClassEntityRegistrar;
             }
