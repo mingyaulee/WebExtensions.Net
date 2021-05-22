@@ -50,7 +50,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var syncStorage = await webExtensionApi.Storage.GetSync();
 
             // Act
-            var jsonStorageObject = await syncStorage.Get((object)null);
+            var jsonStorageObject = await syncStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
 
             // Assert
@@ -71,7 +71,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             await syncStorage.Remove(storageTestKey2);
 
             // Assert
-            var jsonStorageObject = await syncStorage.Get((object)null);
+            var jsonStorageObject = await syncStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
             storageObject.Should().NotBeNull();
             storageObject.Should().ContainKey(storageTestKey1);
@@ -88,7 +88,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             await syncStorage.Clear();
 
             // Assert
-            var jsonStorageObject = await syncStorage.Get((object)null);
+            var jsonStorageObject = await syncStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
             storageObject.Should().BeEmpty();
         }
@@ -118,7 +118,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var localStorage = await webExtensionApi.Storage.GetLocal();
 
             // Act
-            var jsonStorageObject = await localStorage.Get((object)null);
+            var jsonStorageObject = await localStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
 
             // Assert
@@ -139,7 +139,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             await localStorage.Remove(storageTestKey2);
 
             // Assert
-            var jsonStorageObject = await localStorage.Get((object)null);
+            var jsonStorageObject = await localStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
             storageObject.Should().NotBeNull();
             storageObject.Should().ContainKey(storageTestKey1);
@@ -156,7 +156,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             await localStorage.Clear();
 
             // Assert
-            var jsonStorageObject = await localStorage.Get((object)null);
+            var jsonStorageObject = await localStorage.Get(null);
             var storageObject = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonStorageObject.GetRawText());
             storageObject.Should().BeEmpty();
         }

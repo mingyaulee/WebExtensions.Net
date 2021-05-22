@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtension.Net.Windows;
 
 namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -20,11 +21,11 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var window = await webExtensionApi.Windows.Create(new
+            var window = await webExtensionApi.Windows.Create(new CreateData()
             {
-                url = "https://google.com",
-                top = 0,
-                left = 0
+                Url = "https://google.com",
+                Top = 0,
+                Left = 0
             });
 
             // Assert
@@ -52,10 +53,10 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var windowLeft = 100;
 
             // Act
-            var window = await webExtensionApi.Windows.Update(testWindowId.Value, new
+            var window = await webExtensionApi.Windows.Update(testWindowId.Value, new UpdateInfo()
             {
-                top = windowTop,
-                left = windowLeft
+                Top = windowTop,
+                Left = windowLeft
             });
 
             // Assert

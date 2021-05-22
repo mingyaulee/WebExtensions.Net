@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
 using WebExtension.Net.ExtensionTypes;
+using WebExtension.Net.Tabs;
 
 namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -84,9 +85,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.Create(new
+            var tab = await webExtensionApi.Tabs.Create(new CreateProperties()
             {
-                url = testTabUrl
+                Url = testTabUrl
             });
 
             // Assert
@@ -102,7 +103,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         {
             // Act
             var tab = await webExtensionApi.Tabs.Get(testTabId.Value);
-            int attemptCount = 0;
+            var attemptCount = 0;
             while (tab.Status != "complete" && attemptCount < 10)
             {
                 attemptCount++;
@@ -121,9 +122,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Query()
         {
             // Act
-            var tabs = await webExtensionApi.Tabs.Query(new
+            var tabs = await webExtensionApi.Tabs.Query(new QueryInfo()
             {
-                url = testTabUrl
+                Url = testTabUrl
             });
 
             // Assert
@@ -139,9 +140,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var url = testTabUpdateUrl;
 
             // Act
-            var tab = await webExtensionApi.Tabs.Update(testTabId.Value, new
+            var tab = await webExtensionApi.Tabs.Update(testTabId.Value, new UpdateProperties()
             {
-                url
+                Url = url
             });
 
             // Assert

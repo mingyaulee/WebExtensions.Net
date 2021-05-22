@@ -1,5 +1,6 @@
 ﻿@page "/options"
 @inherits Blazor.BrowserExtension.Pages.BasePage;
+@using WebExtension.Net.Tabs; 
 
 <h3>Options</h3>
 <button class="btn btn-primary" @onclick="RunIntegrationTests">Run Integration Tests</button>
@@ -7,10 +8,10 @@
     async Task RunIntegrationTests()
     {
         var testUrl = await WebExtension.Runtime.GetURL("tests.html?random=false");
-        await WebExtension.Tabs.Create(new
+        await WebExtension.Tabs.Create(new CreateProperties()
         {
-            active = true,
-            url = testUrl
+            Active = true,
+            Url = testUrl
         });
     }
 }

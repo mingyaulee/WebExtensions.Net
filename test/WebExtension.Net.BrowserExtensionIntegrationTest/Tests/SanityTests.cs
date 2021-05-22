@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtension.Net.Tabs;
 
 namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -17,7 +18,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             this.webExtensionApi = webExtensionApi;
         }
 
-        [Fact(Description = "Execute API with primitive return type")]
+        [Fact(Description = "Execute API with primitive return type", Order = 1)]
         public async Task ExecuteAPIWithPrimitiveReturnType()
         {
             // Act
@@ -27,7 +28,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             createdNotificationId.Should().NotBeNullOrEmpty();
         }
 
-        [Fact(Description = "Execute API with strongly typed object return type")]
+        [Fact(Description = "Execute API with strongly typed object return type", Order = 2)]
         public async Task ExecuteAPIWithStronglyTypedObjectReturnType()
         {
             // Act
@@ -37,16 +38,44 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             platformInfo.Should().NotBeNull();
         }
 
-        [Fact(Description = "Execute API with enumerable return type")]
+        [Fact(Description = "Execute API with enumerable return type", Order = 2)]
         public async Task ExecuteAPIWithEnumerableReturnType()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.Query(new { active = true });
+            var tab = await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true });
 
             // Assert
             tab.Should().NotBeNull();
             tab.Should().NotBeEmpty();
             tab.First().Id.Should().BeGreaterThan(0);
+        }
+
+        [Fact(Description = "Execute API with multitype class argument type", Order = 3)]
+        public async Task ExecuteAPIWithMultitypeClassArgumentType()
+        {
+            // Arrange
+            var activeTab = (await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+
+            // Act
+            var tab = await webExtensionApi.Tabs.Query(new QueryInfo() { Url = activeTab.Url });
+
+            // Assert
+            tab.Should().NotBeNull();
+            tab.Should().NotBeEmpty();
+            tab.First().Id.Should().BeGreaterThan(0);
+        }
+
+        [Fact(Description = "Execute API with multitype class return type", Order = 3)]
+        public async Task ExecuteAPIWithMultitypeClassReturnType()
+        {
+            // Arrange
+            var activeTab = (await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+
+            // Act
+            var tab = await webExtensionApi.Tabs.Move(activeTab.Id.Value, new MoveProperties() { Index = 1 });
+
+            // Assert
+            tab.Should().NotBeNull();
         }
 
         [Fact(Description = "Get primitive API property")]
@@ -81,7 +110,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             await localStorageReference.Set(new { test = testValue });
 
             // Act
-            var storageValue = await localStorageReference.Get((object)null);
+            var storageValue = await localStorageReference.Get(null);
 
             // Assert
             storageValue.Should().NotBeNull();
