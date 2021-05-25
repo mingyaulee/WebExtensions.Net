@@ -5,6 +5,11 @@
     /// </summary>
     public class RemoveObjectReferenceOption : InvokeOption
     {
+        /// <summary>
+        /// The identifier for the action 'RemoveObjectReference'.
+        /// </summary>
+        public const string Identifier = "WebExtensionNet.RemoveObjectReference";
+
         internal RemoveObjectReferenceOption(string referenceId)
         {
             ReferenceId = referenceId;

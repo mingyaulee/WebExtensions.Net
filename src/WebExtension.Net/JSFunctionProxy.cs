@@ -62,7 +62,7 @@ namespace WebExtension.Net
         public TValue DynamicInvoke<TValue>(object[] arguments)
         {
             var webExtensionJsRuntime = WebExtensionJSRuntime.GetStaticInstance();
-            return webExtensionJsRuntime.Invoke<TValue>("WebExtensionNet.InvokeFunctionFromDotNet", new InvokeFunctionReferenceOption(id), arguments);
+            return webExtensionJsRuntime.Invoke<TValue>(InvokeFunctionReferenceOption.Identifier, new InvokeFunctionReferenceOption(id), arguments);
         }
     }
 }

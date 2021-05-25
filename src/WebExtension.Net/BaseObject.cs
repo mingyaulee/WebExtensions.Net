@@ -52,7 +52,7 @@ namespace WebExtension.Net
         internal ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? propertyName : $"{accessPath}.{propertyName}";
-            return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
+            return webExtensionJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace WebExtension.Net
         internal ValueTask<TValue> InvokeAsync<TValue>(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
-            return webExtensionJSRuntime.InvokeAsync<TValue>("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
+            return webExtensionJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace WebExtension.Net
         internal ValueTask InvokeVoidAsync(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
-            return webExtensionJSRuntime.InvokeVoidAsync("WebExtensionNet.InvokeOnObjectReference", new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
+            return webExtensionJSRuntime.InvokeVoidAsync(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace WebExtension.Net
             // Cleanup
             if (!string.IsNullOrEmpty(referenceId) && webExtensionJSRuntime != null)
             {
-                webExtensionJSRuntime.InvokeVoid("WebExtensionNet.RemoveObjectReference", new RemoveObjectReferenceOption(referenceId));
+                webExtensionJSRuntime.InvokeVoid(RemoveObjectReferenceOption.Identifier, new RemoveObjectReferenceOption(referenceId));
                 referenceId = null;
             }
         }

@@ -5,6 +5,11 @@
     /// </summary>
     public class InvokeObjectReferenceOption : InvokeOption
     {
+        /// <summary>
+        /// The identifier for the action 'InvokeOnObjectReference'.
+        /// </summary>
+        public const string Identifier = "WebExtensionNet.InvokeOnObjectReference";
+
         internal InvokeObjectReferenceOption(string referenceId, string targetPath, bool isFunction)
         {
             ReferenceId = referenceId;
