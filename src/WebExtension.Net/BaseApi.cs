@@ -8,9 +8,9 @@
         /// <summary>
         /// Gets the WebExtensionJsRuntime instance.
         /// </summary>
-        protected new WebExtensionJSRuntime webExtensionJSRuntime;
+        protected new IWebExtensionJSRuntime webExtensionJSRuntime;
 
-        internal BaseApi(WebExtensionJSRuntime webExtensionJSRuntime, string apiNamespace)
+        internal BaseApi(IWebExtensionJSRuntime webExtensionJSRuntime, string apiNamespace)
         {
             this.webExtensionJSRuntime = webExtensionJSRuntime;
             Initialize(webExtensionJSRuntime, "browser", apiNamespace);

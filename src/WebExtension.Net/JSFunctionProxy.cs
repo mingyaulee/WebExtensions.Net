@@ -61,7 +61,7 @@ namespace WebExtension.Net
         /// <returns>An instance of TResult obtained by JSON-deserializing the return value.</returns>
         public TValue DynamicInvoke<TValue>(object[] arguments)
         {
-            var webExtensionJsRuntime = WebExtensionJSRuntime.GetStaticInstance();
+            var webExtensionJsRuntime = IWebExtensionJSRuntime.StaticInstance;
             return webExtensionJsRuntime.Invoke<TValue>(InvokeFunctionReferenceOption.Identifier, new InvokeFunctionReferenceOption(id), arguments);
         }
     }

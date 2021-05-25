@@ -11,7 +11,7 @@ namespace WebExtension.Net
     public class BaseObject : IDisposable
     {
         internal bool IsInitialized;
-        internal WebExtensionJSRuntime webExtensionJSRuntime;
+        internal IWebExtensionJSRuntime webExtensionJSRuntime;
         internal string referenceId;
         internal string accessPath;
 
@@ -19,7 +19,7 @@ namespace WebExtension.Net
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalData { get; set; }
 
-        internal void Initialize(WebExtensionJSRuntime webExtensionJSRuntime, string referenceId, string accessPath)
+        internal void Initialize(IWebExtensionJSRuntime webExtensionJSRuntime, string referenceId, string accessPath)
         {
             if (!IsInitialized)
             {
