@@ -35,6 +35,20 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Order = 2)]
+        public async Task Update()
+        {
+            // Act
+            var notificationUpdated = await webExtensionApi.Notifications.Update(testNotificationId, new CreateNotificationOptions()
+            {
+                Title = "Updated notification",
+                Message = "Updated notification message"
+            });
+
+            // Assert
+            notificationUpdated.Should().BeTrue();
+        }
+
+        [Fact(Order = 2)]
         public async Task GetAll()
         {
             // Act

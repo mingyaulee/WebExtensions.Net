@@ -66,13 +66,9 @@ The code generation process is summarised as follows:
     - The Namespace definitions are written as .json files
 
 #### Supporting missing/browser specific APIs
-The APIs generated are only the ones that are defined by the WebExtensions Standards. A browser specific API can be added with extension methods.
-The browser specific extensions and types should be defined in a directory under WebExtension.Net based on the browser name, i.e.
-- WebExtension.Net/Chrome
-- WebExtension.Net/Firefox
-- WebExtension.Net/Edge
-If the directory does not exist, you should create one.
-Refer to WebExtension.Net/Chrome/INotificationsApiExtension.cs for example.
+The APIs generated are only the ones that are defined by the WebExtensions Standards. A non-standard API can be added by extending from the API's partial class.
+The browser specific extensions and types should be defined in a directory under `WebExtension.Net/Extensions` based on the API namespace.
+Refer to `INotificationsApi.cs` and `NotificationsApi.cs` under the path `WebExtension.Net/Extensions/Notifications/` for example.
 
 ### In case of conflicts in the file generated.txt
 It is best to do a rebase and run the generator again to make sure the changes in the generated files are not overwritten by your pull request.

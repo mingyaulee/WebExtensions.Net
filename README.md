@@ -1,8 +1,8 @@
 # WebExtension.Net
-![Nuget](https://img.shields.io/nuget/v/WebExtension.Net?style=flat-square&color=blue)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtension.Net/Build?style=flat-square&color=blue)
-![Sonar Tests](https://img.shields.io/sonar/tests/WebExtension.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)
-![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtension.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)
+[![Nuget](https://img.shields.io/nuget/v/WebExtension.Net?style=flat-square&color=blue)](https://www.nuget.org/packages/WebExtension.Net/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtension.Net/Build?style=flat-square&color=blue)](https://github.com/mingyaulee/WebExtension.Net/actions/workflows/WebExtension.Net-Build.yml)
+[![Sonar Tests](https://img.shields.io/sonar/tests/WebExtension.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtension.Net)
+[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtension.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtension.Net)
 
 A package for consuming WebExtensions API in a browser extension.
 
@@ -35,9 +35,6 @@ var manifest = await webExtensionApi.Runtime.GetManifest();
 ### API References
 - [Chrome Extensions API Reference](https://developer.chrome.com/docs/extensions/reference/)
 - [Firefox Browser Extensions JavaScript API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
-
-### Using browser specific APIs
-Additional APIs may be available for specific browsers, and can be accessed via extension methods once the respective namespace is added with using directive. For example, adding `using WebExtension.Net.Chrome;` allows you to use additional APIs that are only available to the Chrome browser.
 
 ## Limitations
 
