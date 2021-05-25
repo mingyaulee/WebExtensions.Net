@@ -14,7 +14,7 @@ namespace WebExtension.Net
     /// <summary>Web Extension Api</summary>
     public class WebExtensionApi : IWebExtensionApi
     {
-        private readonly WebExtensionJSRuntime webExtensionJSRuntime;
+        private readonly IWebExtensionJSRuntime webExtensionJSRuntime;
         private IBookmarksApi _bookmarks;
         private IContentScriptsApi _contentScripts;
         private INotificationsApi _notifications;
@@ -27,7 +27,7 @@ namespace WebExtension.Net
         private IWindowsApi _windows;
 
         /// <summary>Creates a new instance of <see cref="WebExtensionApi" />.</summary>
-        public WebExtensionApi(WebExtensionJSRuntime webExtensionJSRuntime)
+        public WebExtensionApi(IWebExtensionJSRuntime webExtensionJSRuntime)
         {
             this.webExtensionJSRuntime = webExtensionJSRuntime;
         }

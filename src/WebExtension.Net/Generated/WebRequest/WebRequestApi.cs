@@ -18,7 +18,7 @@ namespace WebExtension.Net.WebRequest
 
         /// <summary>Creates a new instance of <see cref="WebRequestApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebRequestApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
+        public WebRequestApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
         {
         }
 

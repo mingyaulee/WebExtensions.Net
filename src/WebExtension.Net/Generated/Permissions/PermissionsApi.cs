@@ -10,7 +10,7 @@ namespace WebExtension.Net.Permissions
 
         /// <summary>Creates a new instance of <see cref="PermissionsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public PermissionsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "permissions")
+        public PermissionsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "permissions")
         {
         }
 

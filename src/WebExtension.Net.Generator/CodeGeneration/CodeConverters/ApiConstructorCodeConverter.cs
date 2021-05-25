@@ -16,7 +16,7 @@
             codeWriter.Constructors
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
                 .WriteWithConverter(new CommentParamCodeSectionConverter("webExtensionJSRuntime", "Web Extension JS Runtime"))
-                .WriteLine($"public {className}(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, \"{apiName}\")")
+                .WriteLine($"public {className}(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, \"{apiName}\")")
                 .WriteStartBlock()
                 .WriteEndBlock();
         }

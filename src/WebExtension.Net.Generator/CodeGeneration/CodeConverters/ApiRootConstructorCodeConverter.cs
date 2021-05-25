@@ -12,11 +12,11 @@
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
             codeWriter.Properties
-                .WriteLine($"private readonly WebExtensionJSRuntime webExtensionJSRuntime;");
+                .WriteLine($"private readonly IWebExtensionJSRuntime webExtensionJSRuntime;");
 
             codeWriter.Constructors
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{apiRootName}\" />."))
-                .WriteLine($"public {apiRootName}(WebExtensionJSRuntime webExtensionJSRuntime)")
+                .WriteLine($"public {apiRootName}(IWebExtensionJSRuntime webExtensionJSRuntime)")
                 .WriteStartBlock()
                 .WriteLine($"this.webExtensionJSRuntime = webExtensionJSRuntime;")
                 .WriteEndBlock();

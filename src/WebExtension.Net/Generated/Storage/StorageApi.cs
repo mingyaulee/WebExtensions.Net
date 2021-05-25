@@ -9,7 +9,7 @@ namespace WebExtension.Net.Storage
 
         /// <summary>Creates a new instance of <see cref="StorageApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public StorageApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
+        public StorageApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
         {
         }
 

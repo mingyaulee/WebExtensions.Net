@@ -17,7 +17,7 @@ namespace WebExtension.Net.Runtime
 
         /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public RuntimeApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
+        public RuntimeApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
         {
         }
 

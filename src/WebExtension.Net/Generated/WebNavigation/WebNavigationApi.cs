@@ -18,7 +18,7 @@ namespace WebExtension.Net.WebNavigation
 
         /// <summary>Creates a new instance of <see cref="WebNavigationApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebNavigationApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
+        public WebNavigationApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
         {
         }
 

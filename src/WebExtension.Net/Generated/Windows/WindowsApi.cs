@@ -12,7 +12,7 @@ namespace WebExtension.Net.Windows
 
         /// <summary>Creates a new instance of <see cref="WindowsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WindowsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
+        public WindowsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
         {
         }
 

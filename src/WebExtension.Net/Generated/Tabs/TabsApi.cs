@@ -23,7 +23,7 @@ namespace WebExtension.Net.Tabs
 
         /// <summary>Creates a new instance of <see cref="TabsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public TabsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "tabs")
+        public TabsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "tabs")
         {
         }
 

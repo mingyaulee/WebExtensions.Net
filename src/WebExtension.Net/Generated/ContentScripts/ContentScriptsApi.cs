@@ -7,7 +7,7 @@ namespace WebExtension.Net.ContentScripts
     {
         /// <summary>Creates a new instance of <see cref="ContentScriptsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public ContentScriptsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
+        public ContentScriptsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
         {
         }
 

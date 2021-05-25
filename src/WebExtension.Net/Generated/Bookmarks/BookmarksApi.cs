@@ -13,7 +13,7 @@ namespace WebExtension.Net.Bookmarks
 
         /// <summary>Creates a new instance of <see cref="BookmarksApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public BookmarksApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "bookmarks")
+        public BookmarksApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "bookmarks")
         {
         }
 

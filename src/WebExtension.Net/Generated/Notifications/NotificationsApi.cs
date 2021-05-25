@@ -13,7 +13,7 @@ namespace WebExtension.Net.Notifications
 
         /// <summary>Creates a new instance of <see cref="NotificationsApi" />.</summary>
         /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public NotificationsApi(WebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "notifications")
+        public NotificationsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "notifications")
         {
         }
 
