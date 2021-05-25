@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Storage
 {
     /// <inheritdoc />
-    public class StorageApi : BaseApi, IStorageApi
+    public partial class StorageApi : BaseApi, IStorageApi
     {
         private OnChangedEvent _onChanged;
 

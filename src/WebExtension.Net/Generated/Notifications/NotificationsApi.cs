@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Notifications
 {
     /// <inheritdoc />
-    public class NotificationsApi : BaseApi, INotificationsApi
+    public partial class NotificationsApi : BaseApi, INotificationsApi
     {
         private OnButtonClickedEvent _onButtonClicked;
         private OnClickedEvent _onClicked;

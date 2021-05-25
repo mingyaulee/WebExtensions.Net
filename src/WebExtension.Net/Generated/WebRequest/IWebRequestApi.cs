@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebRequest
 {
     /// <summary>Use the <c>browser.webRequest</c> API to observe and analyze traffic and to intercept, block, or modify requests in-flight.</summary>
-    public interface IWebRequestApi
+    public partial interface IWebRequestApi
     {
         /// <summary>The maximum number of times that <c>handlerBehaviorChanged</c> can be called per 10 minute sustained interval. <c>handlerBehaviorChanged</c> is an expensive function call that shouldn't be called often.</summary>
         int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES { get; }

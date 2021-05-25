@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Bookmarks
 {
     /// <inheritdoc />
-    public class BookmarksApi : BaseApi, IBookmarksApi
+    public partial class BookmarksApi : BaseApi, IBookmarksApi
     {
         private OnChangedEvent _onChanged;
         private OnCreatedEvent _onCreated;

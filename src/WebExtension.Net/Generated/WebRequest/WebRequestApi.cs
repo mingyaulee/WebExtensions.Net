@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebRequest
 {
     /// <inheritdoc />
-    public class WebRequestApi : BaseApi, IWebRequestApi
+    public partial class WebRequestApi : BaseApi, IWebRequestApi
     {
         private OnAuthRequiredEvent _onAuthRequired;
         private OnBeforeRedirectEvent _onBeforeRedirect;

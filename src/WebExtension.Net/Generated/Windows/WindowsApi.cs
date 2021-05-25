@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Windows
 {
     /// <inheritdoc />
-    public class WindowsApi : BaseApi, IWindowsApi
+    public partial class WindowsApi : BaseApi, IWindowsApi
     {
         private OnCreatedEvent _onCreated;
         private OnFocusChangedEvent _onFocusChanged;

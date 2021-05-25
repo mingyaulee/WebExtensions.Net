@@ -8,7 +8,7 @@ using WebExtension.Net.Windows;
 namespace WebExtension.Net.Tabs
 {
     /// <summary>Use the <c>browser.tabs</c> API to interact with the browser's tab system. You can use this API to create, modify, and rearrange tabs in the browser.</summary>
-    public interface ITabsApi
+    public partial interface ITabsApi
     {
         /// <summary>Fires when the active tab in a window changes. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</summary>
         OnActivatedEvent OnActivated { get; }

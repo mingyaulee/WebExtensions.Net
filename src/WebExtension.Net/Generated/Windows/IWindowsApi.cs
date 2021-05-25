@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Windows
 {
     /// <summary>Use the <c>browser.windows</c> API to interact with browser windows. You can use this API to create, modify, and rearrange windows in the browser.</summary>
-    public interface IWindowsApi
+    public partial interface IWindowsApi
     {
         /// <summary>Fired when a window is created.</summary>
         OnCreatedEvent OnCreated { get; }

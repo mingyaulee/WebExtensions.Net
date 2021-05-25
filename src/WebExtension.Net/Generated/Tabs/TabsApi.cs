@@ -8,7 +8,7 @@ using WebExtension.Net.Windows;
 namespace WebExtension.Net.Tabs
 {
     /// <inheritdoc />
-    public class TabsApi : BaseApi, ITabsApi
+    public partial class TabsApi : BaseApi, ITabsApi
     {
         private OnActivatedEvent _onActivated;
         private OnAttachedEvent _onAttached;

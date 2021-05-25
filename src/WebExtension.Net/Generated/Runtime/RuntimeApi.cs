@@ -5,7 +5,7 @@ using WebExtension.Net.Events;
 namespace WebExtension.Net.Runtime
 {
     /// <inheritdoc />
-    public class RuntimeApi : BaseApi, IRuntimeApi
+    public partial class RuntimeApi : BaseApi, IRuntimeApi
     {
         private OnConnectEvent _onConnect;
         private OnConnectExternalEvent _onConnectExternal;

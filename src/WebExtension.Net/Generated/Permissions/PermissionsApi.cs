@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Permissions
 {
     /// <inheritdoc />
-    public class PermissionsApi : BaseApi, IPermissionsApi
+    public partial class PermissionsApi : BaseApi, IPermissionsApi
     {
         private OnAddedEvent _onAdded;
         private OnRemovedEvent _onRemoved;

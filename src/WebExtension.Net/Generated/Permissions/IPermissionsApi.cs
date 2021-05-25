@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Permissions
 {
     /// <summary></summary>
-    public interface IPermissionsApi
+    public partial interface IPermissionsApi
     {
         /// <summary>Fired when the extension acquires new permissions.</summary>
         OnAddedEvent OnAdded { get; }

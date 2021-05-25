@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebNavigation
 {
     /// <summary>Use the <c>browser.webNavigation</c> API to receive notifications about the status of navigation requests in-flight.</summary>
-    public interface IWebNavigationApi
+    public partial interface IWebNavigationApi
     {
         /// <summary>Fired when a navigation is about to occur.</summary>
         OnBeforeNavigateEvent OnBeforeNavigate { get; }

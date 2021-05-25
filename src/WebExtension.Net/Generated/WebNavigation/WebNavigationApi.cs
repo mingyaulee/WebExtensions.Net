@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.WebNavigation
 {
     /// <inheritdoc />
-    public class WebNavigationApi : BaseApi, IWebNavigationApi
+    public partial class WebNavigationApi : BaseApi, IWebNavigationApi
     {
         private OnBeforeNavigateEvent _onBeforeNavigate;
         private OnCommittedEvent _onCommitted;

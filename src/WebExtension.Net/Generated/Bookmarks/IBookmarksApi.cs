@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Bookmarks
 {
     /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.</summary>
-    public interface IBookmarksApi
+    public partial interface IBookmarksApi
     {
         /// <summary>Fired when a bookmark or folder changes.  'b'Note:'/b' Currently, only title and url changes trigger this.</summary>
         OnChangedEvent OnChanged { get; }

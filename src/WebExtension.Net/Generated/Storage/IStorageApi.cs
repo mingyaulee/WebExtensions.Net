@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Storage
 {
     /// <summary>Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.</summary>
-    public interface IStorageApi
+    public partial interface IStorageApi
     {
         /// <summary>Fired when one or more items change.</summary>
         OnChangedEvent OnChanged { get; }

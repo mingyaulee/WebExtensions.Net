@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace WebExtension.Net.Notifications
 {
     /// <summary></summary>
-    public interface INotificationsApi
+    public partial interface INotificationsApi
     {
         /// <summary>Fired when the  user pressed a button in the notification.</summary>
         OnButtonClickedEvent OnButtonClicked { get; }
