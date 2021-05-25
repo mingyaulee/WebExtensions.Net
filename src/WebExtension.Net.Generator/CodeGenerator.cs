@@ -46,6 +46,10 @@ namespace WebExtension.Net.Generator
         {
             var relativeNamespace = clrTypeInfo.GeneratedNamespace ?? string.Empty;
             var codeType = GetCodeType(clrTypeInfo);
+            if (clrTypeInfo.IsPartial)
+            {
+                codeType = $"partial {codeType}";
+            }
             var declaration = $"public {codeType} {clrTypeInfo.CSharpName}";
             if (!string.IsNullOrEmpty(clrTypeInfo.BaseTypeName))
             {
