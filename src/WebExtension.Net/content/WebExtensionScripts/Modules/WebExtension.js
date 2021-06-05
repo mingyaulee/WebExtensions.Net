@@ -46,10 +46,14 @@ export default class WebExtension {
       if (result instanceof Promise) {
         result = await result;
       }
+
+      result = ArgumentsHandler.ProcessOutgoingArgument(result);
+
       if (returnObjectReferenceId) {
         this.#objectReferencesCount++;
         this.#objectReferences[returnObjectReferenceId] = result;
       }
+
       return result;
     } catch (error) {
       console.error(referenceId, targetPath, processedArgs, targetObject, targetMember, args);

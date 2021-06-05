@@ -25,12 +25,43 @@ export default class ArgumentsHandler {
    * @returns {object[]} The processed outgoing arguments.
    */
   static ProcessOutgoingArguments(outgoingArguments) {
-    return outgoingArguments.map(outgoingArgument => {
-      if (outgoingArgument instanceof Function) {
-        return FunctionReferenceHandler.GetJSFunctionReference(outgoingArgument);
-      }
+    return outgoingArguments.map(this.ProcessOutgoingArgument);
+  }
 
+  /**
+   * Process outgoing argument.
+   * @param {object} outgoingArgument The outgoing argument.
+   * @returns {object} The processed outgoing argument.
+   */
+  static ProcessOutgoingArgument(outgoingArgument) {
+    if (outgoingArgument === undefined || outgoingArgument === null) {
       return outgoingArgument;
-    });
+    }
+
+    if (outgoingArgument instanceof Function) {
+      return FunctionReferenceHandler.GetJSFunctionReference(outgoingArgument);
+    }
+
+    if (outgoingArgument instanceof Window || outgoingArgument?.["window"] === outgoingArgument) {
+      return this._ProcessWindowArgument(outgoingArgument);
+    }
+
+    return outgoingArgument;
+  }
+
+  /**
+   * Process window argument.
+   * @param {Window} windowObject The window object.
+   * @returns {object} The processed window object.
+   */
+  static _ProcessWindowArgument(windowObject) {
+    var processedWindowObject = {};
+    for (const [key, value] of Object.entries(windowObject)) {
+      if (value == windowObject) {
+        continue;
+      }
+      processedWindowObject[key] = value;
+    }
+    return processedWindowObject;
   }
 }
