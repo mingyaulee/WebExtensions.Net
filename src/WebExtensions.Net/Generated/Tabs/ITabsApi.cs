@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.ExtensionTypes;
-using WebExtension.Net.Runtime;
-using WebExtension.Net.Windows;
+using WebExtensions.Net.ExtensionTypes;
+using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Windows;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>Use the <c>browser.tabs</c> API to interact with the browser's tab system. You can use this API to create, modify, and rearrange tabs in the browser.</summary>
     public partial interface ITabsApi

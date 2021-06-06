@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     /// <summary>Tracking flags that match our internal tracking classification</summary>
     [JsonConverter(typeof(EnumStringConverter<UrlClassificationFlagTypes>))]

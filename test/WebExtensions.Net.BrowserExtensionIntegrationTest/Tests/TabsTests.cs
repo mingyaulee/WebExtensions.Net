@@ -2,24 +2,24 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtension.Net.ExtensionTypes;
-using WebExtension.Net.Tabs;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.ExtensionTypes;
+using WebExtensions.Net.Tabs;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.tabs")]
     public class TabsTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private int? testTabId;
         private readonly string testTabUrl;
         private readonly string testTabUpdateUrl;
 
-        public TabsTests(IWebExtensionApi webExtensionApi)
+        public TabsTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
-            testTabUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtension.Net/main/README.md?testId=" + Guid.NewGuid().ToString();
+            this.webExtensionsApi = webExtensionsApi;
+            testTabUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtensions.Net/main/README.md?testId=" + Guid.NewGuid().ToString();
             testTabUpdateUrl = testTabUrl + "&update=true";
         }
 
@@ -27,7 +27,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetCurrent()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.GetCurrent();
+            var tab = await webExtensionsApi.Tabs.GetCurrent();
 
             // Assert
             tab.Should().NotBeNull();
@@ -38,7 +38,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task AccessAllTabsProperties()
         {
             // Arrange
-            var tab = await webExtensionApi.Tabs.GetCurrent();
+            var tab = await webExtensionsApi.Tabs.GetCurrent();
 
             // Act
             Func<object[]> accessProperties = () => new object[]
@@ -85,7 +85,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.Create(new CreateProperties()
+            var tab = await webExtensionsApi.Tabs.Create(new CreateProperties()
             {
                 Url = testTabUrl
             });
@@ -93,7 +93,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             // Assert
             tab.Should().NotBeNull();
             tab.Id.Should().HaveValue();
-            tab.Id.Should().NotBe(webExtensionApi.Tabs.TAB_ID_NONE);
+            tab.Id.Should().NotBe(webExtensionsApi.Tabs.TAB_ID_NONE);
 
             testTabId = tab.Id;
         }
@@ -102,13 +102,13 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Get()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.Get(testTabId.Value);
+            var tab = await webExtensionsApi.Tabs.Get(testTabId.Value);
             var attemptCount = 0;
             while (tab.Status != "complete" && attemptCount < 10)
             {
                 attemptCount++;
                 await Task.Delay(500);
-                tab = await webExtensionApi.Tabs.Get(testTabId.Value);
+                tab = await webExtensionsApi.Tabs.Get(testTabId.Value);
             }
 
             // Assert
@@ -122,7 +122,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Query()
         {
             // Act
-            var tabs = await webExtensionApi.Tabs.Query(new QueryInfo()
+            var tabs = await webExtensionsApi.Tabs.Query(new QueryInfo()
             {
                 Url = testTabUrl
             });
@@ -140,7 +140,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var url = testTabUpdateUrl;
 
             // Act
-            var tab = await webExtensionApi.Tabs.Update(testTabId.Value, new UpdateProperties()
+            var tab = await webExtensionsApi.Tabs.Update(testTabId.Value, new UpdateProperties()
             {
                 Url = url
             });
@@ -154,7 +154,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Remove()
         {
             // Act
-            Func<Task> action = async () => await webExtensionApi.Tabs.Remove(testTabId.Value);
+            Func<Task> action = async () => await webExtensionsApi.Tabs.Remove(testTabId.Value);
 
             // Assert
             await action.Should().NotThrowAsync();

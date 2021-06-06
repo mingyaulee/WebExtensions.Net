@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// A DotNet delegate reference to be invoked in JavaScript.

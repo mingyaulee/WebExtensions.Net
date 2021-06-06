@@ -1,12 +1,12 @@
-# WebExtension.Net
-[![Nuget](https://img.shields.io/nuget/v/WebExtension.Net?style=flat-square&color=blue)](https://www.nuget.org/packages/WebExtension.Net/)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtension.Net/Build?style=flat-square&color=blue)](https://github.com/mingyaulee/WebExtension.Net/actions/workflows/WebExtension.Net-Build.yml)
-[![Sonar Tests](https://img.shields.io/sonar/tests/WebExtension.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtension.Net)
-[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtension.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtension.Net)
+# WebExtensions.Net
+[![Nuget](https://img.shields.io/nuget/v/WebExtensions.Net?style=flat-square&color=blue)](https://www.nuget.org/packages/WebExtensions.Net/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtensions.Net/Build?style=flat-square&color=blue)](https://github.com/mingyaulee/WebExtensions.Net/actions/workflows/WebExtensions.Net-Build.yml)
+[![Sonar Tests](https://img.shields.io/sonar/tests/WebExtensions.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
+[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtensions.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
 
 A package for consuming WebExtensions API in a browser extension.
 
-These API classes are generated based on the [Mozilla documentation for WebExtension API](https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html).
+These API classes are generated based on the [Mozilla documentation for WebExtensions API](https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/index.html).
 
 - [toolkit](https://searchfox.org/mozilla-central/source/toolkit/components/extensions/ext-toolkit.json)
 - [browser](https://searchfox.org/mozilla-central/source/browser/components/extensions/ext-browser.json)
@@ -20,29 +20,29 @@ Create a browser extension using Blazor. Refer to the package [Blazor.BrowserExt
 ### Without Blazor
 Create a standard browser extension using JavaScript and load the WebAssembly manually. The .Net source code can be compiled into wasm using Mono.
 
-1. Install `WebExtension.Net` from Nuget.
-2. A JavaScript file will be added to your project at the path `wwwroot/WebExtensionScripts/WebExtensionNet.js`. This `.js` file needs to be included in your  application, either by using a `<script>` element in HTML or using `import` from JavaScript code.
-3. Import the [WebExtension polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla for cross browser compatibility. This polyfill helps to convert the callback based Chrome extensions API to a Promise based API for asynchronous functions.
-4. Consume the WebExtension API by creating an instance of `WebExtensionApi` as shown below.
+1. Install `WebExtensions.Net` from Nuget.
+2. A JavaScript file will be added to your project at the path `wwwroot/WebExtensionsScripts/WebExtensionsNet.js`. This `.js` file needs to be included in your  application, either by using a `<script>` element in HTML or using `import` from JavaScript code.
+3. Import the [WebExtensions polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla for cross browser compatibility. This polyfill helps to convert the callback based Chrome extensions API to a Promise based API for asynchronous functions.
+4. Consume the WebExtensions API by creating an instance of `WebExtensionsApi` as shown below.
 
 ```csharp
-using WebExtension.Net;
+using WebExtensions.Net;
 ...
 // iJsRuntime is an instance of MonoWebAssemblyJSRuntime
-var webExtensionJsRuntime = new WebExtensionJSRuntime(iJsRuntime);
-var webExtensionApi = new WebExtensionApi(webExtensionJsRuntime);
-var manifest = await webExtensionApi.Runtime.GetManifest();
+var webExtensionsJsRuntime = new WebExtensionsJSRuntime(iJsRuntime);
+var webExtensionsApi = new WebExtensionsApi(webExtensionsJsRuntime);
+var manifest = await webExtensionsApi.Runtime.GetManifest();
 ```
 
 #### Debugging and testing
-For the purpose of debugging and testing outside of the browser extension environment, there is a `MockWebExtensionJSRuntime` class under the `WebExtension.Net.Mock` namespace.
+For the purpose of debugging and testing outside of the browser extension environment, there is a `MockWebExtensionsJSRuntime` class under the `WebExtensions.Net.Mock` namespace.
 Initialize an instance of the mock API with:
 ```csharp
-using WebExtension.Net;
-using WebExtension.Net.Mock;
+using WebExtensions.Net;
+using WebExtensions.Net.Mock;
 ...
-var webExtensionJsRuntime = new MockWebExtensionJSRuntime();
-var webExtensionApi = new WebExtensionApi(webExtensionJsRuntime);
+var webExtensionsJsRuntime = new MockWebExtensionsJSRuntime();
+var webExtensionsApi = new WebExtensionsApi(webExtensionsJsRuntime);
 ```
 
 To configure the behaviour of the mock API, you may use any combination of the following:
@@ -149,5 +149,5 @@ The following MSBuild properties can be specified in your project file or when r
 
 | Property                  | Default value | Description                                                               |
 | ------------------------- | ------------- | ------------------------------------------------------------------------- |
-| WebExtensionAssetsPath    | wwwroot       | The root folder where the JavaScript file should be added as link.        |
-| IncludeWebExtensionAssets | true          | If set to false, the JavaScript file will not be added as to the project. |
+| WebExtensionsAssetsPath    | wwwroot       | The root folder where the JavaScript file should be added as link.        |
+| IncludeWebExtensionsAssets | true          | If set to false, the JavaScript file will not be added as to the project. |

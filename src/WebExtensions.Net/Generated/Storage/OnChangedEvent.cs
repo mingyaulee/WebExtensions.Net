@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     // Type Class
     /// <summary>Fired when one or more items change.</summary>

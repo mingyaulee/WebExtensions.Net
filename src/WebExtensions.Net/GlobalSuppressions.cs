@@ -5,5 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtension.Net.ExtensionTypes.Rect.X")]
-[assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtension.Net.ExtensionTypes.Rect.Y")]
+[assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtensions.Net.ExtensionTypes.Rect.X")]
+[assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtensions.Net.ExtensionTypes.Rect.Y")]

@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Generator.Models.ClrTypes;
+﻿using WebExtensions.Net.Generator.Models.ClrTypes;
 
-namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
     public class ApiRootPropertyCodeConverter : ICodeConverter
     {
@@ -29,7 +29,7 @@ namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
                     .WriteStartBlock()
                         .WriteLine($"if (_{privatePropertyName} is null)")
                         .WriteStartBlock()
-                            .WriteLine($"_{privatePropertyName} = new {propertyType}(webExtensionJSRuntime);")
+                            .WriteLine($"_{privatePropertyName} = new {propertyType}(webExtensionsJSRuntime);")
                         .WriteEndBlock()
                         .WriteLine($"return _{privatePropertyName};")
                     // end property get

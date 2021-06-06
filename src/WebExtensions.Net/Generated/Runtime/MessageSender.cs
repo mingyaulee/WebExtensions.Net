@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using WebExtension.Net.Tabs;
+using WebExtensions.Net.Tabs;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>An object containing information about the script context that sent a message or request.</summary>

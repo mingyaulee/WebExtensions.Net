@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when the highlighted or selected tabs in a window changes.</summary>

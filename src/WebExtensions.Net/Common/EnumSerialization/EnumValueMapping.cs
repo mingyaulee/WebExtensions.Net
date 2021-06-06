@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net
+﻿namespace WebExtensions.Net
 {
     internal class EnumValueMapping
     {

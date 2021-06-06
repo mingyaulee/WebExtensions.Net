@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when the extension is first installed, when the extension is updated to a new version, and when the browser is updated to a new version.</summary>

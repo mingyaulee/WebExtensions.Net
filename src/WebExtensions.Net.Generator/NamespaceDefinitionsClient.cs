@@ -6,10 +6,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator
+namespace WebExtensions.Net.Generator
 {
     /// <summary>
     /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html

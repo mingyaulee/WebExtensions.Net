@@ -3,22 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.storage")]
     public class StorageTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private readonly string storageTestKey1;
         private readonly string storageTestValue1;
         private readonly string storageTestKey2;
         private readonly string storageTestValue2;
 
-        public StorageTests(IWebExtensionApi webExtensionApi)
+        public StorageTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
             storageTestKey1 = "test";
             storageTestValue1 = Guid.NewGuid().ToString();
             storageTestKey2 = "toRemove";
@@ -29,7 +29,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task SetSyncStorageValue()
         {
             // Assert
-            var syncStorage = await webExtensionApi.Storage.GetSync();
+            var syncStorage = await webExtensionsApi.Storage.GetSync();
             var storageItem = new Dictionary<string, string>()
             {
                 { storageTestKey1, storageTestValue1 },
@@ -47,7 +47,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionApi.Storage.GetSync();
+            var syncStorage = await webExtensionsApi.Storage.GetSync();
 
             // Act
             var jsonStorageObject = await syncStorage.Get(null);
@@ -65,7 +65,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task RemoveSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionApi.Storage.GetSync();
+            var syncStorage = await webExtensionsApi.Storage.GetSync();
 
             // Act
             await syncStorage.Remove(storageTestKey2);
@@ -82,7 +82,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ClearSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionApi.Storage.GetSync();
+            var syncStorage = await webExtensionsApi.Storage.GetSync();
 
             // Act
             await syncStorage.Clear();
@@ -97,7 +97,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task SetLocalStorageValue()
         {
             // Assert
-            var localStorage = await webExtensionApi.Storage.GetLocal();
+            var localStorage = await webExtensionsApi.Storage.GetLocal();
             var storageItem = new Dictionary<string, string>()
             {
                 { storageTestKey1, storageTestValue1 },
@@ -115,7 +115,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionApi.Storage.GetLocal();
+            var localStorage = await webExtensionsApi.Storage.GetLocal();
 
             // Act
             var jsonStorageObject = await localStorage.Get(null);
@@ -133,7 +133,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task RemoveLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionApi.Storage.GetLocal();
+            var localStorage = await webExtensionsApi.Storage.GetLocal();
 
             // Act
             await localStorage.Remove(storageTestKey2);
@@ -150,7 +150,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ClearLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionApi.Storage.GetLocal();
+            var localStorage = await webExtensionsApi.Storage.GetLocal();
 
             // Act
             await localStorage.Clear();

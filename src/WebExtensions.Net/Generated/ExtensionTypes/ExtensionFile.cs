@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using WebExtension.Net.Manifest;
+using WebExtensions.Net.Manifest;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary></summary>

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     /// <summary>Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.</summary>
     public partial interface IStorageApi

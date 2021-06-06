@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a document, including the resources it refers to, is completely loaded and initialized.</summary>

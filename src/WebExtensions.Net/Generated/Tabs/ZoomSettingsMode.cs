@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>Defines how zoom changes are handled, i.e. which entity is responsible for the actual scaling of the page; defaults to <c>automatic</c>.</summary>
     [JsonConverter(typeof(EnumStringConverter<ZoomSettingsMode>))]

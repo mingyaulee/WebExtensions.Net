@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Generator.Models.ClrTypes
+﻿namespace WebExtensions.Net.Generator.Models.ClrTypes
 {
     public class ClrMethodReturnInfo
     {

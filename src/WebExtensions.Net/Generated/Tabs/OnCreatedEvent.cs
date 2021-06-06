@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</summary>

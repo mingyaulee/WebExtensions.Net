@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     /// <summary></summary>
     [JsonConverter(typeof(EnumStringConverter<OnBeforeRedirectOptions>))]

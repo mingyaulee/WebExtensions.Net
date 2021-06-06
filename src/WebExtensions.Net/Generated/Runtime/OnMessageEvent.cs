@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when a message is sent from either an extension process or a content script.</summary>

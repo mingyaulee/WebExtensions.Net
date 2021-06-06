@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
+﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
     public class ApiConstructorCodeConverter : ICodeConverter
     {
@@ -15,8 +15,8 @@
         {
             codeWriter.Constructors
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
-                .WriteWithConverter(new CommentParamCodeSectionConverter("webExtensionJSRuntime", "Web Extension JS Runtime"))
-                .WriteLine($"public {className}(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, \"{apiName}\")")
+                .WriteWithConverter(new CommentParamCodeSectionConverter("webExtensionsJSRuntime", "Web Extension JS Runtime"))
+                .WriteLine($"public {className}(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, \"{apiName}\")")
                 .WriteStartBlock()
                 .WriteEndBlock();
         }

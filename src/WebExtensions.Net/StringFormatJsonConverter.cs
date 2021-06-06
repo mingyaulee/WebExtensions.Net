@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// JSON converter for String Format class object

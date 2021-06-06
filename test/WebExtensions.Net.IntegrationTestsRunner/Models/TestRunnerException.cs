@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net.IntegrationTestsRunner.Models
+namespace WebExtensions.Net.IntegrationTestsRunner.Models
 {
     public class TestRunnerException : Exception
     {

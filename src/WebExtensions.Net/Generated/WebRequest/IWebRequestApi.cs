@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     /// <summary>Use the <c>browser.webRequest</c> API to observe and analyze traffic and to intercept, block, or modify requests in-flight.</summary>
     public partial interface IWebRequestApi

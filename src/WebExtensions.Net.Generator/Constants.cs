@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Generator
+﻿namespace WebExtensions.Net.Generator
 {
     public static class Constants
     {

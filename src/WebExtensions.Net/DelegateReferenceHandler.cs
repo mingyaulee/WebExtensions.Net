@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.JSInterop;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Handles passing delegate reference to be invoked in JavaScript.

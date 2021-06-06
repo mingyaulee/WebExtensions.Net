@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.JsonConverters
+namespace WebExtensions.Net.Generator.JsonConverters
 {
     public class EnumValueDefinitionConverter : JsonConverter<EnumValueDefinition>
     {

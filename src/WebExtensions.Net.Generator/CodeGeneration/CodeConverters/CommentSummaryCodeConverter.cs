@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Generator.Extensions;
+﻿using WebExtensions.Net.Generator.Extensions;
 
-namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
     public class CommentSummaryCodeConverter : ICodeConverter, ICodeSectionConverter
     {

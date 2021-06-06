@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>Defines whether zoom changes will persist for the page's origin, or only take effect in this tab; defaults to <c>per-origin</c> when in <c>automatic</c> mode, and <c>per-tab</c> otherwise.</summary>
     [JsonConverter(typeof(EnumStringConverter<ZoomSettingsScope>))]

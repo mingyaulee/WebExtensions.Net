@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple =false, Inherited = false)]
     internal class EnumValueAttribute : Attribute

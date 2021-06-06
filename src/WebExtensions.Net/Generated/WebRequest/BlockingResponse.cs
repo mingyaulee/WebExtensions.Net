@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Returns value for event handlers that have the 'blocking' extraInfoSpec applied. Allows the event handler to modify network requests.</summary>

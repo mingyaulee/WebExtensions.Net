@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Tab sharing state for screen, microphone and camera.</summary>

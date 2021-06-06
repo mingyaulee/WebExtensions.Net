@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.Entities;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration
+namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
     public class NamespaceRegistrationFilter
     {

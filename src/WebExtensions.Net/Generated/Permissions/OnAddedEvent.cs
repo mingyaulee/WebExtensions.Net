@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Permissions
+namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary>Fired when the extension acquires new permissions.</summary>

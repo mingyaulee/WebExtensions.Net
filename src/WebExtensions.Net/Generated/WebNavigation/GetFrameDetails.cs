@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Information about the frame to retrieve information about.</summary>

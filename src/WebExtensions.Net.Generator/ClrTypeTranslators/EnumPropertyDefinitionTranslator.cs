@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.ClrTypes;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Extensions;
+using WebExtensions.Net.Generator.Models.ClrTypes;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.ClrTypeTranslators
+namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
     public static class EnumPropertyDefinitionTranslator
     {

@@ -1,4 +1,4 @@
 ﻿(async () => {
-  var WebExtension = (await import("./Modules/WebExtension.js")).default;
-  globalThis.WebExtensionNet = new WebExtension();
+  var WebExtensions = (await import("./Modules/WebExtensions.js")).default;
+  globalThis.WebExtensionsNet = new WebExtensions();
 })();

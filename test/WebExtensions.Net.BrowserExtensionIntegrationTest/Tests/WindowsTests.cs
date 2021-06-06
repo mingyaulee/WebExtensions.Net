@@ -1,27 +1,27 @@
 ﻿using FluentAssertions;
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtension.Net.Windows;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.Windows;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.windows")]
     public class WindowsTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private int? testWindowId;
 
-        public WindowsTests(IWebExtensionApi webExtensionApi)
+        public WindowsTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
         }
 
         [Fact(Order = 1)]
         public async Task Create()
         {
             // Act
-            var window = await webExtensionApi.Windows.Create(new CreateData()
+            var window = await webExtensionsApi.Windows.Create(new CreateData()
             {
                 Url = "https://google.com",
                 Top = 0,
@@ -38,7 +38,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Get()
         {
             // Act
-            var window = await webExtensionApi.Windows.Get(testWindowId.Value, null);
+            var window = await webExtensionsApi.Windows.Get(testWindowId.Value, null);
 
             // Assert
             window.Should().NotBeNull();
@@ -53,7 +53,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
             var windowLeft = 100;
 
             // Act
-            var window = await webExtensionApi.Windows.Update(testWindowId.Value, new UpdateInfo()
+            var window = await webExtensionsApi.Windows.Update(testWindowId.Value, new UpdateInfo()
             {
                 Top = windowTop,
                 Left = windowLeft
@@ -69,7 +69,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Remove()
         {
             // Act
-            Func<Task> action = async () => await webExtensionApi.Windows.Remove(testWindowId.Value);
+            Func<Task> action = async () => await webExtensionsApi.Windows.Remove(testWindowId.Value);
 
             // Assert
             await action.Should().NotThrowAsync();

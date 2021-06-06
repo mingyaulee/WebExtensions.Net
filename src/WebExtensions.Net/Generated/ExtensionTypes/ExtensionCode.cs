@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary></summary>

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Models;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     public class TestFactory : ITestFactory
     {
-        private const string TestNamespace = "WebExtension.Net.BrowserExtensionIntegrationTest.Tests";
+        private const string TestNamespace = "WebExtensions.Net.BrowserExtensionIntegrationTest.Tests";
 
         public IEnumerable<TestClassInfo> GetAllTests()
         {

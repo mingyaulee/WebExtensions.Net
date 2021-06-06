@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.</summary>

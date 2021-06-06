@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Notifications
+namespace WebExtensions.Net.Notifications
 {
     /// <inheritdoc />
     public partial class NotificationsApi : BaseApi, INotificationsApi
@@ -12,8 +12,8 @@ namespace WebExtension.Net.Notifications
         private OnShownEvent _onShown;
 
         /// <summary>Creates a new instance of <see cref="NotificationsApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public NotificationsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "notifications")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public NotificationsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "notifications")
         {
         }
 

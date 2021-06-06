@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net
+﻿namespace WebExtensions.Net
 {
     /// <summary>
     /// Invoke JavaScript options.

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     /// <summary>The type of browser window this is. Under some circumstances a Window may not be assigned type property, for example when querying closed windows from the $(ref:sessions) API.</summary>
     [JsonConverter(typeof(EnumStringConverter<WindowType>))]

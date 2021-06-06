@@ -30,6 +30,6 @@ export default class DotNetDelegateProxy {
   dynamicInvoke(...invokeArgs) {
     const id = this.#id;
     const processedInvokeArgs = ArgumentsHandler.ProcessOutgoingArguments(invokeArgs);
-    return globalThis.DotNet.invokeMethod("WebExtension.Net", "InvokeDelegateFromJS", id, processedInvokeArgs);
+    return globalThis.DotNet.invokeMethod("WebExtensions.Net", "InvokeDelegateFromJS", id, processedInvokeArgs);
   }
 }

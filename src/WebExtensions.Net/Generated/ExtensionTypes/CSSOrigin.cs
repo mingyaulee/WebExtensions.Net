@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     /// <summary>The origin of the CSS to inject, this affects the cascading order (priority) of the stylesheet.</summary>
     [JsonConverter(typeof(EnumStringConverter<CSSOrigin>))]

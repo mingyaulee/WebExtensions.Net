@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary>Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.</summary>

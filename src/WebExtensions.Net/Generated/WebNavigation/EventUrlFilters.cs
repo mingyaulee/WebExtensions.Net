@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>

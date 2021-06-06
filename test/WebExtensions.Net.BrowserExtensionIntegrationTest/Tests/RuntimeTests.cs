@@ -1,25 +1,25 @@
 ﻿using FluentAssertions;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.runtime")]
     public class RuntimeTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
 
-        public RuntimeTests(IWebExtensionApi webExtensionApi)
+        public RuntimeTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
         }
 
         [Fact]
         public async Task GetId()
         {
             // Act
-            var extensionId = await webExtensionApi.Runtime.GetId();
+            var extensionId = await webExtensionsApi.Runtime.GetId();
 
             // Assert
             extensionId.Should().NotBeNullOrEmpty();
@@ -29,7 +29,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetManifest()
         {
             // Act
-            var manifest = await webExtensionApi.Runtime.GetManifest();
+            var manifest = await webExtensionsApi.Runtime.GetManifest();
 
             // Assert
             manifest.ValueKind.Should().Be(JsonValueKind.Object);
@@ -39,7 +39,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetURL()
         {
             // Act
-            var url = await webExtensionApi.Runtime.GetURL("index.html");
+            var url = await webExtensionsApi.Runtime.GetURL("index.html");
 
             // Assert
             url.Should().StartWith("chrome-extension://")
@@ -50,7 +50,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetPlatformInfo()
         {
             // Act
-            var platformInfo = await webExtensionApi.Runtime.GetPlatformInfo();
+            var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
 
             // Assert
             platformInfo.Should().NotBeNull();

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Notifications
+namespace WebExtensions.Net.Notifications
 {
     /// <summary></summary>
     [JsonConverter(typeof(EnumStringConverter<TemplateType>))]

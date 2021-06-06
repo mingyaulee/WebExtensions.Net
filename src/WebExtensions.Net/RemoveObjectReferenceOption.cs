@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net
+﻿namespace WebExtensions.Net
 {
     /// <summary>
     /// Remove JavaScript object reference options.
@@ -8,7 +8,7 @@
         /// <summary>
         /// The identifier for the action 'RemoveObjectReference'.
         /// </summary>
-        public const string Identifier = "WebExtensionNet.RemoveObjectReference";
+        public const string Identifier = "WebExtensionsNet.RemoveObjectReference";
 
         internal RemoveObjectReferenceOption(string referenceId)
         {

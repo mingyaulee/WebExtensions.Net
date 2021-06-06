@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace WebExtension.Net.IntegrationTestsRunner.Helpers
+namespace WebExtensions.Net.IntegrationTestsRunner.Helpers
 {
     /// <summary>
     /// Helper methods for working with <see cref="Guid"/>.

@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Adapter for IJSRuntime
     /// </summary>
-    public interface IWebExtensionJSRuntime
+    public interface IWebExtensionsJSRuntime
     {
-        internal static IWebExtensionJSRuntime StaticInstance { get; set; }
+        internal static IWebExtensionsJSRuntime StaticInstance { get; set; }
 
         /// <summary>
         /// Invokes the specified JavaScript function synchronously.

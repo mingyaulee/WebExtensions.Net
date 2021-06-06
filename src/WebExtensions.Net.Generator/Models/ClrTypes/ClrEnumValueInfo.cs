@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace WebExtension.Net.Generator.Models.ClrTypes
+namespace WebExtensions.Net.Generator.Models.ClrTypes
 {
     [DebuggerDisplay("{CSharpName}")]
     public class ClrEnumValueInfo

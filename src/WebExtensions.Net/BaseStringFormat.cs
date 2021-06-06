@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Base class for types that has a format pattern

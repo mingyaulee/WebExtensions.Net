@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Models.Schema;
-using WebExtension.Net.Generator.Repositories;
+using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
+namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
     public class EnumClassEntityRegistrar : BaseClassEntityRegistrar
     {

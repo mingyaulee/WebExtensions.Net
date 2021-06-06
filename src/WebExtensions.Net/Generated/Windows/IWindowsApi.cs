@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     /// <summary>Use the <c>browser.windows</c> API to interact with browser windows. You can use this API to create, modify, and rearrange windows in the browser.</summary>
     public partial interface IWindowsApi

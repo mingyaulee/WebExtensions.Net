@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     /// <inheritdoc />
     public partial class StorageApi : BaseApi, IStorageApi
@@ -8,8 +8,8 @@ namespace WebExtension.Net.Storage
         private OnChangedEvent _onChanged;
 
         /// <summary>Creates a new instance of <see cref="StorageApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public StorageApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "storage")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public StorageApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "storage")
         {
         }
 

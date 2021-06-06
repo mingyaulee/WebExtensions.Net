@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net.Generator", "src\WebExtension.Net.Generator\WebExtension.Net.Generator.csproj", "{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net.Generator", "src\WebExtensions.Net.Generator\WebExtensions.Net.Generator.csproj", "{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net", "src\WebExtension.Net\WebExtension.Net.csproj", "{F84448CE-50BD-41BA-A49D-87F6CB4AF130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net", "src\WebExtensions.Net\WebExtensions.Net.csproj", "{F84448CE-50BD-41BA-A49D-87F6CB4AF130}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36C5C454-9F2E-4505-B08D-452DED9D18F0}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{790DED5B-7057-4D11-BD7D-79AFA689C68E}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\WebExtension.Net-Build.yml = .github\workflows\WebExtension.Net-Build.yml
-		.github\workflows\WebExtension.Net-Release.yml = .github\workflows\WebExtension.Net-Release.yml
+		.github\workflows\WebExtensions.Net-Build.yml = .github\workflows\WebExtensions.Net-Build.yml
+		.github\workflows\WebExtensions.Net-Release.yml = .github\workflows\WebExtensions.Net-Release.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{402C7B21-F25A-4EB2-AAAE-A8F827CD0ED4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net.BrowserExtensionIntegrationTest", "test\WebExtension.Net.BrowserExtensionIntegrationTest\WebExtension.Net.BrowserExtensionIntegrationTest.csproj", "{C8382E8F-80E4-4EA5-B64E-D8AD46D84F90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net.BrowserExtensionIntegrationTest", "test\WebExtensions.Net.BrowserExtensionIntegrationTest\WebExtensions.Net.BrowserExtensionIntegrationTest.csproj", "{C8382E8F-80E4-4EA5-B64E-D8AD46D84F90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtension.Net.IntegrationTestsRunner", "test\WebExtension.Net.IntegrationTestsRunner\WebExtension.Net.IntegrationTestsRunner.csproj", "{6F6D0020-DE47-47F5-8D85-25A4D328B0A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net.IntegrationTestsRunner", "test\WebExtensions.Net.IntegrationTestsRunner\WebExtensions.Net.IntegrationTestsRunner.csproj", "{6F6D0020-DE47-47F5-8D85-25A4D328B0A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37728F80-FC95-4451-B92C-3D915C0D11B6}"
 EndProject

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     /// <summary>The state of this browser window. Under some circumstances a Window may not be assigned state property, for example when querying closed windows from the $(ref:sessions) API.</summary>
     [JsonConverter(typeof(EnumStringConverter<WindowState>))]

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     /// <summary>The reason that this event is being dispatched.</summary>
     [JsonConverter(typeof(EnumStringConverter<OnInstalledReason>))]

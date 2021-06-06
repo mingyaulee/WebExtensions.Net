@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Notifications
+namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary>Fired when the  user pressed a button in the notification.</summary>

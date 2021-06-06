@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     // Multitype Class
     /// <summary>A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</summary>

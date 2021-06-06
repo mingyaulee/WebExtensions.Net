@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Generator.CodeGeneration
+﻿namespace WebExtensions.Net.Generator.CodeGeneration
 {
     public class CodeWriterOptions
     {

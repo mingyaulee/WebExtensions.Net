@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>The type of window.</summary>
     [JsonConverter(typeof(EnumStringConverter<WindowType>))]

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Generator.Models.Schema
+namespace WebExtensions.Net.Generator.Models.Schema
 {
     [JsonConverter(typeof(EnumStringConverter<ObjectType>))]
     public enum ObjectType

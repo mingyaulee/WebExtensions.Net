@@ -2,27 +2,27 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtension.Net.Tabs;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.Tabs;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "Sanity Tests")]
     public class SanityTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private string testStorageArea;
 
-        public SanityTests(IWebExtensionApi webExtensionApi)
+        public SanityTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
         }
 
         [Fact(Description = "Execute API with primitive return type", Order = 1)]
         public async Task ExecuteAPIWithPrimitiveReturnType()
         {
             // Act
-            var createdNotificationId = await webExtensionApi.Runtime.GetURL("");
+            var createdNotificationId = await webExtensionsApi.Runtime.GetURL("");
 
             // Assert
             createdNotificationId.Should().NotBeNullOrEmpty();
@@ -32,7 +32,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteAPIWithStronglyTypedObjectReturnType()
         {
             // Act
-            var platformInfo = await webExtensionApi.Runtime.GetPlatformInfo();
+            var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
 
             // Assert
             platformInfo.Should().NotBeNull();
@@ -42,7 +42,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteAPIWithEnumerableReturnType()
         {
             // Act
-            var tab = await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true });
+            var tab = await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true });
 
             // Assert
             tab.Should().NotBeNull();
@@ -54,10 +54,10 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteAPIWithMultitypeClassArgumentType()
         {
             // Arrange
-            var activeTab = (await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+            var activeTab = (await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true })).First();
 
             // Act
-            var tab = await webExtensionApi.Tabs.Query(new QueryInfo() { Url = activeTab.Url });
+            var tab = await webExtensionsApi.Tabs.Query(new QueryInfo() { Url = activeTab.Url });
 
             // Assert
             tab.Should().NotBeNull();
@@ -69,10 +69,10 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteAPIWithMultitypeClassReturnType()
         {
             // Arrange
-            var activeTab = (await webExtensionApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+            var activeTab = (await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true })).First();
 
             // Act
-            var tab = await webExtensionApi.Tabs.Move(activeTab.Id.Value, new MoveProperties() { Index = 1 });
+            var tab = await webExtensionsApi.Tabs.Move(activeTab.Id.Value, new MoveProperties() { Index = 1 });
 
             // Assert
             tab.Should().NotBeNull();
@@ -82,7 +82,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetPrimitiveAPIProperty()
         {
             // Act
-            var extensionId = await webExtensionApi.Runtime.GetId();
+            var extensionId = await webExtensionsApi.Runtime.GetId();
 
             // Assert
             extensionId.Should().NotBeNullOrEmpty();
@@ -92,7 +92,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteReferenceObjectFunction()
         {
             // Arrange
-            var localStorageReference = await webExtensionApi.Storage.GetLocal();
+            var localStorageReference = await webExtensionsApi.Storage.GetLocal();
 
             // Act
             Func<Task> action = async () => await localStorageReference.Set(new { test = true });
@@ -105,7 +105,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteReferenceObjectFunctionWithReturn()
         {
             // Arrange
-            var localStorageReference = await webExtensionApi.Storage.GetLocal();
+            var localStorageReference = await webExtensionsApi.Storage.GetLocal();
             var testValue = Guid.NewGuid().ToString();
             await localStorageReference.Set(new { test = testValue });
 
@@ -122,7 +122,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task EventListenerCanBeAddedToEvent()
         {
             // Act
-            Func<Task> action = async () => await webExtensionApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
+            Func<Task> action = async () => await webExtensionsApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
 
             // Assert
             await action.Should().NotThrowAsync();
@@ -132,7 +132,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task EventListenerCanBeCheckedIfTheEventHasTheListener()
         {
             // Act
-            var isRegistered = await webExtensionApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
+            var isRegistered = await webExtensionsApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
 
             // Assert
             isRegistered.Should().BeTrue();
@@ -142,7 +142,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task EventListenerIsInvokedWhenTheEventIsFired()
         {
             // Arrange
-            var localStorage = await webExtensionApi.Storage.GetLocal();
+            var localStorage = await webExtensionsApi.Storage.GetLocal();
             await localStorage.Set(new { test = 1234 });
             await localStorage.Clear();
 
@@ -154,7 +154,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task EventListenerCanBeRemovedFromEvent()
         {
             // Act
-            Func<Task> action = async () => await webExtensionApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
+            Func<Task> action = async () => await webExtensionsApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
 
             // Assert
             await action.Should().NotThrowAsync();

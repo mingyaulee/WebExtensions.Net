@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Invoke JavaScript function reference options.
@@ -10,7 +10,7 @@ namespace WebExtension.Net
         /// <summary>
         /// The identifier for the action 'InvokeFunctionFromDotNet'.
         /// </summary>
-        public const string Identifier = "WebExtensionNet.InvokeFunctionFromDotNet";
+        public const string Identifier = "WebExtensionsNet.InvokeFunctionFromDotNet";
 
         internal InvokeFunctionReferenceOption(Guid referenceId)
         {

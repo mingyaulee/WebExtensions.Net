@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using WebExtension.Net.Tabs;
+using WebExtensions.Net.Tabs;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary></summary>

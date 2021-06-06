@@ -1,9 +1,9 @@
-﻿<!-- build/WebExtension.Net.props -->
+﻿<!-- build/WebExtensions.Net.props -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <WebExtensionAssetsPath Condition="'$(WebExtensionAssetsPath)' == ''">wwwroot</WebExtensionAssetsPath>
-    <IncludeWebExtensionAssets Condition="'$(IncludeWebExtensionAssets)' == ''">true</IncludeWebExtensionAssets>
+    <WebExtensionsAssetsPath Condition="'$(WebExtensionsAssetsPath)' == ''">wwwroot</WebExtensionsAssetsPath>
+    <IncludeWebExtensionsAssets Condition="'$(IncludeWebExtensionsAssets)' == ''">true</IncludeWebExtensionsAssets>
   </PropertyGroup>
 
 </Project>

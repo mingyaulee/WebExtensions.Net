@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Bookmarks
+namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>A node (either a bookmark or a folder) in the bookmark tree.  Child nodes are ordered within their parent folder.</summary>

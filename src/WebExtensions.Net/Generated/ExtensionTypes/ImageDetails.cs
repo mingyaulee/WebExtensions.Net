@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary>Details about the format, quality, area and scale of the capture.</summary>

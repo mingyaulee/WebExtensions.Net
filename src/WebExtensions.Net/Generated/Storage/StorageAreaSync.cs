@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     // Type Class
     /// <summary></summary>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using WebExtension.Net.Mock.Handlers;
+using WebExtensions.Net.Mock.Handlers;
 
-namespace WebExtension.Net.Mock.Configurators
+namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>
     /// The base configurator.
@@ -14,17 +14,17 @@ namespace WebExtension.Net.Mock.Configurators
     /// <typeparam name="TObject">The type of object to configure.</typeparam>
     public abstract class BaseConfigurator<TObject>
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private readonly IList<IMockHandler> mockHandlers;
 
         /// <summary>
         /// Creates a new instance of BaseConfigurator.
         /// </summary>
-        /// <param name="webExtensionApi">The web extension API.</param>
+        /// <param name="webExtensionsApi">The web extension API.</param>
         /// <param name="mockHandlers">The mock handlers.</param>
-        protected BaseConfigurator(IWebExtensionApi webExtensionApi, IList<IMockHandler> mockHandlers)
+        protected BaseConfigurator(IWebExtensionsApi webExtensionsApi, IList<IMockHandler> mockHandlers)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
             this.mockHandlers = mockHandlers;
         }
 
@@ -151,7 +151,7 @@ namespace WebExtension.Net.Mock.Configurators
         {
             try
             {
-                var delegateToMock = (Delegate)expression.Compile().DynamicInvoke(webExtensionApi);
+                var delegateToMock = (Delegate)expression.Compile().DynamicInvoke(webExtensionsApi);
                 var arguments = delegateToMock.Method.GetParameters()
                     .Select(parameter => parameter.ParameterType.IsClass ? null : Activator.CreateInstance(parameter.ParameterType))
                     .ToArray();

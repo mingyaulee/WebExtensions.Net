@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using WebExtension.Net.Generator.Models.ClrTypes;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.ClrTypeTranslators;
+using WebExtensions.Net.Generator.Models.ClrTypes;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.ClrTypeTranslators;
 
-namespace WebExtension.Net.Generator
+namespace WebExtensions.Net.Generator
 {
     public class ClrTypeManager
     {

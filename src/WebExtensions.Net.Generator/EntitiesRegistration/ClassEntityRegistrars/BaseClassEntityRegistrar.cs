@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Helpers;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Models.Schema;
-using WebExtension.Net.Generator.Repositories;
+using WebExtensions.Net.Generator.Extensions;
+using WebExtensions.Net.Generator.Helpers;
+using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
+namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
     public abstract class BaseClassEntityRegistrar
     {

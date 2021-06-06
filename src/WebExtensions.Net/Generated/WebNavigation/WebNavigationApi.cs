@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     /// <inheritdoc />
     public partial class WebNavigationApi : BaseApi, IWebNavigationApi
@@ -17,8 +17,8 @@ namespace WebExtension.Net.WebNavigation
         private OnTabReplacedEvent _onTabReplaced;
 
         /// <summary>Creates a new instance of <see cref="WebNavigationApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebNavigationApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webNavigation")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public WebNavigationApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "webNavigation")
         {
         }
 

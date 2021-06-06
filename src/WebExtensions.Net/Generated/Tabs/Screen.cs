@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     // Multitype Class
     /// <summary>True for any screen sharing, or a string to specify type of screen sharing.</summary>

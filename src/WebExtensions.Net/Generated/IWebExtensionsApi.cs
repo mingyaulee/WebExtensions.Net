@@ -1,18 +1,18 @@
-using WebExtension.Net.Bookmarks;
-using WebExtension.Net.ContentScripts;
-using WebExtension.Net.Notifications;
-using WebExtension.Net.Permissions;
-using WebExtension.Net.Runtime;
-using WebExtension.Net.Storage;
-using WebExtension.Net.Tabs;
-using WebExtension.Net.WebNavigation;
-using WebExtension.Net.WebRequest;
-using WebExtension.Net.Windows;
+using WebExtensions.Net.Bookmarks;
+using WebExtensions.Net.ContentScripts;
+using WebExtensions.Net.Notifications;
+using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Storage;
+using WebExtensions.Net.Tabs;
+using WebExtensions.Net.WebNavigation;
+using WebExtensions.Net.WebRequest;
+using WebExtensions.Net.Windows;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public interface IWebExtensionApi
+    public interface IWebExtensionsApi
     {
         /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.<br />Requires manifest permission bookmarks.</summary>
         IBookmarksApi Bookmarks { get; }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebExtension.Net.IntegrationTestsRunner.Models
+namespace WebExtensions.Net.IntegrationTestsRunner.Models
 {
     public class TestRunInfo
     {

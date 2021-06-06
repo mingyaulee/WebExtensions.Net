@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Only used as a response to the onAuthRequired event. If set, the request is made using the supplied credentials.</summary>

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Defines how zoom changes in a tab are handled and at what scope.</summary>

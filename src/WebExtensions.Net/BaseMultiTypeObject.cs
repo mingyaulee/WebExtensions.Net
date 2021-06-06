@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Base class for types that has multiple type choices
@@ -29,7 +29,7 @@ namespace WebExtension.Net
             {
                 if (value is BaseObject baseObject && IsInitialized)
                 {
-                    baseObject.Initialize(webExtensionJSRuntime, referenceId, accessPath);
+                    baseObject.Initialize(webExtensionsJSRuntime, referenceId, accessPath);
                 }
 
                 return value;

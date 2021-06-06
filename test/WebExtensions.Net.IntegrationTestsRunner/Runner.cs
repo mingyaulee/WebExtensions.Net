@@ -5,10 +5,10 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.IntegrationTestsRunner.Helpers;
-using WebExtension.Net.IntegrationTestsRunner.Models;
+using WebExtensions.Net.IntegrationTestsRunner.Helpers;
+using WebExtensions.Net.IntegrationTestsRunner.Models;
 
-namespace WebExtension.Net.IntegrationTestsRunner
+namespace WebExtensions.Net.IntegrationTestsRunner
 {
     [TestClass]
     public class Runner
@@ -26,7 +26,7 @@ namespace WebExtension.Net.IntegrationTestsRunner
             var configuration = "release";
 #endif
 
-            var extensionPath = $"{solutionDirectory}\\test\\WebExtension.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\wwwroot";
+            var extensionPath = $"{solutionDirectory}\\test\\WebExtensions.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\wwwroot";
 
             if (!Directory.Exists(resultsPath))
             {

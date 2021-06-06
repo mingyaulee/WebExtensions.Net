@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Storage
+namespace WebExtensions.Net.Storage
 {
     // Multitype Class
     /// <summary>A single key or a list of keys for items to remove.</summary>

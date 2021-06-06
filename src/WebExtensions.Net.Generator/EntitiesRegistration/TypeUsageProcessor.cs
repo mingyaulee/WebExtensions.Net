@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration
+namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
     public class TypeUsageProcessor
     {

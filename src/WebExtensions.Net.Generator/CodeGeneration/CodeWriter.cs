@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebExtension.Net.Generator.CodeGeneration
+namespace WebExtensions.Net.Generator.CodeGeneration
 {
     public abstract class CodeWriter
     {

@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Generator.Models.Entities;
+﻿using WebExtensions.Net.Generator.Models.Entities;
 
-namespace WebExtension.Net.Generator.Extensions
+namespace WebExtensions.Net.Generator.Extensions
 {
     public static class NamespaceEntityExtensions
     {

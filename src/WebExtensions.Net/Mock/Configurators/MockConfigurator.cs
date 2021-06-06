@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebExtension.Net.Mock.Handlers;
-using WebExtension.Net.Mock.Resolvers;
+using WebExtensions.Net.Mock.Handlers;
+using WebExtensions.Net.Mock.Resolvers;
 
-namespace WebExtension.Net.Mock.Configurators
+namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>
     /// Mock configurator
@@ -14,17 +14,17 @@ namespace WebExtension.Net.Mock.Configurators
         private readonly IList<IMockHandler> apiHandlers;
         private readonly IList<IMockHandler> objectReferenceHandlers;
         private readonly ApiConfigurator apiConfigurator;
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
 
         /// <summary>
         /// Creates a new instance of MockConfigurator.
         /// </summary>
-        public MockConfigurator(IWebExtensionApi webExtensionApi)
+        public MockConfigurator(IWebExtensionsApi webExtensionsApi)
         {
             apiHandlers = new List<IMockHandler>();
             objectReferenceHandlers = new List<IMockHandler>();
-            apiConfigurator = new ApiConfigurator(webExtensionApi, apiHandlers);
-            this.webExtensionApi = webExtensionApi;
+            apiConfigurator = new ApiConfigurator(webExtensionsApi, apiHandlers);
+            this.webExtensionsApi = webExtensionsApi;
         }
 
         /// <inheritdoc />
@@ -33,7 +33,7 @@ namespace WebExtension.Net.Mock.Configurators
         /// <inheritdoc />
         public ObjectReferenceConfigurator<TObject> ObjectReference<TObject>(TObject objectReference)
             where TObject : BaseObject
-            => new(webExtensionApi, objectReferenceHandlers, objectReference);
+            => new(webExtensionsApi, objectReferenceHandlers, objectReference);
 
         /// <inheritdoc />
         public void ApiHandler(ApiHandler apiHandler)

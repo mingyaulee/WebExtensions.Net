@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Permissions
+namespace WebExtensions.Net.Permissions
 {
     /// <summary></summary>
     public partial interface IPermissionsApi

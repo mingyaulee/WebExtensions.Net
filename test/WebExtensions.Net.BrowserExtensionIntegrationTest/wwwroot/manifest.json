@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "WebExtension.Net Integration Test",
-  "description": "A browser extension for integration test of WebExtension.Net",
+  "name": "WebExtensions.Net Integration Test",
+  "description": "A browser extension for integration test of WebExtensions.Net",
   "version": "1.0",
   "background": {
     "page": "index.html?path=background",
@@ -12,7 +12,7 @@
   "web_accessible_resources": [
     "framework/*",
     "BrowserExtensionScripts/*",
-    "WebExtensionScripts/*"
+    "WebExtensionsScripts/*"
   ],
   "permissions": [
     "*://*/*",

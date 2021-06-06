@@ -1,7 +1,7 @@
 ﻿import ArgumentsHandler from "./ArgumentsHandler.js";
 import FunctionReferenceHandler from "./FunctionReferenceHandler.js";
 
-export default class WebExtension {
+export default class WebExtensions {
   /**
    * @type {object} The object references.
    */

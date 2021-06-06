@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     /// <summary>The format of an image.</summary>
     [JsonConverter(typeof(EnumStringConverter<ImageFormat>))]

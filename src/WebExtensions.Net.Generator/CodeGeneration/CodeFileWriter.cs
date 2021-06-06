@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace WebExtension.Net.Generator.CodeGeneration
+namespace WebExtensions.Net.Generator.CodeGeneration
 {
     public class CodeFileWriter : CodeWriter
     {

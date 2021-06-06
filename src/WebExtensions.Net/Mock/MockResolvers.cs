@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebExtension.Net.Mock.Configurators;
-using WebExtension.Net.Mock.Handlers;
-using WebExtension.Net.Mock.Resolvers;
+using WebExtensions.Net.Mock.Configurators;
+using WebExtensions.Net.Mock.Handlers;
+using WebExtensions.Net.Mock.Resolvers;
 
-namespace WebExtension.Net.Mock
+namespace WebExtensions.Net.Mock
 {
     /// <summary>
     /// Mock resolvers.

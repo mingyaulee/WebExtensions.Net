@@ -4,16 +4,16 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebExtension.Net.Generator.ClrTypeTranslators;
-using WebExtension.Net.Generator.CodeGeneration;
-using WebExtension.Net.Generator.CodeGeneration.CodeConverterFactories;
-using WebExtension.Net.Generator.EntitiesRegistration;
-using WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
-using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Models.Schema;
-using WebExtension.Net.Generator.Repositories;
+using WebExtensions.Net.Generator.ClrTypeTranslators;
+using WebExtensions.Net.Generator.CodeGeneration;
+using WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories;
+using WebExtensions.Net.Generator.EntitiesRegistration;
+using WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
+using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator
+namespace WebExtensions.Net.Generator
 {
     public static class Program
     {

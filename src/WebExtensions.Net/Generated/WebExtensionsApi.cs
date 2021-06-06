@@ -1,20 +1,20 @@
-using WebExtension.Net.Bookmarks;
-using WebExtension.Net.ContentScripts;
-using WebExtension.Net.Notifications;
-using WebExtension.Net.Permissions;
-using WebExtension.Net.Runtime;
-using WebExtension.Net.Storage;
-using WebExtension.Net.Tabs;
-using WebExtension.Net.WebNavigation;
-using WebExtension.Net.WebRequest;
-using WebExtension.Net.Windows;
+using WebExtensions.Net.Bookmarks;
+using WebExtensions.Net.ContentScripts;
+using WebExtensions.Net.Notifications;
+using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Storage;
+using WebExtensions.Net.Tabs;
+using WebExtensions.Net.WebNavigation;
+using WebExtensions.Net.WebRequest;
+using WebExtensions.Net.Windows;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public class WebExtensionApi : IWebExtensionApi
+    public class WebExtensionsApi : IWebExtensionsApi
     {
-        private readonly IWebExtensionJSRuntime webExtensionJSRuntime;
+        private readonly IWebExtensionsJSRuntime webExtensionsJSRuntime;
         private IBookmarksApi _bookmarks;
         private IContentScriptsApi _contentScripts;
         private INotificationsApi _notifications;
@@ -26,10 +26,10 @@ namespace WebExtension.Net
         private IWebRequestApi _webRequest;
         private IWindowsApi _windows;
 
-        /// <summary>Creates a new instance of <see cref="WebExtensionApi" />.</summary>
-        public WebExtensionApi(IWebExtensionJSRuntime webExtensionJSRuntime)
+        /// <summary>Creates a new instance of <see cref="WebExtensionsApi" />.</summary>
+        public WebExtensionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime)
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
+            this.webExtensionsJSRuntime = webExtensionsJSRuntime;
         }
 
         /// <inheritdoc />
@@ -39,7 +39,7 @@ namespace WebExtension.Net
             {
                 if (_bookmarks is null)
                 {
-                    _bookmarks = new BookmarksApi(webExtensionJSRuntime);
+                    _bookmarks = new BookmarksApi(webExtensionsJSRuntime);
                 }
                 return _bookmarks;
             }
@@ -52,7 +52,7 @@ namespace WebExtension.Net
             {
                 if (_contentScripts is null)
                 {
-                    _contentScripts = new ContentScriptsApi(webExtensionJSRuntime);
+                    _contentScripts = new ContentScriptsApi(webExtensionsJSRuntime);
                 }
                 return _contentScripts;
             }
@@ -65,7 +65,7 @@ namespace WebExtension.Net
             {
                 if (_notifications is null)
                 {
-                    _notifications = new NotificationsApi(webExtensionJSRuntime);
+                    _notifications = new NotificationsApi(webExtensionsJSRuntime);
                 }
                 return _notifications;
             }
@@ -78,7 +78,7 @@ namespace WebExtension.Net
             {
                 if (_permissions is null)
                 {
-                    _permissions = new PermissionsApi(webExtensionJSRuntime);
+                    _permissions = new PermissionsApi(webExtensionsJSRuntime);
                 }
                 return _permissions;
             }
@@ -91,7 +91,7 @@ namespace WebExtension.Net
             {
                 if (_runtime is null)
                 {
-                    _runtime = new RuntimeApi(webExtensionJSRuntime);
+                    _runtime = new RuntimeApi(webExtensionsJSRuntime);
                 }
                 return _runtime;
             }
@@ -104,7 +104,7 @@ namespace WebExtension.Net
             {
                 if (_storage is null)
                 {
-                    _storage = new StorageApi(webExtensionJSRuntime);
+                    _storage = new StorageApi(webExtensionsJSRuntime);
                 }
                 return _storage;
             }
@@ -117,7 +117,7 @@ namespace WebExtension.Net
             {
                 if (_tabs is null)
                 {
-                    _tabs = new TabsApi(webExtensionJSRuntime);
+                    _tabs = new TabsApi(webExtensionsJSRuntime);
                 }
                 return _tabs;
             }
@@ -130,7 +130,7 @@ namespace WebExtension.Net
             {
                 if (_webNavigation is null)
                 {
-                    _webNavigation = new WebNavigationApi(webExtensionJSRuntime);
+                    _webNavigation = new WebNavigationApi(webExtensionsJSRuntime);
                 }
                 return _webNavigation;
             }
@@ -143,7 +143,7 @@ namespace WebExtension.Net
             {
                 if (_webRequest is null)
                 {
-                    _webRequest = new WebRequestApi(webExtensionJSRuntime);
+                    _webRequest = new WebRequestApi(webExtensionsJSRuntime);
                 }
                 return _webRequest;
             }
@@ -156,7 +156,7 @@ namespace WebExtension.Net
             {
                 if (_windows is null)
                 {
-                    _windows = new WindowsApi(webExtensionJSRuntime);
+                    _windows = new WindowsApi(webExtensionsJSRuntime);
                 }
                 return _windows;
             }

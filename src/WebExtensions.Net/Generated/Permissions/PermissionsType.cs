@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using WebExtension.Net.Manifest;
+using WebExtensions.Net.Manifest;
 
-namespace WebExtension.Net.Permissions
+namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary></summary>

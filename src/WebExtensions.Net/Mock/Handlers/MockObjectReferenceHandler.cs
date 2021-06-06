@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net.Mock.Handlers
+namespace WebExtensions.Net.Mock.Handlers
 {
     /// <summary>
     /// Mock Object Reference Handler.

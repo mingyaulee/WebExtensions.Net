@@ -1,20 +1,20 @@
 ﻿using FluentAssertions;
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtension.Net.Notifications;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.Notifications;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.notifications")]
     public class NotificationsTests
     {
-        private readonly IWebExtensionApi webExtensionApi;
+        private readonly IWebExtensionsApi webExtensionsApi;
         private readonly string testNotificationId;
 
-        public NotificationsTests(IWebExtensionApi webExtensionApi)
+        public NotificationsTests(IWebExtensionsApi webExtensionsApi)
         {
-            this.webExtensionApi = webExtensionApi;
+            this.webExtensionsApi = webExtensionsApi;
             testNotificationId = Guid.NewGuid().ToString();
         }
 
@@ -22,7 +22,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var createdNotificationId = await webExtensionApi.Notifications.Create(testNotificationId, new CreateNotificationOptions()
+            var createdNotificationId = await webExtensionsApi.Notifications.Create(testNotificationId, new CreateNotificationOptions()
             {
                 Title = "Testing notification",
                 Message = "Test notification message",
@@ -38,7 +38,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Update()
         {
             // Act
-            var notificationUpdated = await webExtensionApi.Notifications.Update(testNotificationId, new CreateNotificationOptions()
+            var notificationUpdated = await webExtensionsApi.Notifications.Update(testNotificationId, new CreateNotificationOptions()
             {
                 Title = "Updated notification",
                 Message = "Updated notification message"
@@ -52,7 +52,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetAll()
         {
             // Act
-            var notifications = await webExtensionApi.Notifications.GetAll();
+            var notifications = await webExtensionsApi.Notifications.GetAll();
 
             // Assert
             notifications.EnumerateObject().Should().Contain(property => property.Name == testNotificationId);
@@ -62,7 +62,7 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Clear()
         {
             // Act
-            var notificationCleared = await webExtensionApi.Notifications.Clear(testNotificationId);
+            var notificationCleared = await webExtensionsApi.Notifications.Clear(testNotificationId);
 
             // Assert
             notificationCleared.Should().BeTrue();

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Events
+namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>Filters URLs for various criteria. See <see href='events#filtered'>event filtering</see>. All criteria are case sensitive.</summary>

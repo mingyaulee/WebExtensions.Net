@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Bookmarks
+namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary></summary>

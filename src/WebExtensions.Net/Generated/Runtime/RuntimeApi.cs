@@ -1,8 +1,8 @@
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     /// <inheritdoc />
     public partial class RuntimeApi : BaseApi, IRuntimeApi
@@ -16,8 +16,8 @@ namespace WebExtension.Net.Runtime
         private OnUpdateAvailableEvent _onUpdateAvailable;
 
         /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public RuntimeApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "runtime")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public RuntimeApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "runtime")
         {
         }
 

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebExtension.Net.BrowserExtensionIntegrationTest\WebExtension.Net.BrowserExtensionIntegrationTest.csproj" />
+    <ProjectReference Include="..\WebExtensions.Net.BrowserExtensionIntegrationTest\WebExtensions.Net.BrowserExtensionIntegrationTest.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary>Fired when a window is created.</summary>

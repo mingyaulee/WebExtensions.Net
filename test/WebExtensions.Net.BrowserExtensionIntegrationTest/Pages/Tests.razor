@@ -1,6 +1,7 @@
 ﻿@page "/tests.html"
-@using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
+@using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 @inherits Blazor.BrowserExtension.Pages.BasePage
+@inject NavigationManager NavigationManager
 
 @code {
     [Inject]
@@ -9,7 +10,7 @@
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        var coverlet = Navigation.Uri.Contains("coverlet");
+        var coverlet = NavigationManager.Uri.Contains("coverlet");
         base.OnAfterRender(firstRender);
         if (firstRender)
         {

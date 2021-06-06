@@ -28,7 +28,7 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 ## Working in this repository
 ### Packages shipped by this repository
 There is one package that is shipped from the repository:
-1. WebExtension.Net
+1. WebExtensions.Net
 
 ### Project Details
 #### The terms used
@@ -39,7 +39,7 @@ There is one package that is shipped from the repository:
 0. Code File - An object representing a .cs file
 
 #### The code generation process
-The APIs in WebExtension.Net/Generated is generated from the WebExtension.Net.Generator project.
+The APIs in WebExtensions.Net/Generated is generated from the WebExtensions.Net.Generator project.
 The code generation process is summarised as follows:
 1. Namespace Definitions are retrieved by the NamespaceDefinitionsClient
 0. The raw Namespace Definitions are then processed by the EntitiesRegistrationManager. In this stage:
@@ -67,8 +67,8 @@ The code generation process is summarised as follows:
 
 #### Supporting missing/browser specific APIs
 The APIs generated are only the ones that are defined by the WebExtensions Standards. A non-standard API can be added by extending from the API's partial class.
-The browser specific extensions and types should be defined in a directory under `WebExtension.Net/Extensions` based on the API namespace.
-Refer to `INotificationsApi.cs` and `NotificationsApi.cs` under the path `WebExtension.Net/Extensions/Notifications/` for example.
+The browser specific extensions and types should be defined in a directory under `WebExtensions.Net/Extensions` based on the API namespace.
+Refer to `INotificationsApi.cs` and `NotificationsApi.cs` under the path `WebExtensions.Net/Extensions/Notifications/` for example.
 
 ### In case of conflicts in the file generated.txt
 It is best to do a rebase and run the generator again to make sure the changes in the generated files are not overwritten by your pull request.

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Notifications
+namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary></summary>

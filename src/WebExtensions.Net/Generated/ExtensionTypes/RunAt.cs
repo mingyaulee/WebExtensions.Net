@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.ExtensionTypes
+namespace WebExtensions.Net.ExtensionTypes
 {
     /// <summary>The soonest that the JavaScript or CSS will be injected into the tab.</summary>
     [JsonConverter(typeof(EnumStringConverter<RunAt>))]

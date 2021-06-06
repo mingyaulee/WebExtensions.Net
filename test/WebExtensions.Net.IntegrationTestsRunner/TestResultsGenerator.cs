@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using WebExtension.Net.IntegrationTestsRunner.Models;
+using WebExtensions.Net.IntegrationTestsRunner.Models;
 
-namespace WebExtension.Net.IntegrationTestsRunner
+namespace WebExtensions.Net.IntegrationTestsRunner
 {
     public static class TestResultsGenerator
     {

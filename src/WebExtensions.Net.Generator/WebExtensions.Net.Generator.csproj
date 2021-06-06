@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\WebExtension.Net\Common\**\*.cs" />
+    <Compile Include="..\WebExtensions.Net\Common\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

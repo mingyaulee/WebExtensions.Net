@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.IntegrationTestsRunner.Models
+﻿namespace WebExtensions.Net.IntegrationTestsRunner.Models
 {
     public enum TestStatus
     {

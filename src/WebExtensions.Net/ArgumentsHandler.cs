@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.Json;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Process incoming and outgoing arguments.

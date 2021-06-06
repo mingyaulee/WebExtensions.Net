@@ -1,8 +1,8 @@
 ﻿using System;
-using WebExtension.Net.Mock.Configurators;
-using WebExtension.Net.Mock.Resolvers;
+using WebExtensions.Net.Mock.Configurators;
+using WebExtensions.Net.Mock.Resolvers;
 
-namespace WebExtension.Net.Mock
+namespace WebExtensions.Net.Mock
 {
     internal static class MockConfigurationContext
     {
@@ -19,8 +19,8 @@ namespace WebExtension.Net.Mock
             IsConfiguring = true;
             IsConfigured = false;
 
-            var webExtensionApi = new WebExtensionApi(new MockWebExtensionJSRuntime());
-            var configurator = new MockConfigurator(webExtensionApi);
+            var webExtensionsApi = new WebExtensionsApi(new MockWebExtensionsJSRuntime());
+            var configurator = new MockConfigurator(webExtensionsApi);
             DefaultMockResolver.Configure(configurator);
             ConfiguredMockResolver.Configure(configurator);
 

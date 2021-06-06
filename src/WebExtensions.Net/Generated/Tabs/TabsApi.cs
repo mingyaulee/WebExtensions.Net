@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WebExtension.Net.ExtensionTypes;
-using WebExtension.Net.Runtime;
-using WebExtension.Net.Windows;
+using WebExtensions.Net.ExtensionTypes;
+using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Windows;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <inheritdoc />
     public partial class TabsApi : BaseApi, ITabsApi
@@ -22,8 +22,8 @@ namespace WebExtension.Net.Tabs
         private OnZoomChangeEvent _onZoomChange;
 
         /// <summary>Creates a new instance of <see cref="TabsApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public TabsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "tabs")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public TabsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "tabs")
         {
         }
 

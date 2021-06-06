@@ -5,6 +5,7 @@
     <BlazorEnableCompression>false</BlazorEnableCompression>
     <!-- Disable caching so that we can skip integrity check. This is for coverlet to inject the hits counter into the assembly which will change the integrity hash. -->
     <BlazorCacheBootResources>false</BlazorCacheBootResources>
+    <BuildBlazorToBrowserExtension>false</BuildBlazorToBrowserExtension>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,9 +33,9 @@
 
   <!-- Import project reference and build props and targets as if we are referencing the built NuGet package -->
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WebExtension.Net\WebExtension.Net.csproj" />
+    <ProjectReference Include="..\..\src\WebExtensions.Net\WebExtensions.Net.csproj" />
   </ItemGroup>
-  <Import Project="..\..\src\WebExtension.Net\build\WebExtension.Net.props" />
-  <Import Project="..\..\src\WebExtension.Net\build\WebExtension.Net.targets" />
+  <Import Project="..\..\src\WebExtensions.Net\build\WebExtensions.Net.props" />
+  <Import Project="..\..\src\WebExtensions.Net\build\WebExtensions.Net.targets" />
 
 </Project>

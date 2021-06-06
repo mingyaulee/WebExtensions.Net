@@ -1,13 +1,13 @@
-﻿<!-- build/WebExtension.Net.targets -->
+﻿<!-- build/WebExtensions.Net.targets -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <WebExtensionAssetsContentsPath>$(MSBuildThisFileDirectory)..\content\WebExtensionScripts</WebExtensionAssetsContentsPath>
-    <WebExtensionAssetsTargetPath>$(WebExtensionAssetsPath)\WebExtensionScripts</WebExtensionAssetsTargetPath>
+    <WebExtensionsAssetsContentsPath>$(MSBuildThisFileDirectory)..\content\WebExtensionsScripts</WebExtensionsAssetsContentsPath>
+    <WebExtensionsAssetsTargetPath>$(WebExtensionsAssetsPath)\WebExtensionsScripts</WebExtensionsAssetsTargetPath>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IncludeWebExtensionAssets)' == 'true'">
-    <None Include="$(WebExtensionAssetsContentsPath)\**\*.*" Link="$(WebExtensionAssetsTargetPath)\%(RecursiveDir)%(Filename)%(Extension)">
+  <ItemGroup Condition="'$(IncludeWebExtensionsAssets)' == 'true'">
+    <None Include="$(WebExtensionsAssetsContentsPath)\**\*.*" Link="$(WebExtensionsAssetsTargetPath)\%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

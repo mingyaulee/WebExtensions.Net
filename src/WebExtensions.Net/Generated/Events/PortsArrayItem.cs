@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Events
+namespace WebExtensions.Net.Events
 {
     // Multitype Class
     /// <summary></summary>

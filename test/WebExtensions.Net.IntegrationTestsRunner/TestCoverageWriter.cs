@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using WebExtension.Net.IntegrationTestsRunner.Models;
+using WebExtensions.Net.IntegrationTestsRunner.Models;
 
-namespace WebExtension.Net.IntegrationTestsRunner
+namespace WebExtensions.Net.IntegrationTestsRunner
 {
     public static class TestCoverageWriter
     {

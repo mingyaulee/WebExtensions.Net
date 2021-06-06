@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace WebExtension.Net.Generator.Extensions
+namespace WebExtensions.Net.Generator.Extensions
 {
     public static class ThreeDimensionalArrayExtensions
     {

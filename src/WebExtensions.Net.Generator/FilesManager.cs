@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
-using WebExtension.Net.Generator.CodeGeneration;
-using WebExtension.Net.Generator.CodeGeneration.CodeConverters;
-using WebExtension.Net.Generator.Repositories;
+using WebExtensions.Net.Generator.CodeGeneration;
+using WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator
+namespace WebExtensions.Net.Generator
 {
     public class FilesManager
     {

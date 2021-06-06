@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Windows
+namespace WebExtensions.Net.Windows
 {
     /// <inheritdoc />
     public partial class WindowsApi : BaseApi, IWindowsApi
@@ -11,8 +11,8 @@ namespace WebExtension.Net.Windows
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="WindowsApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WindowsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "windows")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public WindowsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "windows")
         {
         }
 

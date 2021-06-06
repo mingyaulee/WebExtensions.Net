@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
     public class CodeFileConverter : ICodeConverter
     {

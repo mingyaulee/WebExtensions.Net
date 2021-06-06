@@ -1,7 +1,7 @@
-﻿using WebExtension.Net.Generator.Models;
-using WebExtension.Net.Generator.Repositories;
+﻿using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
+namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
     public class ApiRootClassEntityRegistrar : BaseClassEntityRegistrar
     {

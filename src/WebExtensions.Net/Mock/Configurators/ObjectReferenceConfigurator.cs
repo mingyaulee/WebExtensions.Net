@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using WebExtension.Net.Mock.Handlers;
+using WebExtensions.Net.Mock.Handlers;
 
-namespace WebExtension.Net.Mock.Configurators
+namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>
     /// The API configurator.
@@ -15,10 +15,10 @@ namespace WebExtension.Net.Mock.Configurators
         /// <summary>
         /// Creates a new instance of ObjectReferenceConfigurator.
         /// </summary>
-        /// <param name="webExtensionApi">The web extension API.</param>
+        /// <param name="webExtensionsApi">The web extension API.</param>
         /// <param name="mockHandlers">The mock handlers.</param>
         /// <param name="objectReference">The object reference configured.</param>
-        internal ObjectReferenceConfigurator(IWebExtensionApi webExtensionApi, IList<IMockHandler> mockHandlers, TObject objectReference) : base(webExtensionApi, mockHandlers)
+        internal ObjectReferenceConfigurator(IWebExtensionsApi webExtensionsApi, IList<IMockHandler> mockHandlers, TObject objectReference) : base(webExtensionsApi, mockHandlers)
         {
             if (objectReference is null)
             {

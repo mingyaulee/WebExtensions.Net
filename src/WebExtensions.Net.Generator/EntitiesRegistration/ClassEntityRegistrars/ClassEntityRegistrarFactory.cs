@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Generator.Models.Schema;
+﻿using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
+namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
     public class ClassEntityRegistrarFactory
     {

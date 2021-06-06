@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Manifest
+namespace WebExtensions.Net.Manifest
 {
     // Multitype Class
     /// <summary></summary>

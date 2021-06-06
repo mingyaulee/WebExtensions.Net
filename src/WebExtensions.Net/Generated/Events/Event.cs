@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Events
+namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>An object which allows the addition and removal of listeners for a Chrome event.</summary>

@@ -1,10 +1,10 @@
 ﻿using System;
-using WebExtension.Net.Generator.Extensions;
-using WebExtension.Net.Generator.Models.ClrTypes;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Extensions;
+using WebExtensions.Net.Generator.Models.ClrTypes;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.ClrTypeTranslators
+namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
     public class PropertyDefinitionTranslator
     {

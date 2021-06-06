@@ -1,8 +1,8 @@
 using System;
 using System.Text.Json.Serialization;
-using WebExtension.Net.Events;
+using WebExtensions.Net.Events;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>An object which allows two way communication with other pages.</summary>

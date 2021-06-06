@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Storage;
+﻿using WebExtensions.Net.Storage;
 
-namespace WebExtension.Net.Mock
+namespace WebExtensions.Net.Mock
 {
     /// <summary>
     /// Default mock objects.

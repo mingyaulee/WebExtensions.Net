@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using WebExtension.Net.Generator.JsonConverters;
+using WebExtensions.Net.Generator.JsonConverters;
 
-namespace WebExtension.Net.Generator.Models.Schema
+namespace WebExtensions.Net.Generator.Models.Schema
 {
     public class FunctionDefinition : TypeReference
     {

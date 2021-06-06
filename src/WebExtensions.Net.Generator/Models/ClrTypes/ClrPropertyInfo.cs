@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 
-namespace WebExtension.Net.Generator.Models.ClrTypes
+namespace WebExtensions.Net.Generator.Models.ClrTypes
 {
     [DebuggerDisplay("{Name}")]
     public class ClrPropertyInfo

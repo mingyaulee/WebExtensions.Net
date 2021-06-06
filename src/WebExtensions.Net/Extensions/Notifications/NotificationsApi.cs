@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebExtension.Net.Notifications
+namespace WebExtensions.Net.Notifications
 {
     public partial class NotificationsApi
     {

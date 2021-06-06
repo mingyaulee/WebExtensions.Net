@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Manifest
+namespace WebExtensions.Net.Manifest
 {
     // Multitype Class
     /// <summary>Same as MatchPattern above, but excludes 'all_urls'</summary>

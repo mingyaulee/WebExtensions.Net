@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Models;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     public class TestRunner : ITestRunner
     {
@@ -92,9 +92,9 @@ namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
 
         public async Task GetTestCoverageInfo()
         {
-            // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtension.Net
-            var webExtensionAssembly = typeof(WebExtension.Net.IWebExtensionApi).Assembly;
-            var types = webExtensionAssembly.GetTypes();
+            // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtensions.Net
+            var webExtensionsAssembly = typeof(WebExtensions.Net.IWebExtensionsApi).Assembly;
+            var types = webExtensionsAssembly.GetTypes();
             var coverletType = types.FirstOrDefault(type => type.Namespace?.Contains("Coverlet", StringComparison.OrdinalIgnoreCase) ?? false);
             if (coverletType == null)
             {

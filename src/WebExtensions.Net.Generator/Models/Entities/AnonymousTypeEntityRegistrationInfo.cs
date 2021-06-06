@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebExtension.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtension.Net.Generator.Models.Entities
+namespace WebExtensions.Net.Generator.Models.Entities
 {
     public class AnonymousTypeEntityRegistrationInfo
     {

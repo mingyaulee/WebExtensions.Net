@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Mock.Resolvers
+﻿namespace WebExtensions.Net.Mock.Resolvers
 {
     internal interface IMockResolver
     {

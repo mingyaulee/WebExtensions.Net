@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// A JS function proxy to be invoked in DotNet.
@@ -61,8 +61,8 @@ namespace WebExtension.Net
         /// <returns>An instance of TResult obtained by JSON-deserializing the return value.</returns>
         public TValue DynamicInvoke<TValue>(object[] arguments)
         {
-            var webExtensionJsRuntime = IWebExtensionJSRuntime.StaticInstance;
-            return webExtensionJsRuntime.Invoke<TValue>(InvokeFunctionReferenceOption.Identifier, new InvokeFunctionReferenceOption(id), arguments);
+            var webExtensionsJsRuntime = IWebExtensionsJSRuntime.StaticInstance;
+            return webExtensionsJsRuntime.Invoke<TValue>(InvokeFunctionReferenceOption.Identifier, new InvokeFunctionReferenceOption(id), arguments);
         }
     }
 }

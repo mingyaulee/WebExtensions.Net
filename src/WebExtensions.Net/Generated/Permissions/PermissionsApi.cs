@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Permissions
+namespace WebExtensions.Net.Permissions
 {
     /// <inheritdoc />
     public partial class PermissionsApi : BaseApi, IPermissionsApi
@@ -9,8 +9,8 @@ namespace WebExtension.Net.Permissions
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="PermissionsApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public PermissionsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "permissions")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public PermissionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "permissions")
         {
         }
 

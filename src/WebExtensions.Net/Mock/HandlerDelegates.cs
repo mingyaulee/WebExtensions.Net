@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Mock
+﻿namespace WebExtensions.Net.Mock
 {
     /// <summary>
     /// Api handler delegate.

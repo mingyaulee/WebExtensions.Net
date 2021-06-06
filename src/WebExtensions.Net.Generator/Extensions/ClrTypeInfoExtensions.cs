@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebExtension.Net.Generator.Models.ClrTypes;
+using WebExtensions.Net.Generator.Models.ClrTypes;
 
-namespace WebExtension.Net.Generator.Extensions
+namespace WebExtensions.Net.Generator.Extensions
 {
     public static class ClrTypeInfoExtensions
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     // Array Class
     /// <summary>If the request has been classified this is an array of $(ref:UrlClassificationFlags).</summary>

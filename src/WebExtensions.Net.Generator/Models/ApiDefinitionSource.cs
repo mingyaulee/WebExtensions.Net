@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.Generator.Models
+﻿namespace WebExtensions.Net.Generator.Models
 {
     public class ApiDefinitionSource
     {

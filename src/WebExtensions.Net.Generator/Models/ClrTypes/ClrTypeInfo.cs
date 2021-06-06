@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace WebExtension.Net.Generator.Models.ClrTypes
+namespace WebExtensions.Net.Generator.Models.ClrTypes
 {
     [DebuggerDisplay("{FullName}")]
     public class ClrTypeInfo : ICloneable

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Generator.JsonConverters
+namespace WebExtensions.Net.Generator.JsonConverters
 {
     public class FunctionAsyncConverter : JsonConverter<string?>
     {

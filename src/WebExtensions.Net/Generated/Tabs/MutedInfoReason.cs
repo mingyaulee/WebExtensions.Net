@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>An event that caused a muted state change.</summary>
     [JsonConverter(typeof(EnumStringConverter<MutedInfoReason>))]

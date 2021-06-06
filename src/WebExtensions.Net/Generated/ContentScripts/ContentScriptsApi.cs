@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.ContentScripts
+namespace WebExtensions.Net.ContentScripts
 {
     /// <inheritdoc />
     public partial class ContentScriptsApi : BaseApi, IContentScriptsApi
     {
         /// <summary>Creates a new instance of <see cref="ContentScriptsApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public ContentScriptsApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "contentScripts")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public ContentScriptsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "contentScripts")
         {
         }
 

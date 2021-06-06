@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Bookmarks
+namespace WebExtensions.Net.Bookmarks
 {
     /// <summary>Indicates the type of a BookmarkTreeNode, which can be one of bookmark, folder or separator.</summary>
     [JsonConverter(typeof(EnumStringConverter<BookmarkTreeNodeType>))]

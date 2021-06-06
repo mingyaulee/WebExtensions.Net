@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using WebExtension.Net.Mock.Handlers;
+using WebExtensions.Net.Mock.Handlers;
 
-namespace WebExtension.Net.Mock.Configurators
+namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>Mock function configurator.</summary>
     /// <typeparam name="TResult">The function return type.</typeparam>

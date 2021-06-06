@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Models;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     public interface ITestFactory
     {

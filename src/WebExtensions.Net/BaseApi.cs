@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net
+﻿namespace WebExtensions.Net
 {
     /// <summary>
     /// Base API class.
@@ -6,14 +6,14 @@
     public class BaseApi : BaseObject
     {
         /// <summary>
-        /// Gets the WebExtensionJsRuntime instance.
+        /// Gets the WebExtensionsJsRuntime instance.
         /// </summary>
-        protected new IWebExtensionJSRuntime webExtensionJSRuntime;
+        protected new IWebExtensionsJSRuntime webExtensionsJSRuntime;
 
-        internal BaseApi(IWebExtensionJSRuntime webExtensionJSRuntime, string apiNamespace)
+        internal BaseApi(IWebExtensionsJSRuntime webExtensionsJSRuntime, string apiNamespace)
         {
-            this.webExtensionJSRuntime = webExtensionJSRuntime;
-            Initialize(webExtensionJSRuntime, "browser", apiNamespace);
+            this.webExtensionsJSRuntime = webExtensionsJSRuntime;
+            Initialize(webExtensionsJSRuntime, "browser", apiNamespace);
         }
     }
 }

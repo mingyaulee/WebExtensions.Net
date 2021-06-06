@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.WebRequest
+namespace WebExtensions.Net.WebRequest
 {
     /// <inheritdoc />
     public partial class WebRequestApi : BaseApi, IWebRequestApi
@@ -17,8 +17,8 @@ namespace WebExtension.Net.WebRequest
         private OnSendHeadersEvent _onSendHeaders;
 
         /// <summary>Creates a new instance of <see cref="WebRequestApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public WebRequestApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "webRequest")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public WebRequestApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "webRequest")
         {
         }
 

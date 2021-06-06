@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebExtension.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtension.Net.BrowserExtensionIntegrationTest
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest
 {
     public static class Program
     {

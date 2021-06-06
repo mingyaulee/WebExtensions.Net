@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Bookmarks
+namespace WebExtensions.Net.Bookmarks
 {
     /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.</summary>
     public partial interface IBookmarksApi

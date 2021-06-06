@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     /// <summary>The machine's processor architecture.</summary>
     [JsonConverter(typeof(EnumStringConverter<PlatformArch>))]

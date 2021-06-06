@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using WebExtension.Net.Generator.JsonConverters;
+using WebExtensions.Net.Generator.JsonConverters;
 
-namespace WebExtension.Net.Generator
+namespace WebExtensions.Net.Generator
 {
     public static class JsonSerializerConstant
     {

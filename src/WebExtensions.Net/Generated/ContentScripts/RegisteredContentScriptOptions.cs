@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using WebExtension.Net.ExtensionTypes;
-using WebExtension.Net.Manifest;
+using WebExtensions.Net.ExtensionTypes;
+using WebExtensions.Net.Manifest;
 
-namespace WebExtension.Net.ContentScripts
+namespace WebExtensions.Net.ContentScripts
 {
     // Type Class
     /// <summary>Details of a content script registered programmatically</summary>

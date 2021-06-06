@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.ContentScripts
+namespace WebExtensions.Net.ContentScripts
 {
     /// <summary></summary>
     public partial interface IContentScriptsApi

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Bookmarks
+namespace WebExtensions.Net.Bookmarks
 {
     /// <inheritdoc />
     public partial class BookmarksApi : BaseApi, IBookmarksApi
@@ -12,8 +12,8 @@ namespace WebExtension.Net.Bookmarks
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="BookmarksApi" />.</summary>
-        /// <param name="webExtensionJSRuntime">Web Extension JS Runtime</param>
-        public BookmarksApi(IWebExtensionJSRuntime webExtensionJSRuntime) : base(webExtensionJSRuntime, "bookmarks")
+        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
+        public BookmarksApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "bookmarks")
         {
         }
 

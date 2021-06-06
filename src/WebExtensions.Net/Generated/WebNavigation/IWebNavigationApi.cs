@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.WebNavigation
+namespace WebExtensions.Net.WebNavigation
 {
     /// <summary>Use the <c>browser.webNavigation</c> API to receive notifications about the status of navigation requests in-flight.</summary>
     public partial interface IWebNavigationApi

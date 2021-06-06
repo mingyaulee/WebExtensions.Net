@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net.Mock
+namespace WebExtensions.Net.Mock
 {
     /// <summary>
     /// Mock adapter for IJSRuntime, should be used as a singleton.
     /// </summary>
-    public class MockWebExtensionJSRuntime : IWebExtensionJSRuntime
+    public class MockWebExtensionsJSRuntime : IWebExtensionsJSRuntime
     {
         private static readonly IDictionary<string, object> objectReferences = new Dictionary<string, object>();
 
         /// <summary>
-        /// Creates a new instance of MockWebExtensionJSRuntime.
+        /// Creates a new instance of MockWebExtensionsJSRuntime.
         /// </summary>
-        public MockWebExtensionJSRuntime()
+        public MockWebExtensionsJSRuntime()
         {
-            IWebExtensionJSRuntime.StaticInstance = this;
+            IWebExtensionsJSRuntime.StaticInstance = this;
         }
 
         /// <inheritdoc />

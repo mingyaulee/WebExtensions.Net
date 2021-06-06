@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net.BrowserExtensionIntegrationTest.Models
+﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Models
 {
     public class TestResult
     {

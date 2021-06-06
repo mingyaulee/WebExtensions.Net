@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebExtension.Net.Mock.Configurators
+namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>
     /// Mock configurator interface.
@@ -8,7 +8,7 @@ namespace WebExtension.Net.Mock.Configurators
     public interface IMockConfigurator
     {
         /// <summary>
-        /// Configures the mock handler for the WebExtensionApi.
+        /// Configures the mock handler for the WebExtensionsApi.
         /// </summary>
         ApiConfigurator Api { get; }
 

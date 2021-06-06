@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebExtension.Net.Generator.Repositories
+namespace WebExtensions.Net.Generator.Repositories
 {
     public class BaseRepository<TEntity>
     {

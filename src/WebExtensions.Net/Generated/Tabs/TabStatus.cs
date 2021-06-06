@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Tabs
+namespace WebExtensions.Net.Tabs
 {
     /// <summary>Whether the tabs have completed loading.</summary>
     [JsonConverter(typeof(EnumStringConverter<TabStatus>))]

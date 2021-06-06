@@ -3,22 +3,22 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Adapter for IJSRuntime
     /// </summary>
-    public class WebExtensionJSRuntime : IWebExtensionJSRuntime
+    public class WebExtensionsJSRuntime : IWebExtensionsJSRuntime
     {
         private readonly IJSRuntime jsRuntime;
 
         /// <summary>
-        /// Creates a new instance of WebExtensionJSRuntime.
+        /// Creates a new instance of WebExtensionsJSRuntime.
         /// </summary>
         /// <param name="jsRuntime">The IJSRuntime instance.</param>
-        public WebExtensionJSRuntime(IJSRuntime jsRuntime)
+        public WebExtensionsJSRuntime(IJSRuntime jsRuntime)
         {
-            IWebExtensionJSRuntime.StaticInstance = this;
+            IWebExtensionsJSRuntime.StaticInstance = this;
             this.jsRuntime = jsRuntime;
         }
 

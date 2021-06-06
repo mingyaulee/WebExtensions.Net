@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Text.Json;
-using WebExtension.Net.Generator.Models.Entities;
-using WebExtension.Net.Generator.Models.Schema;
-using WebExtension.Net.Generator.Repositories;
+using WebExtensions.Net.Generator.Models.Entities;
+using WebExtensions.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtension.Net.Generator.EntitiesRegistration
+namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
     public class TypeEntityRegistrar
     {

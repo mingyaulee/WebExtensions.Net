@@ -1,6 +1,6 @@
-﻿using WebExtension.Net.Generator.Models.ClrTypes;
+﻿using WebExtensions.Net.Generator.Models.ClrTypes;
 
-namespace WebExtension.Net.Generator.CodeGeneration.CodeConverters
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
     public class ApiInterfacePropertyCodeConverter : ICodeConverter
     {

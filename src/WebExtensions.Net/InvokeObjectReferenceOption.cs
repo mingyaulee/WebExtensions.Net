@@ -1,4 +1,4 @@
-﻿namespace WebExtension.Net
+﻿namespace WebExtensions.Net
 {
     /// <summary>
     /// Invoke JavaScript object reference options.
@@ -8,7 +8,7 @@
         /// <summary>
         /// The identifier for the action 'InvokeOnObjectReference'.
         /// </summary>
-        public const string Identifier = "WebExtensionNet.InvokeOnObjectReference";
+        public const string Identifier = "WebExtensionsNet.InvokeOnObjectReference";
 
         internal InvokeObjectReferenceOption(string referenceId, string targetPath, bool isFunction)
         {

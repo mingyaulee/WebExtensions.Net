@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace WebExtension.Net.Generator.Helpers
+namespace WebExtensions.Net.Generator.Helpers
 {
     public static class SerializationHelper
     {

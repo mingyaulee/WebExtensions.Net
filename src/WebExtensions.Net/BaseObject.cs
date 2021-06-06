@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace WebExtension.Net
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Base object returned from JavaScript.
@@ -11,7 +11,7 @@ namespace WebExtension.Net
     public class BaseObject : IDisposable
     {
         internal bool IsInitialized;
-        internal IWebExtensionJSRuntime webExtensionJSRuntime;
+        internal IWebExtensionsJSRuntime webExtensionsJSRuntime;
         internal string referenceId;
         internal string accessPath;
 
@@ -19,12 +19,12 @@ namespace WebExtension.Net
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalData { get; set; }
 
-        internal void Initialize(IWebExtensionJSRuntime webExtensionJSRuntime, string referenceId, string accessPath)
+        internal void Initialize(IWebExtensionsJSRuntime webExtensionsJSRuntime, string referenceId, string accessPath)
         {
             if (!IsInitialized)
             {
                 IsInitialized = true;
-                this.webExtensionJSRuntime = webExtensionJSRuntime;
+                this.webExtensionsJSRuntime = webExtensionsJSRuntime;
                 this.referenceId = referenceId;
                 this.accessPath = accessPath;
             }
@@ -40,7 +40,7 @@ namespace WebExtension.Net
             if (propertyValue is BaseObject baseObject && !baseObject.IsInitialized)
             {
                 var propertyAccessPath = string.IsNullOrEmpty(accessPath) ? propertyName : $"{accessPath}.{propertyName}";
-                baseObject.Initialize(webExtensionJSRuntime, referenceId, propertyAccessPath);
+                baseObject.Initialize(webExtensionsJSRuntime, referenceId, propertyAccessPath);
             }
         }
 
@@ -52,7 +52,7 @@ namespace WebExtension.Net
         internal ValueTask<TValue> GetPropertyAsync<TValue>(string propertyName)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? propertyName : $"{accessPath}.{propertyName}";
-            return webExtensionJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
+            return webExtensionsJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, false));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace WebExtension.Net
         internal ValueTask<TValue> InvokeAsync<TValue>(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
-            return webExtensionJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
+            return webExtensionsJSRuntime.InvokeAsync<TValue>(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace WebExtension.Net
         internal ValueTask InvokeVoidAsync(string function, params object[] args)
         {
             var functionIdentifier = string.IsNullOrEmpty(accessPath) ? function : $"{accessPath}.{function}";
-            return webExtensionJSRuntime.InvokeVoidAsync(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
+            return webExtensionsJSRuntime.InvokeVoidAsync(InvokeObjectReferenceOption.Identifier, new InvokeObjectReferenceOption(referenceId, functionIdentifier, true), args);
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace WebExtension.Net
         protected virtual void Dispose(bool disposing)
         {
             // Cleanup
-            if (!string.IsNullOrEmpty(referenceId) && webExtensionJSRuntime != null)
+            if (!string.IsNullOrEmpty(referenceId) && webExtensionsJSRuntime != null)
             {
-                webExtensionJSRuntime.InvokeVoid(RemoveObjectReferenceOption.Identifier, new RemoveObjectReferenceOption(referenceId));
+                webExtensionsJSRuntime.InvokeVoid(RemoveObjectReferenceOption.Identifier, new RemoveObjectReferenceOption(referenceId));
                 referenceId = null;
             }
         }

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtension.Net.Runtime
+namespace WebExtensions.Net.Runtime
 {
     /// <summary>The operating system the browser is running on.</summary>
     [JsonConverter(typeof(EnumStringConverter<PlatformOs>))]
