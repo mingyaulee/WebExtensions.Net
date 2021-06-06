@@ -5,11 +5,10 @@
     <BlazorEnableCompression>false</BlazorEnableCompression>
     <!-- Disable caching so that we can skip integrity check. This is for coverlet to inject the hits counter into the assembly which will change the integrity hash. -->
     <BlazorCacheBootResources>false</BlazorCacheBootResources>
-    <BuildBlazorToBrowserExtension>false</BuildBlazorToBrowserExtension>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.BrowserExtension" Version="0.1.9" />
+    <PackageReference Include="Blazor.BrowserExtension" Version="0.3.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.4" PrivateAssets="all" />

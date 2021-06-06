@@ -75,8 +75,7 @@ jobs:
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.FullSemVer }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
         dotnet build --configuration Release
-        # disable integration test for now
-        # .\.coverlet\console\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net5.0/wwwroot/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-build --no-restore --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
+        .\.coverlet\console\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net5.0/wwwroot/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-build --no-restore --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   tag:

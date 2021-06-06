@@ -7,8 +7,8 @@
 @code {
     async Task RunIntegrationTests()
     {
-        var testUrl = await WebExtension.Runtime.GetURL("tests.html?random=false");
-        await WebExtension.Tabs.Create(new CreateProperties()
+        var testUrl = await WebExtensions.Runtime.GetURL("tests.html?random=false");
+        await WebExtensions.Tabs.Create(new CreateProperties()
         {
             Active = true,
             Url = testUrl
