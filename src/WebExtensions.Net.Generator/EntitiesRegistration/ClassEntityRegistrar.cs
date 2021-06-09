@@ -16,14 +16,16 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         private readonly ApiRootClassEntityRegistrar rootApiClassEntityRegistrar;
         private readonly ApiClassEntityRegistrar apiClassEntityRegistrar;
         private readonly EntitiesContext entitiesContext;
+        private readonly NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter;
         private readonly RegistrationOptions registrationOptions;
 
-        public ClassEntityRegistrar(ClassEntityRegistrarFactory classEntityRegistrarFactory, ApiRootClassEntityRegistrar rootApiClassEntityRegistrar, ApiClassEntityRegistrar apiClassEntityRegistrar, EntitiesContext entitiesContext, RegistrationOptions registrationOptions)
+        public ClassEntityRegistrar(ClassEntityRegistrarFactory classEntityRegistrarFactory, ApiRootClassEntityRegistrar rootApiClassEntityRegistrar, ApiClassEntityRegistrar apiClassEntityRegistrar, EntitiesContext entitiesContext, NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter, RegistrationOptions registrationOptions)
         {
             this.classEntityRegistrarFactory = classEntityRegistrarFactory;
             this.rootApiClassEntityRegistrar = rootApiClassEntityRegistrar;
             this.apiClassEntityRegistrar = apiClassEntityRegistrar;
             this.entitiesContext = entitiesContext;
+            this.namespaceApiToTypeDefinitionConverter = namespaceApiToTypeDefinitionConverter;
             this.registrationOptions = registrationOptions;
         }
 
@@ -32,8 +34,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return entitiesContext.Classes.GetAllClassEntities();
         }
 
-        public ClassEntity RegisterNamespaceApi(TypeDefinition namespaceApiTypeDefinition, NamespaceEntity namespaceEntity)
+        public ClassEntity RegisterNamespaceApi(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
         {
+            var namespaceApiTypeDefinition = namespaceApiToTypeDefinitionConverter.Convert(namespaceDefinition, namespaceEntity);
+
             if (namespaceApiTypeDefinition.Id is null)
             {
                 throw new InvalidOperationException("Namespace Api should have an Id.");

@@ -130,12 +130,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
                 if (typesToRegister.ContainsKey(typeReference))
                 {
-                    var currentNamePaths = string.Join(',', nameHierarchy);
-                    var registeredNamePaths = string.Join(',', typesToRegister[typeReference].NameHierarchy);
-                    if (registeredNamePaths != currentNamePaths)
-                    {
-                        throw new InvalidOperationException($"A registered type reference has more than one name hierarchy, [{registeredNamePaths}] and [{currentNamePaths}].");
-                    }
+                    ThrowIfNameHierarchyDifferent(nameHierarchy, typesToRegister[typeReference].NameHierarchy);
                     return;
                 }
 
@@ -205,6 +200,16 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 typeReference.Ref = typeChoice.Ref;
                 typeReference.StringFormat = typeChoice.StringFormat;
                 typeReference.StringPattern = typeChoice.StringPattern;
+            }
+        }
+
+        private static void ThrowIfNameHierarchyDifferent(IEnumerable<string> nameHierarchy, IEnumerable<string> registeredNameHierarchy)
+        {
+            var currentNamePaths = string.Join(',', nameHierarchy);
+            var registeredNamePaths = string.Join(',', registeredNameHierarchy);
+            if (registeredNamePaths != currentNamePaths)
+            {
+                throw new InvalidOperationException($"A registered type reference has more than one name hierarchy, [{registeredNamePaths}] and [{currentNamePaths}].");
             }
         }
 

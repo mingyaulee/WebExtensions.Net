@@ -120,34 +120,31 @@ namespace WebExtensions.Net
 
         private static bool IsMatchingType(Type type, JsonElement jsonElement, JsonSerializerOptions jsonSerializerOptions, out object value)
         {
-            if ((jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False) && IsBoolType(type))
+            if (IsMatchingBoolean(type, jsonElement))
             {
                 value = jsonElement.GetBoolean();
                 return true;
             }
 
-            if (jsonElement.ValueKind == JsonValueKind.Number)
+            if (IsMatchingInteger(type, jsonElement))
             {
-                if (IsIntType(type))
-                {
-                    value = jsonElement.GetInt32();
-                    return true;
-                }
-
-                if (IsDoubleType(type))
-                {
-                    value = jsonElement.GetDouble();
-                    return true;
-                }
+                value = jsonElement.GetInt32();
+                return true;
             }
 
-            if (jsonElement.ValueKind == JsonValueKind.String && IsStringType(type))
+            if (IsMatchingDouble(type, jsonElement))
+            {
+                value = jsonElement.GetDouble();
+                return true;
+            }
+
+            if (IsMatchingString(type, jsonElement))
             {
                 value = jsonElement.GetString();
                 return true;
             }
 
-            if (jsonElement.ValueKind == JsonValueKind.Object && IsObjectType(type))
+            if (IsMatchingObject(type, jsonElement))
             {
                 try
                 {
@@ -160,7 +157,7 @@ namespace WebExtensions.Net
                 }
             }
 
-            if (jsonElement.ValueKind == JsonValueKind.Array && IsArrayType(type))
+            if (IsMatchingArray(type, jsonElement))
             {
                 try
                 {
@@ -175,6 +172,36 @@ namespace WebExtensions.Net
 
             value = null;
             return false;
+        }
+
+        private static bool IsMatchingBoolean(Type type, JsonElement jsonElement)
+        {
+            return (jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False) && IsBoolType(type);
+        }
+
+        private static bool IsMatchingInteger(Type type, JsonElement jsonElement)
+        {
+            return jsonElement.ValueKind == JsonValueKind.Number && IsIntType(type);
+        }
+
+        private static bool IsMatchingDouble(Type type, JsonElement jsonElement)
+        {
+            return jsonElement.ValueKind == JsonValueKind.Number && IsDoubleType(type);
+        }
+
+        private static bool IsMatchingString(Type type, JsonElement jsonElement)
+        {
+            return jsonElement.ValueKind == JsonValueKind.String && IsStringType(type);
+        }
+
+        private static bool IsMatchingObject(Type type, JsonElement jsonElement)
+        {
+            return jsonElement.ValueKind == JsonValueKind.Object && IsObjectType(type);
+        }
+
+        private static bool IsMatchingArray(Type type, JsonElement jsonElement)
+        {
+            return jsonElement.ValueKind == JsonValueKind.Array && IsArrayType(type);
         }
 
         private static T CreateFromConstructor(ConstructorInfo constructorInfo, object value)

@@ -14,7 +14,6 @@ namespace WebExtensions.Net.Generator
         private readonly NamespaceRegistrationFilter namespaceRegistrationFilter;
         private readonly NamespaceEntityRegistrar namespaceEntityRegistrar;
         private readonly TypeEntityRegistrar typeEntityRegistrar;
-        private readonly NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter;
         private readonly AnonymousTypeProcessor anonymousTypeProcessor;
         private readonly TypeUsageProcessor typeUsageProcessor;
         private readonly ClassEntityRegistrar classEntityRegistrar;
@@ -24,7 +23,6 @@ namespace WebExtensions.Net.Generator
             NamespaceRegistrationFilter namespaceRegistrationFilter,
             NamespaceEntityRegistrar namespaceEntityRegistrar,
             TypeEntityRegistrar typeEntityRegistrar,
-            NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter,
             AnonymousTypeProcessor anonymousTypeProcessor,
             TypeUsageProcessor typeUsageProcessor,
             ClassEntityRegistrar classEntityRegistrar)
@@ -33,7 +31,6 @@ namespace WebExtensions.Net.Generator
             this.namespaceRegistrationFilter = namespaceRegistrationFilter;
             this.namespaceEntityRegistrar = namespaceEntityRegistrar;
             this.typeEntityRegistrar = typeEntityRegistrar;
-            this.namespaceApiToTypeDefinitionConverter = namespaceApiToTypeDefinitionConverter;
             this.anonymousTypeProcessor = anonymousTypeProcessor;
             this.typeUsageProcessor = typeUsageProcessor;
             this.classEntityRegistrar = classEntityRegistrar;
@@ -81,11 +78,8 @@ namespace WebExtensions.Net.Generator
 
         private IEnumerable<ClassEntity> RegisterNamespaceDefinitionsAsClassEntities(IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> namespaceDefinitions)
         {
-            return namespaceDefinitions.Select(namespaceDefinitionPair =>
-            {
-                var namespaceApiTypeDefinition = namespaceApiToTypeDefinitionConverter.Convert(namespaceDefinitionPair.Key, namespaceDefinitionPair.Value);
-                return classEntityRegistrar.RegisterNamespaceApi(namespaceApiTypeDefinition, namespaceDefinitionPair.Value);
-            }).ToArray();
+            return namespaceDefinitions.Select(namespaceDefinitionPair => classEntityRegistrar.RegisterNamespaceApi(namespaceDefinitionPair.Key, namespaceDefinitionPair.Value))
+                .ToArray();
         }
 
         private void RegisterApiRoot(IEnumerable<ClassEntity> apiClassEntities)
