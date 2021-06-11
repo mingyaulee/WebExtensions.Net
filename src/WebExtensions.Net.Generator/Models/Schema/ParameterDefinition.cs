@@ -1,8 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using WebExtensions.Net.Generator.JsonConverters;
 
 namespace WebExtensions.Net.Generator.Models.Schema
 {
+    [DebuggerDisplay("{Name}")]
     public class ParameterDefinition : TypeReference
     {
         [JsonPropertyName("name")]

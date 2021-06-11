@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.Generator.Models.Schema
 {
+    [DebuggerDisplay("{Namespace}")]
     public class NamespaceDefinition
     {
         [JsonIgnore]
