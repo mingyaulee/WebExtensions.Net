@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebExtensions.Net.Generator.EntitiesRegistration;
@@ -38,8 +37,8 @@ namespace WebExtensions.Net.Generator
 
         public IEnumerable<ClassEntity> RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
-            var apiNamespaceDefinitions = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
-            var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceDefinitions);
+            var apiNamespaceEntities = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
+            var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceEntities);
             RegisterApiRoot(apiClassEntities);
             RegisterAnonymousTypesAsTypeEntities(apiClassEntities);
             MarkApiClassEntitiesTypeUsage(apiClassEntities);
@@ -48,9 +47,9 @@ namespace WebExtensions.Net.Generator
             return classEntityRegistrar.GetAllClassEntities();
         }
 
-        private IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
+        private IEnumerable<NamespaceEntity> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
-            var apiNamespaceDefinitions = new List<KeyValuePair<NamespaceDefinition, NamespaceEntity>>();
+            var apiNamespaceDefinitions = new HashSet<NamespaceEntity>();
 
             foreach (var namespaceDefinition in namespaceDefinitions)
             {
@@ -64,7 +63,7 @@ namespace WebExtensions.Net.Generator
 
                 if (ShouldRegisterNamespaceApi(namespaceDefinition))
                 {
-                    apiNamespaceDefinitions.Add(KeyValuePair.Create(namespaceDefinition, namespaceEntity));
+                    apiNamespaceDefinitions.Add(namespaceEntity);
                 }
             }
 
@@ -76,9 +75,9 @@ namespace WebExtensions.Net.Generator
             return !(namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null);
         }
 
-        private IEnumerable<ClassEntity> RegisterNamespaceDefinitionsAsClassEntities(IEnumerable<KeyValuePair<NamespaceDefinition, NamespaceEntity>> namespaceDefinitions)
+        private IEnumerable<ClassEntity> RegisterNamespaceDefinitionsAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
         {
-            return namespaceDefinitions.Select(namespaceDefinitionPair => classEntityRegistrar.RegisterNamespaceApi(namespaceDefinitionPair.Key, namespaceDefinitionPair.Value))
+            return namespaceEntities.Select(namespaceEntity => classEntityRegistrar.RegisterNamespaceApi(namespaceEntity.NamespaceDefinitions, namespaceEntity))
                 .ToArray();
         }
 

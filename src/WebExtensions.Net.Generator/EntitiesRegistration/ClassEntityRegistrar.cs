@@ -34,8 +34,23 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return entitiesContext.Classes.GetAllClassEntities();
         }
 
-        public ClassEntity RegisterNamespaceApi(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
+        public ClassEntity RegisterNamespaceApi(IEnumerable<NamespaceDefinition> namespaceDefinitions, NamespaceEntity namespaceEntity)
         {
+            var namespaceDefinition = namespaceDefinitions.First();
+            if (namespaceDefinitions.Count() > 1)
+            {
+                namespaceDefinition = new NamespaceDefinition()
+                {
+                    Description = namespaceDefinitions.FirstOrDefault(definition => definition.Description is not null)?.Description,
+                    Events = namespaceDefinitions.SelectMany(definition => definition.Events ?? Enumerable.Empty<EventDefinition>()).ToArray(),
+                    Functions = namespaceDefinitions.SelectMany(definition => definition.Functions ?? Enumerable.Empty<FunctionDefinition>()).ToArray(),
+                    Namespace = namespaceDefinition.Namespace,
+                    Permissions = namespaceDefinitions.SelectMany(definition => definition.Permissions ?? Enumerable.Empty<string>()).Distinct().ToArray(),
+                    Properties = namespaceDefinitions.SelectMany(definition => definition.Properties ?? Enumerable.Empty<KeyValuePair<string, PropertyDefinition>>()).ToDictionary(propertyDefinitionPair => propertyDefinitionPair.Key, propertyDefinitionPair => propertyDefinitionPair.Value),
+                    Source = namespaceDefinition.Source,
+                    Types = namespaceDefinitions.SelectMany(definition => definition.Types ?? Enumerable.Empty<TypeDefinition>()).ToArray()
+                };
+            }
             var namespaceApiTypeDefinition = namespaceApiToTypeDefinitionConverter.Convert(namespaceDefinition, namespaceEntity);
 
             if (namespaceApiTypeDefinition.Id is null)
