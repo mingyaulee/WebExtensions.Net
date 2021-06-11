@@ -17,7 +17,7 @@ namespace WebExtensions.Net.Generator.Repositories
                 Entities.Add(entity);
             }
             entity.NamespaceDefinitions.Add(namespaceDefinition);
-            entity.OriginalNamepaceDefinitions.Add(SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition));
+            entity.OriginalNamespaceDefinitions.Add(SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition));
             return entity;
         }
 
