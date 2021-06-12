@@ -21,7 +21,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         {
             var usingNamespaces = new HashSet<string>();
             var typeNames = new HashSet<string>();
-            bool writeParameterlessConstructor = typeChoices.Any(clrTypeInfo => clrTypeInfo.IsNullType);
+            var writeParameterlessConstructor = typeChoices.Any(clrTypeInfo => clrTypeInfo.IsNullType);
 
             codeWriter.WriteUsingStatement(usingNamespaces);
             
@@ -29,14 +29,14 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             {
                 codeWriter.Constructors
                     .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
-                    .WriteLine($"public {className}()")
+                    .WriteLine($"public {className}() : base(null, null)")
                     .WriteStartBlock()
                     .WriteEndBlock();
             }
 
             foreach (var clrTypeInfo in typeChoices)
             {
-                if (typeNames.Contains(clrTypeInfo.CSharpName))
+                if (typeNames.Contains(clrTypeInfo.CSharpName) || clrTypeInfo.IsNullType)
                 {
                     continue;
                 }
