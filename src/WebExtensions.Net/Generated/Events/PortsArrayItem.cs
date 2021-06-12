@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Events
     // Multitype Class
     /// <summary></summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<PortsArrayItem>))]
-    public class PortsArrayItem : BaseMultiTypeObject
+    public partial class PortsArrayItem : BaseMultiTypeObject
     {
         private readonly int valueInt;
 

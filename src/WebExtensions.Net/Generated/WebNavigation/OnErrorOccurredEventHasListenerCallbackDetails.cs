@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnErrorOccurredEventHasListenerCallbackDetails : BaseObject
+    public partial class OnErrorOccurredEventHasListenerCallbackDetails : BaseObject
     {
         private int _frameId;
         private int _tabId;

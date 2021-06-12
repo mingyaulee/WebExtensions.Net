@@ -4,7 +4,7 @@ namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary>Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.</summary>
-    public class InjectDetails : BaseObject
+    public partial class InjectDetails : BaseObject
     {
         private bool? _allFrames;
         private string _code;

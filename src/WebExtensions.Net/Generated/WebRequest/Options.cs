@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class Options : BaseObject
+    public partial class Options : BaseObject
     {
         private bool? _certificateChain;
         private bool? _rawDER;

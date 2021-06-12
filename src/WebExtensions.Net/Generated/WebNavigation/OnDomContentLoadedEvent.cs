@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the page's DOM is fully constructed, but the referenced resources may not finish loading.</summary>
-    public class OnDomContentLoadedEvent : Event
+    public partial class OnDomContentLoadedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the page's DOM is fully constructed, but the referenced resources may not finish loading.</param>

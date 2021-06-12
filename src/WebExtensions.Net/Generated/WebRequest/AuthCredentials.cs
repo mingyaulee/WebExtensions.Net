@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Only used as a response to the onAuthRequired event. If set, the request is made using the supplied credentials.</summary>
-    public class AuthCredentials : BaseObject
+    public partial class AuthCredentials : BaseObject
     {
         private string _password;
         private string _username;

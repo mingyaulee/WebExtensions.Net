@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary>Fired when the  user pressed a button in the notification.</summary>
-    public class OnButtonClickedEvent : Event
+    public partial class OnButtonClickedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the  user pressed a button in the notification.</param>

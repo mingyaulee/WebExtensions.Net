@@ -5,7 +5,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Contains the HTTP request body data. Only provided if extraInfoSpec contains 'requestBody'.</summary>
-    public class RemoveListenerCallbackDetailsRequestBody : BaseObject
+    public partial class RemoveListenerCallbackDetailsRequestBody : BaseObject
     {
         private string _error;
         private object _formData;

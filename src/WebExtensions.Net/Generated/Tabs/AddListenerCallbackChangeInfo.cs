@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Lists the changes to the state of the tab that was updated.</summary>
-    public class AddListenerCallbackChangeInfo : BaseObject
+    public partial class AddListenerCallbackChangeInfo : BaseObject
     {
         private bool? _attention;
         private bool? _audible;

@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>A node (either a bookmark or a folder) in the bookmark tree.  Child nodes are ordered within their parent folder.</summary>
-    public class BookmarkTreeNode : BaseObject
+    public partial class BookmarkTreeNode : BaseObject
     {
         private IEnumerable<BookmarkTreeNode> _children;
         private double? _dateAdded;

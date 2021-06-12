@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>This will be defined during an API method callback if there was an error</summary>
-    public class LastError : BaseObject
+    public partial class LastError : BaseObject
     {
         private string _message;
 

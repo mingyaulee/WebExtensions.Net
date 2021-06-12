@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the contents of the tab is replaced by a different (usually previously pre-rendered) tab.</summary>
-    public class OnTabReplacedEvent : Event
+    public partial class OnTabReplacedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the contents of the tab is replaced by a different (usually previously pre-rendered) tab.</param>

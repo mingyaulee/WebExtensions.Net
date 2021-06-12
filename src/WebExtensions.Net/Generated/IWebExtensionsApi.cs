@@ -12,7 +12,7 @@ using WebExtensions.Net.Windows;
 namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public interface IWebExtensionsApi
+    public partial interface IWebExtensionsApi
     {
         /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.<br />Requires manifest permission bookmarks.</summary>
         IBookmarksApi Bookmarks { get; }

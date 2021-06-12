@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class EventUrlFilters : BaseObject
+    public partial class EventUrlFilters : BaseObject
     {
         private IEnumerable<UrlFilter> _url;
 

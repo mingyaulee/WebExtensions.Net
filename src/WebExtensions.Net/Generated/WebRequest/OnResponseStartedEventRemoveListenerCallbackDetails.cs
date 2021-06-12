@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class OnResponseStartedEventRemoveListenerCallbackDetails : BaseObject
+    public partial class OnResponseStartedEventRemoveListenerCallbackDetails : BaseObject
     {
         private string _cookieStoreId;
         private string _documentUrl;

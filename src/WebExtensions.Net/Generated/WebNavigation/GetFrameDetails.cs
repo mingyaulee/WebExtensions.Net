@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Information about the frame to retrieve information about.</summary>
-    public class GetFrameDetails : BaseObject
+    public partial class GetFrameDetails : BaseObject
     {
         private int _frameId;
         private int? _processId;

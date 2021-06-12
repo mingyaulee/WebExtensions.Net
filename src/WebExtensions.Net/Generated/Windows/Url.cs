@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Windows
     // Multitype Class
     /// <summary>A URL or array of URLs to open as tabs in the window. Fully-qualified URLs must include a scheme (i.e. 'http://www.google.com', not 'www.google.com'). Relative URLs will be relative to the current page within the extension. Defaults to the New Tab Page.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<Url>))]
-    public class Url : BaseMultiTypeObject
+    public partial class Url : BaseMultiTypeObject
     {
         private readonly string valueString;
 

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Storage
     // Multitype Class
     /// <summary>A single key or a list of keys for items to remove.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<StorageAreaSyncRemoveKeys>))]
-    public class StorageAreaSyncRemoveKeys : BaseMultiTypeObject
+    public partial class StorageAreaSyncRemoveKeys : BaseMultiTypeObject
     {
         private readonly string valueString;
 

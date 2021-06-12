@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>An object which allows the addition and removal of listeners for a Chrome event.</summary>
-    public class Event : BaseObject
+    public partial class Event : BaseObject
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Called when an event occurs. The parameters of this function depend on the type of event.</param>

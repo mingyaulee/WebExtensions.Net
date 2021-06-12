@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary>Fired when the extension acquires new permissions.</summary>
-    public class OnAddedEvent : Event
+    public partial class OnAddedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the extension acquires new permissions.</param>

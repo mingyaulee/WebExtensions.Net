@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
     // Multitype Class
     /// <summary>One or more tab indices to highlight.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<HighlightInfoTabs>))]
-    public class HighlightInfoTabs : BaseMultiTypeObject
+    public partial class HighlightInfoTabs : BaseMultiTypeObject
     {
         private readonly int valueInt;
 

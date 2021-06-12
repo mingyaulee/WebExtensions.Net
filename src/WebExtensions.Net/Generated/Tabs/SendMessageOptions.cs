@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class SendMessageOptions : BaseObject
+    public partial class SendMessageOptions : BaseObject
     {
         private int? _frameId;
 

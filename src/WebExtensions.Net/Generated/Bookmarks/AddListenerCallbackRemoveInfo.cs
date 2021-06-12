@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary></summary>
-    public class AddListenerCallbackRemoveInfo : BaseObject
+    public partial class AddListenerCallbackRemoveInfo : BaseObject
     {
         private int _index;
         private BookmarkTreeNode _node;

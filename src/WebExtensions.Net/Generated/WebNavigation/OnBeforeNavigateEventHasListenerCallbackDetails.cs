@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnBeforeNavigateEventHasListenerCallbackDetails : BaseObject
+    public partial class OnBeforeNavigateEventHasListenerCallbackDetails : BaseObject
     {
         private int _frameId;
         private int _parentFrameId;

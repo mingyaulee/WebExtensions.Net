@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Information about the tab to retrieve all frames from.</summary>
-    public class GetAllFramesDetails : BaseObject
+    public partial class GetAllFramesDetails : BaseObject
     {
         private int _tabId;
 

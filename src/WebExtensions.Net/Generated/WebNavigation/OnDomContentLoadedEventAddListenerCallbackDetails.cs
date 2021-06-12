@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnDomContentLoadedEventAddListenerCallbackDetails : BaseObject
+    public partial class OnDomContentLoadedEventAddListenerCallbackDetails : BaseObject
     {
         private int _frameId;
         private int _tabId;

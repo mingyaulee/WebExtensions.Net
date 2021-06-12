@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class CreateProperties : BaseObject
+    public partial class CreateProperties : BaseObject
     {
         private bool? _active;
         private string _cookieStoreId;

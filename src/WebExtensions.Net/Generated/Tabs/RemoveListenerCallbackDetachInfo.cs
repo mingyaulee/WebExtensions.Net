@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class RemoveListenerCallbackDetachInfo : BaseObject
+    public partial class RemoveListenerCallbackDetachInfo : BaseObject
     {
         private int _oldPosition;
         private int _oldWindowId;

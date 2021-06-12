@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary>Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.</summary>
-    public class GetAllGetInfo : BaseObject
+    public partial class GetAllGetInfo : BaseObject
     {
         private IEnumerable<WindowType> _windowTypes;
 

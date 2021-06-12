@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when a tab is updated.</summary>
-    public class OnUpdatedEvent : Event
+    public partial class OnUpdatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a tab is updated.</param>

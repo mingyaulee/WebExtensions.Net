@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary></summary>
-    public class CreateData : BaseObject
+    public partial class CreateData : BaseObject
     {
         private bool? _allowScriptsToClose;
         private string _cookieStoreId;

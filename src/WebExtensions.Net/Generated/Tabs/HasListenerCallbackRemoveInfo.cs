@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class HasListenerCallbackRemoveInfo : BaseObject
+    public partial class HasListenerCallbackRemoveInfo : BaseObject
     {
         private bool _isWindowClosing;
         private int _windowId;

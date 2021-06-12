@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary></summary>
-    public class ConnectInfo : BaseObject
+    public partial class ConnectInfo : BaseObject
     {
         private bool? _includeTlsChannelId;
         private string _name;

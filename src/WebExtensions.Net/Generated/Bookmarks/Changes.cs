@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary></summary>
-    public class Changes : BaseObject
+    public partial class Changes : BaseObject
     {
         private string _title;
         private string _url;

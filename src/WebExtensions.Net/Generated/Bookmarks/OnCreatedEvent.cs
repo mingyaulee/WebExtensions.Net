@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Fired when a bookmark or folder is created.</summary>
-    public class OnCreatedEvent : Event
+    public partial class OnCreatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a bookmark or folder is created.</param>

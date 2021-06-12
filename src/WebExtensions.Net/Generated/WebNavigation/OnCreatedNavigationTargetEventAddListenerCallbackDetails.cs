@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnCreatedNavigationTargetEventAddListenerCallbackDetails : BaseObject
+    public partial class OnCreatedNavigationTargetEventAddListenerCallbackDetails : BaseObject
     {
         private int _sourceFrameId;
         private int _sourceProcessId;

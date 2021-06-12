@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when a tab is closed.</summary>
-    public class OnRemovedEvent : Event
+    public partial class OnRemovedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a tab is closed.</param>

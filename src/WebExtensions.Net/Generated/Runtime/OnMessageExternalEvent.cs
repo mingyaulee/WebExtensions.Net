@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when a message is sent from another extension/app. Cannot be used in a content script.</summary>
-    public class OnMessageExternalEvent : Event
+    public partial class OnMessageExternalEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a message is sent from another extension/app. Cannot be used in a content script.</param>

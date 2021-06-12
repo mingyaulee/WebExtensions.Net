@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Storage
 {
     // Type Class
     /// <summary>Fired when one or more items change.</summary>
-    public class OnChangedEvent : Event
+    public partial class OnChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when one or more items change.</param>

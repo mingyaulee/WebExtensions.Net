@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when a connection is made from another extension.</summary>
-    public class OnConnectExternalEvent : Event
+    public partial class OnConnectExternalEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a connection is made from another extension.</param>

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when the extension is first installed, when the extension is updated to a new version, and when the browser is updated to a new version.</summary>
-    public class OnInstalledEvent : Event
+    public partial class OnInstalledEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the extension is first installed, when the extension is updated to a new version, and when the browser is updated to a new version.</param>

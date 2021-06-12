@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>An object describing filters to apply to tabs.onUpdated events.</summary>
-    public class UpdateFilter : BaseObject
+    public partial class UpdateFilter : BaseObject
     {
         private IEnumerable<UpdatePropertyName> _properties;
         private int? _tabId;

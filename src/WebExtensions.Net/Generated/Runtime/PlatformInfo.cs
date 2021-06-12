@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>An object containing information about the current platform.</summary>
-    public class PlatformInfo : BaseObject
+    public partial class PlatformInfo : BaseObject
     {
         private PlatformArch _arch;
         private PlatformOs _os;

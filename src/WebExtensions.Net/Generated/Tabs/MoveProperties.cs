@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class MoveProperties : BaseObject
+    public partial class MoveProperties : BaseObject
     {
         private int _index;
         private int? _windowId;

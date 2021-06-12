@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary>Specifies whether the $(ref:windows.Window) returned should contain a list of the $(ref:tabs.Tab) objects.</summary>
-    public class GetInfo : BaseObject
+    public partial class GetInfo : BaseObject
     {
         private bool? _populate;
         private IEnumerable<WindowType> _windowTypes;

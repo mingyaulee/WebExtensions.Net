@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class DuplicateProperties : BaseObject
+    public partial class DuplicateProperties : BaseObject
     {
         private bool? _active;
         private int? _index;

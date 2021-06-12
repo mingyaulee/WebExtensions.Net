@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Storage
     // Multitype Class
     /// <summary>A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<StorageAreaSyncGetBytesInUseKeys>))]
-    public class StorageAreaSyncGetBytesInUseKeys : BaseMultiTypeObject
+    public partial class StorageAreaSyncGetBytesInUseKeys : BaseMultiTypeObject
     {
         private readonly string valueString;
 

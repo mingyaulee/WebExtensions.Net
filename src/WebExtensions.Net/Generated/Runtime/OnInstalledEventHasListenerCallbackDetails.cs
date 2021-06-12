@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary></summary>
-    public class OnInstalledEventHasListenerCallbackDetails : BaseObject
+    public partial class OnInstalledEventHasListenerCallbackDetails : BaseObject
     {
         private string _previousVersion;
         private OnInstalledReason _reason;

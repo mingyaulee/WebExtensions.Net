@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnCompletedEventRemoveListenerCallbackDetails : BaseObject
+    public partial class OnCompletedEventRemoveListenerCallbackDetails : BaseObject
     {
         private int _frameId;
         private int _tabId;

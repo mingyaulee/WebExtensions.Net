@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when an error occurs.</summary>
-    public class OnErrorOccurredEvent : Event
+    public partial class OnErrorOccurredEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when an error occurs.</param>

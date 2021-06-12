@@ -7,7 +7,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when the first byte of the response body is received. For HTTP requests, this means that the status line and response headers are available.</summary>
-    public class OnResponseStartedEvent : Event
+    public partial class OnResponseStartedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the first byte of the response body is received. For HTTP requests, this means that the status line and response headers are available.</param>

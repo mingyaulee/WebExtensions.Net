@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a new window, or a new tab in an existing window, is created to host a navigation.</summary>
-    public class OnCreatedNavigationTargetEvent : Event
+    public partial class OnCreatedNavigationTargetEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a new window, or a new tab in an existing window, is created to host a navigation.</param>

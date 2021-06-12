@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary></summary>
-    public class Destination : BaseObject
+    public partial class Destination : BaseObject
     {
         private int? _index;
         private string _parentId;

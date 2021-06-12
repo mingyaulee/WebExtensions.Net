@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Object passed to the create() function.</summary>
-    public class CreateDetails : BaseObject
+    public partial class CreateDetails : BaseObject
     {
         private int? _index;
         private string _parentId;

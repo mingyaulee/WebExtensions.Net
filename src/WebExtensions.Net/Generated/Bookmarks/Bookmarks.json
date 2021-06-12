@@ -436,36 +436,6 @@
             "parameters": []
           }
         ]
-      },
-      {
-        "name": "import",
-        "description": "Imports bookmarks from an html bookmark file",
-        "async": "callback",
-        "type": "function",
-        "unsupported": true,
-        "parameters": [
-          {
-            "name": "callback",
-            "optional": true,
-            "type": "function",
-            "parameters": []
-          }
-        ]
-      },
-      {
-        "name": "export",
-        "description": "Exports bookmarks to an html bookmark file",
-        "async": "callback",
-        "type": "function",
-        "unsupported": true,
-        "parameters": [
-          {
-            "name": "callback",
-            "optional": true,
-            "type": "function",
-            "parameters": []
-          }
-        ]
       }
     ],
     "events": [

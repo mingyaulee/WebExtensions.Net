@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary>Fired when a window is removed (closed).</summary>
-    public class OnRemovedEvent : Event
+    public partial class OnRemovedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a window is removed (closed).</param>

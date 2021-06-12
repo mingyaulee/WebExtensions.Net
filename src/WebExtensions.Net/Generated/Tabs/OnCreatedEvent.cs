@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</summary>
-    public class OnCreatedEvent : Event
+    public partial class OnCreatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a tab is created. Note that the tab's URL may not be set at the time this event fired, but you can listen to onUpdated events to be notified when a URL is set.</param>

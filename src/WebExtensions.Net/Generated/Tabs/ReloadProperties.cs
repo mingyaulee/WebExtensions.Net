@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class ReloadProperties : BaseObject
+    public partial class ReloadProperties : BaseObject
     {
         private bool? _bypassCache;
 

@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Tab sharing state for screen, microphone and camera.</summary>
-    public class SharingState : BaseObject
+    public partial class SharingState : BaseObject
     {
         private bool _camera;
         private bool _microphone;

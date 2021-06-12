@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Defines the page settings to be used when saving a page as a pdf file.</summary>
-    public class PageSettings : BaseObject
+    public partial class PageSettings : BaseObject
     {
         private double? _edgeBottom;
         private double? _edgeLeft;

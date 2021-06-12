@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
     // Multitype Class
     /// <summary>Match tabs against one or more $(topic:match_patterns)[URL patterns]. Note that fragment identifiers are not matched.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<Url>))]
-    public class Url : BaseMultiTypeObject
+    public partial class Url : BaseMultiTypeObject
     {
         private readonly string valueString;
 

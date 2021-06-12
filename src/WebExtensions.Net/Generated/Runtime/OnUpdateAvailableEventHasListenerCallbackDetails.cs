@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>The manifest details of the available update.</summary>
-    public class OnUpdateAvailableEventHasListenerCallbackDetails : BaseObject
+    public partial class OnUpdateAvailableEventHasListenerCallbackDetails : BaseObject
     {
         private string _version;
 

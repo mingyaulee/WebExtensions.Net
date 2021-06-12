@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.</summary>
-    public class GetFrameCallbackDetails : BaseObject
+    public partial class GetFrameCallbackDetails : BaseObject
     {
         private bool? _errorOccurred;
         private int _frameId;

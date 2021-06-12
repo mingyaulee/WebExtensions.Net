@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class AddListenerCallbackMoveInfo : BaseObject
+    public partial class AddListenerCallbackMoveInfo : BaseObject
     {
         private int _fromIndex;
         private int _toIndex;

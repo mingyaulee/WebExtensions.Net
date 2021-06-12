@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Manifest
     // String Format Class
     /// <summary></summary>
     [JsonConverter(typeof(StringFormatJsonConverter<ExtensionUrl>))]
-    public class ExtensionUrl : BaseStringFormat
+    public partial class ExtensionUrl : BaseStringFormat
     {
         private const string FORMAT = "strictRelativeUrl";
         private const string PATTERN = "";

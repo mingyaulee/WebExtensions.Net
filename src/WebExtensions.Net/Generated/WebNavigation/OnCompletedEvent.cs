@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a document, including the resources it refers to, is completely loaded and initialized.</summary>
-    public class OnCompletedEvent : Event
+    public partial class OnCompletedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a document, including the resources it refers to, is completely loaded and initialized.</param>

@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class HasListenerCallbackActiveInfo : BaseObject
+    public partial class HasListenerCallbackActiveInfo : BaseObject
     {
         private int? _previousTabId;
         private int _tabId;

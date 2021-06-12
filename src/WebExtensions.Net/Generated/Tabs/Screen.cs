@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Tabs
     // Multitype Class
     /// <summary>True for any screen sharing, or a string to specify type of screen sharing.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<Screen>))]
-    public class Screen : BaseMultiTypeObject
+    public partial class Screen : BaseMultiTypeObject
     {
         private readonly string valueString;
         private readonly bool valueBool;

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary></summary>
-    public class AnyPermissions : BaseObject
+    public partial class AnyPermissions : BaseObject
     {
         private IEnumerable<MatchPattern> _origins;
         private IEnumerable<Permission> _permissions;

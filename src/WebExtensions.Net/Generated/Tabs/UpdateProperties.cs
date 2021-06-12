@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class UpdateProperties : BaseObject
+    public partial class UpdateProperties : BaseObject
     {
         private bool? _active;
         private bool? _highlighted;

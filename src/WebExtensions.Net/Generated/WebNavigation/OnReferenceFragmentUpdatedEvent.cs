@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the reference fragment of a frame was updated. All future events for that frame will use the updated URL.</summary>
-    public class OnReferenceFragmentUpdatedEvent : Event
+    public partial class OnReferenceFragmentUpdatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the reference fragment of a frame was updated. All future events for that frame will use the updated URL.</param>

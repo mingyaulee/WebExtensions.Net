@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class OnSendHeadersEventHasListenerCallbackDetails : BaseObject
+    public partial class OnSendHeadersEventHasListenerCallbackDetails : BaseObject
     {
         private string _cookieStoreId;
         private string _documentUrl;

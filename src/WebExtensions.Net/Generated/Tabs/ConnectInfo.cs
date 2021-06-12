@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class ConnectInfo : BaseObject
+    public partial class ConnectInfo : BaseObject
     {
         private int? _frameId;
         private string _name;

@@ -4,7 +4,7 @@ namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary>Details about the format, quality, area and scale of the capture.</summary>
-    public class ImageDetails : BaseObject
+    public partial class ImageDetails : BaseObject
     {
         private ImageFormat? _format;
         private int? _quality;

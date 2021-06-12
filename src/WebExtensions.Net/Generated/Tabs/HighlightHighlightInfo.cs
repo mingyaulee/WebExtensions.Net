@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class HighlightHighlightInfo : BaseObject
+    public partial class HighlightHighlightInfo : BaseObject
     {
         private bool? _populate;
         private HighlightInfoTabs _tabs;

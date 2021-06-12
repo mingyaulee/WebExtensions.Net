@@ -7,7 +7,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when HTTP response headers of a request have been received.</summary>
-    public class OnHeadersReceivedEvent : Event
+    public partial class OnHeadersReceivedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when HTTP response headers of a request have been received.</param>

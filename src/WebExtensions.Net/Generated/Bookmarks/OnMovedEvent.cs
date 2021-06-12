@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Fired when a bookmark or folder is moved to a different parent folder.</summary>
-    public class OnMovedEvent : Event
+    public partial class OnMovedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a bookmark or folder is moved to a different parent folder.</param>

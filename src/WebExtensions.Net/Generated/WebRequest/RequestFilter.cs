@@ -5,7 +5,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>An object describing filters to apply to webRequest events.</summary>
-    public class RequestFilter : BaseObject
+    public partial class RequestFilter : BaseObject
     {
         private bool? _incognito;
         private int? _tabId;

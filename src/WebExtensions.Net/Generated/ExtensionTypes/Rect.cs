@@ -4,7 +4,7 @@ namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary>The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.</summary>
-    public class Rect : BaseObject
+    public partial class Rect : BaseObject
     {
         private double _height;
         private double _width;

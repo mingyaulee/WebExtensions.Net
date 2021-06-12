@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class QueryInfo : BaseObject
+    public partial class QueryInfo : BaseObject
     {
         private bool? _active;
         private bool? _attention;

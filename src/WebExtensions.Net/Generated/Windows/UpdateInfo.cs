@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary></summary>
-    public class UpdateInfo : BaseObject
+    public partial class UpdateInfo : BaseObject
     {
         private bool? _drawAttention;
         private bool? _focused;

@@ -4,7 +4,7 @@ namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary></summary>
-    public class ExtensionCode : BaseObject
+    public partial class ExtensionCode : BaseObject
     {
         private string _code;
 

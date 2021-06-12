@@ -5,7 +5,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class HttpHeadersArrayItem : BaseObject
+    public partial class HttpHeadersArrayItem : BaseObject
     {
         private IEnumerable<int> _binaryValue;
         private string _name;

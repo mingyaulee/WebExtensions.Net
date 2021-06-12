@@ -12,7 +12,7 @@ using WebExtensions.Net.Windows;
 namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public class WebExtensionsApi : IWebExtensionsApi
+    public partial class WebExtensionsApi : IWebExtensionsApi
     {
         private readonly IWebExtensionsJSRuntime webExtensionsJSRuntime;
         private IBookmarksApi _bookmarks;

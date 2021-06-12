@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when the highlighted or selected tabs in a window changes.</summary>
-    public class OnHighlightedEvent : Event
+    public partial class OnHighlightedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the highlighted or selected tabs in a window changes.</param>

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when a message is sent from either an extension process or a content script.</summary>
-    public class OnMessageEvent : Event
+    public partial class OnMessageEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a message is sent from either an extension process or a content script.</param>

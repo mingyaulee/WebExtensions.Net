@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Tab muted state and the reason for the last state change.</summary>
-    public class MutedInfo : BaseObject
+    public partial class MutedInfo : BaseObject
     {
         private string _extensionId;
         private bool _muted;

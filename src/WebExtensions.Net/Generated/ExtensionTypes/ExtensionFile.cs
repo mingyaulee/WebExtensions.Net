@@ -5,7 +5,7 @@ namespace WebExtensions.Net.ExtensionTypes
 {
     // Type Class
     /// <summary></summary>
-    public class ExtensionFile : BaseObject
+    public partial class ExtensionFile : BaseObject
     {
         private ExtensionUrl _file;
 

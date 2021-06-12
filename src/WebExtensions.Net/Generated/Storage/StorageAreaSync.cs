@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Storage
 {
     // Type Class
     /// <summary></summary>
-    public class StorageAreaSync : BaseObject
+    public partial class StorageAreaSync : BaseObject
     {
         /// <summary>Removes all items from storage.</summary>
         public virtual ValueTask Clear()

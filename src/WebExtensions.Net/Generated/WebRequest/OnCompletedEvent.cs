@@ -7,7 +7,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when a request is completed.</summary>
-    public class OnCompletedEvent : Event
+    public partial class OnCompletedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a request is completed.</param>

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary></summary>
-    public class Window : BaseObject
+    public partial class Window : BaseObject
     {
         private bool _alwaysOnTop;
         private bool _focused;

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary>Fired when permissions are removed from the extension.</summary>
-    public class OnRemovedEvent : Event
+    public partial class OnRemovedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when permissions are removed from the extension.</param>

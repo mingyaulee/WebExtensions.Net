@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class HasListenerCallbackHighlightInfo : BaseObject
+    public partial class HasListenerCallbackHighlightInfo : BaseObject
     {
         private IEnumerable<int> _tabIds;
         private int _windowId;

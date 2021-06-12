@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Returns value for event handlers that have the 'blocking' extraInfoSpec applied. Allows the event handler to modify network requests.</summary>
-    public class BlockingResponse : BaseObject
+    public partial class BlockingResponse : BaseObject
     {
         private AuthCredentials _authCredentials;
         private bool? _cancel;

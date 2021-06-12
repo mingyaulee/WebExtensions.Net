@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class UrlClassification : BaseObject
+    public partial class UrlClassification : BaseObject
     {
         private UrlClassificationParty _firstParty;
         private UrlClassificationParty _thirdParty;

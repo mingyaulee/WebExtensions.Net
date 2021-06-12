@@ -7,7 +7,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when a request is about to occur.</summary>
-    public class OnBeforeRequestEvent : Event
+    public partial class OnBeforeRequestEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a request is about to occur.</param>

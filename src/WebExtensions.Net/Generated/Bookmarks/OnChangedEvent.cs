@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Fired when a bookmark or folder changes.  'b'Note:'/b' Currently, only title and url changes trigger this.</summary>
-    public class OnChangedEvent : Event
+    public partial class OnChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a bookmark or folder changes.  'b'Note:'/b' Currently, only title and url changes trigger this.</param>

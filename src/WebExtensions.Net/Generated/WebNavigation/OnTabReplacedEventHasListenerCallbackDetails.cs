@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class OnTabReplacedEventHasListenerCallbackDetails : BaseObject
+    public partial class OnTabReplacedEventHasListenerCallbackDetails : BaseObject
     {
         private int _replacedTabId;
         private int _tabId;

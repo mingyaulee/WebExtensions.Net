@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Defines how zoom changes in a tab are handled and at what scope.</summary>
-    public class ZoomSettings : BaseObject
+    public partial class ZoomSettings : BaseObject
     {
         private double? _defaultZoomFactor;
         private ZoomSettingsMode? _mode;

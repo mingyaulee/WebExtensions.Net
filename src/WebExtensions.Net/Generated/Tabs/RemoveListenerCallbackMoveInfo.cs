@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class RemoveListenerCallbackMoveInfo : BaseObject
+    public partial class RemoveListenerCallbackMoveInfo : BaseObject
     {
         private int _fromIndex;
         private int _toIndex;

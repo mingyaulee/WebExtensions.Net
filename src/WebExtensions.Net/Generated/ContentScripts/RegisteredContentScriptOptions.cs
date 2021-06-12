@@ -7,7 +7,7 @@ namespace WebExtensions.Net.ContentScripts
 {
     // Type Class
     /// <summary>Details of a content script registered programmatically</summary>
-    public class RegisteredContentScriptOptions : BaseObject
+    public partial class RegisteredContentScriptOptions : BaseObject
     {
         private bool? _allFrames;
         private IEnumerable<ExtensionFileOrCode> _css;

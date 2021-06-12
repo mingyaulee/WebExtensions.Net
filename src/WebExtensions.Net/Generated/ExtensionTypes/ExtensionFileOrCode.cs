@@ -5,7 +5,7 @@ namespace WebExtensions.Net.ExtensionTypes
     // Multitype Class
     /// <summary></summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<ExtensionFileOrCode>))]
-    public class ExtensionFileOrCode : BaseMultiTypeObject
+    public partial class ExtensionFileOrCode : BaseMultiTypeObject
     {
         private readonly ExtensionFile valueExtensionFile;
         private readonly ExtensionCode valueExtensionCode;

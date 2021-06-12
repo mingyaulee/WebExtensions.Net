@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary></summary>
-    public class NotificationItem : BaseObject
+    public partial class NotificationItem : BaseObject
     {
         private string _message;
         private string _title;

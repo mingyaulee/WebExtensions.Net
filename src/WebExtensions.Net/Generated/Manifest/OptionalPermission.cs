@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Manifest
     // Multitype Class
     /// <summary></summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<OptionalPermission>))]
-    public class OptionalPermission : BaseMultiTypeObject
+    public partial class OptionalPermission : BaseMultiTypeObject
     {
         private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
         private readonly string valueString;

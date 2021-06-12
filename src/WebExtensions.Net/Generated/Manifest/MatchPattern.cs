@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Manifest
     // Multitype Class
     /// <summary></summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<MatchPattern>))]
-    public class MatchPattern : BaseMultiTypeObject
+    public partial class MatchPattern : BaseMultiTypeObject
     {
         private readonly string valueString;
         private readonly MatchPatternRestricted valueMatchPatternRestricted;

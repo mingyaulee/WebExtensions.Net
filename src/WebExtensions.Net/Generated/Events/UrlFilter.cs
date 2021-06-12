@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>Filters URLs for various criteria. See <see href='events#filtered'>event filtering</see>. All criteria are case sensitive.</summary>
-    public class UrlFilter : BaseObject
+    public partial class UrlFilter : BaseObject
     {
         private string _hostContains;
         private string _hostEquals;

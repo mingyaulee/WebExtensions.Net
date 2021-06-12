@@ -7,7 +7,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when a server-initiated redirect is about to occur.</summary>
-    public class OnBeforeRedirectEvent : Event
+    public partial class OnBeforeRedirectEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a server-initiated redirect is about to occur.</param>

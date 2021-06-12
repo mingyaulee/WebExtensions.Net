@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary></summary>
-    public class DetailsArrayItem : BaseObject
+    public partial class DetailsArrayItem : BaseObject
     {
         private bool? _errorOccurred;
         private int _frameId;

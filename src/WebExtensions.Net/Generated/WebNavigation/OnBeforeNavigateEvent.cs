@@ -6,7 +6,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a navigation is about to occur.</summary>
-    public class OnBeforeNavigateEvent : Event
+    public partial class OnBeforeNavigateEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a navigation is about to occur.</param>

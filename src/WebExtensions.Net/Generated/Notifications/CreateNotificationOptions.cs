@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary></summary>
-    public class CreateNotificationOptions : BaseObject
+    public partial class CreateNotificationOptions : BaseObject
     {
         private string _appIconMaskUrl;
         private string _contextMessage;

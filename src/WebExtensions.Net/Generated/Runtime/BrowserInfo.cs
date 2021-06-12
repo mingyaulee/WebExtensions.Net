@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>An object containing information about the current browser.</summary>
-    public class BrowserInfo : BaseObject
+    public partial class BrowserInfo : BaseObject
     {
         private string _buildID;
         private string _name;

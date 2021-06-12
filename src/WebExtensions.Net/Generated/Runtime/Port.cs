@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>An object which allows two way communication with other pages.</summary>
-    public class Port : BaseObject
+    public partial class Port : BaseObject
     {
         private Action _disconnect;
         private string _name;

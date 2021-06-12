@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Tabs
     // Multitype Class
     /// <summary>Details about the moved tabs.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<CallbackTabs>))]
-    public class CallbackTabs : BaseMultiTypeObject
+    public partial class CallbackTabs : BaseMultiTypeObject
     {
         private readonly Tab valueTab;
 

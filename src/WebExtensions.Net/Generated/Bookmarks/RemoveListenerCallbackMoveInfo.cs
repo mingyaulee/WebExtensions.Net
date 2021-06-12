@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary></summary>
-    public class RemoveListenerCallbackMoveInfo : BaseObject
+    public partial class RemoveListenerCallbackMoveInfo : BaseObject
     {
         private int _index;
         private int _oldIndex;

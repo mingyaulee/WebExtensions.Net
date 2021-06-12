@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>The server requesting authentication.</summary>
-    public class RemoveListenerCallbackDetailsChallenger : BaseObject
+    public partial class RemoveListenerCallbackDetailsChallenger : BaseObject
     {
         private string _host;
         private int _port;

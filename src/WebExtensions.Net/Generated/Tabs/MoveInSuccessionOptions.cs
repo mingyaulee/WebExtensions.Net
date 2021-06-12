@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class MoveInSuccessionOptions : BaseObject
+    public partial class MoveInSuccessionOptions : BaseObject
     {
         private bool? _append;
         private bool? _insert;

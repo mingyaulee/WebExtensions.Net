@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Storage
     // Multitype Class
     /// <summary>A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</summary>
     [JsonConverter(typeof(MultiTypeJsonConverter<StorageAreaGetKeys>))]
-    public class StorageAreaGetKeys : BaseMultiTypeObject
+    public partial class StorageAreaGetKeys : BaseMultiTypeObject
     {
         private readonly string valueString;
 

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary>Fired when the notification is shown.</summary>
-    public class OnShownEvent : Event
+    public partial class OnShownEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the notification is shown.</param>

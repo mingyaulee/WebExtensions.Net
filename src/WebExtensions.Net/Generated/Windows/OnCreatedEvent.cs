@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Windows
 {
     // Type Class
     /// <summary>Fired when a window is created.</summary>
-    public class OnCreatedEvent : Event
+    public partial class OnCreatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a window is created.</param>

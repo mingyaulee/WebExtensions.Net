@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Fired when a bookmark or folder is removed.  When a folder is removed recursively, a single notification is fired for the folder, and none for its contents.</summary>
-    public class OnRemovedEvent : Event
+    public partial class OnRemovedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a bookmark or folder is removed.  When a folder is removed recursively, a single notification is fired for the folder, and none for its contents.</param>

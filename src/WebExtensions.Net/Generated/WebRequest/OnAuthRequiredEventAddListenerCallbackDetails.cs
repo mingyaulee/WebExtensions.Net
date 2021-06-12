@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary></summary>
-    public class OnAuthRequiredEventAddListenerCallbackDetails : BaseObject
+    public partial class OnAuthRequiredEventAddListenerCallbackDetails : BaseObject
     {
         private AddListenerCallbackDetailsChallenger _challenger;
         private string _cookieStoreId;

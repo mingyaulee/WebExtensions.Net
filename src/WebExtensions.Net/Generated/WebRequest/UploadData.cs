@@ -4,7 +4,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Contains data uploaded in a URL request.</summary>
-    public class UploadData : BaseObject
+    public partial class UploadData : BaseObject
     {
         private object _bytes;
         private string _file;

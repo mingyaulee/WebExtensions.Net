@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class RemoveListenerCallbackHighlightInfo : BaseObject
+    public partial class RemoveListenerCallbackHighlightInfo : BaseObject
     {
         private IEnumerable<int> _tabIds;
         private int _windowId;

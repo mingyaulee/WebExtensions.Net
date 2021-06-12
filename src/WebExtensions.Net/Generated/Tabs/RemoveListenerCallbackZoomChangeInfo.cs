@@ -4,7 +4,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
-    public class RemoveListenerCallbackZoomChangeInfo : BaseObject
+    public partial class RemoveListenerCallbackZoomChangeInfo : BaseObject
     {
         private double _newZoomFactor;
         private double _oldZoomFactor;

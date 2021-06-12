@@ -5,7 +5,7 @@ namespace WebExtensions.Net.Manifest
     // String Format Class
     /// <summary>Mostly unrestricted match patterns for privileged add-ons. This should technically be rejected for unprivileged add-ons, but, reasons. The MatchPattern class will still refuse privileged schemes for those extensions.</summary>
     [JsonConverter(typeof(StringFormatJsonConverter<MatchPatternUnestricted>))]
-    public class MatchPatternUnestricted : BaseStringFormat
+    public partial class MatchPatternUnestricted : BaseStringFormat
     {
         private const string FORMAT = "";
         private const string PATTERN = "^resource://(\\*|\\*\\.[^*/]+|[^*/]+)/.*$|^about:";

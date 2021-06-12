@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary>Fired when the notification closed, either by the system or by user action.</summary>
-    public class OnClosedEvent : Event
+    public partial class OnClosedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the notification closed, either by the system or by user action.</param>
