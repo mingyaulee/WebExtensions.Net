@@ -1,0 +1,204 @@
+[
+  {
+    "namespace": "omnibox",
+    "description": "The omnibox API allows you to register a keyword with Firefox\u0027s address bar.",
+    "permissions": [
+      "manifest:omnibox"
+    ],
+    "types": [
+      {
+        "id": "DescriptionStyleType",
+        "description": "The style type.",
+        "type": "string",
+        "enum": [
+          "url",
+          "match",
+          "dim"
+        ]
+      },
+      {
+        "id": "OnInputEnteredDisposition",
+        "description": "The window disposition for the omnibox query. This is the recommended context to display results. For example, if the omnibox command is to navigate to a certain URL, a disposition of \u0027newForegroundTab\u0027 means the navigation should take place in a new selected tab.",
+        "type": "string",
+        "enum": [
+          "currentTab",
+          "newForegroundTab",
+          "newBackgroundTab"
+        ]
+      },
+      {
+        "id": "SuggestResult",
+        "description": "A suggest result.",
+        "type": "object",
+        "properties": {
+          "content": {
+            "description": "The text that is put into the URL bar, and that is sent to the extension when the user chooses this entry.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The text that is displayed in the URL dropdown. Can contain XML-style markup for styling. The supported tags are \u0027url\u0027 (for a literal URL), \u0027match\u0027 (for highlighting text that matched what the user\u0027s query), and \u0027dim\u0027 (for dim helper text). The styles can be nested, eg. \u003Cdim\u003E\u003Cmatch\u003Edimmed match\u003C/match\u003E\u003C/dim\u003E. You must escape the five predefined entities to display them as text: stackoverflow.com/a/1091953/89484 ",
+            "type": "string"
+          },
+          "descriptionStyles": {
+            "description": "An array of style ranges for the description, as provided by the extension.",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "integer"
+                },
+                "type": {
+                  "description": "The style type",
+                  "$ref": "DescriptionStyleType"
+                },
+                "length": {
+                  "optional": true,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "descriptionStylesRaw": {
+            "description": "An array of style ranges for the description, as provided by ToValue().",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "DefaultSuggestResult",
+        "description": "A suggest result.",
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "The text that is displayed in the URL dropdown.",
+            "type": "string"
+          },
+          "descriptionStyles": {
+            "description": "An array of style ranges for the description, as provided by the extension.",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "integer"
+                },
+                "type": {
+                  "description": "The style type",
+                  "$ref": "DescriptionStyleType"
+                },
+                "length": {
+                  "optional": true,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "descriptionStylesRaw": {
+            "description": "An array of style ranges for the description, as provided by ToValue().",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "offset": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "setDefaultSuggestion",
+        "description": "Sets the description and styling for the default suggestion. The default suggestion is the text that is displayed in the first suggestion row underneath the URL bar.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "suggestion",
+            "description": "A partial SuggestResult object, without the \u0027content\u0027 parameter.",
+            "$ref": "DefaultSuggestResult"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onInputStarted",
+        "description": "User has started a keyword input session by typing the extension\u0027s keyword. This is guaranteed to be sent exactly once per input session, and before any onInputChanged events.",
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "onInputChanged",
+        "description": "User has changed what is typed into the omnibox.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "suggest",
+            "description": "A callback passed to the onInputChanged event used for sending suggestions back to the browser.",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "suggestResults",
+                "description": "Array of suggest results",
+                "type": "array",
+                "items": {
+                  "$ref": "SuggestResult"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "onInputEntered",
+        "description": "User has accepted what is typed into the omnibox.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "disposition",
+            "$ref": "OnInputEnteredDisposition"
+          }
+        ]
+      },
+      {
+        "name": "onInputCancelled",
+        "description": "User has ended the keyword input session without accepting the input.",
+        "type": "function",
+        "parameters": []
+      }
+    ]
+  }
+]

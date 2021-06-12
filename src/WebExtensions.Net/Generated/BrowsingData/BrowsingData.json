@@ -1,0 +1,410 @@
+[
+  {
+    "namespace": "browsingData",
+    "description": "Use the \u003Ccode\u003Echrome.browsingData\u003C/code\u003E API to remove browsing data from a user\u0027s local profile.",
+    "permissions": [
+      "browsingData"
+    ],
+    "types": [
+      {
+        "id": "RemovalOptions",
+        "description": "Options that determine exactly what data will be removed.",
+        "type": "object",
+        "properties": {
+          "since": {
+            "description": "Remove data accumulated on or after this date, represented in milliseconds since the epoch (accessible via the \u003Ccode\u003EgetTime\u003C/code\u003E method of the JavaScript \u003Ccode\u003EDate\u003C/code\u003E object). If absent, defaults to 0 (which would remove all browsing data).",
+            "optional": true,
+            "$ref": "extensionTypes.Date"
+          },
+          "hostnames": {
+            "description": "Only remove data associated with these hostnames (only applies to cookies and localStorage).",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "hostname"
+            }
+          },
+          "cookieStoreId": {
+            "description": "Only remove data associated with this specific cookieStoreId.",
+            "optional": true,
+            "type": "string"
+          },
+          "originTypes": {
+            "description": "An object whose properties specify which origin types ought to be cleared. If this object isn\u0027t specified, it defaults to clearing only \u0022unprotected\u0022 origins. Please ensure that you \u003Cem\u003Ereally\u003C/em\u003E want to remove application data before adding \u0027protectedWeb\u0027 or \u0027extensions\u0027.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "unprotectedWeb": {
+                "description": "Normal websites.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "protectedWeb": {
+                "description": "Websites that have been installed as hosted applications (be careful!).",
+                "optional": true,
+                "type": "boolean"
+              },
+              "extension": {
+                "description": "Extensions and packaged applications a user has installed (be _really_ careful!).",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "DataTypeSet",
+        "description": "A set of data types. Missing data types are interpreted as \u003Ccode\u003Efalse\u003C/code\u003E.",
+        "type": "object",
+        "properties": {
+          "cache": {
+            "description": "The browser\u0027s cache. Note: when removing data, this clears the \u003Cem\u003Eentire\u003C/em\u003E cache: it is not limited to the range you specify.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "cookies": {
+            "description": "The browser\u0027s cookies.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "downloads": {
+            "description": "The browser\u0027s download list.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "formData": {
+            "description": "The browser\u0027s stored form data.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "history": {
+            "description": "The browser\u0027s history.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "indexedDB": {
+            "description": "Websites\u0027 IndexedDB data.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "localStorage": {
+            "description": "Websites\u0027 local storage data.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "serverBoundCertificates": {
+            "description": "Server-bound certificates.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "passwords": {
+            "description": "Stored passwords.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "pluginData": {
+            "description": "Plugins\u0027 data.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "serviceWorkers": {
+            "description": "Service Workers.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "settings",
+        "description": "Reports which types of data are currently selected in the \u0027Clear browsing data\u0027 settings UI.  Note: some of the data types included in this API are not available in the settings UI, and some UI settings control more than one data type listed here.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "object",
+                "properties": {
+                  "options": {
+                    "$ref": "RemovalOptions"
+                  },
+                  "dataToRemove": {
+                    "description": "All of the types will be present in the result, with values of \u003Ccode\u003Etrue\u003C/code\u003E if they are both selected to be removed and permitted to be removed, otherwise \u003Ccode\u003Efalse\u003C/code\u003E.",
+                    "$ref": "DataTypeSet"
+                  },
+                  "dataRemovalPermitted": {
+                    "description": "All of the types will be present in the result, with values of \u003Ccode\u003Etrue\u003C/code\u003E if they are permitted to be removed (e.g., by enterprise policy) and \u003Ccode\u003Efalse\u003C/code\u003E if not.",
+                    "$ref": "DataTypeSet"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "description": "Clears various types of browsing data stored in a user\u0027s profile.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "dataToRemove",
+            "description": "The set of data types to remove.",
+            "$ref": "DataTypeSet"
+          },
+          {
+            "name": "callback",
+            "description": "Called when deletion has completed.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeAppcache",
+        "description": "Clears websites\u0027 appcache data.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when websites\u0027 appcache data has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeCache",
+        "description": "Clears the browser\u0027s cache.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s cache has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeCookies",
+        "description": "Clears the browser\u0027s cookies and server-bound certificates modified within a particular timeframe.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s cookies and server-bound certificates have been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeDownloads",
+        "description": "Clears the browser\u0027s list of downloaded files (\u003Cem\u003Enot\u003C/em\u003E the downloaded files themselves).",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s list of downloaded files has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeFileSystems",
+        "description": "Clears websites\u0027 file system data.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when websites\u0027 file systems have been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeFormData",
+        "description": "Clears the browser\u0027s stored form data (autofill).",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s form data has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeHistory",
+        "description": "Clears the browser\u0027s history.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s history has cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeIndexedDB",
+        "description": "Clears websites\u0027 IndexedDB data.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when websites\u0027 IndexedDB data has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeLocalStorage",
+        "description": "Clears websites\u0027 local storage data.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when websites\u0027 local storage has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removePluginData",
+        "description": "Clears plugins\u0027 data.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when plugins\u0027 data has been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removePasswords",
+        "description": "Clears the browser\u0027s stored passwords.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when the browser\u0027s passwords have been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "removeWebSQL",
+        "description": "Clears websites\u0027 WebSQL data.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "RemovalOptions"
+          },
+          {
+            "name": "callback",
+            "description": "Called when websites\u0027 WebSQL databases have been cleared.",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      }
+    ]
+  }
+]

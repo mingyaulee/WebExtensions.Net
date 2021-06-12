@@ -1,0 +1,794 @@
+[
+  {
+    "namespace": "downloads",
+    "permissions": [
+      "downloads"
+    ],
+    "types": [
+      {
+        "id": "FilenameConflictAction",
+        "type": "string",
+        "enum": [
+          "uniquify",
+          "overwrite",
+          "prompt"
+        ]
+      },
+      {
+        "id": "InterruptReason",
+        "type": "string",
+        "enum": [
+          "FILE_FAILED",
+          "FILE_ACCESS_DENIED",
+          "FILE_NO_SPACE",
+          "FILE_NAME_TOO_LONG",
+          "FILE_TOO_LARGE",
+          "FILE_VIRUS_INFECTED",
+          "FILE_TRANSIENT_ERROR",
+          "FILE_BLOCKED",
+          "FILE_SECURITY_CHECK_FAILED",
+          "FILE_TOO_SHORT",
+          "NETWORK_FAILED",
+          "NETWORK_TIMEOUT",
+          "NETWORK_DISCONNECTED",
+          "NETWORK_SERVER_DOWN",
+          "NETWORK_INVALID_REQUEST",
+          "SERVER_FAILED",
+          "SERVER_NO_RANGE",
+          "SERVER_BAD_CONTENT",
+          "SERVER_UNAUTHORIZED",
+          "SERVER_CERT_PROBLEM",
+          "SERVER_FORBIDDEN",
+          "USER_CANCELED",
+          "USER_SHUTDOWN",
+          "CRASH"
+        ]
+      },
+      {
+        "id": "DangerType",
+        "description": "\u003Cdl\u003E\u003Cdt\u003Efile\u003C/dt\u003E\u003Cdd\u003EThe download\u0027s filename is suspicious.\u003C/dd\u003E\u003Cdt\u003Eurl\u003C/dt\u003E\u003Cdd\u003EThe download\u0027s URL is known to be malicious.\u003C/dd\u003E\u003Cdt\u003Econtent\u003C/dt\u003E\u003Cdd\u003EThe downloaded file is known to be malicious.\u003C/dd\u003E\u003Cdt\u003Euncommon\u003C/dt\u003E\u003Cdd\u003EThe download\u0027s URL is not commonly downloaded and could be dangerous.\u003C/dd\u003E\u003Cdt\u003Esafe\u003C/dt\u003E\u003Cdd\u003EThe download presents no known danger to the user\u0027s computer.\u003C/dd\u003E\u003C/dl\u003EThese string constants will never change, however the set of DangerTypes may change.",
+        "type": "string",
+        "enum": [
+          "file",
+          "url",
+          "content",
+          "uncommon",
+          "host",
+          "unwanted",
+          "safe",
+          "accepted"
+        ]
+      },
+      {
+        "id": "State",
+        "description": "\u003Cdl\u003E\u003Cdt\u003Ein_progress\u003C/dt\u003E\u003Cdd\u003EThe download is currently receiving data from the server.\u003C/dd\u003E\u003Cdt\u003Einterrupted\u003C/dt\u003E\u003Cdd\u003EAn error broke the connection with the file host.\u003C/dd\u003E\u003Cdt\u003Ecomplete\u003C/dt\u003E\u003Cdd\u003EThe download completed successfully.\u003C/dd\u003E\u003C/dl\u003EThese string constants will never change, however the set of States may change.",
+        "type": "string",
+        "enum": [
+          "in_progress",
+          "interrupted",
+          "complete"
+        ]
+      },
+      {
+        "id": "DownloadItem",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "An identifier that is persistent across browser sessions.",
+            "type": "integer"
+          },
+          "url": {
+            "description": "Absolute URL.",
+            "type": "string"
+          },
+          "referrer": {
+            "optional": true,
+            "type": "string"
+          },
+          "filename": {
+            "description": "Absolute local path.",
+            "type": "string"
+          },
+          "incognito": {
+            "description": "False if this download is recorded in the history, true if it is not recorded.",
+            "type": "boolean"
+          },
+          "danger": {
+            "description": "Indication of whether this download is thought to be safe or known to be suspicious.",
+            "$ref": "DangerType"
+          },
+          "mime": {
+            "description": "The file\u0027s MIME type.",
+            "optional": true,
+            "type": "string"
+          },
+          "startTime": {
+            "description": "Number of milliseconds between the unix epoch and when this download began.",
+            "type": "string"
+          },
+          "endTime": {
+            "description": "Number of milliseconds between the unix epoch and when this download ended.",
+            "optional": true,
+            "type": "string"
+          },
+          "estimatedEndTime": {
+            "optional": true,
+            "type": "string"
+          },
+          "state": {
+            "description": "Indicates whether the download is progressing, interrupted, or complete.",
+            "$ref": "State"
+          },
+          "paused": {
+            "description": "True if the download has stopped reading data from the host, but kept the connection open.",
+            "type": "boolean"
+          },
+          "canResume": {
+            "type": "boolean"
+          },
+          "error": {
+            "description": "Number indicating why a download was interrupted.",
+            "optional": true,
+            "$ref": "InterruptReason"
+          },
+          "bytesReceived": {
+            "description": "Number of bytes received so far from the host, without considering file compression.",
+            "type": "number"
+          },
+          "totalBytes": {
+            "description": "Number of bytes in the whole file, without considering file compression, or -1 if unknown.",
+            "type": "number"
+          },
+          "fileSize": {
+            "description": "Number of bytes in the whole file post-decompression, or -1 if unknown.",
+            "type": "number"
+          },
+          "exists": {
+            "type": "boolean"
+          },
+          "byExtensionId": {
+            "optional": true,
+            "type": "string"
+          },
+          "byExtensionName": {
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "StringDelta",
+        "type": "object",
+        "properties": {
+          "current": {
+            "optional": true,
+            "type": "string"
+          },
+          "previous": {
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "DoubleDelta",
+        "type": "object",
+        "properties": {
+          "current": {
+            "optional": true,
+            "type": "number"
+          },
+          "previous": {
+            "optional": true,
+            "type": "number"
+          }
+        }
+      },
+      {
+        "id": "BooleanDelta",
+        "type": "object",
+        "properties": {
+          "current": {
+            "optional": true,
+            "type": "boolean"
+          },
+          "previous": {
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "id": "DownloadTime",
+        "description": "A time specified as a Date object, a number or string representing milliseconds since the epoch, or an ISO 8601 string",
+        "choices": [
+          {
+            "type": "string",
+            "pattern": "^[1-9]\\d*$"
+          },
+          {
+            "$ref": "extensionTypes.Date"
+          }
+        ]
+      },
+      {
+        "id": "DownloadQuery",
+        "description": "Parameters that combine to specify a predicate that can be used to select a set of downloads.  Used for example in search() and erase()",
+        "type": "object",
+        "properties": {
+          "query": {
+            "description": "This array of search terms limits results to \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E whose \u003Ccode\u003Efilename\u003C/code\u003E or \u003Ccode\u003Eurl\u003C/code\u003E contain all of the search terms that do not begin with a dash \u0027-\u0027 and none of the search terms that do begin with a dash.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "startedBefore": {
+            "description": "Limits results to downloads that started before the given ms since the epoch.",
+            "optional": true,
+            "$ref": "DownloadTime"
+          },
+          "startedAfter": {
+            "description": "Limits results to downloads that started after the given ms since the epoch.",
+            "optional": true,
+            "$ref": "DownloadTime"
+          },
+          "endedBefore": {
+            "description": "Limits results to downloads that ended before the given ms since the epoch.",
+            "optional": true,
+            "$ref": "DownloadTime"
+          },
+          "endedAfter": {
+            "description": "Limits results to downloads that ended after the given ms since the epoch.",
+            "optional": true,
+            "$ref": "DownloadTime"
+          },
+          "totalBytesGreater": {
+            "description": "Limits results to downloads whose totalBytes is greater than the given integer.",
+            "optional": true,
+            "type": "number"
+          },
+          "totalBytesLess": {
+            "description": "Limits results to downloads whose totalBytes is less than the given integer.",
+            "optional": true,
+            "type": "number"
+          },
+          "filenameRegex": {
+            "description": "Limits results to \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E whose \u003Ccode\u003Efilename\u003C/code\u003E matches the given regular expression.",
+            "optional": true,
+            "type": "string"
+          },
+          "urlRegex": {
+            "description": "Limits results to \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E whose \u003Ccode\u003Eurl\u003C/code\u003E matches the given regular expression.",
+            "optional": true,
+            "type": "string"
+          },
+          "limit": {
+            "description": "Setting this integer limits the number of results. Otherwise, all matching \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E will be returned.",
+            "optional": true,
+            "type": "integer"
+          },
+          "orderBy": {
+            "description": "Setting elements of this array to \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E properties in order to sort the search results. For example, setting \u003Ccode\u003EorderBy=\u0027startTime\u0027\u003C/code\u003E sorts the \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E by their start time in ascending order. To specify descending order, prefix \u003Ccode\u003EorderBy\u003C/code\u003E with a hyphen: \u0027-startTime\u0027.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "optional": true,
+            "type": "integer"
+          },
+          "url": {
+            "description": "Absolute URL.",
+            "optional": true,
+            "type": "string"
+          },
+          "filename": {
+            "description": "Absolute local path.",
+            "optional": true,
+            "type": "string"
+          },
+          "danger": {
+            "description": "Indication of whether this download is thought to be safe or known to be suspicious.",
+            "optional": true,
+            "$ref": "DangerType"
+          },
+          "mime": {
+            "description": "The file\u0027s MIME type.",
+            "optional": true,
+            "type": "string"
+          },
+          "startTime": {
+            "optional": true,
+            "type": "string"
+          },
+          "endTime": {
+            "optional": true,
+            "type": "string"
+          },
+          "state": {
+            "description": "Indicates whether the download is progressing, interrupted, or complete.",
+            "optional": true,
+            "$ref": "State"
+          },
+          "paused": {
+            "description": "True if the download has stopped reading data from the host, but kept the connection open.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "error": {
+            "description": "Why a download was interrupted.",
+            "optional": true,
+            "$ref": "InterruptReason"
+          },
+          "bytesReceived": {
+            "description": "Number of bytes received so far from the host, without considering file compression.",
+            "optional": true,
+            "type": "number"
+          },
+          "totalBytes": {
+            "description": "Number of bytes in the whole file, without considering file compression, or -1 if unknown.",
+            "optional": true,
+            "type": "number"
+          },
+          "fileSize": {
+            "description": "Number of bytes in the whole file post-decompression, or -1 if unknown.",
+            "optional": true,
+            "type": "number"
+          },
+          "exists": {
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "download",
+        "description": "Download a URL. If the URL uses the HTTP[S] protocol, then the request will include all cookies currently set for its hostname. If both \u003Ccode\u003Efilename\u003C/code\u003E and \u003Ccode\u003EsaveAs\u003C/code\u003E are specified, then the Save As dialog will be displayed, pre-populated with the specified \u003Ccode\u003Efilename\u003C/code\u003E. If the download started successfully, \u003Ccode\u003Ecallback\u003C/code\u003E will be called with the new \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003EdownloadId\u003C/code\u003E. If there was an error starting the download, then \u003Ccode\u003Ecallback\u003C/code\u003E will be called with \u003Ccode\u003EdownloadId=undefined\u003C/code\u003E and \u003Ca href=\u0027extension.html#property-lastError\u0027\u003Echrome.extension.lastError\u003C/a\u003E will contain a descriptive string. The error strings are not guaranteed to remain backwards compatible between releases. You must not parse it.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "description": "What to download and how.",
+            "type": "object",
+            "properties": {
+              "url": {
+                "description": "The URL to download.",
+                "type": "string",
+                "format": "url"
+              },
+              "filename": {
+                "description": "A file path relative to the Downloads directory to contain the downloaded file.",
+                "optional": true,
+                "type": "string"
+              },
+              "incognito": {
+                "description": "Whether to associate the download with a private browsing session.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "conflictAction": {
+                "optional": true,
+                "$ref": "FilenameConflictAction"
+              },
+              "saveAs": {
+                "description": "Use a file-chooser to allow the user to select a filename. If the option is not specified, the file chooser will be shown only if the Firefox \u0022Always ask you where to save files\u0022 option is enabled (i.e. the pref \u003Ccode\u003Ebrowser.download.useDownloadDir\u003C/code\u003E is set to \u003Ccode\u003Efalse\u003C/code\u003E).",
+                "optional": true,
+                "type": "boolean"
+              },
+              "method": {
+                "description": "The HTTP method to use if the URL uses the HTTP[S] protocol.",
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "GET",
+                  "POST"
+                ]
+              },
+              "headers": {
+                "description": "Extra HTTP headers to send with the request if the URL uses the HTTP[s] protocol. Each header is represented as a dictionary containing the keys \u003Ccode\u003Ename\u003C/code\u003E and either \u003Ccode\u003Evalue\u003C/code\u003E or \u003Ccode\u003EbinaryValue\u003C/code\u003E, restricted to those allowed by XMLHttpRequest.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the HTTP header.",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Value of the HTTP header.",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "body": {
+                "description": "Post body.",
+                "optional": true,
+                "type": "string"
+              },
+              "allowHttpErrors": {
+                "description": "When this flag is set to \u003Ccode\u003Etrue\u003C/code\u003E, then the browser will allow downloads to proceed after encountering HTTP errors such as \u003Ccode\u003E404 Not Found\u003C/code\u003E.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "downloadId",
+                "type": "integer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "search",
+        "description": "Find \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E. Set \u003Ccode\u003Equery\u003C/code\u003E to the empty object to get all \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E. To get a specific \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E, set only the \u003Ccode\u003Eid\u003C/code\u003E field.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "$ref": "DownloadQuery"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "DownloadItem"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "description": "Pause the download. If the request was successful the download is in a paused state. Otherwise \u003Ca href=\u0027extension.html#property-lastError\u0027\u003Echrome.extension.lastError\u003C/a\u003E contains an error message. The request will fail if the download is not active.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "description": "The id of the download to pause.",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "resume",
+        "description": "Resume a paused download. If the request was successful the download is in progress and unpaused. Otherwise \u003Ca href=\u0027extension.html#property-lastError\u0027\u003Echrome.extension.lastError\u003C/a\u003E contains an error message. The request will fail if the download is not active.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "description": "The id of the download to resume.",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "cancel",
+        "description": "Cancel a download. When \u003Ccode\u003Ecallback\u003C/code\u003E is run, the download is cancelled, completed, interrupted or doesn\u0027t exist anymore.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "description": "The id of the download to cancel.",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getFileIcon",
+        "description": "Retrieve an icon for the specified download. For new downloads, file icons are available after the \u003Ca href=\u0027#event-onCreated\u0027\u003EonCreated\u003C/a\u003E event has been received. The image returned by this function while a download is in progress may be different from the image returned after the download is complete. Icon retrieval is done by querying the underlying operating system or toolkit depending on the platform. The icon that is returned will therefore depend on a number of factors including state of the download, platform, registered file types and visual theme. If a file icon cannot be determined, \u003Ca href=\u0027extension.html#property-lastError\u0027\u003Echrome.extension.lastError\u003C/a\u003E will contain an error message.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "description": "The identifier for the download.",
+            "type": "integer"
+          },
+          {
+            "name": "options",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "size": {
+                "description": "The size of the icon.  The returned icon will be square with dimensions size * size pixels.  The default size for the icon is 32x32 pixels.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 127
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "iconURL",
+                "optional": true,
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "open",
+        "description": "Open the downloaded file.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "show",
+        "description": "Show the downloaded file in its folder in a file manager.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "success",
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "showDefaultFolder",
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "erase",
+        "description": "Erase matching \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItems\u003C/a\u003E from history",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "$ref": "DownloadQuery"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "erasedIds",
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "removeFile",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "acceptDanger",
+        "description": "Prompt the user to either accept or cancel a dangerous download. \u003Ccode\u003EacceptDanger()\u003C/code\u003E does not automatically accept dangerous downloads.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "downloadId",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "drag",
+        "description": "Initiate dragging the file to another application.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "downloadId",
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "name": "setShelfEnabled",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "enabled",
+            "type": "boolean"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onCreated",
+        "description": "This event fires with the \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E object when a download begins.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadItem",
+            "$ref": "DownloadItem"
+          }
+        ]
+      },
+      {
+        "name": "onErased",
+        "description": "Fires with the \u003Ccode\u003EdownloadId\u003C/code\u003E when a download is erased from history.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadId",
+            "description": "The \u003Ccode\u003Eid\u003C/code\u003E of the \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E that was erased.",
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "name": "onChanged",
+        "description": "When any of a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s properties except \u003Ccode\u003EbytesReceived\u003C/code\u003E changes, this event fires with the \u003Ccode\u003EdownloadId\u003C/code\u003E and an object containing the properties that changed.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "downloadDelta",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The \u003Ccode\u003Eid\u003C/code\u003E of the \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E that changed.",
+                "type": "integer"
+              },
+              "url": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Eurl\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "filename": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Efilename\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "danger": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Edanger\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "mime": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Emime\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "startTime": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003EstartTime\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "endTime": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003EendTime\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "state": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Estate\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "canResume": {
+                "optional": true,
+                "$ref": "BooleanDelta"
+              },
+              "paused": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Epaused\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "BooleanDelta"
+              },
+              "error": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003Eerror\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "StringDelta"
+              },
+              "totalBytes": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003EtotalBytes\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "DoubleDelta"
+              },
+              "fileSize": {
+                "description": "Describes a change in a \u003Ca href=\u0027#type-DownloadItem\u0027\u003EDownloadItem\u003C/a\u003E\u0027s \u003Ccode\u003EfileSize\u003C/code\u003E.",
+                "optional": true,
+                "$ref": "DoubleDelta"
+              },
+              "exists": {
+                "optional": true,
+                "$ref": "BooleanDelta"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

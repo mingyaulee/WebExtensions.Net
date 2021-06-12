@@ -1,0 +1,170 @@
+[
+  {
+    "namespace": "alarms",
+    "permissions": [
+      "alarms"
+    ],
+    "types": [
+      {
+        "id": "Alarm",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of this alarm.",
+            "type": "string"
+          },
+          "scheduledTime": {
+            "description": "Time when the alarm is scheduled to fire, in milliseconds past the epoch.",
+            "type": "number"
+          },
+          "periodInMinutes": {
+            "description": "When present, signals that the alarm triggers periodically after so many minutes.",
+            "optional": true,
+            "type": "number"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "create",
+        "description": "Creates an alarm. After the delay is expired, the onAlarm event is fired. If there is another alarm with the same name (or no name if none is specified), it will be cancelled and replaced by this alarm.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Optional name to identify this alarm. Defaults to the empty string.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "alarmInfo",
+            "description": "Details about the alarm. The alarm first fires either at \u0027when\u0027 milliseconds past the epoch (if \u0027when\u0027 is provided), after \u0027delayInMinutes\u0027 minutes from the current time (if \u0027delayInMinutes\u0027 is provided instead), or after \u0027periodInMinutes\u0027 minutes from the current time (if only \u0027periodInMinutes\u0027 is provided). Users should never provide both \u0027when\u0027 and \u0027delayInMinutes\u0027. If \u0027periodInMinutes\u0027 is provided, then the alarm recurs repeatedly after that many minutes.",
+            "type": "object",
+            "properties": {
+              "when": {
+                "description": "Time when the alarm is scheduled to first fire, in milliseconds past the epoch.",
+                "optional": true,
+                "type": "number"
+              },
+              "delayInMinutes": {
+                "description": "Number of minutes from the current time after which the alarm should first fire.",
+                "optional": true,
+                "type": "number"
+              },
+              "periodInMinutes": {
+                "description": "Number of minutes after which the alarm should recur repeatedly.",
+                "optional": true,
+                "type": "number"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "get",
+        "description": "Retrieves details about the specified alarm.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The name of the alarm to get. Defaults to the empty string.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "alarm",
+                "optional": true,
+                "$ref": "Alarm"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getAll",
+        "description": "Gets an array of all the alarms.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "alarms",
+                "type": "array",
+                "items": {
+                  "$ref": "Alarm"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "clear",
+        "description": "Clears the alarm with the given name.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The name of the alarm to clear. Defaults to the empty string.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "wasCleared",
+                "description": "Whether an alarm of the given name was found to clear.",
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "clearAll",
+        "description": "Clears all alarms.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "wasCleared",
+                "description": "Whether any alarm was found to clear.",
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onAlarm",
+        "description": "Fired when an alarm has expired. Useful for transient background pages.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The alarm that has expired.",
+            "$ref": "Alarm"
+          }
+        ]
+      }
+    ]
+  }
+]

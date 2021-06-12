@@ -1,10 +1,27 @@
+using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
+using WebExtensions.Net.BrowserAction;
+using WebExtensions.Net.BrowsingData;
 using WebExtensions.Net.ContentScripts;
+using WebExtensions.Net.Cookies;
+using WebExtensions.Net.Downloads;
+using WebExtensions.Net.Extension;
+using WebExtensions.Net.History;
+using WebExtensions.Net.I18n;
+using WebExtensions.Net.Identity;
+using WebExtensions.Net.Idle;
+using WebExtensions.Net.Management;
 using WebExtensions.Net.Notifications;
+using WebExtensions.Net.Omnibox;
+using WebExtensions.Net.PageAction;
 using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Search;
+using WebExtensions.Net.Sessions;
 using WebExtensions.Net.Storage;
 using WebExtensions.Net.Tabs;
+using WebExtensions.Net.TopSites;
 using WebExtensions.Net.WebNavigation;
 using WebExtensions.Net.WebRequest;
 using WebExtensions.Net.Windows;
@@ -15,13 +32,30 @@ namespace WebExtensions.Net
     public partial class WebExtensionsApi : IWebExtensionsApi
     {
         private readonly IWebExtensionsJSRuntime webExtensionsJSRuntime;
+        private IAlarmsApi _alarms;
         private IBookmarksApi _bookmarks;
+        private IBrowserActionApi _browserAction;
+        private IBrowsingDataApi _browsingData;
         private IContentScriptsApi _contentScripts;
+        private ICookiesApi _cookies;
+        private IDownloadsApi _downloads;
+        private IExtensionApi _extension;
+        private IHistoryApi _history;
+        private II18nApi _i18n;
+        private IIdentityApi _identity;
+        private IIdleApi _idle;
+        private IManagementApi _management;
         private INotificationsApi _notifications;
+        private IOmniboxApi _omnibox;
+        private IPageActionApi _pageAction;
         private IPermissionsApi _permissions;
+        private IProxyApi _proxy;
         private IRuntimeApi _runtime;
+        private ISearchApi _search;
+        private ISessionsApi _sessions;
         private IStorageApi _storage;
         private ITabsApi _tabs;
+        private ITopSitesApi _topSites;
         private IWebNavigationApi _webNavigation;
         private IWebRequestApi _webRequest;
         private IWindowsApi _windows;
@@ -30,6 +64,19 @@ namespace WebExtensions.Net
         public WebExtensionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime)
         {
             this.webExtensionsJSRuntime = webExtensionsJSRuntime;
+        }
+
+        /// <inheritdoc />
+        public IAlarmsApi Alarms
+        {
+            get
+            {
+                if (_alarms is null)
+                {
+                    _alarms = new AlarmsApi(webExtensionsJSRuntime);
+                }
+                return _alarms;
+            }
         }
 
         /// <inheritdoc />
@@ -42,6 +89,32 @@ namespace WebExtensions.Net
                     _bookmarks = new BookmarksApi(webExtensionsJSRuntime);
                 }
                 return _bookmarks;
+            }
+        }
+
+        /// <inheritdoc />
+        public IBrowserActionApi BrowserAction
+        {
+            get
+            {
+                if (_browserAction is null)
+                {
+                    _browserAction = new BrowserActionApi(webExtensionsJSRuntime);
+                }
+                return _browserAction;
+            }
+        }
+
+        /// <inheritdoc />
+        public IBrowsingDataApi BrowsingData
+        {
+            get
+            {
+                if (_browsingData is null)
+                {
+                    _browsingData = new BrowsingDataApi(webExtensionsJSRuntime);
+                }
+                return _browsingData;
             }
         }
 
@@ -59,6 +132,110 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
+        public ICookiesApi Cookies
+        {
+            get
+            {
+                if (_cookies is null)
+                {
+                    _cookies = new CookiesApi(webExtensionsJSRuntime);
+                }
+                return _cookies;
+            }
+        }
+
+        /// <inheritdoc />
+        public IDownloadsApi Downloads
+        {
+            get
+            {
+                if (_downloads is null)
+                {
+                    _downloads = new DownloadsApi(webExtensionsJSRuntime);
+                }
+                return _downloads;
+            }
+        }
+
+        /// <inheritdoc />
+        public IExtensionApi Extension
+        {
+            get
+            {
+                if (_extension is null)
+                {
+                    _extension = new ExtensionApi(webExtensionsJSRuntime);
+                }
+                return _extension;
+            }
+        }
+
+        /// <inheritdoc />
+        public IHistoryApi History
+        {
+            get
+            {
+                if (_history is null)
+                {
+                    _history = new HistoryApi(webExtensionsJSRuntime);
+                }
+                return _history;
+            }
+        }
+
+        /// <inheritdoc />
+        public II18nApi I18n
+        {
+            get
+            {
+                if (_i18n is null)
+                {
+                    _i18n = new I18nApi(webExtensionsJSRuntime);
+                }
+                return _i18n;
+            }
+        }
+
+        /// <inheritdoc />
+        public IIdentityApi Identity
+        {
+            get
+            {
+                if (_identity is null)
+                {
+                    _identity = new IdentityApi(webExtensionsJSRuntime);
+                }
+                return _identity;
+            }
+        }
+
+        /// <inheritdoc />
+        public IIdleApi Idle
+        {
+            get
+            {
+                if (_idle is null)
+                {
+                    _idle = new IdleApi(webExtensionsJSRuntime);
+                }
+                return _idle;
+            }
+        }
+
+        /// <inheritdoc />
+        public IManagementApi Management
+        {
+            get
+            {
+                if (_management is null)
+                {
+                    _management = new ManagementApi(webExtensionsJSRuntime);
+                }
+                return _management;
+            }
+        }
+
+        /// <inheritdoc />
         public INotificationsApi Notifications
         {
             get
@@ -68,6 +245,32 @@ namespace WebExtensions.Net
                     _notifications = new NotificationsApi(webExtensionsJSRuntime);
                 }
                 return _notifications;
+            }
+        }
+
+        /// <inheritdoc />
+        public IOmniboxApi Omnibox
+        {
+            get
+            {
+                if (_omnibox is null)
+                {
+                    _omnibox = new OmniboxApi(webExtensionsJSRuntime);
+                }
+                return _omnibox;
+            }
+        }
+
+        /// <inheritdoc />
+        public IPageActionApi PageAction
+        {
+            get
+            {
+                if (_pageAction is null)
+                {
+                    _pageAction = new PageActionApi(webExtensionsJSRuntime);
+                }
+                return _pageAction;
             }
         }
 
@@ -85,6 +288,19 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
+        public IProxyApi Proxy
+        {
+            get
+            {
+                if (_proxy is null)
+                {
+                    _proxy = new ProxyApi(webExtensionsJSRuntime);
+                }
+                return _proxy;
+            }
+        }
+
+        /// <inheritdoc />
         public IRuntimeApi Runtime
         {
             get
@@ -94,6 +310,32 @@ namespace WebExtensions.Net
                     _runtime = new RuntimeApi(webExtensionsJSRuntime);
                 }
                 return _runtime;
+            }
+        }
+
+        /// <inheritdoc />
+        public ISearchApi Search
+        {
+            get
+            {
+                if (_search is null)
+                {
+                    _search = new SearchApi(webExtensionsJSRuntime);
+                }
+                return _search;
+            }
+        }
+
+        /// <inheritdoc />
+        public ISessionsApi Sessions
+        {
+            get
+            {
+                if (_sessions is null)
+                {
+                    _sessions = new SessionsApi(webExtensionsJSRuntime);
+                }
+                return _sessions;
             }
         }
 
@@ -120,6 +362,19 @@ namespace WebExtensions.Net
                     _tabs = new TabsApi(webExtensionsJSRuntime);
                 }
                 return _tabs;
+            }
+        }
+
+        /// <inheritdoc />
+        public ITopSitesApi TopSites
+        {
+            get
+            {
+                if (_topSites is null)
+                {
+                    _topSites = new TopSitesApi(webExtensionsJSRuntime);
+                }
+                return _topSites;
             }
         }
 

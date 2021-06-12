@@ -1,0 +1,117 @@
+[
+  {
+    "namespace": "topSites",
+    "description": "Use the chrome.topSites API to access the top sites that are displayed on the new tab page. ",
+    "permissions": [
+      "topSites"
+    ],
+    "types": [
+      {
+        "id": "MostVisitedURL",
+        "description": "An object encapsulating a most visited URL, such as the URLs on the new tab page.",
+        "type": "object",
+        "properties": {
+          "url": {
+            "description": "The most visited URL.",
+            "type": "string"
+          },
+          "title": {
+            "description": "The title of the page.",
+            "optional": true,
+            "type": "string"
+          },
+          "favicon": {
+            "description": "Data URL for the favicon, if available.",
+            "optional": true,
+            "type": "string"
+          },
+          "type": {
+            "description": "The entry type, either \u003Ccode\u003Eurl\u003C/code\u003E for a normal page link, or \u003Ccode\u003Esearch\u003C/code\u003E for a search shortcut.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "url",
+              "search"
+            ]
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "get",
+        "description": "Gets a list of top sites.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "optional": true,
+            "default": {},
+            "type": "object",
+            "properties": {
+              "providers": {
+                "optional": true,
+                "type": "array",
+                "deprecated": "Please use the other options to tune the results received from topSites.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "limit": {
+                "description": "The number of top sites to return, defaults to the value used by Firefox",
+                "optional": true,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "onePerDomain": {
+                "description": "Limit the result to a single top site link per domain",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includeBlocked": {
+                "description": "Include sites that the user has blocked from appearing on the Firefox new tab.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includeFavicon": {
+                "description": "Include sites favicon if available.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includePinned": {
+                "description": "Include sites that the user has pinned on the Firefox new tab.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includeSearchShortcuts": {
+                "description": "Include search shortcuts appearing on the Firefox new tab.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "newtab": {
+                "description": "Return the sites that exactly appear on the user\u0027s new-tab page. When true, all other options are ignored except limit and includeFavicon. If the user disabled newtab Top Sites, the newtab parameter will be ignored.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "MostVisitedURL"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

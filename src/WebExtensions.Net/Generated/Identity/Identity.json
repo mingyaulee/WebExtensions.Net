@@ -1,0 +1,222 @@
+[
+  {
+    "namespace": "identity",
+    "description": "Use the chrome.identity API to get OAuth2 access tokens. ",
+    "permissions": [
+      "identity"
+    ],
+    "types": [
+      {
+        "id": "AccountInfo",
+        "description": "An object encapsulating an OAuth account id.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "A unique identifier for the account. This ID will not change for the lifetime of the account. ",
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "getAccounts",
+        "description": "Retrieves a list of AccountInfo objects describing the accounts present on the profile.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "AccountInfo"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getAuthToken",
+        "description": "Gets an OAuth2 access token using the client ID and scopes specified in the oauth2 section of manifest.json.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "details",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "interactive": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "account": {
+                "optional": true,
+                "$ref": "AccountInfo"
+              },
+              "scopes": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "AccountInfo"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getProfileUserInfo",
+        "description": "Retrieves email address and obfuscated gaia id of the user signed into a profile.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "userinfo",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "removeCachedAuthToken",
+        "description": "Removes an OAuth2 access token from the Identity API\u0027s token cache.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "userinfo",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "launchWebAuthFlow",
+        "description": "Starts an auth flow at the specified URL.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "url": {
+                "$ref": "manifest.HttpURL"
+              },
+              "interactive": {
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": " responseUrl",
+                "optional": true,
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getRedirectURL",
+        "description": "Generates a redirect URL to be used in |launchWebAuthFlow|.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "path",
+            "description": "The path appended to the end of the generated URL. ",
+            "optional": true,
+            "default": "",
+            "type": "string"
+          }
+        ],
+        "returns": {
+          "type": "string"
+        }
+      }
+    ],
+    "events": [
+      {
+        "name": "onSignInChanged",
+        "description": "Fired when signin state changes for an account on the user\u0027s profile.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "account",
+            "$ref": "AccountInfo"
+          },
+          {
+            "name": "signedIn",
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+]

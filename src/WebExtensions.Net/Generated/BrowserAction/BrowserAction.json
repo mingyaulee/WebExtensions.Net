@@ -1,0 +1,437 @@
+[
+  {
+    "namespace": "browserAction",
+    "description": "Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.",
+    "permissions": [
+      "manifest:browser_action"
+    ],
+    "types": [
+      {
+        "id": "Details",
+        "description": "Specifies to which tab or window the value should be set, or from which one it should be retrieved. If no tab nor window is specified, the global value is set or retrieved.",
+        "type": "object",
+        "properties": {
+          "tabId": {
+            "description": "When setting a value, it will be specific to the specified tab, and will automatically reset when the tab navigates. When getting, specifies the tab to get the value from; if there is no tab-specific value, the window one will be inherited.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0
+          },
+          "windowId": {
+            "description": "When setting a value, it will be specific to the specified window. When getting, specifies the window to get the value from; if there is no window-specific value, the global one will be inherited.",
+            "optional": true,
+            "type": "integer",
+            "minimum": -2
+          }
+        }
+      },
+      {
+        "id": "ColorArray",
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 4,
+        "items": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        }
+      },
+      {
+        "id": "ImageDataType",
+        "description": "Pixel data for an image. Must be an ImageData object (for example, from a \u003Ccode\u003Ecanvas\u003C/code\u003E element).",
+        "type": "object"
+      },
+      {
+        "id": "ColorValue",
+        "description": "An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example, opaque red is \u003Ccode\u003E[255, 0, 0, 255]\u003C/code\u003E. Can also be a string with a CSS value, with opaque red being \u003Ccode\u003E#FF0000\u003C/code\u003E or \u003Ccode\u003E#F00\u003C/code\u003E.",
+        "choices": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "ColorArray"
+          },
+          {}
+        ]
+      },
+      {
+        "id": "OnClickData",
+        "description": "Information sent when a browser action is clicked.",
+        "type": "object",
+        "properties": {
+          "modifiers": {
+            "description": "An array of keyboard modifiers that were held while the menu item was clicked.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Shift",
+                "Alt",
+                "Command",
+                "Ctrl",
+                "MacCtrl"
+              ]
+            }
+          },
+          "button": {
+            "description": "An integer value of button by which menu item was clicked.",
+            "optional": true,
+            "type": "integer"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "setTitle",
+        "description": "Sets the title of the browser action. This shows up in the tooltip.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "title": {
+                "description": "The string the browser action should display when moused over.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getTitle",
+        "description": "Gets the title of the browser action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setIcon",
+        "description": "Sets the icon for the browser action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the \u003Cb\u003Epath\u003C/b\u003E or the \u003Cb\u003EimageData\u003C/b\u003E property must be specified.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "imageData": {
+                "description": "Either an ImageData object or a dictionary {size -\u003E ImageData} representing icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.imageData = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "$ref": "ImageDataType"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "path": {
+                "description": "Either a relative image path or a dictionary {size -\u003E relative image path} pointing to icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.path = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "setPopup",
+        "description": "Sets the html document to be opened as a popup when the user clicks on the browser action\u0027s icon.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "popup": {
+                "description": "The html file to show in a popup.  If set to the empty string (\u0027\u0027), no popup is shown.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getPopup",
+        "description": "Gets the html document set as the popup for this browser action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setBadgeText",
+        "description": "Sets the badge text for the browser action. The badge is displayed on top of the icon.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "text": {
+                "description": "Any number of characters can be passed, but only about four can fit in the space.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getBadgeText",
+        "description": "Gets the badge text of the browser action. If no tab nor window is specified is specified, the global badge text is returned.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setBadgeBackgroundColor",
+        "description": "Sets the background color for the badge.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "color": {
+                "$ref": "ColorValue"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getBadgeBackgroundColor",
+        "description": "Gets the background color of the browser action badge.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "$ref": "ColorArray"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setBadgeTextColor",
+        "description": "Sets the text color for the badge.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "color": {
+                "$ref": "ColorValue"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getBadgeTextColor",
+        "description": "Gets the text color of the browser action badge.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          }
+        ]
+      },
+      {
+        "name": "enable",
+        "description": "Enables the browser action for a tab. By default, browser actions are enabled.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab for which you want to modify the browser action.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "disable",
+        "description": "Disables the browser action for a tab.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab for which you want to modify the browser action.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "isEnabled",
+        "description": "Checks whether the browser action is enabled.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "$ref": "Details"
+          }
+        ]
+      },
+      {
+        "name": "openPopup",
+        "description": "Opens the extension popup window in the active window.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onClicked",
+        "description": "Fired when a browser action icon is clicked.  This event will not fire if the browser action has a popup.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tab",
+            "$ref": "tabs.Tab"
+          },
+          {
+            "name": "info",
+            "optional": true,
+            "$ref": "OnClickData"
+          }
+        ]
+      }
+    ]
+  }
+]

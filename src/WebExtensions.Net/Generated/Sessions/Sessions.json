@@ -1,0 +1,316 @@
+[
+  {
+    "namespace": "sessions",
+    "description": "Use the \u003Ccode\u003Echrome.sessions\u003C/code\u003E API to query and restore tabs and windows from a browsing session.",
+    "permissions": [
+      "sessions"
+    ],
+    "types": [
+      {
+        "id": "Filter",
+        "type": "object",
+        "properties": {
+          "maxResults": {
+            "description": "The maximum number of entries to be fetched in the requested list. Omit this parameter to fetch the maximum number of entries ($(ref:sessions.MAX_SESSION_RESULTS)).",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 25
+          }
+        }
+      },
+      {
+        "id": "Session",
+        "type": "object",
+        "properties": {
+          "lastModified": {
+            "description": "The time when the window or tab was closed or modified, represented in milliseconds since the epoch.",
+            "type": "integer"
+          },
+          "tab": {
+            "description": "The $(ref:tabs.Tab), if this entry describes a tab. Either this or $(ref:sessions.Session.window) will be set.",
+            "optional": true,
+            "$ref": "tabs.Tab"
+          },
+          "window": {
+            "description": "The $(ref:windows.Window), if this entry describes a window. Either this or $(ref:sessions.Session.tab) will be set.",
+            "optional": true,
+            "$ref": "windows.Window"
+          }
+        }
+      },
+      {
+        "id": "Device",
+        "type": "object",
+        "properties": {
+          "info": {
+            "type": "string"
+          },
+          "deviceName": {
+            "description": "The name of the foreign device.",
+            "type": "string"
+          },
+          "sessions": {
+            "description": "A list of open window sessions for the foreign device, sorted from most recently to least recently modified session.",
+            "type": "array",
+            "items": {
+              "$ref": "Session"
+            }
+          }
+        }
+      }
+    ],
+    "properties": {
+      "MAX_SESSION_RESULTS": {
+        "description": "The maximum number of $(ref:sessions.Session) that will be included in a requested list.",
+        "value": 25
+      }
+    },
+    "functions": [
+      {
+        "name": "forgetClosedTab",
+        "description": "Forget a recently closed tab.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The windowId of the window to which the recently closed tab to be forgotten belongs.",
+            "type": "integer"
+          },
+          {
+            "name": "sessionId",
+            "description": "The sessionId (closedId) of the recently closed tab to be forgotten.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "forgetClosedWindow",
+        "description": "Forget a recently closed window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "description": "The sessionId (closedId) of the recently closed window to be forgotten.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "getRecentlyClosed",
+        "description": "Gets the list of recently closed tabs and/or windows.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "filter",
+            "optional": true,
+            "default": {},
+            "$ref": "Filter"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "sessions",
+                "description": "The list of closed entries in reverse order that they were closed (the most recently closed tab or window will be at index \u003Ccode\u003E0\u003C/code\u003E). The entries may contain either tabs or windows.",
+                "type": "array",
+                "items": {
+                  "$ref": "Session"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getDevices",
+        "description": "Retrieves all devices with synced sessions.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "filter",
+            "optional": true,
+            "$ref": "Filter"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "devices",
+                "description": "The list of $(ref:sessions.Device) objects for each synced session, sorted in order from device with most recently modified session to device with least recently modified session. $(ref:tabs.Tab) objects are sorted by recency in the $(ref:windows.Window) of the $(ref:sessions.Session) objects.",
+                "type": "array",
+                "items": {
+                  "$ref": "Device"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "restore",
+        "description": "Reopens a $(ref:windows.Window) or $(ref:tabs.Tab), with an optional callback to run when the entry has been restored.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "description": "The $(ref:windows.Window.sessionId), or $(ref:tabs.Tab.sessionId) to restore. If this parameter is not specified, the most recently closed session is restored.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "restoredSession",
+                "description": "A $(ref:sessions.Session) containing the restored $(ref:windows.Window) or $(ref:tabs.Tab) object.",
+                "$ref": "Session"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setTabValue",
+        "description": "Set a key/value pair on a given tab.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab that the key/value pair is being set on.",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value being set.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The value being set.",
+            "type": "any"
+          }
+        ]
+      },
+      {
+        "name": "getTabValue",
+        "description": "Retrieve a value that was set for a given key on a given tab.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab whose value is being retrieved from.",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "removeTabValue",
+        "description": "Remove a key/value pair that was set on a given tab.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab whose key/value pair is being removed.",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "setWindowValue",
+        "description": "Set a key/value pair on a given window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window that the key/value pair is being set on.",
+            "type": "integer",
+            "minimum": -2
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value being set.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The value being set.",
+            "type": "any"
+          }
+        ]
+      },
+      {
+        "name": "getWindowValue",
+        "description": "Retrieve a value that was set for a given key on a given window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window whose value is being retrieved from.",
+            "type": "integer",
+            "minimum": -2
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "removeWindowValue",
+        "description": "Remove a key/value pair that was set on a given window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window whose key/value pair is being removed.",
+            "type": "integer",
+            "minimum": -2
+          },
+          {
+            "name": "key",
+            "description": "The key which corresponds to the value.",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onChanged",
+        "description": "Fired when recently closed tabs and/or windows are changed. This event does not monitor synced sessions changes.",
+        "type": "function"
+      }
+    ]
+  }
+]

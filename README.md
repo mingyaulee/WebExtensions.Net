@@ -141,8 +141,8 @@ MockResolvers.Configure(configure =>
 
 ## Limitations
 
-- For callback functions with more than one parameter, only the first callback parameter is returned right now.
-- The browser extension API namespaces that are enabled at the moment is 13 out of a total of 60.
+- The browser extension API namespaces that are enabled at the moment is 32 out of a total of 60.
+- For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value.
 - ~~Parameter callback is not supported.~~ __Since v0.4.*__
 - ~~Event listener is not supported.~~ __Since v0.4.*__
 - ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__
