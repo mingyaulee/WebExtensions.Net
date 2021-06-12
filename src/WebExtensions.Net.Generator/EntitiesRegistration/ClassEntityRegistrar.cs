@@ -29,6 +29,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             this.registrationOptions = registrationOptions;
         }
 
+        public void Reset()
+        {
+            entitiesContext.Classes.Clear();
+        }
+
         public IEnumerable<ClassEntity> GetAllClassEntities()
         {
             return entitiesContext.Classes.GetAllClassEntities();

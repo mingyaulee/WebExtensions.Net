@@ -18,6 +18,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             this.logger = logger;
         }
 
+        public void Reset()
+        {
+            entitiesContext.Types.Clear();
+        }
+
         public void RegisterNamespaceType(TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
         {
             if (!string.IsNullOrEmpty(typeDefinition.Id))

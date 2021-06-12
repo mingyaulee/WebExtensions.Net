@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebExtensions.Net.Generator.EntitiesRegistration;
+using WebExtensions.Net.Generator.Helpers;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
 
@@ -37,6 +38,7 @@ namespace WebExtensions.Net.Generator
 
         public IEnumerable<ClassEntity> RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
+            Reset();
             var apiNamespaceEntities = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
             var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceEntities);
             RegisterApiRoot(apiClassEntities);
@@ -47,21 +49,29 @@ namespace WebExtensions.Net.Generator
             return classEntityRegistrar.GetAllClassEntities();
         }
 
+        private void Reset()
+        {
+            namespaceEntityRegistrar.Reset();
+            typeEntityRegistrar.Reset();
+            classEntityRegistrar.Reset();
+        }
+
         private IEnumerable<NamespaceEntity> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
             var apiNamespaceDefinitions = new HashSet<NamespaceEntity>();
 
             foreach (var namespaceDefinition in namespaceDefinitions)
             {
-                var namespaceEntity = namespaceEntityRegistrar.RegisterNamespace(namespaceDefinition);
+                var clonedNamespaceDefinition = SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition);
+                var namespaceEntity = namespaceEntityRegistrar.RegisterNamespace(clonedNamespaceDefinition);
                 if (namespaceEntity is null || !namespaceRegistrationFilter.ShouldProcess(namespaceEntity))
                 {
                     continue;
                 }
 
-                typeEntityRegistrar.RegisterNamespaceTypes(namespaceDefinition.Types, namespaceEntity);
+                typeEntityRegistrar.RegisterNamespaceTypes(clonedNamespaceDefinition.Types, namespaceEntity);
 
-                if (ShouldRegisterNamespaceApi(namespaceDefinition))
+                if (ShouldRegisterNamespaceApi(clonedNamespaceDefinition))
                 {
                     apiNamespaceDefinitions.Add(namespaceEntity);
                 }

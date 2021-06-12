@@ -10,5 +10,10 @@ namespace WebExtensions.Net.Generator.Repositories
         {
             Entities = new List<TEntity>();
         }
+
+        public void Clear()
+        {
+            Entities.Clear();
+        }
     }
 }

@@ -17,6 +17,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             this.logger = logger;
         }
 
+        public void Reset()
+        {
+            entitiesContext.Namespaces.Clear();
+        }
+
         public IEnumerable<NamespaceEntity> GetAllNamespaceEntities()
         {
             return entitiesContext.Namespaces.GetAllNamespaceEntities();
