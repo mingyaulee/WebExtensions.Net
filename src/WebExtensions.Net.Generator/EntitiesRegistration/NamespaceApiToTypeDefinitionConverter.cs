@@ -57,6 +57,8 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                     {
                         Name = propertyName,
                         Description = $"Gets the '{propertyName}' property.",
+                        Deprecated = propertyDefinition.Deprecated,
+                        IsUnsupported = propertyDefinition.IsUnsupported,
                         Type = ObjectType.PropertyGetterFunction,
                         Async = "true",
                         FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
@@ -93,7 +95,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                         throw new InvalidOperationException("Event definition should have a Name.");
                     }
 
-                    var propertyDefinition = eventDefinitionToPropertyDefinitionConverter.Convert(eventDefinition.Name, eventDefinition, namespaceEntity);
+                    var propertyDefinition = eventDefinitionToPropertyDefinitionConverter.Convert(eventDefinition, namespaceEntity);
                     properties.Add(eventDefinition.Name, propertyDefinition);
                 }
             }
