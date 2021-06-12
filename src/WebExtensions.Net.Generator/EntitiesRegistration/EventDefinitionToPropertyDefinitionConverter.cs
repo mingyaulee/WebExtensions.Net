@@ -19,9 +19,9 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             this.typeEntityRegistrar = typeEntityRegistrar;
         }
 
-        public PropertyDefinition Convert(string eventName, EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+        public PropertyDefinition Convert(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
         {
-            if (eventDefinition.FunctionParameters is not null || eventDefinition.ExtraParameters is not null)
+            if (ShouldCreateEventTypeObject(eventDefinition))
             {
                 return new PropertyDefinition()
                 {
@@ -40,6 +40,12 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 IsUnsupported = eventDefinition.IsUnsupported,
                 Deprecated = eventDefinition.Deprecated
             };
+        }
+
+        private static bool ShouldCreateEventTypeObject(EventDefinition eventDefinition)
+        {
+            return (eventDefinition.FunctionParameters is not null && eventDefinition.FunctionParameters.Any()) ||
+                (eventDefinition.ExtraParameters is not null && eventDefinition.ExtraParameters.Any());
         }
 
         private IEnumerable<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
