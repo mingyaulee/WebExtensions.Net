@@ -8,6 +8,7 @@
         EnumClass,
         StringFormatClass,
         ArrayClass,
-        MultitypeClass
+        MultitypeClass,
+        EmptyClass
     }
 }

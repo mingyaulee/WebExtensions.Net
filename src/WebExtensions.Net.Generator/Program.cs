@@ -90,6 +90,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<MultiTypeClassEntityRegistrar>();
             services.AddTransient<StringFormatClassEntityRegistrar>();
             services.AddTransient<TypeClassEntityRegistrar>();
+            services.AddTransient<EmptyClassEntityRegistrar>();
 
             services.AddTransient<AnonymousTypeProcessor>();
             services.AddTransient<AnonymousTypeRegistrar>();
@@ -115,6 +116,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<MultitypeCodeConverterFactory>();
             services.AddTransient<StringFormatCodeConverterFactory>();
             services.AddTransient<TypeCodeConverterFactory>();
+            services.AddTransient<EmptyCodeConverterFactory>();
         }
     }
 }

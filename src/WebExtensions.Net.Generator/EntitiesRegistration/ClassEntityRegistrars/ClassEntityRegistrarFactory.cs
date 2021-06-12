@@ -10,6 +10,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
         private readonly StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar;
         private readonly ArrayClassEntityRegistrar arrayClassEntityRegistrar;
         private readonly MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar;
+        private readonly EmptyClassEntityRegistrar emptyClassEntityRegistrar;
 
         public ClassEntityRegistrarFactory(
             TypeClassEntityRegistrar typeClassEntityRegistrar,
@@ -17,7 +18,8 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             EnumClassEntityRegistrar enumClassEntityRegistrar,
             StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar,
             ArrayClassEntityRegistrar arrayClassEntityRegistrar,
-            MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar)
+            MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar,
+            EmptyClassEntityRegistrar emptyClassEntityRegistrar)
         {
             this.typeClassEntityRegistrar = typeClassEntityRegistrar;
             this.eventTypeClassEntityRegistrar = eventTypeClassEntityRegistrar;
@@ -25,6 +27,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             this.stringFormatClassEntityRegistrar = stringFormatClassEntityRegistrar;
             this.arrayClassEntityRegistrar = arrayClassEntityRegistrar;
             this.multiTypeClassEntityRegistrar = multiTypeClassEntityRegistrar;
+            this.emptyClassEntityRegistrar = emptyClassEntityRegistrar;
         }
 
         public BaseClassEntityRegistrar? GetClassEntityRegistrar(TypeDefinition typeDefinition)
@@ -52,6 +55,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             else if (typeDefinition.TypeChoices is not null)
             {
                 return multiTypeClassEntityRegistrar;
+            }
+            else if (typeDefinition.Type == ObjectType.String)
+            {
+                return emptyClassEntityRegistrar;
             }
 
             return null;

@@ -18,6 +18,7 @@ namespace WebExtensions.Net.Generator
         private readonly StringFormatCodeConverterFactory stringFormatCodeConverterFactory;
         private readonly ArrayCodeConverterFactory arrayCodeConverterFactory;
         private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory;
+        private readonly EmptyCodeConverterFactory emptyCodeConverterFactory;
 
         public CodeGenerator(
             ApiRootCodeConverterFactory apiRootCodeConverterFactory,
@@ -26,7 +27,8 @@ namespace WebExtensions.Net.Generator
             EnumCodeConverterFactory enumCodeConverterFactory,
             StringFormatCodeConverterFactory stringFormatCodeConverterFactory,
             ArrayCodeConverterFactory arrayCodeConverterFactory,
-            MultitypeCodeConverterFactory multitypeCodeConverterFactory)
+            MultitypeCodeConverterFactory multitypeCodeConverterFactory,
+            EmptyCodeConverterFactory emptyCodeConverterFactory)
         {
             this.apiRootCodeConverterFactory = apiRootCodeConverterFactory;
             this.apiCodeConverterFactory = apiCodeConverterFactory;
@@ -35,6 +37,7 @@ namespace WebExtensions.Net.Generator
             this.stringFormatCodeConverterFactory = stringFormatCodeConverterFactory;
             this.arrayCodeConverterFactory = arrayCodeConverterFactory;
             this.multitypeCodeConverterFactory = multitypeCodeConverterFactory;
+            this.emptyCodeConverterFactory = emptyCodeConverterFactory;
         }
 
         public IEnumerable<CodeFileConverter> GetCodeFileConverters(IEnumerable<ClrTypeInfo> clrTypes)
@@ -110,6 +113,7 @@ namespace WebExtensions.Net.Generator
                 ClassType.StringFormatClass => stringFormatCodeConverterFactory,
                 ClassType.ArrayClass => arrayCodeConverterFactory,
                 ClassType.MultitypeClass => multitypeCodeConverterFactory,
+                ClassType.EmptyClass => emptyCodeConverterFactory,
                 _ => throw new NotImplementedException()
             };
         }
