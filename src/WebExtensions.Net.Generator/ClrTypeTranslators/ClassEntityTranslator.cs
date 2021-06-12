@@ -48,7 +48,6 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsObsolete = classEntity.TypeDefinition.IsDeprecated,
                 ObsoleteMessage = classEntity.TypeDefinition.Deprecated,
                 IsGenerated = true,
-                IsPartial = classEntity.Type == ClassType.ApiClass,
                 GeneratedNamespace = classEntity.NamespaceEntity.FormattedName,
                 RequiredNamespaces = new HashSet<string>(),
                 ReferenceNamespaces = new HashSet<string>() { @namespace },

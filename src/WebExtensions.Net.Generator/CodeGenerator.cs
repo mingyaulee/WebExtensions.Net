@@ -46,7 +46,7 @@ namespace WebExtensions.Net.Generator
         {
             var relativeNamespace = clrTypeInfo.GeneratedNamespace ?? string.Empty;
             var codeType = GetCodeType(clrTypeInfo);
-            if (clrTypeInfo.IsPartial)
+            if (codeType != "enum")
             {
                 codeType = $"partial {codeType}";
             }
