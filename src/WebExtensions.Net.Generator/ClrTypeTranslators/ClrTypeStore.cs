@@ -206,6 +206,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             var clrType = GetClrTypeFromSystemType(functionType);
             clrType.GenericTypeArguments = genericTypeArguments;
             clrType.CSharpName = $"{clrType.CSharpName}<{string.Join(", ", genericTypeArguments.Select(genericTypeArgument => genericTypeArgument.CSharpName))}>";
+            foreach (var genericTypeArgument in genericTypeArguments)
+            {
+                clrType.AddReferenceNamespaces(genericTypeArgument.ReferenceNamespaces);
+                clrType.AddRequiredNamespaces(genericTypeArgument.RequiredNamespaces);
+            }
             return clrType;
         }
 

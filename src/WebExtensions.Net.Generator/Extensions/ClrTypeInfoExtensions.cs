@@ -33,6 +33,14 @@ namespace WebExtensions.Net.Generator.Extensions
             return genericClrType;
         }
 
+        public static void AddReferenceNamespaces(this ClrTypeInfo clrTypeInfo, IEnumerable<string> referenceNamespaces)
+        {
+            foreach (var referenceNamespace in referenceNamespaces)
+            {
+                clrTypeInfo.ReferenceNamespaces.Add(referenceNamespace);
+            }
+        }
+
         public static void AddRequiredNamespaces(this ClrTypeInfo clrTypeInfo, IEnumerable<string> requiredNamespaces)
         {
             foreach (var requiredNamespace in requiredNamespaces)
