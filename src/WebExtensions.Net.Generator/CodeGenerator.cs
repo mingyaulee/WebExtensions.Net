@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using WebExtensions.Net.Generator.CodeGeneration;
 using WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories;
 using WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
@@ -20,24 +21,16 @@ namespace WebExtensions.Net.Generator
         private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory;
         private readonly EmptyCodeConverterFactory emptyCodeConverterFactory;
 
-        public CodeGenerator(
-            ApiRootCodeConverterFactory apiRootCodeConverterFactory,
-            ApiCodeConverterFactory apiCodeConverterFactory,
-            TypeCodeConverterFactory typeCodeConverterFactory,
-            EnumCodeConverterFactory enumCodeConverterFactory,
-            StringFormatCodeConverterFactory stringFormatCodeConverterFactory,
-            ArrayCodeConverterFactory arrayCodeConverterFactory,
-            MultitypeCodeConverterFactory multitypeCodeConverterFactory,
-            EmptyCodeConverterFactory emptyCodeConverterFactory)
+        public CodeGenerator(IServiceProvider serviceProvider)
         {
-            this.apiRootCodeConverterFactory = apiRootCodeConverterFactory;
-            this.apiCodeConverterFactory = apiCodeConverterFactory;
-            this.typeCodeConverterFactory = typeCodeConverterFactory;
-            this.enumCodeConverterFactory = enumCodeConverterFactory;
-            this.stringFormatCodeConverterFactory = stringFormatCodeConverterFactory;
-            this.arrayCodeConverterFactory = arrayCodeConverterFactory;
-            this.multitypeCodeConverterFactory = multitypeCodeConverterFactory;
-            this.emptyCodeConverterFactory = emptyCodeConverterFactory;
+            apiRootCodeConverterFactory = serviceProvider.GetRequiredService<ApiRootCodeConverterFactory>();
+            apiCodeConverterFactory = serviceProvider.GetRequiredService<ApiCodeConverterFactory>();
+            typeCodeConverterFactory = serviceProvider.GetRequiredService<TypeCodeConverterFactory>();
+            enumCodeConverterFactory = serviceProvider.GetRequiredService<EnumCodeConverterFactory>();
+            stringFormatCodeConverterFactory = serviceProvider.GetRequiredService<StringFormatCodeConverterFactory>();
+            arrayCodeConverterFactory = serviceProvider.GetRequiredService<ArrayCodeConverterFactory>();
+            multitypeCodeConverterFactory = serviceProvider.GetRequiredService<MultitypeCodeConverterFactory>();
+            emptyCodeConverterFactory = serviceProvider.GetRequiredService<EmptyCodeConverterFactory>();
         }
 
         public IEnumerable<CodeFileConverter> GetCodeFileConverters(IEnumerable<ClrTypeInfo> clrTypes)
