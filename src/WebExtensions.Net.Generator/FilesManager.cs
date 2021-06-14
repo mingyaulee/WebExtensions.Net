@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using WebExtensions.Net.Generator.CodeGeneration;
 using WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
@@ -32,13 +33,13 @@ namespace WebExtensions.Net.Generator
                 {
                     foreach (var directory in Directory.GetDirectories(options.RootDirectory))
                     {
-                        logger.LogWarning($"Deleting directory {directory}");
+                        logger.LogInformation($"Deleting directory {directory}");
                         DeleteDirectory(directory);
                     }
 
                     foreach (var file in Directory.GetFiles(options.RootDirectory))
                     {
-                        logger.LogWarning($"Deleting file {file}");
+                        logger.LogInformation($"Deleting file {file}");
                         DeleteFile(file);
                     }
                 }
@@ -67,7 +68,7 @@ namespace WebExtensions.Net.Generator
             var jsonSerializerOptions = new JsonSerializerOptions(JsonSerializerConstant.Options)
             {
                 WriteIndented = true,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
             };
             foreach (var namespaceEntity in namespaceEntities)
             {
@@ -140,7 +141,7 @@ namespace WebExtensions.Net.Generator
         {
             if (!Directory.Exists(directory))
             {
-                logger.LogWarning($"Creating directory {directory}");
+                logger.LogInformation($"Creating directory {directory}");
                 Directory.CreateDirectory(directory);
             }
         }

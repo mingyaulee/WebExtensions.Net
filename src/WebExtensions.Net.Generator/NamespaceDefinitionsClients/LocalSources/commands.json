@@ -1,0 +1,131 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "id": "KeyName",
+        "type": "string",
+        "format": "manifestShortcutKey"
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "commands": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "commands",
+    "description": "Use the commands API to add keyboard shortcuts that trigger actions in your extension, for example, an action to open the browser action or send a command to the xtension.",
+    "permissions": [
+      "manifest:commands"
+    ],
+    "types": [
+      {
+        "id": "Command",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the Extension Command",
+            "optional": true,
+            "type": "string"
+          },
+          "description": {
+            "description": "The Extension Command description",
+            "optional": true,
+            "type": "string"
+          },
+          "shortcut": {
+            "description": "The shortcut active for this command, or blank if not active.",
+            "optional": true,
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "update",
+        "description": "Update the details of an already defined command.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "detail",
+            "description": "The new description for the command.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the command.",
+                "type": "string"
+              },
+              "description": {
+                "description": "The new description for the command.",
+                "optional": true,
+                "type": "string"
+              },
+              "shortcut": {
+                "optional": true,
+                "type": "string",
+                "format": "manifestShortcutKeyOrEmpty"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "description": "Reset a command\u0027s details to what is specified in the manifest.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The name of the command.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "getAll",
+        "description": "Returns all the registered extension commands for this extension and their shortcut (if active).",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "description": "Called to return the registered commands.",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "commands",
+                "type": "array",
+                "items": {
+                  "$ref": "Command"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onCommand",
+        "description": "Fired when a registered command is activated using a keyboard shortcut.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "command",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -11,6 +11,7 @@ using WebExtensions.Net.Generator.EntitiesRegistration;
 using WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Schema;
+using WebExtensions.Net.Generator.NamespaceDefinitionsClients;
 using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator
@@ -20,9 +21,8 @@ namespace WebExtensions.Net.Generator
         public static void Main()
         {
             var configuration = GetConfiguration();
-            var runInParallel = configuration.GetValue<bool>("runInParallel");
-            var sources = configuration.GetSection("sources").Get<IEnumerable<ApiDefinitionSource>>();
-            var additionalNamespaceSourceDefinitions = configuration.GetSection("additionalNamespaceSourceDefinitions").Get<IEnumerable<NamespaceSourceDefinition>>();
+            var sourceOptions = configuration.GetSection("sourceOptions").Get<SourceOptions>();
+            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, sourceOptions.LocalDirectory));
             var codeWriterOptions = configuration.GetSection("codeWriterOptions").Get<CodeWriterOptions>();
             codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, codeWriterOptions.RootDirectory));
             var registrationOptions = configuration.GetSection("registrationOptions").Get<RegistrationOptions>();
@@ -30,6 +30,7 @@ namespace WebExtensions.Net.Generator
 
             var services = new ServiceCollection();
             RegisterServices(services);
+            services.AddSingleton(sourceOptions);
             services.AddSingleton(codeWriterOptions);
             services.AddSingleton(registrationOptions);
             services.AddSingleton(classTranslationOptions);
@@ -37,8 +38,8 @@ namespace WebExtensions.Net.Generator
             var serviceProvicer = services.BuildServiceProvider();
             using var scope = serviceProvicer.CreateScope();
 
-            var namespaceDefinitionsClient = scope.ServiceProvider.GetRequiredService<NamespaceDefinitionsClient>();
-            var namespaceDefinitions = namespaceDefinitionsClient.GetNamespaceDefinitions(sources, additionalNamespaceSourceDefinitions, runInParallel).GetAwaiter().GetResult();
+            var namespaceDefinitionsManager = scope.ServiceProvider.GetRequiredService<NamespaceDefinitionsManager>();
+            var namespaceDefinitions = namespaceDefinitionsManager.GetNamespaceDefinitions().GetAwaiter().GetResult();
 
             var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
             var classEntities = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
@@ -73,12 +74,15 @@ namespace WebExtensions.Net.Generator
             });
             var logger = loggerFactory.CreateLogger("Generator");
             services.AddSingleton(logger);
-            services.AddScoped<NamespaceDefinitionsClient>();
+            services.AddScoped<NamespaceDefinitionsManager>();
             services.AddScoped<EntitiesContext>();
             services.AddScoped<EntitiesRegistrationManager>();
             services.AddScoped<ClrTypeManager>();
             services.AddScoped<CodeGenerator>();
             services.AddScoped<FilesManager>();
+
+            // namespace definition clients
+            services.AddTransient<NamespaceDefinitionsClient>();
 
             // entity registrars
             services.AddTransient<ApiClassEntityRegistrar>();

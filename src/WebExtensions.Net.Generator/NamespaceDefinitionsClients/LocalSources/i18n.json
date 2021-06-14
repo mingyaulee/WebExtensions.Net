@@ -1,0 +1,137 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "default_locale": {
+            "optional": true,
+            "type": "string"
+          },
+          "l10n_resources": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "i18n",
+    "description": "Use the \u003Ccode\u003Ebrowser.i18n\u003C/code\u003E infrastructure to implement internationalization across your whole app or extension.",
+    "types": [
+      {
+        "id": "LanguageCode",
+        "description": "An ISO language code such as \u003Ccode\u003Een\u003C/code\u003E or \u003Ccode\u003Efr\u003C/code\u003E. For a complete list of languages supported by this method, see \u003Ca href=\u0027http://src.chromium.org/viewvc/chrome/trunk/src/third_party/cld/languages/internal/languages.cc\u0027\u003EkLanguageInfoTable\u003C/a\u003E. For an unknown language, \u003Ccode\u003Eund\u003C/code\u003E will be returned, which means that [percentage] of the text is unknown to CLD",
+        "type": "string"
+      }
+    ],
+    "functions": [
+      {
+        "name": "getAcceptLanguages",
+        "description": "Gets the accept-languages of the browser. This is different from the locale used by the browser; to get the locale, use $(ref:i18n.getUILanguage).",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "languages",
+                "description": "Array of LanguageCode",
+                "type": "array",
+                "items": {
+                  "$ref": "LanguageCode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getMessage",
+        "description": "Gets the localized string for the specified message. If the message is missing, this method returns an empty string (\u0027\u0027). If the format of the \u003Ccode\u003EgetMessage()\u003C/code\u003E call is wrong \u0026mdash; for example, \u003Cem\u003EmessageName\u003C/em\u003E is not a string or the \u003Cem\u003Esubstitutions\u003C/em\u003E array has more than 9 elements \u0026mdash; this method returns \u003Ccode\u003Eundefined\u003C/code\u003E.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "messageName",
+            "description": "The name of the message, as specified in the \u003Ccode\u003E$(topic:i18n-messages)[messages.json]\u003C/code\u003E file.",
+            "type": "string"
+          },
+          {
+            "name": "substitutions",
+            "description": "Substitution strings, if the message requires any.",
+            "optional": true,
+            "type": "any"
+          }
+        ],
+        "returns": {
+          "description": "Message localized for current locale.",
+          "type": "string"
+        }
+      },
+      {
+        "name": "getUILanguage",
+        "description": "Gets the browser UI language of the browser. This is different from $(ref:i18n.getAcceptLanguages) which returns the preferred user languages.",
+        "type": "function",
+        "parameters": [],
+        "returns": {
+          "description": "The browser UI language code such as en-US or fr-FR.",
+          "type": "string"
+        }
+      },
+      {
+        "name": "detectLanguage",
+        "description": "Detects the language of the provided text using CLD.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "text",
+            "description": "User input string to be translated.",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "description": "LanguageDetectionResult object that holds detected langugae reliability and array of DetectedLanguage",
+                "type": "object",
+                "properties": {
+                  "isReliable": {
+                    "description": "CLD detected language reliability",
+                    "type": "boolean"
+                  },
+                  "languages": {
+                    "description": "array of detectedLanguage",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "language": {
+                          "$ref": "LanguageCode"
+                        },
+                        "percentage": {
+                          "description": "The percentage of the detected language",
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": []
+  }
+]

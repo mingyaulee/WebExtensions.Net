@@ -1,0 +1,193 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "geckoProfiler"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "geckoProfiler",
+    "description": "Exposes the browser\u0027s profiler.",
+    "permissions": [
+      "geckoProfiler"
+    ],
+    "types": [
+      {
+        "id": "ProfilerFeature",
+        "type": "string",
+        "enum": [
+          "java",
+          "js",
+          "leaf",
+          "mainthreadio",
+          "responsiveness",
+          "screenshots",
+          "seqstyle",
+          "stackwalk",
+          "tasktracer",
+          "threads",
+          "jstracer",
+          "jsallocations",
+          "nostacksampling",
+          "nativeallocations",
+          "preferencereads",
+          "ipcmessages",
+          "fileio",
+          "fileioall",
+          "noiostacks",
+          "audiocallbacktracing",
+          "cpu"
+        ]
+      },
+      {
+        "id": "supports",
+        "type": "string",
+        "enum": [
+          "windowLength"
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "name": "start",
+        "description": "Starts the profiler with the specified settings.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "settings",
+            "type": "object",
+            "properties": {
+              "bufferSize": {
+                "description": "The maximum size in bytes of the buffer used to store profiling data. A larger value allows capturing a profile that covers a greater amount of time.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "windowLength": {
+                "description": "The length of the window of time that\u0027s kept in the buffer. Any collected samples are discarded as soon as they are older than the number of seconds specified in this setting. Zero means no duration restriction.",
+                "optional": true,
+                "type": "number"
+              },
+              "interval": {
+                "description": "Interval in milliseconds between samples of profiling data. A smaller value will increase the detail of the profiles captured.",
+                "type": "number"
+              },
+              "features": {
+                "description": "A list of active features for the profiler.",
+                "type": "array",
+                "items": {
+                  "$ref": "ProfilerFeature"
+                }
+              },
+              "threads": {
+                "description": "A list of thread names for which to capture profiles.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "stop",
+        "description": "Stops the profiler and discards any captured profile data.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "pause",
+        "description": "Pauses the profiler, keeping any profile data that is already written.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "resume",
+        "description": "Resumes the profiler with the settings that were initially used to start it.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "dumpProfileToFile",
+        "description": "Gathers the profile data from the current profiling session, and writes it to disk. The returned promise resolves to a path that locates the created file.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "fileName",
+            "description": "The name of the file inside the profile/profiler directory",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "getProfile",
+        "description": "Gathers the profile data from the current profiling session.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "getProfileAsArrayBuffer",
+        "description": "Gathers the profile data from the current profiling session. The returned promise resolves to an array buffer that contains a JSON string.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "getProfileAsGzippedArrayBuffer",
+        "description": "Gathers the profile data from the current profiling session. The returned promise resolves to an array buffer that contains a gzipped JSON string.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "getSymbols",
+        "description": "Gets the debug symbols for a particular library.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "debugName",
+            "description": "The name of the library\u0027s debug file. For example, \u0027xul.pdb",
+            "type": "string"
+          },
+          {
+            "name": "breakpadId",
+            "description": "The Breakpad ID of the library",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onRunning",
+        "description": "Fires when the profiler starts/stops running.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "isRunning",
+            "description": "Whether the profiler is running or not. Pausing the profiler will not affect this value.",
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+]

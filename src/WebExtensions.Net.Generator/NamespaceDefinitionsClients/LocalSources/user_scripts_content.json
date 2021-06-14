@@ -1,0 +1,56 @@
+[
+  {
+    "namespace": "userScripts",
+    "permissions": [
+      "manifest:user_scripts"
+    ],
+    "events": [
+      {
+        "name": "onBeforeScript",
+        "description": "Event called when a new userScript global has been created",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "userScript",
+            "type": "object",
+            "properties": {
+              "metadata": {
+                "description": "The userScript metadata (as set in userScripts.register)",
+                "type": "any"
+              },
+              "global": {
+                "description": "The userScript global",
+                "type": "any"
+              },
+              "defineGlobals": {
+                "description": "Exports all the properties of a given plain object as userScript globals",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "sourceObject",
+                    "description": "A plain object whose properties are exported as userScript globals",
+                    "type": "object"
+                  }
+                ]
+              },
+              "export": {
+                "description": "Convert a given value to make it accessible to the userScript code",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "value",
+                    "description": "A value to convert into an object accessible to the userScript",
+                    "type": "any"
+                  }
+                ],
+                "returns": {
+                  "type": "any"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

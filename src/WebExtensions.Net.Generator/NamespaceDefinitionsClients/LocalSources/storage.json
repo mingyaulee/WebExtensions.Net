@@ -1,0 +1,394 @@
+[
+  {
+    "namespace": "storage",
+    "description": "Use the \u003Ccode\u003Ebrowser.storage\u003C/code\u003E API to store, retrieve, and track changes to user data.",
+    "permissions": [
+      "storage"
+    ],
+    "types": [
+      {
+        "id": "StorageChange",
+        "type": "object",
+        "properties": {
+          "oldValue": {
+            "description": "The old value of the item, if there was an old value.",
+            "optional": true,
+            "type": "any"
+          },
+          "newValue": {
+            "description": "The new value of the item, if there is a new value.",
+            "optional": true,
+            "type": "any"
+          }
+        }
+      },
+      {
+        "id": "StorageArea",
+        "type": "object",
+        "functions": [
+          {
+            "name": "get",
+            "description": "Gets one or more items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in \u003Ccode\u003Enull\u003C/code\u003E to get the entire contents of storage.",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "description": "Storage items to return in the callback, where the values are replaced with those from storage if they exist.",
+                    "type": "object"
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "items",
+                    "description": "Object with items in their key-value mappings.",
+                    "type": "object"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "getBytesInUse",
+            "description": "Gets the amount of space (in bytes) being used by one or more items.",
+            "async": "callback",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key or list of keys to get the total usage for. An empty list will return 0. Pass in \u003Ccode\u003Enull\u003C/code\u003E to get the total usage of all of storage.",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback with the amount of space being used by storage, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "bytesInUse",
+                    "description": "Amount of space being used in storage, in bytes.",
+                    "type": "integer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "set",
+            "description": "Sets multiple items.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "items",
+                "description": "\u003Cp\u003EAn object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.\u003C/p\u003E\u003Cp\u003EPrimitive values such as numbers will serialize as expected. Values with a \u003Ccode\u003Etypeof\u003C/code\u003E \u003Ccode\u003E\u0022object\u0022\u003C/code\u003E and \u003Ccode\u003E\u0022function\u0022\u003C/code\u003E will typically serialize to \u003Ccode\u003E{}\u003C/code\u003E, with the exception of \u003Ccode\u003EArray\u003C/code\u003E (serializes as expected), \u003Ccode\u003EDate\u003C/code\u003E, and \u003Ccode\u003ERegex\u003C/code\u003E (serialize using their \u003Ccode\u003EString\u003C/code\u003E representation).\u003C/p\u003E",
+                "type": "object"
+              },
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          },
+          {
+            "name": "remove",
+            "description": "Removes one or more items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key or a list of keys for items to remove.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          },
+          {
+            "name": "clear",
+            "description": "Removes all items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "StorageAreaSync",
+        "type": "object",
+        "functions": [
+          {
+            "name": "get",
+            "description": "Gets one or more items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in \u003Ccode\u003Enull\u003C/code\u003E to get the entire contents of storage.",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "description": "Storage items to return in the callback, where the values are replaced with those from storage if they exist.",
+                    "type": "object"
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback with storage items, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "items",
+                    "description": "Object with items in their key-value mappings.",
+                    "type": "object"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "getBytesInUse",
+            "description": "Gets the amount of space (in bytes) being used by one or more items.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key or list of keys to get the total usage for. An empty list will return 0. Pass in \u003Ccode\u003Enull\u003C/code\u003E to get the total usage of all of storage.",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback with the amount of space being used by storage, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "bytesInUse",
+                    "description": "Amount of space being used in storage, in bytes.",
+                    "type": "integer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "set",
+            "description": "Sets multiple items.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "items",
+                "description": "\u003Cp\u003EAn object which gives each key/value pair to update storage with. Any other key/value pairs in storage will not be affected.\u003C/p\u003E\u003Cp\u003EPrimitive values such as numbers will serialize as expected. Values with a \u003Ccode\u003Etypeof\u003C/code\u003E \u003Ccode\u003E\u0022object\u0022\u003C/code\u003E and \u003Ccode\u003E\u0022function\u0022\u003C/code\u003E will typically serialize to \u003Ccode\u003E{}\u003C/code\u003E, with the exception of \u003Ccode\u003EArray\u003C/code\u003E (serializes as expected), \u003Ccode\u003EDate\u003C/code\u003E, and \u003Ccode\u003ERegex\u003C/code\u003E (serialize using their \u003Ccode\u003EString\u003C/code\u003E representation).\u003C/p\u003E",
+                "type": "object"
+              },
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          },
+          {
+            "name": "remove",
+            "description": "Removes one or more items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "keys",
+                "description": "A single key or a list of keys for items to remove.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          },
+          {
+            "name": "clear",
+            "description": "Removes all items from storage.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "callback",
+                "description": "Callback on success, or on failure (in which case $(ref:runtime.lastError) will be set).",
+                "optional": true,
+                "type": "function",
+                "parameters": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "properties": {
+      "sync": {
+        "description": "Items in the \u003Ccode\u003Esync\u003C/code\u003E storage area are synced by the browser.",
+        "$ref": "StorageAreaSync",
+        "properties": {
+          "QUOTA_BYTES": {
+            "description": "The maximum total amount (in bytes) of data that can be stored in sync storage, as measured by the JSON stringification of every value plus every key\u0027s length. Updates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).",
+            "value": 102400
+          },
+          "QUOTA_BYTES_PER_ITEM": {
+            "description": "The maximum size (in bytes) of each individual item in sync storage, as measured by the JSON stringification of its value plus its key length. Updates containing items larger than this limit will fail immediately and set $(ref:runtime.lastError).",
+            "value": 8192
+          },
+          "MAX_ITEMS": {
+            "description": "The maximum number of items that can be stored in sync storage. Updates that would cause this limit to be exceeded will fail immediately and set $(ref:runtime.lastError).",
+            "value": 512
+          },
+          "MAX_WRITE_OPERATIONS_PER_HOUR": {
+            "description": "\u003Cp\u003EThe maximum number of \u003Ccode\u003Eset\u003C/code\u003E, \u003Ccode\u003Eremove\u003C/code\u003E, or \u003Ccode\u003Eclear\u003C/code\u003E operations that can be performed each hour. This is 1 every 2 seconds, a lower ceiling than the short term higher writes-per-minute limit.\u003C/p\u003E\u003Cp\u003EUpdates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).\u003C/p\u003E",
+            "value": 1800
+          },
+          "MAX_WRITE_OPERATIONS_PER_MINUTE": {
+            "description": "\u003Cp\u003EThe maximum number of \u003Ccode\u003Eset\u003C/code\u003E, \u003Ccode\u003Eremove\u003C/code\u003E, or \u003Ccode\u003Eclear\u003C/code\u003E operations that can be performed each minute. This is 2 per second, providing higher throughput than writes-per-hour over a shorter period of time.\u003C/p\u003E\u003Cp\u003EUpdates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).\u003C/p\u003E",
+            "value": 120
+          },
+          "MAX_SUSTAINED_WRITE_OPERATIONS_PER_MINUTE": {
+            "description": "",
+            "value": 1000000,
+            "deprecated": "The storage.sync API no longer has a sustained write operation quota."
+          }
+        }
+      },
+      "local": {
+        "description": "Items in the \u003Ccode\u003Elocal\u003C/code\u003E storage area are local to each machine.",
+        "$ref": "StorageArea",
+        "properties": {
+          "QUOTA_BYTES": {
+            "description": "The maximum amount (in bytes) of data that can be stored in local storage, as measured by the JSON stringification of every value plus every key\u0027s length. This value will be ignored if the extension has the \u003Ccode\u003EunlimitedStorage\u003C/code\u003E permission. Updates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).",
+            "value": 5242880
+          }
+        }
+      },
+      "managed": {
+        "description": "Items in the \u003Ccode\u003Emanaged\u003C/code\u003E storage area are set by administrators or native applications, and are read-only for the extension; trying to modify this namespace results in an error.",
+        "$ref": "StorageArea",
+        "properties": {
+          "QUOTA_BYTES": {
+            "description": "The maximum size (in bytes) of the managed storage JSON manifest file. Files larger than this limit will fail to load.",
+            "value": 5242880
+          }
+        }
+      }
+    },
+    "events": [
+      {
+        "name": "onChanged",
+        "description": "Fired when one or more items change.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "changes",
+            "description": "Object mapping each key that changed to its corresponding $(ref:storage.StorageChange) for that item.",
+            "type": "object"
+          },
+          {
+            "name": "areaName",
+            "description": "The name of the storage area (\u003Ccode\u003E\u0022sync\u0022\u003C/code\u003E, \u003Ccode\u003E\u0022local\u0022\u003C/code\u003E or \u003Ccode\u003E\u0022managed\u0022\u003C/code\u003E) the changes are for.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

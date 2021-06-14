@@ -1,0 +1,71 @@
+[
+  {
+    "namespace": "idle",
+    "description": "Use the \u003Ccode\u003Ebrowser.idle\u003C/code\u003E API to detect when the machine\u0027s idle state changes.",
+    "permissions": [
+      "idle"
+    ],
+    "types": [
+      {
+        "id": "IdleState",
+        "type": "string",
+        "enum": [
+          "active",
+          "idle"
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "name": "queryState",
+        "description": "Returns \u0022idle\u0022 if the user has not generated any input for a specified number of seconds, or \u0022active\u0022 otherwise.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "detectionIntervalInSeconds",
+            "description": "The system is considered idle if detectionIntervalInSeconds seconds have elapsed since the last user input detected.",
+            "type": "integer",
+            "minimum": 15
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "newState",
+                "$ref": "IdleState"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setDetectionInterval",
+        "description": "Sets the interval, in seconds, used to determine when the system is in an idle state for onStateChanged events. The default interval is 60 seconds.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "intervalInSeconds",
+            "description": "Threshold, in seconds, used to determine when the system is in an idle state.",
+            "type": "integer",
+            "minimum": 15
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onStateChanged",
+        "description": "Fired when the system changes to an active or idle state. The event fires with \u0022idle\u0022 if the the user has not generated any input for a specified number of seconds, and \u0022active\u0022 when the user generates input on an idle system.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "newState",
+            "$ref": "IdleState"
+          }
+        ]
+      }
+    ]
+  }
+]

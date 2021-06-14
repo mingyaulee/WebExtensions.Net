@@ -1,0 +1,433 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "theme"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ThemeColor",
+        "choices": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            }
+          },
+          {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "number"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ThemeExperiment",
+        "type": "object",
+        "properties": {
+          "stylesheet": {
+            "optional": true,
+            "$ref": "ExtensionURL"
+          },
+          "images": {
+            "optional": true,
+            "type": "object"
+          },
+          "colors": {
+            "optional": true,
+            "type": "object"
+          },
+          "properties": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      },
+      {
+        "id": "ThemeType",
+        "type": "object",
+        "properties": {
+          "images": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "additional_backgrounds": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "$ref": "ImageDataOrExtensionURL"
+                }
+              },
+              "headerURL": {
+                "optional": true,
+                "$ref": "ImageDataOrExtensionURL",
+                "deprecated": "Unsupported images property, use \u0027theme.images.theme_frame\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "theme_frame": {
+                "optional": true,
+                "$ref": "ImageDataOrExtensionURL"
+              }
+            }
+          },
+          "colors": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "tab_selected": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "accentcolor": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "Unsupported colors property, use \u0027theme.colors.frame\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "frame": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "frame_inactive": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "textcolor": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "Unsupported color property, use \u0027theme.colors.tab_background_text\u0027, this alias is ignored in Firefox \u003E= 70."
+              },
+              "tab_background_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_background_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_loading": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "tab_line": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_text": {
+                "description": "This color property is an alias of \u0027bookmark_text\u0027.",
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "bookmark_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_separator": {
+                "optional": true,
+                "$ref": "ThemeColor",
+                "deprecated": "This color property is ignored in Firefox \u003E= 89."
+              },
+              "toolbar_top_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_bottom_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_vertical_separator": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "icons": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "icons_attention": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "button_background_hover": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "button_background_active": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_text_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_border_focus": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "popup_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "ntp_background": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "ntp_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_border": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "sidebar_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_highlight": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
+              "toolbar_field_highlight_text": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              }
+            }
+          },
+          "properties": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "additional_backgrounds_alignment": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "bottom",
+                    "center",
+                    "left",
+                    "right",
+                    "top",
+                    "center bottom",
+                    "center center",
+                    "center top",
+                    "left bottom",
+                    "left center",
+                    "left top",
+                    "right bottom",
+                    "right center",
+                    "right top"
+                  ]
+                }
+              },
+              "additional_backgrounds_tiling": {
+                "optional": true,
+                "type": "array",
+                "maxItems": 15,
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "no-repeat",
+                    "repeat",
+                    "repeat-x",
+                    "repeat-y"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "ThemeManifest",
+        "description": "Contents of manifest.json for a static theme",
+        "type": "object",
+        "properties": {
+          "theme": {
+            "$ref": "ThemeType"
+          },
+          "dark_theme": {
+            "optional": true,
+            "$ref": "ThemeType"
+          },
+          "default_locale": {
+            "optional": true,
+            "type": "string"
+          },
+          "theme_experiment": {
+            "optional": true,
+            "$ref": "ThemeExperiment"
+          },
+          "icons": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "theme_experiment": {
+            "optional": true,
+            "$ref": "ThemeExperiment"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "theme",
+    "description": "The theme API allows customizing of visual elements of the browser.",
+    "types": [
+      {
+        "id": "ThemeUpdateInfo",
+        "description": "Info provided in the onUpdated listener.",
+        "type": "object",
+        "properties": {
+          "theme": {
+            "description": "The new theme after update",
+            "type": "object"
+          },
+          "windowId": {
+            "description": "The id of the window the theme has been applied to",
+            "optional": true,
+            "type": "integer"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "getCurrent",
+        "description": "Returns the current theme for the specified window or the last focused window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The window for which we want the theme.",
+            "optional": true,
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Make complete updates to the theme. Resolves when the update has completed.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window to update. No id updates all windows.",
+            "optional": true,
+            "type": "integer"
+          },
+          {
+            "name": "details",
+            "description": "The properties of the theme to update.",
+            "$ref": "manifest.ThemeType"
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "description": "Removes the updates made to the theme.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window to reset. No id resets all windows.",
+            "optional": true,
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onUpdated",
+        "description": "Fired when a new theme has been applied",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "updateInfo",
+            "description": "Details of the theme update",
+            "$ref": "ThemeUpdateInfo"
+          }
+        ]
+      }
+    ]
+  }
+]

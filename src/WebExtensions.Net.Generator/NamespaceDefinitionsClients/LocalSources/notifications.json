@@ -1,0 +1,429 @@
+[
+  {
+    "namespace": "notifications",
+    "permissions": [
+      "notifications"
+    ],
+    "types": [
+      {
+        "id": "TemplateType",
+        "type": "string",
+        "enum": [
+          "basic",
+          "image",
+          "list",
+          "progress"
+        ]
+      },
+      {
+        "id": "PermissionLevel",
+        "type": "string",
+        "enum": [
+          "granted",
+          "denied"
+        ]
+      },
+      {
+        "id": "NotificationItem",
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Title of one item of a list notification.",
+            "type": "string"
+          },
+          "message": {
+            "description": "Additional details about this item.",
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "CreateNotificationOptions",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Which type of notification to display.",
+            "$ref": "TemplateType"
+          },
+          "iconUrl": {
+            "description": "A URL to the sender\u0027s avatar, app icon, or a thumbnail for image notifications.",
+            "optional": true,
+            "type": "string"
+          },
+          "appIconMaskUrl": {
+            "description": "A URL to the app icon mask.",
+            "optional": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the notification (e.g. sender name for email).",
+            "type": "string"
+          },
+          "message": {
+            "description": "Main notification content.",
+            "type": "string"
+          },
+          "contextMessage": {
+            "description": "Alternate notification content with a lower-weight font.",
+            "optional": true,
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.",
+            "optional": true,
+            "type": "integer",
+            "minimum": -2,
+            "maximum": 2
+          },
+          "eventTime": {
+            "description": "A timestamp associated with the notification, in milliseconds past the epoch.",
+            "optional": true,
+            "type": "number"
+          },
+          "buttons": {
+            "description": "Text and icons for up to two notification action buttons.",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "iconUrl": {
+                  "optional": true,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "imageUrl": {
+            "description": "A URL to the image thumbnail for image-type notifications.",
+            "optional": true,
+            "type": "string"
+          },
+          "items": {
+            "description": "Items for multi-item notifications.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "NotificationItem"
+            }
+          },
+          "progress": {
+            "description": "Current progress ranges from 0 to 100.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "isClickable": {
+            "description": "Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "id": "UpdateNotificationOptions",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "Which type of notification to display.",
+            "optional": true,
+            "$ref": "TemplateType"
+          },
+          "iconUrl": {
+            "description": "A URL to the sender\u0027s avatar, app icon, or a thumbnail for image notifications.",
+            "optional": true,
+            "type": "string"
+          },
+          "appIconMaskUrl": {
+            "description": "A URL to the app icon mask.",
+            "optional": true,
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the notification (e.g. sender name for email).",
+            "optional": true,
+            "type": "string"
+          },
+          "message": {
+            "description": "Main notification content.",
+            "optional": true,
+            "type": "string"
+          },
+          "contextMessage": {
+            "description": "Alternate notification content with a lower-weight font.",
+            "optional": true,
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.",
+            "optional": true,
+            "type": "integer",
+            "minimum": -2,
+            "maximum": 2
+          },
+          "eventTime": {
+            "description": "A timestamp associated with the notification, in milliseconds past the epoch.",
+            "optional": true,
+            "type": "number"
+          },
+          "buttons": {
+            "description": "Text and icons for up to two notification action buttons.",
+            "optional": true,
+            "type": "array",
+            "unsupported": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "iconUrl": {
+                  "optional": true,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "imageUrl": {
+            "description": "A URL to the image thumbnail for image-type notifications.",
+            "optional": true,
+            "type": "string"
+          },
+          "items": {
+            "description": "Items for multi-item notifications.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "NotificationItem"
+            }
+          },
+          "progress": {
+            "description": "Current progress ranges from 0 to 100.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "isClickable": {
+            "description": "Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "create",
+        "description": "Creates and displays a notification.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "Identifier of the notification. If it is empty, this method generates an id. If it matches an existing notification, this method first clears that notification before proceeding with the create operation.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "description": "Contents of the notification.",
+            "$ref": "CreateNotificationOptions"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "notificationId",
+                "description": "The notification id (either supplied or generated) that represents the created notification.",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Updates an existing notification.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The id of the notification to be updated.",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "description": "Contents of the notification to update to.",
+            "$ref": "UpdateNotificationOptions"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "wasUpdated",
+                "description": "Indicates whether a matching notification existed.",
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "clear",
+        "description": "Clears an existing notification.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The id of the notification to be updated.",
+            "type": "string"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "wasCleared",
+                "description": "Indicates whether a matching notification existed.",
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getAll",
+        "description": "Retrieves all the notifications.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "notifications",
+                "description": "The set of notifications currently in the system.",
+                "type": "object"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getPermissionLevel",
+        "description": "Retrieves whether the user has enabled notifications from this app or extension.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "level",
+                "description": "The current permission level.",
+                "$ref": "PermissionLevel"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onClosed",
+        "description": "Fired when the notification closed, either by the system or by user action.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The notificationId of the closed notification.",
+            "type": "string"
+          },
+          {
+            "name": "byUser",
+            "description": "True if the notification was closed by the user.",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "name": "onClicked",
+        "description": "Fired when the user clicked in a non-button area of the notification.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The notificationId of the clicked notification.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "onButtonClicked",
+        "description": "Fired when the  user pressed a button in the notification.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The notificationId of the clicked notification.",
+            "type": "string"
+          },
+          {
+            "name": "buttonIndex",
+            "description": "The index of the button clicked by the user.",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "onPermissionLevelChanged",
+        "description": "Fired when the user changes the permission level.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "level",
+            "description": "The new permission level.",
+            "$ref": "PermissionLevel"
+          }
+        ]
+      },
+      {
+        "name": "onShowSettings",
+        "description": "Fired when the user clicked on a link for the app\u0027s notification settings.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": []
+      },
+      {
+        "name": "onShown",
+        "description": "Fired when the notification is shown.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "description": "The notificationId of the shown notification.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

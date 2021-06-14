@@ -1,0 +1,224 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "contextualIdentities"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "contextualIdentities",
+    "description": "Use the \u003Ccode\u003Ebrowser.contextualIdentities\u003C/code\u003E API to query and modify contextual identity, also called as containers.",
+    "permissions": [
+      "contextualIdentities"
+    ],
+    "types": [
+      {
+        "id": "ContextualIdentity",
+        "description": "Represents information about a contextual identity.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the contextual identity.",
+            "type": "string"
+          },
+          "icon": {
+            "description": "The icon name of the contextual identity.",
+            "type": "string"
+          },
+          "iconUrl": {
+            "description": "The icon url of the contextual identity.",
+            "type": "string"
+          },
+          "color": {
+            "description": "The color name of the contextual identity.",
+            "type": "string"
+          },
+          "colorCode": {
+            "description": "The color hash of the contextual identity.",
+            "type": "string"
+          },
+          "cookieStoreId": {
+            "description": "The cookie store ID of the contextual identity.",
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "get",
+        "description": "Retrieves information about a single contextual identity.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "cookieStoreId",
+            "description": "The ID of the contextual identity cookie store. ",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "query",
+        "description": "Retrieves all contextual identities",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "description": "Information to filter the contextual identities being retrieved.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "Filters the contextual identity by name.",
+                "optional": true,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "create",
+        "description": "Creates a contextual identity with the given data.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "description": "Details about the contextual identity being created.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the contextual identity.",
+                "optional": false,
+                "type": "string"
+              },
+              "color": {
+                "description": "The color of the contextual identity.",
+                "optional": false,
+                "type": "string"
+              },
+              "icon": {
+                "description": "The icon of the contextual identity.",
+                "optional": false,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Updates a contextual identity with the given data.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "cookieStoreId",
+            "description": "The ID of the contextual identity cookie store. ",
+            "type": "string"
+          },
+          {
+            "name": "details",
+            "description": "Details about the contextual identity being created.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the contextual identity.",
+                "optional": true,
+                "type": "string"
+              },
+              "color": {
+                "description": "The color of the contextual identity.",
+                "optional": true,
+                "type": "string"
+              },
+              "icon": {
+                "description": "The icon of the contextual identity.",
+                "optional": true,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "description": "Deletes a contetual identity by its cookie Store ID.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "cookieStoreId",
+            "description": "The ID of the contextual identity cookie store. ",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onUpdated",
+        "description": "Fired when a container is updated.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "changeInfo",
+            "type": "object",
+            "properties": {
+              "contextualIdentity": {
+                "description": "Contextual identity that has been updated",
+                "$ref": "ContextualIdentity"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onCreated",
+        "description": "Fired when a new container is created.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "changeInfo",
+            "type": "object",
+            "properties": {
+              "contextualIdentity": {
+                "description": "Contextual identity that has been created",
+                "$ref": "ContextualIdentity"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onRemoved",
+        "description": "Fired when a container is removed.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "changeInfo",
+            "type": "object",
+            "properties": {
+              "contextualIdentity": {
+                "description": "Contextual identity that has been removed",
+                "$ref": "ContextualIdentity"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

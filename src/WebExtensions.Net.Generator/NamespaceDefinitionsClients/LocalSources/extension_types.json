@@ -1,0 +1,184 @@
+[
+  {
+    "namespace": "extensionTypes",
+    "description": "The \u003Ccode\u003Ebrowser.extensionTypes\u003C/code\u003E API contains type declarations for WebExtensions.",
+    "types": [
+      {
+        "id": "ImageFormat",
+        "description": "The format of an image.",
+        "type": "string",
+        "enum": [
+          "jpeg",
+          "png"
+        ]
+      },
+      {
+        "id": "ImageDetails",
+        "description": "Details about the format, quality, area and scale of the capture.",
+        "type": "object",
+        "properties": {
+          "format": {
+            "description": "The format of the resulting image.  Default is \u003Ccode\u003E\u0022jpeg\u0022\u003C/code\u003E.",
+            "optional": true,
+            "$ref": "ImageFormat"
+          },
+          "quality": {
+            "description": "When format is \u003Ccode\u003E\u0022jpeg\u0022\u003C/code\u003E, controls the quality of the resulting image.  This value is ignored for PNG images.  As quality is decreased, the resulting image will have more visual artifacts, and the number of bytes needed to store it will decrease.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "rect": {
+            "description": "The area of the document to capture, in CSS pixels, relative to the page.  If omitted, capture the visible viewport.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "width": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            }
+          },
+          "scale": {
+            "description": "The scale of the resulting image.  Defaults to \u003Ccode\u003EdevicePixelRatio\u003C/code\u003E.",
+            "optional": true,
+            "type": "number"
+          }
+        }
+      },
+      {
+        "id": "RunAt",
+        "description": "The soonest that the JavaScript or CSS will be injected into the tab.",
+        "type": "string",
+        "enum": [
+          "document_start",
+          "document_end",
+          "document_idle"
+        ]
+      },
+      {
+        "id": "CSSOrigin",
+        "description": "The origin of the CSS to inject, this affects the cascading order (priority) of the stylesheet.",
+        "type": "string",
+        "enum": [
+          "user",
+          "author"
+        ]
+      },
+      {
+        "id": "InjectDetails",
+        "description": "Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "JavaScript or CSS code to inject.\u003Cbr\u003E\u003Cbr\u003E\u003Cb\u003EWarning:\u003C/b\u003E\u003Cbr\u003EBe careful using the \u003Ccode\u003Ecode\u003C/code\u003E parameter. Incorrect use of it may open your extension to \u003Ca href=\u0022https://en.wikipedia.org/wiki/Cross-site_scripting\u0022\u003Ecross site scripting\u003C/a\u003E attacks.",
+            "optional": true,
+            "type": "string"
+          },
+          "file": {
+            "description": "JavaScript or CSS file to inject.",
+            "optional": true,
+            "type": "string"
+          },
+          "allFrames": {
+            "description": "If allFrames is \u003Ccode\u003Etrue\u003C/code\u003E, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it\u0027s \u003Ccode\u003Efalse\u003C/code\u003E and is only injected into the top frame.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "matchAboutBlank": {
+            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "frameId": {
+            "description": "The ID of the frame to inject the script into. This may not be used in combination with \u003Ccode\u003EallFrames\u003C/code\u003E.",
+            "optional": true,
+            "type": "integer",
+            "minimum": 0
+          },
+          "runAt": {
+            "description": "The soonest that the JavaScript or CSS will be injected into the tab. Defaults to \u0022document_idle\u0022.",
+            "optional": true,
+            "$ref": "RunAt"
+          },
+          "cssOrigin": {
+            "description": "The css origin of the stylesheet to inject. Defaults to \u0022author\u0022.",
+            "optional": true,
+            "$ref": "CSSOrigin"
+          }
+        }
+      },
+      {
+        "id": "Date",
+        "choices": [
+          {
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      {
+        "id": "ExtensionFileOrCode",
+        "choices": [
+          {
+            "type": "object",
+            "properties": {
+              "file": {
+                "$ref": "manifest.ExtensionURL"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "PlainJSONValue",
+        "description": "A plain JSON value",
+        "choices": [
+          {},
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "PlainJSONValue"
+            }
+          },
+          {
+            "type": "object"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "dns"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "dns",
+    "description": "Asynchronous DNS API",
+    "permissions": [
+      "dns"
+    ],
+    "types": [
+      {
+        "id": "DNSRecord",
+        "description": "An object encapsulating a DNS Record.",
+        "type": "object",
+        "properties": {
+          "canonicalName": {
+            "description": "The canonical hostname for this record.  this value is empty if the record was not fetched with the \u0027canonical_name\u0027 flag.",
+            "optional": true,
+            "type": "string"
+          },
+          "isTRR": {
+            "description": "Record retreived with TRR.",
+            "type": "string"
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "ResolveFlags",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "allow_name_collisions",
+            "bypass_cache",
+            "canonical_name",
+            "disable_ipv4",
+            "disable_ipv6",
+            "disable_trr",
+            "offline",
+            "priority_low",
+            "priority_medium",
+            "speculate"
+          ]
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "resolve",
+        "description": "Resolves a hostname to a DNS record.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "hostname",
+            "type": "string"
+          },
+          {
+            "name": "flags",
+            "optional": true,
+            "default": [],
+            "$ref": "ResolveFlags"
+          }
+        ]
+      }
+    ]
+  }
+]

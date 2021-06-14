@@ -1,0 +1,299 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "urlbar"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "urlbar",
+    "description": "Use the \u003Ccode\u003Ebrowser.urlbar\u003C/code\u003E API to experiment with new features in the URLBar. Restricted to Mozilla privileged WebExtensions.",
+    "permissions": [
+      "urlbar"
+    ],
+    "types": [
+      {
+        "id": "EngagementState",
+        "description": "The state of an engagement made with the urlbar by the user. \u003Ccode\u003Estart\u003C/code\u003E: The user has started an engagement. \u003Ccode\u003Eengagement\u003C/code\u003E: The user has completed an engagement by picking a result. \u003Ccode\u003Eabandonment\u003C/code\u003E: The user has abandoned their engagement, for example by blurring the urlbar. \u003Ccode\u003Ediscard\u003C/code\u003E: The engagement ended in a way that should be ignored by listeners.",
+        "type": "string",
+        "enum": [
+          "start",
+          "engagement",
+          "abandonment",
+          "discard"
+        ]
+      },
+      {
+        "id": "Query",
+        "description": "A query performed in the urlbar.",
+        "type": "object",
+        "properties": {
+          "isPrivate": {
+            "description": "Whether the query\u0027s browser context is private.",
+            "type": "boolean"
+          },
+          "maxResults": {
+            "description": "The maximum number of results shown to the user.",
+            "type": "integer"
+          },
+          "searchString": {
+            "description": "The query\u0027s search string.",
+            "type": "string"
+          },
+          "sources": {
+            "description": "List of acceptable source types to return.",
+            "type": "array",
+            "items": {
+              "$ref": "SourceType"
+            }
+          }
+        }
+      },
+      {
+        "id": "Result",
+        "description": "A result of a query. Queries can have many results. Each result is created by a provider.",
+        "type": "object",
+        "properties": {
+          "payload": {
+            "description": "An object with arbitrary properties depending on the result\u0027s type.",
+            "type": "object"
+          },
+          "source": {
+            "description": "The result\u0027s source.",
+            "$ref": "SourceType"
+          },
+          "type": {
+            "description": "The result\u0027s type.",
+            "$ref": "ResultType"
+          },
+          "suggestedIndex": {
+            "description": "Suggest a preferred position for this result within the result set.",
+            "optional": true,
+            "type": "integer"
+          }
+        }
+      },
+      {
+        "id": "ResultType",
+        "description": "Possible types of results. \u003Ccode\u003Edynamic\u003C/code\u003E: A result whose view and payload are specified by the extension. \u003Ccode\u003Eremote_tab\u003C/code\u003E: A synced tab from another device. \u003Ccode\u003Esearch\u003C/code\u003E: A search suggestion from a search engine. \u003Ccode\u003Etab\u003C/code\u003E: An open tab in the browser. \u003Ccode\u003Etip\u003C/code\u003E: An actionable message to help the user with their query. \u003Ccode\u003Eurl\u003C/code\u003E: A URL that\u0027s not one of the other types.",
+        "type": "string",
+        "enum": [
+          "dynamic",
+          "remote_tab",
+          "search",
+          "tab",
+          "tip",
+          "url"
+        ]
+      },
+      {
+        "id": "SearchOptions",
+        "description": "Options to the \u003Ccode\u003Esearch\u003C/code\u003E function.",
+        "type": "object",
+        "properties": {
+          "focus": {
+            "description": "Whether to focus the input field and select its contents.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "id": "SourceType",
+        "description": "Possible sources of results. \u003Ccode\u003Ebookmarks\u003C/code\u003E: The result comes from the user\u0027s bookmarks. \u003Ccode\u003Ehistory\u003C/code\u003E: The result comes from the user\u0027s history. \u003Ccode\u003Elocal\u003C/code\u003E: The result comes from some local source not covered by another source type. \u003Ccode\u003Enetwork\u003C/code\u003E: The result comes from some network source not covered by another source type. \u003Ccode\u003Esearch\u003C/code\u003E: The result comes from a search engine. \u003Ccode\u003Etabs\u003C/code\u003E: The result is an open tab in the browser or a synced tab from another device.",
+        "type": "string",
+        "enum": [
+          "bookmarks",
+          "history",
+          "local",
+          "network",
+          "search",
+          "tabs"
+        ]
+      }
+    ],
+    "properties": {
+      "engagementTelemetry": {
+        "description": "Enables or disables the engagement telemetry.",
+        "$ref": "types.Setting"
+      }
+    },
+    "functions": [
+      {
+        "name": "closeView",
+        "description": "Closes the urlbar view in the current window.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "focus",
+        "description": "Focuses the urlbar in the current window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "select",
+            "description": "If true, the text in the urlbar will also be selected.",
+            "optional": true,
+            "default": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "name": "search",
+        "description": "Starts a search in the urlbar in the current window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "searchString",
+            "description": "The search string.",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "description": "Options for the search.",
+            "optional": true,
+            "default": {},
+            "$ref": "SearchOptions"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onBehaviorRequested",
+        "description": "Before a query starts, this event is fired for the given provider. Its purpose is to request the provider\u0027s behavior for the query. The listener should return a behavior in response. By default, providers are inactive, so if your provider should always be inactive, you don\u0027t need to listen for this event.",
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "description": "The name of the provider whose behavior the listener returns.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]\u002B$"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "description": "The query for which the behavior is requested.",
+            "$ref": "Query"
+          }
+        ],
+        "returns": {
+          "description": "The behavior of the provider for the query.",
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive",
+            "restricting"
+          ]
+        }
+      },
+      {
+        "name": "onEngagement",
+        "description": "This event is fired when the user starts and ends an engagement with the urlbar.",
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "description": "The name of the provider that will listen for engagement events.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]\u002B$"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "state",
+            "description": "The state of the engagement.",
+            "$ref": "EngagementState"
+          }
+        ]
+      },
+      {
+        "name": "onQueryCanceled",
+        "description": "This event is fired for the given provider when a query is canceled. The listener should stop any ongoing fetch or creation of results and clean up its resources.",
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "description": "The name of the provider that is creating results for the query.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]\u002B$"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "description": "The query that was canceled.",
+            "$ref": "Query"
+          }
+        ]
+      },
+      {
+        "name": "onResultsRequested",
+        "description": "When a query starts, this event is fired for the given provider if the provider is active for the query and there are no other providers that are restricting. Its purpose is to request the provider\u0027s results for the query. The listener should return a list of results in response.",
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "description": "The name of the provider whose results the listener returns.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]\u002B$"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "query",
+            "description": "The query for which results are requested.",
+            "$ref": "Query"
+          }
+        ],
+        "returns": {
+          "description": "The results that the provider fetched for the query.",
+          "type": "array",
+          "items": {
+            "$ref": "Result"
+          }
+        }
+      },
+      {
+        "name": "onResultPicked",
+        "description": "Typically, a provider includes a \u003Ccode\u003Eurl\u003C/code\u003E property in its results\u0027 payloads. When the user picks a result with a URL, Firefox automatically loads the URL. URLs don\u0027t make sense for every result type, however. When the user picks a result without a URL, this event is fired. The provider should take an appropriate action in response. Currently the only applicable \u003Ccode\u003EResultTypes\u003C/code\u003E are \u003Ccode\u003Edynamic\u003C/code\u003E and \u003Ccode\u003Etip\u003C/code\u003E.",
+        "extraParameters": [
+          {
+            "name": "providerName",
+            "description": "The listener will be called for the results of the provider with this name.",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]\u002B$"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "payload",
+            "description": "The payload of the result that was picked.",
+            "type": "object"
+          },
+          {
+            "name": "elementName",
+            "description": "If the result is a dynamic type, this is the name of the element in the result view that was picked. If the result is not a dynamic type, this is an empty string.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

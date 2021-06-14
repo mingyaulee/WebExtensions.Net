@@ -1,0 +1,346 @@
+[
+  {
+    "namespace": "devtools.panels",
+    "description": "Use the \u003Ccode\u003Echrome.devtools.panels\u003C/code\u003E API to integrate your extension into Developer Tools window UI: create your own panels, access existing panels, and add sidebars.",
+    "types": [
+      {
+        "id": "ElementsPanel",
+        "description": "Represents the Elements panel.",
+        "type": "object",
+        "functions": [
+          {
+            "name": "createSidebarPane",
+            "description": "Creates a pane within panel\u0027s sidebar.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "title",
+                "description": "Text that is displayed in sidebar caption.",
+                "type": "string"
+              },
+              {
+                "name": "callback",
+                "description": "A callback invoked when the sidebar is created.",
+                "optional": true,
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "result",
+                    "description": "An ExtensionSidebarPane object for created sidebar pane.",
+                    "$ref": "ExtensionSidebarPane"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "SourcesPanel",
+        "description": "Represents the Sources panel.",
+        "type": "object",
+        "functions": [
+          {
+            "name": "createSidebarPane",
+            "description": "Creates a pane within panel\u0027s sidebar.",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "title",
+                "description": "Text that is displayed in sidebar caption.",
+                "type": "string"
+              },
+              {
+                "name": "callback",
+                "description": "A callback invoked when the sidebar is created.",
+                "optional": true,
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "result",
+                    "description": "An ExtensionSidebarPane object for created sidebar pane.",
+                    "$ref": "ExtensionSidebarPane"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ExtensionPanel",
+        "description": "Represents a panel created by extension.",
+        "type": "object",
+        "functions": [
+          {
+            "name": "createStatusBarButton",
+            "description": "Appends a button to the status bar of the panel.",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "iconPath",
+                "description": "Path to the icon of the button. The file should contain a 64x24-pixel image composed of two 32x24 icons. The left icon is used when the button is inactive; the right icon is displayed when the button is pressed.",
+                "type": "string"
+              },
+              {
+                "name": "tooltipText",
+                "description": "Text shown as a tooltip when user hovers the mouse over the button.",
+                "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "Whether the button is disabled.",
+                "type": "boolean"
+              }
+            ],
+            "returns": {
+              "$ref": "Button"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ExtensionSidebarPane",
+        "description": "A sidebar created by the extension.",
+        "type": "object",
+        "functions": [
+          {
+            "name": "setHeight",
+            "description": "Sets the height of the sidebar.",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "height",
+                "description": "A CSS-like size specification, such as \u003Ccode\u003E\u0027100px\u0027\u003C/code\u003E or \u003Ccode\u003E\u002712ex\u0027\u003C/code\u003E.",
+                "type": "string"
+              }
+            ]
+          },
+          {
+            "name": "setExpression",
+            "description": "Sets an expression that is evaluated within the inspected page. The result is displayed in the sidebar pane.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "expression",
+                "description": "An expression to be evaluated in context of the inspected page. JavaScript objects and DOM nodes are displayed in an expandable tree similar to the console/watch.",
+                "type": "string"
+              },
+              {
+                "name": "rootTitle",
+                "description": "An optional title for the root of the expression tree.",
+                "optional": true,
+                "type": "string"
+              },
+              {
+                "name": "callback",
+                "description": "A callback invoked after the sidebar pane is updated with the expression evaluation results.",
+                "optional": true,
+                "type": "function"
+              }
+            ]
+          },
+          {
+            "name": "setObject",
+            "description": "Sets a JSON-compliant object to be displayed in the sidebar pane.",
+            "async": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "jsonObject",
+                "description": "An object to be displayed in context of the inspected page. Evaluated in the context of the caller (API client).",
+                "type": "string"
+              },
+              {
+                "name": "rootTitle",
+                "description": "An optional title for the root of the expression tree.",
+                "optional": true,
+                "type": "string"
+              },
+              {
+                "name": "callback",
+                "description": "A callback invoked after the sidebar is updated with the object.",
+                "optional": true,
+                "type": "function"
+              }
+            ]
+          },
+          {
+            "name": "setPage",
+            "description": "Sets an HTML page to be displayed in the sidebar pane.",
+            "async": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "path",
+                "description": "Relative path of an extension page to display within the sidebar.",
+                "$ref": "manifest.ExtensionURL"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Button",
+        "description": "A button created by the extension.",
+        "type": "object",
+        "functions": [
+          {
+            "name": "update",
+            "description": "Updates the attributes of the button. If some of the arguments are omitted or \u003Ccode\u003Enull\u003C/code\u003E, the corresponding attributes are not updated.",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "iconPath",
+                "description": "Path to the new icon of the button.",
+                "optional": true,
+                "type": "string"
+              },
+              {
+                "name": "tooltipText",
+                "description": "Text shown as a tooltip when user hovers the mouse over the button.",
+                "optional": true,
+                "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "Whether the button is disabled.",
+                "optional": true,
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "properties": {
+      "elements": {
+        "description": "Elements panel.",
+        "$ref": "ElementsPanel"
+      },
+      "sources": {
+        "description": "Sources panel.",
+        "$ref": "SourcesPanel"
+      },
+      "themeName": {
+        "description": "The name of the current devtools theme.",
+        "type": "string"
+      }
+    },
+    "functions": [
+      {
+        "name": "create",
+        "description": "Creates an extension panel.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "title",
+            "description": "Title that is displayed next to the extension icon in the Developer Tools toolbar.",
+            "type": "string"
+          },
+          {
+            "name": "iconPath",
+            "description": "Path of the panel\u0027s icon relative to the extension directory, or an empty string to use the default extension icon as the panel icon.",
+            "choices": [
+              {
+                "type": "string",
+                "enum": [
+                  ""
+                ]
+              },
+              {
+                "$ref": "manifest.ExtensionURL"
+              }
+            ]
+          },
+          {
+            "name": "pagePath",
+            "description": "Path of the panel\u0027s HTML page relative to the extension directory.",
+            "$ref": "manifest.ExtensionURL"
+          },
+          {
+            "name": "callback",
+            "description": "A function that is called when the panel is created.",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "panel",
+                "description": "An ExtensionPanel object representing the created panel.",
+                "$ref": "ExtensionPanel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setOpenResourceHandler",
+        "description": "Specifies the function to be called when the user clicks a resource link in the Developer Tools window. To unset the handler, either call the method with no parameters or pass null as the parameter.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "description": "A function that is called when the user clicks on a valid resource link in Developer Tools window. Note that if the user clicks an invalid URL or an XHR, this function is not called.",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "resource",
+                "description": "A $(ref:devtools.inspectedWindow.Resource) object for the resource that was clicked.",
+                "$ref": "devtools.inspectedWindow.Resource"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "openResource",
+        "description": "Requests DevTools to open a URL in a Developer Tools panel.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "url",
+            "description": "The URL of the resource to open.",
+            "type": "string"
+          },
+          {
+            "name": "lineNumber",
+            "description": "Specifies the line number to scroll to when the resource is loaded.",
+            "type": "integer"
+          },
+          {
+            "name": "callback",
+            "description": "A function that is called when the resource has been successfully loaded.",
+            "optional": true,
+            "type": "function"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onThemeChanged",
+        "description": "Fired when the devtools theme changes.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "themeName",
+            "description": "The name of the current devtools theme.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,597 @@
+[
+  {
+    "namespace": "manifest",
+    "permissions": [],
+    "types": [
+      {
+        "id": "ManifestBase",
+        "description": "Common properties for all manifest.json files",
+        "type": "object",
+        "properties": {
+          "manifest_version": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 3
+          },
+          "applications": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "gecko": {
+                "optional": true,
+                "$ref": "FirefoxSpecificProperties"
+              }
+            }
+          },
+          "browser_specific_settings": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "gecko": {
+                "optional": true,
+                "$ref": "FirefoxSpecificProperties"
+              },
+              "edge": {
+                "optional": true,
+                "type": "object"
+              }
+            }
+          },
+          "name": {
+            "optional": false,
+            "type": "string"
+          },
+          "short_name": {
+            "optional": true,
+            "type": "string"
+          },
+          "description": {
+            "optional": true,
+            "type": "string"
+          },
+          "author": {
+            "optional": true,
+            "type": "string"
+          },
+          "version": {
+            "optional": false,
+            "type": "string"
+          },
+          "homepage_url": {
+            "optional": true,
+            "type": "string",
+            "format": "url"
+          }
+        }
+      },
+      {
+        "id": "WebExtensionManifest",
+        "description": "Represents a WebExtension manifest.json file",
+        "type": "object",
+        "properties": {
+          "minimum_chrome_version": {
+            "optional": true,
+            "type": "string"
+          },
+          "minimum_opera_version": {
+            "optional": true,
+            "type": "string"
+          },
+          "icons": {
+            "optional": true,
+            "type": "object"
+          },
+          "incognito": {
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "not_allowed",
+              "spanning"
+            ]
+          },
+          "background": {
+            "optional": true,
+            "choices": [
+              {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "$ref": "ExtensionURL"
+                  },
+                  "persistent": {
+                    "optional": true,
+                    "$ref": "PersistentBackgroundProperty"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "scripts": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "ExtensionURL"
+                    }
+                  },
+                  "persistent": {
+                    "optional": true,
+                    "$ref": "PersistentBackgroundProperty"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "service_worker": {
+                    "$ref": "ExtensionURL"
+                  }
+                }
+              }
+            ]
+          },
+          "options_ui": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "page": {
+                "$ref": "ExtensionURL"
+              },
+              "browser_style": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "chrome_style": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "open_in_tab": {
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          },
+          "content_scripts": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "ContentScript"
+            }
+          },
+          "content_security_policy": {
+            "optional": true,
+            "choices": [
+              {
+                "type": "string",
+                "format": "contentSecurityPolicy"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "extension_pages": {
+                    "description": "The Content Security Policy used for extension pages.",
+                    "optional": true,
+                    "type": "string",
+                    "format": "contentSecurityPolicy"
+                  }
+                }
+              }
+            ]
+          },
+          "permissions": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "PermissionOrOrigin"
+            }
+          },
+          "optional_permissions": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "OptionalPermissionOrOrigin"
+            }
+          },
+          "web_accessible_resources": {
+            "optional": true,
+            "choices": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "matches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "MatchPatternRestricted"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "developer": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "name": {
+                "optional": true,
+                "type": "string"
+              },
+              "url": {
+                "optional": true,
+                "type": "string"
+              }
+            }
+          },
+          "hidden": {
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "id": "WebExtensionLangpackManifest",
+        "description": "Represents a WebExtension language pack manifest.json file",
+        "type": "object",
+        "properties": {
+          "homepage_url": {
+            "optional": true,
+            "type": "string",
+            "format": "url"
+          },
+          "langpack_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z-]\u002B$"
+          },
+          "languages": {
+            "type": "object"
+          },
+          "sources": {
+            "optional": true,
+            "type": "object"
+          }
+        }
+      },
+      {
+        "id": "WebExtensionDictionaryManifest",
+        "description": "Represents a WebExtension dictionary manifest.json file",
+        "type": "object",
+        "properties": {
+          "homepage_url": {
+            "optional": true,
+            "type": "string",
+            "format": "url"
+          },
+          "dictionaries": {
+            "type": "object"
+          }
+        }
+      },
+      {
+        "id": "ThemeIcons",
+        "type": "object",
+        "properties": {
+          "light": {
+            "description": "A light icon to use for dark themes",
+            "$ref": "ExtensionURL"
+          },
+          "dark": {
+            "description": "The dark icon to use for light themes",
+            "$ref": "ExtensionURL"
+          },
+          "size": {
+            "description": "The size of the icons",
+            "type": "integer"
+          }
+        }
+      },
+      {
+        "id": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "idle"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "OptionalPermission",
+        "choices": [
+          {
+            "$ref": "OptionalPermissionNoPrompt"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "clipboardRead",
+              "clipboardWrite",
+              "geolocation",
+              "notifications"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "OptionalPermissionOrOrigin",
+        "choices": [
+          {
+            "$ref": "OptionalPermission"
+          },
+          {
+            "$ref": "MatchPattern"
+          }
+        ]
+      },
+      {
+        "id": "PermissionNoPrompt",
+        "choices": [
+          {
+            "$ref": "OptionalPermission"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "alarms",
+              "mozillaAddons",
+              "storage",
+              "unlimitedStorage"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Permission",
+        "choices": [
+          {
+            "$ref": "PermissionNoPrompt"
+          },
+          {
+            "$ref": "OptionalPermission"
+          }
+        ]
+      },
+      {
+        "id": "PermissionOrOrigin",
+        "choices": [
+          {
+            "$ref": "Permission"
+          },
+          {
+            "$ref": "MatchPattern"
+          }
+        ]
+      },
+      {
+        "id": "HttpURL",
+        "type": "string",
+        "format": "url",
+        "pattern": "^https?://.*$"
+      },
+      {
+        "id": "ExtensionURL",
+        "type": "string",
+        "format": "strictRelativeUrl"
+      },
+      {
+        "id": "ExtensionFileUrl",
+        "type": "string",
+        "format": "strictRelativeUrl",
+        "pattern": "\\S"
+      },
+      {
+        "id": "ImageDataOrExtensionURL",
+        "type": "string",
+        "format": "imageDataOrStrictRelativeUrl"
+      },
+      {
+        "id": "ExtensionID",
+        "choices": [
+          {
+            "type": "string",
+            "pattern": "(?i)^\\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\}$"
+          },
+          {
+            "type": "string",
+            "pattern": "(?i)^[a-z0-9-._]*@[a-z0-9-._]\u002B$"
+          }
+        ]
+      },
+      {
+        "id": "FirefoxSpecificProperties",
+        "type": "object",
+        "properties": {
+          "id": {
+            "optional": true,
+            "$ref": "ExtensionID"
+          },
+          "update_url": {
+            "optional": true,
+            "type": "string",
+            "format": "url"
+          },
+          "strict_min_version": {
+            "optional": true,
+            "type": "string"
+          },
+          "strict_max_version": {
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "MatchPattern",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "\u003Call_urls\u003E"
+            ]
+          },
+          {
+            "$ref": "MatchPatternRestricted"
+          },
+          {
+            "$ref": "MatchPatternUnestricted"
+          }
+        ]
+      },
+      {
+        "id": "MatchPatternRestricted",
+        "description": "Same as MatchPattern above, but excludes \u003Call_urls\u003E",
+        "choices": [
+          {
+            "type": "string",
+            "pattern": "^(https?|wss?|file|ftp|\\*)://(\\*|\\*\\.[^*/]\u002B|[^*/]\u002B)/.*$"
+          },
+          {
+            "type": "string",
+            "pattern": "^file:///.*$"
+          }
+        ]
+      },
+      {
+        "id": "MatchPatternUnestricted",
+        "description": "Mostly unrestricted match patterns for privileged add-ons. This should technically be rejected for unprivileged add-ons, but, reasons. The MatchPattern class will still refuse privileged schemes for those extensions.",
+        "choices": [
+          {
+            "type": "string",
+            "pattern": "^resource://(\\*|\\*\\.[^*/]\u002B|[^*/]\u002B)/.*$|^about:"
+          }
+        ]
+      },
+      {
+        "id": "ContentScript",
+        "description": "Details of the script or CSS to inject. Either the code or the file property must be set, but both may not be set at the same time. Based on InjectDetails, but using underscore rather than camel case naming conventions.",
+        "type": "object",
+        "properties": {
+          "matches": {
+            "optional": false,
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "MatchPattern"
+            }
+          },
+          "exclude_matches": {
+            "optional": true,
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "MatchPattern"
+            }
+          },
+          "include_globs": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "exclude_globs": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "css": {
+            "description": "The list of CSS files to inject",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "ExtensionURL"
+            }
+          },
+          "js": {
+            "description": "The list of JS files to inject",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "ExtensionURL"
+            }
+          },
+          "all_frames": {
+            "description": "If allFrames is \u003Ccode\u003Etrue\u003C/code\u003E, implies that the JavaScript or CSS should be injected into all frames of current page. By default, it\u0027s \u003Ccode\u003Efalse\u003C/code\u003E and is only injected into the top frame.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "match_about_blank": {
+            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "run_at": {
+            "description": "The soonest that the JavaScript or CSS will be injected into the tab. Defaults to \u0022document_idle\u0022.",
+            "optional": true,
+            "$ref": "extensionTypes.RunAt"
+          }
+        }
+      },
+      {
+        "id": "IconPath",
+        "choices": [
+          {
+            "type": "object"
+          },
+          {
+            "$ref": "ExtensionFileUrl"
+          }
+        ]
+      },
+      {
+        "id": "IconImageData",
+        "choices": [
+          {
+            "type": "object"
+          },
+          {
+            "$ref": "ImageData"
+          }
+        ]
+      },
+      {
+        "id": "ImageData",
+        "type": "object"
+      },
+      {
+        "id": "UnrecognizedProperty",
+        "type": "any",
+        "deprecated": "An unexpected property was found in the WebExtension manifest."
+      },
+      {
+        "id": "PersistentBackgroundProperty",
+        "choices": [
+          {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          {
+            "type": "boolean",
+            "deprecated": "Event pages are not currently supported. This will run as a persistent background page.",
+            "enum": [
+              false
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

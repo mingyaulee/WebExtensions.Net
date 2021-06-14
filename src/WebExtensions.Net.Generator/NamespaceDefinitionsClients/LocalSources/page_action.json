@@ -1,0 +1,340 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "page_action": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "default_title": {
+                "optional": true,
+                "type": "string"
+              },
+              "default_icon": {
+                "optional": true,
+                "$ref": "IconPath"
+              },
+              "default_popup": {
+                "optional": true,
+                "type": "string",
+                "format": "relativeUrl"
+              },
+              "browser_style": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "show_matches": {
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "MatchPattern"
+                }
+              },
+              "hide_matches": {
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "MatchPatternRestricted"
+                }
+              },
+              "pinned": {
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "pageAction",
+    "description": "Use the \u003Ccode\u003Ebrowser.pageAction\u003C/code\u003E API to put icons inside the address bar. Page actions represent actions that can be taken on the current page, but that aren\u0027t applicable to all pages.",
+    "permissions": [
+      "manifest:page_action"
+    ],
+    "types": [
+      {
+        "id": "ImageDataType",
+        "description": "Pixel data for an image. Must be an ImageData object (for example, from a \u003Ccode\u003Ecanvas\u003C/code\u003E element).",
+        "type": "object"
+      },
+      {
+        "id": "OnClickData",
+        "description": "Information sent when a page action is clicked.",
+        "type": "object",
+        "properties": {
+          "modifiers": {
+            "description": "An array of keyboard modifiers that were held while the menu item was clicked.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Shift",
+                "Alt",
+                "Command",
+                "Ctrl",
+                "MacCtrl"
+              ]
+            }
+          },
+          "button": {
+            "description": "An integer value of button by which menu item was clicked.",
+            "optional": true,
+            "type": "integer"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "show",
+        "description": "Shows the page action. The page action is shown whenever the tab is selected.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab for which you want to modify the page action.",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "hide",
+        "description": "Hides the page action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "The id of the tab for which you want to modify the page action.",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "isShown",
+        "description": "Checks whether the page action is shown.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Specify the tab to get the shownness from.",
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "setTitle",
+        "description": "Sets the title of the page action. This is displayed in a tooltip over the page action.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "The id of the tab for which you want to modify the page action.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "title": {
+                "description": "The tooltip string.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getTitle",
+        "description": "Gets the title of the page action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Specify the tab to get the title from.",
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "setIcon",
+        "description": "Sets the icon for the page action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the \u003Cb\u003Epath\u003C/b\u003E or the \u003Cb\u003EimageData\u003C/b\u003E property must be specified.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "The id of the tab for which you want to modify the page action.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "imageData": {
+                "description": "Either an ImageData object or a dictionary {size -\u003E ImageData} representing icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.imageData = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "$ref": "ImageDataType"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "path": {
+                "description": "Either a relative image path or a dictionary {size -\u003E relative image path} pointing to icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.path = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "setPopup",
+        "description": "Sets the html document to be opened as a popup when the user clicks on the page action\u0027s icon.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "The id of the tab for which you want to modify the page action.",
+                "type": "integer",
+                "minimum": 0
+              },
+              "popup": {
+                "description": "The html file to show in a popup.  If set to the empty string (\u0027\u0027), no popup is shown.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getPopup",
+        "description": "Gets the html document set as the popup for this page action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Specify the tab to get the popup from.",
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "openPopup",
+        "description": "Opens the extension page action in the active window.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onClicked",
+        "description": "Fired when a page action icon is clicked.  This event will not fire if the page action has a popup.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tab",
+            "$ref": "tabs.Tab"
+          },
+          {
+            "name": "info",
+            "optional": true,
+            "$ref": "OnClickData"
+          }
+        ]
+      }
+    ]
+  }
+]

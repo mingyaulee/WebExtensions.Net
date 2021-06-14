@@ -1,0 +1,33 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "devtools_page": {
+            "optional": true,
+            "$ref": "ExtensionURL"
+          }
+        }
+      },
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "devtools"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "devtools",
+    "permissions": [
+      "manifest:devtools_page"
+    ]
+  }
+]

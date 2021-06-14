@@ -1,0 +1,264 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "sidebar_action": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "default_title": {
+                "optional": true,
+                "type": "string"
+              },
+              "default_icon": {
+                "optional": true,
+                "$ref": "IconPath"
+              },
+              "browser_style": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "default_panel": {
+                "type": "string",
+                "format": "strictRelativeUrl"
+              },
+              "open_at_install": {
+                "description": "Whether or not the sidebar is opened at install. Default is \u003Ccode\u003Etrue\u003C/code\u003E.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "namespace": "sidebarAction",
+    "description": "Use sidebar actions to add a sidebar to Firefox.",
+    "permissions": [
+      "manifest:sidebar_action"
+    ],
+    "types": [
+      {
+        "id": "ImageDataType",
+        "description": "Pixel data for an image. Must be an ImageData object (for example, from a \u003Ccode\u003Ecanvas\u003C/code\u003E element).",
+        "type": "object"
+      }
+    ],
+    "functions": [
+      {
+        "name": "setTitle",
+        "description": "Sets the title of the sidebar action. This shows up in the tooltip.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "title": {
+                "description": "The string the sidebar action should display when moused over.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              },
+              "tabId": {
+                "description": "Sets the sidebar title for the tab specified by tabId. Automatically resets when the tab is closed.",
+                "optional": true,
+                "type": "integer"
+              },
+              "windowId": {
+                "description": "Sets the sidebar title for the window specified by windowId.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getTitle",
+        "description": "Gets the title of the sidebar action.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Specify the tab to get the title from. If no tab nor window is specified, the global title is returned.",
+                "optional": true,
+                "type": "integer"
+              },
+              "windowId": {
+                "description": "Specify the window to get the title from. If no tab nor window is specified, the global title is returned.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "setIcon",
+        "description": "Sets the icon for the sidebar action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the \u003Cstrong\u003Epath\u003C/strong\u003E or the \u003Cstrong\u003EimageData\u003C/strong\u003E property must be specified.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "imageData": {
+                "description": "Either an ImageData object or a dictionary {size -\u003E ImageData} representing icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.imageData = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "$ref": "ImageDataType"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "path": {
+                "description": "Either a relative image path or a dictionary {size -\u003E relative image path} pointing to icon to be set. If the icon is specified as a dictionary, the actual image to be used is chosen depending on screen\u0027s pixel density. If the number of image pixels that fit into one screen space unit equals \u003Ccode\u003Escale\u003C/code\u003E, then image with size \u003Ccode\u003Escale\u003C/code\u003E * 19 will be selected. Initially only scales 1 and 2 will be supported. At least one image must be specified. Note that \u0027details.path = foo\u0027 is equivalent to \u0027details.imageData = {\u002719\u0027: foo}\u0027",
+                "optional": true,
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ]
+              },
+              "tabId": {
+                "description": "Sets the sidebar icon for the tab specified by tabId. Automatically resets when the tab is closed.",
+                "optional": true,
+                "type": "integer"
+              },
+              "windowId": {
+                "description": "Sets the sidebar icon for the window specified by windowId.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "setPanel",
+        "description": "Sets the url to the html document to be opened in the sidebar when the user clicks on the sidebar action\u0027s icon.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Sets the sidebar url for the tab specified by tabId. Automatically resets when the tab is closed.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              },
+              "windowId": {
+                "description": "Sets the sidebar url for the window specified by windowId.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              },
+              "panel": {
+                "description": "The url to the html file to show in a sidebar.  If set to the empty string (\u0027\u0027), no sidebar is shown.",
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {}
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getPanel",
+        "description": "Gets the url to the html document set as the panel for this sidebar action.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Specify the tab to get the panel from. If no tab nor window is specified, the global panel is returned.",
+                "optional": true,
+                "type": "integer"
+              },
+              "windowId": {
+                "description": "Specify the window to get the panel from. If no tab nor window is specified, the global panel is returned.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "open",
+        "description": "Opens the extension sidebar in the active window.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "close",
+        "description": "Closes the extension sidebar in the active window if the sidebar belongs to the extension.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "toggle",
+        "description": "Toggles the extension sidebar in the active window.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "isOpen",
+        "description": "Checks whether the sidebar action is open.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "windowId": {
+                "description": "Specify the window to get the openness from.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

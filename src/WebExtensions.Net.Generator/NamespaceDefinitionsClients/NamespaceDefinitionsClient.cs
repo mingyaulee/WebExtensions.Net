@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtensions.Net.Generator
+namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
 {
     /// <summary>
     /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html

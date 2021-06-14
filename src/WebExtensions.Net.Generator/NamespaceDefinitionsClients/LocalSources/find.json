@@ -1,0 +1,121 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "find"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "find",
+    "description": "Use the \u003Ccode\u003Ebrowser.find\u003C/code\u003E API to interact with the browser\u0027s \u003Ccode\u003EFind\u003C/code\u003E interface.",
+    "permissions": [
+      "find"
+    ],
+    "functions": [
+      {
+        "name": "find",
+        "description": "Search for text in document and store found ranges in array, in document order.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "queryphrase",
+            "description": "The string to search for.",
+            "type": "string"
+          },
+          {
+            "name": "params",
+            "description": "Search parameters.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "tabId": {
+                "description": "Tab to query. Defaults to the active tab.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              },
+              "caseSensitive": {
+                "description": "Find only ranges with case sensitive match.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "entireWord": {
+                "description": "Find only ranges that match entire word.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includeRectData": {
+                "description": "Return rectangle data which describes visual position of search results.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "includeRangeData": {
+                "description": "Return range data which provides range data in a serializable form.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "highlightResults",
+        "description": "Highlight a range",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "params",
+            "description": "highlightResults parameters",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "rangeIndex": {
+                "description": "Found range to be highlighted. Default highlights all ranges.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              },
+              "tabId": {
+                "description": "Tab to highlight. Defaults to the active tab.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              },
+              "noScroll": {
+                "description": "Don\u0027t scroll to highlighted item.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "removeHighlighting",
+        "description": "Remove all highlighting from previous searches.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabId",
+            "description": "Tab to highlight. Defaults to the active tab.",
+            "optional": true,
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  }
+]
