@@ -1,4 +1,5 @@
-﻿using WebExtensions.Net.Generator.Models.ClrTypes;
+﻿using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
@@ -13,7 +14,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            if (clrPropertyInfo.IsConstant)
+            if (clrPropertyInfo.PropertyType.Metadata.TryGetValue(Constants.TypeMetadata.ClassType, out var classType) && (ClassType)classType == ClassType.ApiClass)
+            {
+                new ApiClassApiPropertyCodeConverter(clrPropertyInfo)
+                    .WriteTo(codeWriter, options);
+            }
+            else if (clrPropertyInfo.IsConstant)
             {
                 codeWriter.PublicProperties
                     .WriteWithConverter(new CommentInheritDocCodeConverter())

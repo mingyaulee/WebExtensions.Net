@@ -13,10 +13,8 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
-                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
+            new ApiClassInterfaceApiPropertyCodeConverter(clrPropertyInfo)
+                .WriteTo(codeWriter, options);
         }
     }
 }

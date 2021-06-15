@@ -39,7 +39,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         public void Complete()
         {
             var namespaceGroups = typesToRegister.Values
-                .GroupBy(typeRegistrationInfo => typeRegistrationInfo.NamespaceEntity.FormattedName);
+                .GroupBy(typeRegistrationInfo => typeRegistrationInfo.NamespaceEntity.FullFormattedName);
             foreach (var namespaceGroupAnonymousTypes in namespaceGroups)
             {
                 ProcessNamespaceGroupAnonymousTypes(namespaceGroupAnonymousTypes);
@@ -148,7 +148,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
         private static bool IsObjectType(TypeReference typeReference)
         {
-            return typeReference.Type == ObjectType.Object || typeReference.Type == ObjectType.EventTypeObject || typeReference.TypeChoices != null;
+            return typeReference.Type == ObjectType.Object ||
+                typeReference.Type == ObjectType.ApiObject||
+                typeReference.Type == ObjectType.EventTypeObject ||
+                typeReference.TypeChoices != null;
         }
 
         private static bool ShouldRegisterObjectType(TypeReference typeReference)

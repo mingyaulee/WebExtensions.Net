@@ -30,7 +30,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 classEntityName = classTranslationOptions.Aliases[classEntityName];
             }
 
-            var @namespace = string.IsNullOrEmpty(classEntity.NamespaceEntity.FormattedName) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{classEntity.NamespaceEntity.FormattedName}";
+            var @namespace = string.IsNullOrEmpty(classEntity.NamespaceEntity.FullFormattedName) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{classEntity.NamespaceEntity.FullFormattedName}";
             var clrTypeInfo = new ClrTypeInfo()
             {
                 Id = $"{@namespace}.{classEntity.FormattedName}",
@@ -48,7 +48,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsObsolete = classEntity.TypeDefinition.IsDeprecated,
                 ObsoleteMessage = classEntity.TypeDefinition.Deprecated,
                 IsGenerated = true,
-                GeneratedNamespace = classEntity.NamespaceEntity.FormattedName,
+                GeneratedNamespace = classEntity.NamespaceEntity.FullFormattedName,
                 RequiredNamespaces = new HashSet<string>(),
                 ReferenceNamespaces = new HashSet<string>() { @namespace },
                 Interfaces = new HashSet<string>(),
@@ -57,7 +57,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Metadata = new Dictionary<string, object>()
                 {
                     { Constants.TypeMetadata.ClassType, classEntity.Type },
-                    { Constants.TypeMetadata.ApiNamespace, classEntity.NamespaceEntity.Name }
+                    { Constants.TypeMetadata.ApiNamespace, classEntity.NamespaceEntity.FullName }
                 }
             };
 

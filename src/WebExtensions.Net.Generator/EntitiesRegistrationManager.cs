@@ -40,7 +40,7 @@ namespace WebExtensions.Net.Generator
         {
             Reset();
             var apiNamespaceEntities = RegisterNamespaceTypesAsTypeEntities(namespaceDefinitions);
-            var apiClassEntities = RegisterNamespaceDefinitionsAsClassEntities(apiNamespaceEntities);
+            var apiClassEntities = RegisterNamespaceEntitiesAsClassEntities(apiNamespaceEntities);
             RegisterApiRoot(apiClassEntities);
             RegisterAnonymousTypesAsTypeEntities(apiClassEntities);
             MarkApiClassEntitiesTypeUsage(apiClassEntities);
@@ -58,7 +58,7 @@ namespace WebExtensions.Net.Generator
 
         private IEnumerable<NamespaceEntity> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
-            var apiNamespaceDefinitions = new HashSet<NamespaceEntity>();
+            var apiNamespaceEntities = new HashSet<NamespaceEntity>();
 
             foreach (var namespaceDefinition in namespaceDefinitions)
             {
@@ -73,11 +73,16 @@ namespace WebExtensions.Net.Generator
 
                 if (ShouldRegisterNamespaceApi(clonedNamespaceDefinition))
                 {
-                    apiNamespaceDefinitions.Add(namespaceEntity);
+                    apiNamespaceEntities.Add(namespaceEntity);
+                    while (namespaceEntity.Parent is not null)
+                    {
+                        namespaceEntity = namespaceEntity.Parent;
+                        apiNamespaceEntities.Add(namespaceEntity);
+                    }
                 }
             }
 
-            return apiNamespaceDefinitions;
+            return apiNamespaceEntities;
         }
 
         private static bool ShouldRegisterNamespaceApi(NamespaceDefinition namespaceDefinition)
@@ -85,9 +90,34 @@ namespace WebExtensions.Net.Generator
             return !(namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null);
         }
 
-        private IEnumerable<ClassEntity> RegisterNamespaceDefinitionsAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
+        private IEnumerable<ClassEntity> RegisterNamespaceEntitiesAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
         {
-            return namespaceEntities.Select(namespaceEntity => classEntityRegistrar.RegisterNamespaceApi(namespaceEntity.NamespaceDefinitions, namespaceEntity))
+            var nestedNamespaceEntities = namespaceEntities
+                .Where(namespaceEntity => namespaceEntity.Parent is not null)
+                .ToArray();
+            return namespaceEntities
+                .Except(nestedNamespaceEntities)
+                .SelectMany(namespaceEntity =>
+                {
+                    var classEntity = classEntityRegistrar.RegisterNamespaceApi(namespaceEntity.NamespaceDefinitions, namespaceEntity);
+                    var nestedClassEntities = RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(classEntity, nestedNamespaceEntities);
+                    return new[] { classEntity }.Concat(nestedClassEntities);
+                })
+                .ToArray();
+        }
+
+        private IEnumerable<ClassEntity> RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(ClassEntity classEntity, IEnumerable<NamespaceEntity> namespaceEntities)
+        {
+            var nestedNamespaceEntities = namespaceEntities
+                .Where(namespaceEntity => namespaceEntity.Parent == classEntity.NamespaceEntity)
+                .ToArray();
+            return nestedNamespaceEntities
+                .Select(nestedNamespaceEntity =>
+                {
+                    var nestedClassEntity = classEntityRegistrar.RegisterNamespaceApi(nestedNamespaceEntity.NamespaceDefinitions, nestedNamespaceEntity);
+                    classEntityRegistrar.RegisterNestedNamespaceApi(classEntity, nestedClassEntity);
+                    return nestedClassEntity;
+                })
                 .ToArray();
         }
 

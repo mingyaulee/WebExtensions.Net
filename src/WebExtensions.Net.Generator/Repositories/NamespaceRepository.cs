@@ -1,23 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebExtensions.Net.Generator.Helpers;
+using WebExtensions.Net.Generator.Extensions;
 using WebExtensions.Net.Generator.Models.Entities;
-using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.Repositories
 {
     public class NamespaceRepository : BaseRepository<NamespaceEntity>
     {
-        public NamespaceEntity RegisterNamespace(string @namespace, NamespaceDefinition namespaceDefinition)
+        public NamespaceEntity RegisterNamespace(NamespaceEntity? parentEntity, string @namespace)
         {
-            var entity = Entities.SingleOrDefault(e => e.Name.Equals(@namespace));
+            var fullName = parentEntity is null ? @namespace : parentEntity.GetNamespaceQualifiedId(@namespace);
+            var entity = Entities.SingleOrDefault(e => e.FullName.Equals(fullName));
             if (entity is null)
             {
-                entity = new NamespaceEntity(@namespace);
+                entity = new NamespaceEntity(parentEntity, @namespace, fullName);
                 Entities.Add(entity);
             }
-            entity.NamespaceDefinitions.Add(namespaceDefinition);
-            entity.OriginalNamespaceDefinitions.Add(SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition));
             return entity;
         }
 

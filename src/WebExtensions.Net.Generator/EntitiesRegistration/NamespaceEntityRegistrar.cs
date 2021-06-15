@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
+using WebExtensions.Net.Generator.Helpers;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
 using WebExtensions.Net.Generator.Repositories;
@@ -34,7 +36,23 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 logger.LogInformation($"Namespace is null for namespace definition in source '{namespaceDefinition.Source?.HttpUrl}'");
                 return null;
             }
-            return entitiesContext.Namespaces.RegisterNamespace(namespaceDefinition.Namespace, namespaceDefinition);
+
+            NamespaceEntity? parentEntity = null;
+            var @namespace = namespaceDefinition.Namespace;
+            if (@namespace.Contains("."))
+            {
+                var parentNamespaces = @namespace.Split('.');
+                @namespace = parentNamespaces.Last();
+                foreach (var parentNamespace in parentNamespaces.SkipLast(1))
+                {
+                    parentEntity = entitiesContext.Namespaces.RegisterNamespace(parentEntity, parentNamespace);
+                }
+            }
+
+            var entity = entitiesContext.Namespaces.RegisterNamespace(parentEntity, @namespace);
+            entity.NamespaceDefinitions.Add(namespaceDefinition);
+            entity.OriginalNamespaceDefinitions.Add(SerializationHelper.DeserializeTo<NamespaceDefinition>(namespaceDefinition));
+            return entity;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 
         public BaseClassEntityRegistrar? GetClassEntityRegistrar(TypeDefinition typeDefinition)
         {
-            if (typeDefinition.Type == ObjectType.Object)
+            if (typeDefinition.Type == ObjectType.Object || typeDefinition.Type == ObjectType.ApiObject)
             {
                 return typeClassEntityRegistrar;
             }

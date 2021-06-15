@@ -223,11 +223,12 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             if (typeReference.Ref is not null)
             {
-                if (typeReference.Ref.Contains("."))
+                if (typeReference.Ref.Contains(".") || string.IsNullOrEmpty(namespaceEntity.FullFormattedName))
                 {
-                    return $"{Constants.RelativeNamespaceToken}.{typeReference.Ref.ToCapitalCase()}";
+                    var capitalizedRef = string.Join('.', typeReference.Ref.Split('.').Select(x => x.ToCapitalCase()));
+                    return $"{Constants.RelativeNamespaceToken}.{capitalizedRef}";
                 }
-                return $"{Constants.RelativeNamespaceToken}.{namespaceEntity.FormattedName}.{typeReference.Ref.ToCapitalCase()}";
+                return $"{Constants.RelativeNamespaceToken}.{namespaceEntity.FullFormattedName}.{typeReference.Ref.ToCapitalCase()}";
             }
 
             return typeReference.Type switch

@@ -72,10 +72,10 @@ namespace WebExtensions.Net.Generator
             };
             foreach (var namespaceEntity in namespaceEntities)
             {
-                var directoryPath = Path.Combine(options.RootDirectory, namespaceEntity.FormattedName);
+                var directoryPath = Path.Combine(options.RootDirectory, NormalizePath(namespaceEntity.FullFormattedName));
                 if (Directory.Exists(directoryPath))
                 {
-                    var filePath = Path.Combine(directoryPath, $"{namespaceEntity.FormattedName}.json");
+                    var filePath = Path.Combine(directoryPath, $"{namespaceEntity.FullFormattedName}.json");
                     File.WriteAllText(filePath, JsonSerializer.Serialize(namespaceEntity.OriginalNamespaceDefinitions, jsonSerializerOptions));
                 }
             }
@@ -127,7 +127,7 @@ namespace WebExtensions.Net.Generator
 
         private void WriteCodeFile(CodeFileConverter codeFileConverter)
         {
-            var directoryPath = Path.Combine(options.RootDirectory, codeFileConverter.CodeFile.RelativeNamespace);
+            var directoryPath = Path.Combine(options.RootDirectory, NormalizePath(codeFileConverter.CodeFile.RelativeNamespace));
             var filePath = Path.Combine(directoryPath, $"{codeFileConverter.CodeFile.FileName}.cs");
 
             CreateDirectoryIfNotExist(directoryPath);
@@ -144,6 +144,11 @@ namespace WebExtensions.Net.Generator
                 logger.LogInformation($"Creating directory {directory}");
                 Directory.CreateDirectory(directory);
             }
+        }
+
+        private static string NormalizePath(string path)
+        {
+            return path.Replace('.', Path.DirectorySeparatorChar);
         }
     }
 }

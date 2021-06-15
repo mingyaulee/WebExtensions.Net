@@ -19,21 +19,15 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
         public bool ShouldProcess(NamespaceEntity namespaceEntity)
         {
-            if (registrationOptions.ExcludeNamespaces is not null && registrationOptions.ExcludeNamespaces.Contains(namespaceEntity.Name))
+            if (registrationOptions.ExcludeNamespaces is not null && registrationOptions.ExcludeNamespaces.Contains(namespaceEntity.FullName))
             {
-                logger.LogWarning($"Skipped namespace '{namespaceEntity.Name}'.");
+                logger.LogWarning($"Skipped namespace '{namespaceEntity.FullName}'.");
                 return false;
             }
 
-            if (registrationOptions.IncludeNamespaces is not null && !registrationOptions.IncludeNamespaces.Contains(namespaceEntity.Name))
+            if (registrationOptions.IncludeNamespaces is not null && !registrationOptions.IncludeNamespaces.Contains(namespaceEntity.FullName))
             {
-                logger.LogError($"Namespace '{namespaceEntity.Name}' is not recognized.");
-                return false;
-            }
-
-            if (namespaceEntity.Name.Contains("."))
-            {
-                logger.LogWarning($"Nested namespace '{namespaceEntity.Name}' is not supported yet.");
+                logger.LogError($"Namespace '{namespaceEntity.FullName}' is not recognized.");
                 return false;
             }
 

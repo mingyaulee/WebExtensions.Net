@@ -68,34 +68,25 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return apiClassEntityRegistrar.RegisterClass(typeEntity);
         }
 
+        public void RegisterNestedNamespaceApi(ClassEntity classEntity, ClassEntity nestedClassEntity)
+        {
+            var propertyDefinition = GetPropertyDefinition(nestedClassEntity);
+            classEntity.Properties.Add(nestedClassEntity.NamespaceEntity.Name, propertyDefinition);
+        }
+
         public void RegisterRootApi(IEnumerable<ClassEntity> classEntities)
         {
-            var namespaceEntity = new NamespaceEntity(string.Empty);
+            var namespaceEntity = new NamespaceEntity(null, string.Empty, string.Empty);
             var typeDefinition = new TypeDefinition()
             {
                 Description = registrationOptions.RootApiClassDescription,
-                ObjectProperties = classEntities.Select(classEntity =>
-                {
-                    var description = string.Join(" ", classEntity.NamespaceEntity.NamespaceDefinitions
-                        .Select(namespaceDefinition => namespaceDefinition.Description)
-                        .Where(namespaceDescription => !string.IsNullOrEmpty(namespaceDescription)));
-                    var permissions = string.Join(", ", classEntity.NamespaceEntity.NamespaceDefinitions
-                        .SelectMany(namespaceDefinition => namespaceDefinition.Permissions ?? Enumerable.Empty<string>())
-                        .Where(permission => !string.IsNullOrEmpty(permission)));
-                    if (!string.IsNullOrEmpty(permissions))
+                ObjectProperties = classEntities
+                    .Where(classEntity => classEntity.NamespaceEntity.Parent is null)
+                    .Select(classEntity =>
                     {
-                        description += $"<br>Requires manifest permission {permissions}.";
-                    }
-
-                    var propertyDefinition = new PropertyDefinition()
-                    {
-                        Description = description,
-                        Type = ObjectType.Object,
-                        Ref = classEntity.NamespaceQualifiedId
-                    };
-
-                    return KeyValuePair.Create(classEntity.NamespaceEntity.Name, propertyDefinition);
-                }).ToDictionary(p => p.Key, p => p.Value)
+                        var propertyDefinition = GetPropertyDefinition(classEntity);
+                        return KeyValuePair.Create(classEntity.NamespaceEntity.Name, propertyDefinition);
+                    }).ToDictionary(p => p.Key, p => p.Value)
             };
             var typeEntity = new TypeEntity(registrationOptions.RootApiClassName, registrationOptions.RootApiClassName, namespaceEntity, typeDefinition);
             rootApiClassEntityRegistrar.RegisterClass(typeEntity);
@@ -110,6 +101,27 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
 
             registrar.RegisterClass(typeEntity);
+        }
+
+        private static PropertyDefinition GetPropertyDefinition(ClassEntity classEntity)
+        {
+            var description = string.Join(" ", classEntity.NamespaceEntity.NamespaceDefinitions
+                .Select(namespaceDefinition => namespaceDefinition.Description)
+                .Where(namespaceDescription => !string.IsNullOrEmpty(namespaceDescription)));
+            var permissions = string.Join(", ", classEntity.NamespaceEntity.NamespaceDefinitions
+                .SelectMany(namespaceDefinition => namespaceDefinition.Permissions ?? Enumerable.Empty<string>())
+                .Where(permission => !string.IsNullOrEmpty(permission)));
+            if (!string.IsNullOrEmpty(permissions))
+            {
+                description += $"<br>Requires manifest permission {permissions}.";
+            }
+
+            return new PropertyDefinition()
+            {
+                Description = description,
+                Type = ObjectType.ApiObject,
+                Ref = classEntity.NamespaceQualifiedId
+            };
         }
     }
 }

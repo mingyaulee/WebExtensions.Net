@@ -6,11 +6,11 @@ namespace WebExtensions.Net.Generator.Extensions
     {
         public static string GetNamespaceQualifiedId(this NamespaceEntity namespaceEntity, string id)
         {
-            if (string.IsNullOrEmpty(namespaceEntity.Name) || id.Contains("."))
+            if (string.IsNullOrEmpty(namespaceEntity.FullName) || id.Contains("."))
             {
                 return id;
             }
-            return $"{namespaceEntity.Name}.{id}";
+            return $"{namespaceEntity.FullName}.{id}";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using WebExtensions.Net.Generator.Models.ClrTypes;
+﻿using WebExtensions.Net.Generator.Models;
+using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
@@ -13,10 +14,18 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
-                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                .WriteLine($"{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
+            if (clrPropertyInfo.PropertyType.Metadata.TryGetValue(Constants.TypeMetadata.ClassType, out var classType) && (ClassType)classType == ClassType.ApiClass)
+            {
+                new ApiClassInterfaceApiPropertyCodeConverter(clrPropertyInfo)
+                    .WriteTo(codeWriter, options);
+            }
+            else
+            {
+                codeWriter.PublicProperties
+                    .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+                    .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                    .WriteLine($"{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
+            }
         }
     }
 }

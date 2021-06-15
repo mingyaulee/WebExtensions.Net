@@ -34,7 +34,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 return;
             }
 
-            if (typeReference.Ref is not null)
+            if (typeReference.Ref is not null && typeReference.Type != ObjectType.ApiObject)
             {
                 var typeEntity = typeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
                 if (typeEntity.IsReferenced)
