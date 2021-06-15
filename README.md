@@ -141,8 +141,8 @@ MockResolvers.Configure(configure =>
 
 ## Limitations
 
-- The browser extension API namespaces that are enabled at the moment is 32 out of a total of 60.
-- For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value.
+- The browser extension API namespaces that are enabled at the moment is 44 out of a total of 60.
+- For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value. Affected functions: 1 (Devtools.InspectedWindow.Eval)
 - ~~Parameter callback is not supported.~~ __Since v0.4.*__
 - ~~Event listener is not supported.~~ __Since v0.4.*__
 - ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__
@@ -151,7 +151,7 @@ MockResolvers.Configure(configure =>
 
 The following MSBuild properties can be specified in your project file or when running `dotnet build` command.
 
-| Property                  | Default value | Description                                                               |
-| ------------------------- | ------------- | ------------------------------------------------------------------------- |
+| Property                   | Default value | Description                                                               |
+| -------------------------- | ------------- | ------------------------------------------------------------------------- |
 | WebExtensionsAssetsPath    | wwwroot       | The root folder where the JavaScript file should be added as link.        |
 | IncludeWebExtensionsAssets | true          | If set to false, the JavaScript file will not be added as to the project. |

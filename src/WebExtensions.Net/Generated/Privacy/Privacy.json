@@ -1,0 +1,8 @@
+[
+  {
+    "namespace": "privacy",
+    "permissions": [
+      "privacy"
+    ]
+  }
+]

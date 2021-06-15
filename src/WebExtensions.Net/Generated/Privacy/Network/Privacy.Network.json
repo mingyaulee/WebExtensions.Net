@@ -1,0 +1,86 @@
+[
+  {
+    "namespace": "privacy.network",
+    "description": "Use the \u003Ccode\u003Ebrowser.privacy\u003C/code\u003E API to control usage of the features in the browser that can affect a user\u0027s privacy.",
+    "permissions": [
+      "privacy"
+    ],
+    "types": [
+      {
+        "id": "IPHandlingPolicy",
+        "description": "The IP handling policy of WebRTC.",
+        "type": "string",
+        "enum": [
+          "default",
+          "default_public_and_private_interfaces",
+          "default_public_interface_only",
+          "disable_non_proxied_udp",
+          "proxy_only"
+        ]
+      },
+      {
+        "id": "tlsVersionRestrictionConfig",
+        "description": "An object which describes TLS minimum and maximum versions.",
+        "type": "object",
+        "properties": {
+          "minimum": {
+            "description": "The minimum TLS version supported.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "TLSv1",
+              "TLSv1.1",
+              "TLSv1.2",
+              "TLSv1.3",
+              "unknown"
+            ]
+          },
+          "maximum": {
+            "description": "The maximum TLS version supported.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "TLSv1",
+              "TLSv1.1",
+              "TLSv1.2",
+              "TLSv1.3",
+              "unknown"
+            ]
+          }
+        }
+      },
+      {
+        "id": "HTTPSOnlyModeOption",
+        "description": "The mode for https-only mode.",
+        "type": "string",
+        "enum": [
+          "always",
+          "private_browsing",
+          "never"
+        ]
+      }
+    ],
+    "properties": {
+      "networkPredictionEnabled": {
+        "description": "If enabled, the browser attempts to speed up your web browsing experience by pre-resolving DNS entries, prerendering sites (\u003Ccode\u003E\u0026lt;link rel=\u0027prefetch\u0027 ...\u0026gt;\u003C/code\u003E), and preemptively opening TCP and SSL connections to servers.  This preference\u0027s value is a boolean, defaulting to \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "peerConnectionEnabled": {
+        "description": "Allow users to enable and disable RTCPeerConnections (aka WebRTC).",
+        "$ref": "types.Setting"
+      },
+      "webRTCIPHandlingPolicy": {
+        "description": "Allow users to specify the media performance/privacy tradeoffs which impacts how WebRTC traffic will be routed and how much local address information is exposed. This preference\u0027s value is of type IPHandlingPolicy, defaulting to \u003Ccode\u003Edefault\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "tlsVersionRestriction": {
+        "description": "This property controls the minimum and maximum TLS versions. This setting\u0027s value is an object of $(ref:tlsVersionRestrictionConfig).",
+        "$ref": "types.Setting"
+      },
+      "httpsOnlyMode": {
+        "description": "Allow users to query the mode for \u0027HTTPS-Only Mode\u0027. This setting\u0027s value is of type HTTPSOnlyModeOption, defaulting to \u003Ccode\u003Enever\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      }
+    }
+  }
+]

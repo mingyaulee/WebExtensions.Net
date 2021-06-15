@@ -1,0 +1,82 @@
+[
+  {
+    "namespace": "privacy.websites",
+    "description": "Use the \u003Ccode\u003Ebrowser.privacy\u003C/code\u003E API to control usage of the features in the browser that can affect a user\u0027s privacy.",
+    "permissions": [
+      "privacy"
+    ],
+    "types": [
+      {
+        "id": "TrackingProtectionModeOption",
+        "description": "The mode for tracking protection.",
+        "type": "string",
+        "enum": [
+          "always",
+          "never",
+          "private_browsing"
+        ]
+      },
+      {
+        "id": "CookieConfig",
+        "description": "The settings for cookies.",
+        "type": "object",
+        "properties": {
+          "behavior": {
+            "description": "The type of cookies to allow.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "allow_all",
+              "reject_all",
+              "reject_third_party",
+              "allow_visited",
+              "reject_trackers",
+              "reject_trackers_and_partition_foreign"
+            ]
+          },
+          "nonPersistentCookies": {
+            "description": "Whether to create all cookies as nonPersistent (i.e., session) cookies.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      }
+    ],
+    "properties": {
+      "thirdPartyCookiesAllowed": {
+        "description": "If disabled, the browser blocks third-party sites from setting cookies. The value of this preference is of type boolean, and the default value is \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting",
+        "unsupported": true
+      },
+      "hyperlinkAuditingEnabled": {
+        "description": "If enabled, the browser sends auditing pings when requested by a website (\u003Ccode\u003E\u0026lt;a ping\u0026gt;\u003C/code\u003E). The value of this preference is of type boolean, and the default value is \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "referrersEnabled": {
+        "description": "If enabled, the browser sends \u003Ccode\u003Ereferer\u003C/code\u003E headers with your requests. Yes, the name of this preference doesn\u0027t match the misspelled header. No, we\u0027re not going to change it. The value of this preference is of type boolean, and the default value is \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "resistFingerprinting": {
+        "description": "If enabled, the browser attempts to appear similar to other users by reporting generic information to websites. This can prevent websites from uniquely identifying users. Examples of data that is spoofed include number of CPU cores, precision of JavaScript timers, the local timezone, and disabling features such as GamePad support, and the WebSpeech and Navigator APIs. The value of this preference is of type boolean, and the default value is \u003Ccode\u003Efalse\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "firstPartyIsolate": {
+        "description": "If enabled, the browser will associate all data (including cookies, HSTS data, cached images, and more) for any third party domains with the domain in the address bar. This prevents third party trackers from using directly stored information to identify you across different websites, but may break websites where you login with a third party account (such as a Facebook or Google login.) The value of this preference is of type boolean, and the default value is \u003Ccode\u003Efalse\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "protectedContentEnabled": {
+        "description": "\u003Cstrong\u003EAvailable on Windows and ChromeOS only\u003C/strong\u003E: If enabled, the browser provides a unique ID to plugins in order to run protected content. The value of this preference is of type boolean, and the default value is \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting",
+        "unsupported": true
+      },
+      "trackingProtectionMode": {
+        "description": "Allow users to specify the mode for tracking protection. This setting\u0027s value is of type TrackingProtectionModeOption, defaulting to \u003Ccode\u003Eprivate_browsing_only\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      },
+      "cookieConfig": {
+        "description": "Allow users to specify the default settings for allowing cookies, as well as whether all cookies should be created as non-persistent cookies. This setting\u0027s value is of type CookieConfig.",
+        "$ref": "types.Setting"
+      }
+    }
+  }
+]

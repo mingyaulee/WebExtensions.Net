@@ -1,0 +1,266 @@
+[
+  {
+    "namespace": "devtools.inspectedWindow",
+    "description": "Use the \u003Ccode\u003Echrome.devtools.inspectedWindow\u003C/code\u003E API to interact with the inspected window: obtain the tab ID for the inspected page, evaluate the code in the context of the inspected window, reload the page, or obtain the list of resources within the page.",
+    "types": [
+      {
+        "id": "Resource",
+        "description": "A resource within the inspected page, such as a document, a script, or an image.",
+        "type": "object",
+        "properties": {
+          "url": {
+            "description": "The URL of the resource.",
+            "type": "string"
+          }
+        },
+        "functions": [
+          {
+            "name": "getContent",
+            "description": "Gets the content of the resource.",
+            "async": "callback",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "callback",
+                "description": "A function that receives resource content when the request completes.",
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "content",
+                    "description": "Content of the resource (potentially encoded).",
+                    "type": "string"
+                  },
+                  {
+                    "name": "encoding",
+                    "description": "Empty if content is not encoded, encoding name otherwise. Currently, only base64 is supported.",
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "setContent",
+            "description": "Sets the content of the resource.",
+            "async": "callback",
+            "type": "function",
+            "unsupported": true,
+            "parameters": [
+              {
+                "name": "content",
+                "description": "New content of the resource. Only resources with the text type are currently supported.",
+                "type": "string"
+              },
+              {
+                "name": "commit",
+                "description": "True if the user has finished editing the resource, and the new content of the resource should be persisted; false if this is a minor change sent in progress of the user editing the resource.",
+                "type": "boolean"
+              },
+              {
+                "name": "callback",
+                "description": "A function called upon request completion.",
+                "optional": true,
+                "type": "function",
+                "parameters": [
+                  {
+                    "name": "error",
+                    "description": "Set to undefined if the resource content was set successfully; describes error otherwise.",
+                    "optional": true,
+                    "type": "object"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "properties": {
+      "tabId": {
+        "description": "The ID of the tab being inspected. This ID may be used with chrome.tabs.* API.",
+        "type": "integer"
+      }
+    },
+    "functions": [
+      {
+        "name": "eval",
+        "description": "Evaluates a JavaScript expression in the context of the main frame of the inspected page. The expression must evaluate to a JSON-compliant object, otherwise an exception is thrown. The eval function can report either a DevTools-side error or a JavaScript exception that occurs during evaluation. In either case, the \u003Ccode\u003Eresult\u003C/code\u003E parameter of the callback is \u003Ccode\u003Eundefined\u003C/code\u003E. In the case of a DevTools-side error, the \u003Ccode\u003EisException\u003C/code\u003E parameter is non-null and has \u003Ccode\u003EisError\u003C/code\u003E set to true and \u003Ccode\u003Ecode\u003C/code\u003E set to an error code. In the case of a JavaScript error, \u003Ccode\u003EisException\u003C/code\u003E is set to true and \u003Ccode\u003Evalue\u003C/code\u003E is set to the string value of thrown object.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "expression",
+            "description": "An expression to evaluate.",
+            "type": "string"
+          },
+          {
+            "name": "options",
+            "description": "The options parameter can contain one or more options.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "frameURL": {
+                "description": "If specified, the expression is evaluated on the iframe whose URL matches the one specified. By default, the expression is evaluated in the top frame of the inspected page.",
+                "optional": true,
+                "type": "string",
+                "unsupported": true
+              },
+              "useContentScriptContext": {
+                "description": "Evaluate the expression in the context of the content script of the calling extension, provided that the content script is already injected into the inspected page. If not, the expression is not evaluated and the callback is invoked with the exception parameter set to an object that has the \u003Ccode\u003EisError\u003C/code\u003E field set to true and the \u003Ccode\u003Ecode\u003C/code\u003E field set to \u003Ccode\u003EE_NOTFOUND\u003C/code\u003E.",
+                "optional": true,
+                "type": "boolean",
+                "unsupported": true
+              },
+              "contextSecurityOrigin": {
+                "description": "Evaluate the expression in the context of a content script of an extension that matches the specified origin. If given, contextSecurityOrigin overrides the \u0027true\u0027 setting on userContentScriptContext.",
+                "optional": true,
+                "type": "string",
+                "unsupported": true
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "description": "A function called when evaluation completes.",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "description": "The result of evaluation.",
+                "type": "any"
+              },
+              {
+                "name": "exceptionInfo",
+                "description": "An object providing details if an exception occurred while evaluating the expression.",
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "isError": {
+                    "description": "Set if the error occurred on the DevTools side before the expression is evaluated.",
+                    "type": "boolean"
+                  },
+                  "code": {
+                    "description": "Set if the error occurred on the DevTools side before the expression is evaluated.",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Set if the error occurred on the DevTools side before the expression is evaluated.",
+                    "type": "string"
+                  },
+                  "details": {
+                    "description": "Set if the error occurred on the DevTools side before the expression is evaluated, contains the array of the values that may be substituted into the description string to provide more information about the cause of the error.",
+                    "type": "array",
+                    "items": {
+                      "type": "any"
+                    }
+                  },
+                  "isException": {
+                    "description": "Set if the evaluated code produces an unhandled exception.",
+                    "type": "boolean"
+                  },
+                  "value": {
+                    "description": "Set if the evaluated code produces an unhandled exception.",
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "reload",
+        "description": "Reloads the inspected page.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "reloadOptions",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "ignoreCache": {
+                "description": "When true, the loader will bypass the cache for all inspected page resources loaded before the \u003Ccode\u003Eload\u003C/code\u003E event is fired. The effect is similar to pressing Ctrl\u002BShift\u002BR in the inspected window or within the Developer Tools window.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "userAgent": {
+                "description": "If specified, the string will override the value of the \u003Ccode\u003EUser-Agent\u003C/code\u003E HTTP header that\u0027s sent while loading the resources of the inspected page. The string will also override the value of the \u003Ccode\u003Enavigator.userAgent\u003C/code\u003E property that\u0027s returned to any scripts that are running within the inspected page.",
+                "optional": true,
+                "type": "string"
+              },
+              "injectedScript": {
+                "description": "If specified, the script will be injected into every frame of the inspected page immediately upon load, before any of the frame\u0027s scripts. The script will not be injected after subsequent reloads\u0026mdash;for example, if the user presses Ctrl\u002BR.",
+                "optional": true,
+                "type": "string"
+              },
+              "preprocessorScript": {
+                "description": "If specified, this script evaluates into a function that accepts three string arguments: the source to preprocess, the URL of the source, and a function name if the source is an DOM event handler. The preprocessorerScript function should return a string to be compiled by Chrome in place of the input source. In the case that the source is a DOM event handler, the returned source must compile to a single JS function.",
+                "optional": true,
+                "type": "string",
+                "unsupported": true,
+                "deprecated": "Please avoid using this parameter, it will be removed soon."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "getResources",
+        "description": "Retrieves the list of resources from the inspected page.",
+        "async": "callback",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "callback",
+            "description": "A function that receives the list of resources when the request completes.",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "resources",
+                "description": "The resources within the page.",
+                "type": "array",
+                "items": {
+                  "$ref": "Resource"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onResourceAdded",
+        "description": "Fired when a new resource is added to the inspected page.",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "resource",
+            "$ref": "Resource"
+          }
+        ]
+      },
+      {
+        "name": "onResourceContentCommitted",
+        "description": "Fired when a new revision of the resource is committed (e.g. user saves an edited version of the resource in the Developer Tools).",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "resource",
+            "$ref": "Resource"
+          },
+          {
+            "name": "content",
+            "description": "New content of the resource.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+[
+  {
+    "namespace": "clipboard",
+    "description": "Offers the ability to write to the clipboard. Reading is not supported because the clipboard can already be read through the standard web platform APIs.",
+    "permissions": [
+      "clipboardWrite"
+    ],
+    "functions": [
+      {
+        "name": "setImageData",
+        "description": "Copy an image to the clipboard. The image is re-encoded before it is written to the clipboard. If the image is invalid, the clipboard is not modified.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "imageData",
+            "description": "The image data to be copied.",
+            "type": "object"
+          },
+          {
+            "name": "imageType",
+            "description": "The type of imageData.",
+            "type": "string",
+            "enum": [
+              "jpeg",
+              "png"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

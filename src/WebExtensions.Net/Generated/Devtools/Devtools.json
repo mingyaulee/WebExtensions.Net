@@ -1,0 +1,8 @@
+[
+  {
+    "namespace": "devtools",
+    "permissions": [
+      "manifest:devtools_page"
+    ]
+  }
+]

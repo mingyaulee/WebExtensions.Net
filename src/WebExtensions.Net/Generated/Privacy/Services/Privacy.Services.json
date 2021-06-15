@@ -1,0 +1,15 @@
+[
+  {
+    "namespace": "privacy.services",
+    "description": "Use the \u003Ccode\u003Ebrowser.privacy\u003C/code\u003E API to control usage of the features in the browser that can affect a user\u0027s privacy.",
+    "permissions": [
+      "privacy"
+    ],
+    "properties": {
+      "passwordSavingEnabled": {
+        "description": "If enabled, the password manager will ask if you want to save passwords. This preference\u0027s value is a boolean, defaulting to \u003Ccode\u003Etrue\u003C/code\u003E.",
+        "$ref": "types.Setting"
+      }
+    }
+  }
+]

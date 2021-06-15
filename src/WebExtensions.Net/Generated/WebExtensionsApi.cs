@@ -1,9 +1,13 @@
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
+using WebExtensions.Net.BrowserSettings;
 using WebExtensions.Net.BrowsingData;
+using WebExtensions.Net.Clipboard;
+using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
 using WebExtensions.Net.Cookies;
+using WebExtensions.Net.Devtools;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
 using WebExtensions.Net.History;
@@ -11,10 +15,12 @@ using WebExtensions.Net.I18n;
 using WebExtensions.Net.Identity;
 using WebExtensions.Net.Idle;
 using WebExtensions.Net.Management;
+using WebExtensions.Net.Menus;
 using WebExtensions.Net.Notifications;
 using WebExtensions.Net.Omnibox;
 using WebExtensions.Net.PageAction;
 using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
 using WebExtensions.Net.Search;
@@ -35,9 +41,13 @@ namespace WebExtensions.Net
         private IAlarmsApi _alarms;
         private IBookmarksApi _bookmarks;
         private IBrowserActionApi _browserAction;
+        private IBrowserSettingsApi _browserSettings;
         private IBrowsingDataApi _browsingData;
+        private IClipboardApi _clipboard;
+        private ICommandsApi _commands;
         private IContentScriptsApi _contentScripts;
         private ICookiesApi _cookies;
+        private IDevtoolsApi _devtools;
         private IDownloadsApi _downloads;
         private IExtensionApi _extension;
         private IHistoryApi _history;
@@ -45,10 +55,12 @@ namespace WebExtensions.Net
         private IIdentityApi _identity;
         private IIdleApi _idle;
         private IManagementApi _management;
+        private IMenusApi _menus;
         private INotificationsApi _notifications;
         private IOmniboxApi _omnibox;
         private IPageActionApi _pageAction;
         private IPermissionsApi _permissions;
+        private IPrivacyApi _privacy;
         private IProxyApi _proxy;
         private IRuntimeApi _runtime;
         private ISearchApi _search;
@@ -106,6 +118,19 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
+        public IBrowserSettingsApi BrowserSettings
+        {
+            get
+            {
+                if (_browserSettings is null)
+                {
+                    _browserSettings = new BrowserSettingsApi(webExtensionsJSRuntime);
+                }
+                return _browserSettings;
+            }
+        }
+
+        /// <inheritdoc />
         public IBrowsingDataApi BrowsingData
         {
             get
@@ -115,6 +140,32 @@ namespace WebExtensions.Net
                     _browsingData = new BrowsingDataApi(webExtensionsJSRuntime);
                 }
                 return _browsingData;
+            }
+        }
+
+        /// <inheritdoc />
+        public IClipboardApi Clipboard
+        {
+            get
+            {
+                if (_clipboard is null)
+                {
+                    _clipboard = new ClipboardApi(webExtensionsJSRuntime);
+                }
+                return _clipboard;
+            }
+        }
+
+        /// <inheritdoc />
+        public ICommandsApi Commands
+        {
+            get
+            {
+                if (_commands is null)
+                {
+                    _commands = new CommandsApi(webExtensionsJSRuntime);
+                }
+                return _commands;
             }
         }
 
@@ -141,6 +192,19 @@ namespace WebExtensions.Net
                     _cookies = new CookiesApi(webExtensionsJSRuntime);
                 }
                 return _cookies;
+            }
+        }
+
+        /// <inheritdoc />
+        public IDevtoolsApi Devtools
+        {
+            get
+            {
+                if (_devtools is null)
+                {
+                    _devtools = new DevtoolsApi(webExtensionsJSRuntime);
+                }
+                return _devtools;
             }
         }
 
@@ -236,6 +300,19 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
+        public IMenusApi Menus
+        {
+            get
+            {
+                if (_menus is null)
+                {
+                    _menus = new MenusApi(webExtensionsJSRuntime);
+                }
+                return _menus;
+            }
+        }
+
+        /// <inheritdoc />
         public INotificationsApi Notifications
         {
             get
@@ -284,6 +361,19 @@ namespace WebExtensions.Net
                     _permissions = new PermissionsApi(webExtensionsJSRuntime);
                 }
                 return _permissions;
+            }
+        }
+
+        /// <inheritdoc />
+        public IPrivacyApi Privacy
+        {
+            get
+            {
+                if (_privacy is null)
+                {
+                    _privacy = new PrivacyApi(webExtensionsJSRuntime);
+                }
+                return _privacy;
             }
         }
 

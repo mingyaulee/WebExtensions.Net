@@ -1,9 +1,13 @@
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
+using WebExtensions.Net.BrowserSettings;
 using WebExtensions.Net.BrowsingData;
+using WebExtensions.Net.Clipboard;
+using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
 using WebExtensions.Net.Cookies;
+using WebExtensions.Net.Devtools;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
 using WebExtensions.Net.History;
@@ -11,10 +15,12 @@ using WebExtensions.Net.I18n;
 using WebExtensions.Net.Identity;
 using WebExtensions.Net.Idle;
 using WebExtensions.Net.Management;
+using WebExtensions.Net.Menus;
 using WebExtensions.Net.Notifications;
 using WebExtensions.Net.Omnibox;
 using WebExtensions.Net.PageAction;
 using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
 using WebExtensions.Net.Search;
@@ -40,14 +46,26 @@ namespace WebExtensions.Net
         /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:browser_action.</summary>
         IBrowserActionApi BrowserAction { get; }
 
+        /// <summary>Use the <c>browser.browserSettings</c> API to control global settings of the browser.<br />Requires manifest permission browserSettings.</summary>
+        IBrowserSettingsApi BrowserSettings { get; }
+
         /// <summary>Use the <c>chrome.browsingData</c> API to remove browsing data from a user's local profile.<br />Requires manifest permission browsingData.</summary>
         IBrowsingDataApi BrowsingData { get; }
+
+        /// <summary>Offers the ability to write to the clipboard. Reading is not supported because the clipboard can already be read through the standard web platform APIs.<br />Requires manifest permission clipboardWrite.</summary>
+        IClipboardApi Clipboard { get; }
+
+        /// <summary>Use the commands API to add keyboard shortcuts that trigger actions in your extension, for example, an action to open the browser action or send a command to the xtension.<br />Requires manifest permission manifest:commands.</summary>
+        ICommandsApi Commands { get; }
 
         /// <summary></summary>
         IContentScriptsApi ContentScripts { get; }
 
         /// <summary>Use the <c>browser.cookies</c> API to query and modify cookies, and to be notified when they change.<br />Requires manifest permission cookies.</summary>
         ICookiesApi Cookies { get; }
+
+        /// <summary><br />Requires manifest permission manifest:devtools_page.</summary>
+        IDevtoolsApi Devtools { get; }
 
         /// <summary><br />Requires manifest permission downloads.</summary>
         IDownloadsApi Downloads { get; }
@@ -70,6 +88,9 @@ namespace WebExtensions.Net
         /// <summary>The <c>browser.management</c> API provides ways to manage the list of extensions that are installed and running.</summary>
         IManagementApi Management { get; }
 
+        /// <summary>The part of the menus API that is available in all extension contexts, including content scripts. Use the browser.menus API to add items to the browser's menus. You can choose what types of objects your context menu additions apply to, such as images, hyperlinks, and pages.<br />Requires manifest permission menus, menus.</summary>
+        IMenusApi Menus { get; }
+
         /// <summary><br />Requires manifest permission notifications.</summary>
         INotificationsApi Notifications { get; }
 
@@ -81,6 +102,9 @@ namespace WebExtensions.Net
 
         /// <summary><br />Requires manifest permission manifest:optional_permissions.</summary>
         IPermissionsApi Permissions { get; }
+
+        /// <summary><br />Requires manifest permission privacy.</summary>
+        IPrivacyApi Privacy { get; }
 
         /// <summary>Provides access to global proxy settings for Firefox and proxy event listeners to handle dynamic proxy implementations.<br />Requires manifest permission proxy.</summary>
         IProxyApi Proxy { get; }
