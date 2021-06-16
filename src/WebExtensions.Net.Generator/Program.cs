@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +9,6 @@ using WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories;
 using WebExtensions.Net.Generator.EntitiesRegistration;
 using WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
 using WebExtensions.Net.Generator.Models;
-using WebExtensions.Net.Generator.Models.Schema;
 using WebExtensions.Net.Generator.NamespaceDefinitionsClients;
 using WebExtensions.Net.Generator.Repositories;
 
@@ -99,6 +97,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<AnonymousTypeProcessor>();
             services.AddTransient<AnonymousTypeRegistrar>();
             services.AddTransient<ClassEntityRegistrar>();
+            services.AddTransient<CombinedCallbackParameterClassEntityRegistrar>();
             services.AddTransient<EventDefinitionToPropertyDefinitionConverter>();
             services.AddTransient<NamespaceApiToTypeDefinitionConverter>();
             services.AddTransient<NamespaceEntityRegistrar>();
@@ -116,6 +115,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<ApiCodeConverterFactory>();
             services.AddTransient<ApiRootCodeConverterFactory>();
             services.AddTransient<ArrayCodeConverterFactory>();
+            services.AddTransient<CombinedCallbackParameterCodeConverterFactory>();
             services.AddTransient<EnumCodeConverterFactory>();
             services.AddTransient<MultitypeCodeConverterFactory>();
             services.AddTransient<StringFormatCodeConverterFactory>();

@@ -28,6 +28,8 @@ namespace WebExtensions.Net.Generator.Models.Schema
         [EnumValue("ApiObject")]
         ApiObject,
         [EnumValue("EventTypeObject")]
-        EventTypeObject
+        EventTypeObject,
+        [EnumValue("CombinedCallbackParameterObject")]
+        CombinedCallbackParameterObject
     }
 }

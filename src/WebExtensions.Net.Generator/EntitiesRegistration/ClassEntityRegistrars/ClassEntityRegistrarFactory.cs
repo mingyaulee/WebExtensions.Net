@@ -1,4 +1,6 @@
-﻿using WebExtensions.Net.Generator.Models.Schema;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
@@ -6,28 +8,23 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
     {
         private readonly TypeClassEntityRegistrar typeClassEntityRegistrar;
         private readonly EventTypeClassEntityRegistrar eventTypeClassEntityRegistrar;
+        private readonly CombinedCallbackParameterClassEntityRegistrar combinedCallbackParameterClassEntityRegistrar;
         private readonly EnumClassEntityRegistrar enumClassEntityRegistrar;
         private readonly StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar;
         private readonly ArrayClassEntityRegistrar arrayClassEntityRegistrar;
         private readonly MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar;
         private readonly EmptyClassEntityRegistrar emptyClassEntityRegistrar;
 
-        public ClassEntityRegistrarFactory(
-            TypeClassEntityRegistrar typeClassEntityRegistrar,
-            EventTypeClassEntityRegistrar eventTypeClassEntityRegistrar,
-            EnumClassEntityRegistrar enumClassEntityRegistrar,
-            StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar,
-            ArrayClassEntityRegistrar arrayClassEntityRegistrar,
-            MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar,
-            EmptyClassEntityRegistrar emptyClassEntityRegistrar)
+        public ClassEntityRegistrarFactory(IServiceProvider serviceProvider)
         {
-            this.typeClassEntityRegistrar = typeClassEntityRegistrar;
-            this.eventTypeClassEntityRegistrar = eventTypeClassEntityRegistrar;
-            this.enumClassEntityRegistrar = enumClassEntityRegistrar;
-            this.stringFormatClassEntityRegistrar = stringFormatClassEntityRegistrar;
-            this.arrayClassEntityRegistrar = arrayClassEntityRegistrar;
-            this.multiTypeClassEntityRegistrar = multiTypeClassEntityRegistrar;
-            this.emptyClassEntityRegistrar = emptyClassEntityRegistrar;
+            typeClassEntityRegistrar = serviceProvider.GetRequiredService<TypeClassEntityRegistrar>();
+            eventTypeClassEntityRegistrar = serviceProvider.GetRequiredService<EventTypeClassEntityRegistrar>();
+            combinedCallbackParameterClassEntityRegistrar = serviceProvider.GetRequiredService<CombinedCallbackParameterClassEntityRegistrar>();
+            enumClassEntityRegistrar = serviceProvider.GetRequiredService<EnumClassEntityRegistrar>();
+            stringFormatClassEntityRegistrar = serviceProvider.GetRequiredService<StringFormatClassEntityRegistrar>();
+            arrayClassEntityRegistrar = serviceProvider.GetRequiredService<ArrayClassEntityRegistrar>();
+            multiTypeClassEntityRegistrar = serviceProvider.GetRequiredService<MultiTypeClassEntityRegistrar>();
+            emptyClassEntityRegistrar = serviceProvider.GetRequiredService<EmptyClassEntityRegistrar>();
         }
 
         public BaseClassEntityRegistrar? GetClassEntityRegistrar(TypeDefinition typeDefinition)
@@ -39,6 +36,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             else if (typeDefinition.Type == ObjectType.EventTypeObject)
             {
                 return eventTypeClassEntityRegistrar;
+            }
+            else if (typeDefinition.Type == ObjectType.CombinedCallbackParameterObject)
+            {
+                return combinedCallbackParameterClassEntityRegistrar;
             }
             else if (typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null)
             {

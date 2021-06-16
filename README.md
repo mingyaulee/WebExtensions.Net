@@ -142,7 +142,7 @@ MockResolvers.Configure(configure =>
 ## Limitations
 
 - The browser extension API namespaces that are enabled at the moment is 44 out of a total of 60.
-- For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value. Affected functions: 1 (Devtools.InspectedWindow.Eval)
+- ~~For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value.~~ __Since v0.7.*__
 - ~~Parameter callback is not supported.~~ __Since v0.4.*__
 - ~~Event listener is not supported.~~ __Since v0.4.*__
 - ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.Extensions
@@ -31,6 +32,19 @@ namespace WebExtensions.Net.Generator.Extensions
             genericClrType.CSharpName += "?";
             genericClrType.IsNullable = true;
             return genericClrType;
+        }
+
+        public static ClrTypeInfo MakeJsonElement(this ClrTypeInfo clrTypeInfo)
+        {
+            var type = typeof(JsonElement);
+            var jsonElementClrType = (ClrTypeInfo)clrTypeInfo.Clone();
+            jsonElementClrType.CSharpName = type.Name;
+#pragma warning disable CS8601, CS8604 // Type should not have these properties as null
+            jsonElementClrType.Id = type.FullName;
+            jsonElementClrType.Namespace = type.Namespace;
+            jsonElementClrType.ReferenceNamespaces.Add(type.Namespace);
+#pragma warning restore CS8601, CS8604
+            return jsonElementClrType;
         }
 
         public static void AddReferenceNamespaces(this ClrTypeInfo clrTypeInfo, IEnumerable<string> referenceNamespaces)

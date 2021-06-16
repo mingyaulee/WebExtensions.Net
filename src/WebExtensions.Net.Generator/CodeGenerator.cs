@@ -20,6 +20,7 @@ namespace WebExtensions.Net.Generator
         private readonly ArrayCodeConverterFactory arrayCodeConverterFactory;
         private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory;
         private readonly EmptyCodeConverterFactory emptyCodeConverterFactory;
+        private readonly CombinedCallbackParameterCodeConverterFactory combinedCallbackParameterCodeConverterFactory;
 
         public CodeGenerator(IServiceProvider serviceProvider)
         {
@@ -31,6 +32,7 @@ namespace WebExtensions.Net.Generator
             arrayCodeConverterFactory = serviceProvider.GetRequiredService<ArrayCodeConverterFactory>();
             multitypeCodeConverterFactory = serviceProvider.GetRequiredService<MultitypeCodeConverterFactory>();
             emptyCodeConverterFactory = serviceProvider.GetRequiredService<EmptyCodeConverterFactory>();
+            combinedCallbackParameterCodeConverterFactory = serviceProvider.GetRequiredService<CombinedCallbackParameterCodeConverterFactory>();
         }
 
         public IEnumerable<CodeFileConverter> GetCodeFileConverters(IEnumerable<ClrTypeInfo> clrTypes)
@@ -107,6 +109,7 @@ namespace WebExtensions.Net.Generator
                 ClassType.ArrayClass => arrayCodeConverterFactory,
                 ClassType.MultitypeClass => multitypeCodeConverterFactory,
                 ClassType.EmptyClass => emptyCodeConverterFactory,
+                ClassType.CombinedCallbackParameterClass => combinedCallbackParameterCodeConverterFactory,
                 _ => throw new NotImplementedException()
             };
         }

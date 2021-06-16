@@ -13,6 +13,8 @@ namespace WebExtensions.Net.Generator.Models
         public string StringFormatClassBaseClassName { get; init; }
         public string ArrayClassBaseClassName { get; init; }
         public string MultiTypeClassBaseClassName { get; init; }
+        public string CombinedCallbackParameterClassBaseClassName { get; init; }
+        public IDictionary<string, string> CombineCallbackParameter { get; init; }
         public IEnumerable<string> IncludeNamespaces { get; init; }
         public IEnumerable<string> ExcludeNamespaces { get; init; }
         public string BaseEventTypeName { get; init; }

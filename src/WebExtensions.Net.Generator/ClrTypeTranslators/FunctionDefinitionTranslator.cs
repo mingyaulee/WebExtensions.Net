@@ -69,29 +69,37 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
         private static FunctionReturnDefinition? GetReturnDefinition(FunctionDefinition functionDefinition, List<ParameterDefinition> parameterDefinitions)
         {
-            var returnDefinition = functionDefinition.FunctionReturns;
-            if (returnDefinition is null && !string.IsNullOrEmpty(functionDefinition.Async))
+            if (functionDefinition.FunctionReturns is not null)
             {
-                var callbackParameter = parameterDefinitions.Find(parameter => functionDefinition.Async.Equals(parameter.Name) && parameter.Type == ObjectType.Function);
-                if (callbackParameter is not null)
-                {
-                    if (callbackParameter.FunctionParameters is null || !callbackParameter.FunctionParameters.Any())
-                    {
-                        parameterDefinitions.Remove(callbackParameter);
-                    }
-                    else if (callbackParameter.FunctionParameters.Count() == 1)
-                    {
-                        parameterDefinitions.Remove(callbackParameter);
-                        var callbackParameterType = callbackParameter.FunctionParameters.Single();
-                        returnDefinition = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(callbackParameterType);
-                    }
-                    else
-                    {
-                        // multiple callback result is not supported yet
-                    }
-                }
+                return functionDefinition.FunctionReturns;
             }
-            return returnDefinition;
+
+            if (string.IsNullOrEmpty(functionDefinition.Async))
+            {
+                return null;
+            }
+
+            var callbackParameter = parameterDefinitions.Find(parameter => functionDefinition.Async.Equals(parameter.Name) && parameter.Type == ObjectType.Function);
+            if (callbackParameter is null)
+            {
+                return null;
+            }
+            
+            if (callbackParameter.FunctionParameters is null || !callbackParameter.FunctionParameters.Any())
+            {
+                parameterDefinitions.Remove(callbackParameter);
+                return null;
+            }
+
+            if (callbackParameter.FunctionParameters.Count() > 1)
+            {
+                // do not handle callback with multiple parameters
+                return null;
+            }
+
+            parameterDefinitions.Remove(callbackParameter);
+            var callbackParameterType = callbackParameter.FunctionParameters.Single();
+            return SerializationHelper.DeserializeTo<FunctionReturnDefinition>(callbackParameterType);
         }
 
         private ClrTypeInfo? GetReturnType(FunctionReturnDefinition? returnDefinition, NamespaceEntity namespaceEntity)
@@ -104,14 +112,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             var returnClrType = clrTypeStore.GetClrType(returnDefinition, namespaceEntity);
             if (returnClrType.FullName == typeof(object).FullName)
             {
-                var type = typeof(JsonElement);
-                returnClrType = (ClrTypeInfo)returnClrType.Clone();
-                returnClrType.CSharpName = type.Name;
-#pragma warning disable CS8601, CS8604 // Type should not have these properties as null
-                returnClrType.Id = type.FullName;
-                returnClrType.Namespace = type.Namespace;
-                returnClrType.ReferenceNamespaces.Add(type.Namespace);
-#pragma warning restore CS8601, CS8604
+                returnClrType = returnClrType.MakeJsonElement();
             }
             return returnClrType;
         }

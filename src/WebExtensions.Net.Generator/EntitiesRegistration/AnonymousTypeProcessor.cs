@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebExtensions.Net.Generator.Extensions;
+using WebExtensions.Net.Generator.Helpers;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
@@ -120,6 +121,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
 
             TryHandleSingleTypeChoice(typeReference);
+            TryHandleCallbackParametersCombination(nameHierarchy, typeReference);
 
             if (typeReference.Ref is null && IsObjectType(typeReference) && ShouldRegisterObjectType(typeReference))
             {
@@ -149,8 +151,9 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         private static bool IsObjectType(TypeReference typeReference)
         {
             return typeReference.Type == ObjectType.Object ||
-                typeReference.Type == ObjectType.ApiObject||
+                typeReference.Type == ObjectType.ApiObject ||
                 typeReference.Type == ObjectType.EventTypeObject ||
+                typeReference.Type == ObjectType.CombinedCallbackParameterObject ||
                 typeReference.TypeChoices != null;
         }
 
@@ -203,6 +206,32 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 typeReference.Ref = typeChoice.Ref;
                 typeReference.StringFormat = typeChoice.StringFormat;
                 typeReference.StringPattern = typeChoice.StringPattern;
+            }
+        }
+
+        private void TryHandleCallbackParametersCombination(IEnumerable<string> nameHierarchy, TypeReference typeReference)
+        {
+            if (typeReference.FunctionParameters is null || registrationOptions.CombineCallbackParameter is null)
+            {
+                return;
+            }
+
+            var namePath = string.Join('.', nameHierarchy);
+            if (registrationOptions.CombineCallbackParameter.TryGetValue(namePath, out var name))
+            {
+                var parameters = typeReference.FunctionParameters;
+                typeReference.FunctionParameters = new[]
+                {
+                    new ParameterDefinition()
+                    {
+                        Name = name,
+                        Type = ObjectType.CombinedCallbackParameterObject,
+                        ObjectProperties = parameters.ToDictionary(
+                            parameter => parameter.Name ?? throw new InvalidOperationException("Function parameter should have a name."),
+                            parameter => SerializationHelper.DeserializeTo<PropertyDefinition>(parameter)),
+                        Deprecated = parameters.All(parameter => parameter.IsDeprecated) ? "True" : null
+                    }
+                };
             }
         }
 

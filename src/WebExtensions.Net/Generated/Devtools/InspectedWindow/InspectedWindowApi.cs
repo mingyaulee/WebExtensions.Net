@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Devtools.InspectedWindow
@@ -13,9 +12,9 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Eval(string expression, object options, Action<object, ExceptionInfo> callback)
+        public virtual ValueTask<EvalResult> Eval(string expression, object options)
         {
-            return InvokeVoidAsync("eval", expression, options, callback);
+            return InvokeAsync<EvalResult>("eval", expression, options);
         }
 
         /// <inheritdoc />

@@ -9,6 +9,7 @@
         StringFormatClass,
         ArrayClass,
         MultitypeClass,
-        EmptyClass
+        EmptyClass,
+        CombinedCallbackParameterClass
     }
 }
