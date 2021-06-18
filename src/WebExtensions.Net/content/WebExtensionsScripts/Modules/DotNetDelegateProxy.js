@@ -4,14 +4,14 @@
  * A DotNet delegate proxy to be invoked in JS.
  */
 export default class DotNetDelegateProxy {
-  #id;
+  _id;
 
   /**
    * Creates a new instance of the DotNetDelegateProxy class.
    * @param {string} id The delegate identifier.
    */
   constructor(id) {
-    this.#id = id;
+    this._id = id;
   }
 
   /**
@@ -28,7 +28,7 @@ export default class DotNetDelegateProxy {
    * @returns {object} An object obtained by JSON-deserializing the return value.
    */
   dynamicInvoke(...invokeArgs) {
-    const id = this.#id;
+    const id = this._id;
     const processedInvokeArgs = ArgumentsHandler.ProcessOutgoingArguments(invokeArgs);
     return globalThis.DotNet.invokeMethod("WebExtensions.Net", "InvokeDelegateFromJS", id, processedInvokeArgs);
   }

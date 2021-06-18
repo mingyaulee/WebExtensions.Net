@@ -5,12 +5,12 @@ export default class WebExtensions {
   /**
    * @type {object} The object references.
    */
-  #objectReferences = {};
+  _objectReferences = {};
 
   /**
    * @type {number} The count of the object references.
    */
-  #objectReferencesCount = 0;
+  _objectReferencesCount = 0;
 
   /**
    * Invoke on an object reference.
@@ -22,7 +22,7 @@ export default class WebExtensions {
    * @returns {Promise<object>} The result of the invocation.
    */
   async InvokeOnObjectReference({ referenceId, targetPath, isFunction, returnObjectReferenceId }, ...args) {
-    let targetObject = this.#objectReferences[referenceId];
+    let targetObject = this._objectReferences[referenceId];
     let targetMember = targetPath;
     if (referenceId === "browser") {
       targetObject = globalThis.browser;
@@ -50,8 +50,8 @@ export default class WebExtensions {
       result = ArgumentsHandler.ProcessOutgoingArgument(result);
 
       if (returnObjectReferenceId) {
-        this.#objectReferencesCount++;
-        this.#objectReferences[returnObjectReferenceId] = result;
+        this._objectReferencesCount++;
+        this._objectReferences[returnObjectReferenceId] = result;
       }
 
       return result;
@@ -67,9 +67,9 @@ export default class WebExtensions {
    * @param {string} invokeOption.referenceId The identifier of the object reference. 
    */
   RemoveObjectReference({ referenceId }) {
-    if (this.#objectReferences[referenceId] !== null) {
-      this.#objectReferencesCount--;
-      this.#objectReferences[referenceId] = null;
+    if (this._objectReferences[referenceId] !== null) {
+      this._objectReferencesCount--;
+      this._objectReferences[referenceId] = null;
     }
   }
 
@@ -77,13 +77,13 @@ export default class WebExtensions {
    * Gets the object references.
    * @returns {object} The object references.
    */
-  GetObjectReferences() { return this.#objectReferences; }
+  GetObjectReferences() { return this._objectReferences; }
 
   /**
    * Gets the count of the object references.
    * @returns {number} The count of the object references.
    */
-  GetObjectReferencesCount() { return this.#objectReferencesCount; }
+  GetObjectReferencesCount() { return this._objectReferencesCount; }
 
   /**
    * Invoke a function reference.
