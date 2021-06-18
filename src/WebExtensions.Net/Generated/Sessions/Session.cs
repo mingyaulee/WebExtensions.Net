@@ -8,13 +8,13 @@ namespace WebExtensions.Net.Sessions
     /// <summary></summary>
     public partial class Session : BaseObject
     {
-        private int _lastModified;
+        private long _lastModified;
         private Tab _tab;
         private Window _window;
 
         /// <summary>The time when the window or tab was closed or modified, represented in milliseconds since the epoch.</summary>
         [JsonPropertyName("lastModified")]
-        public int LastModified
+        public long LastModified
         {
             get
             {

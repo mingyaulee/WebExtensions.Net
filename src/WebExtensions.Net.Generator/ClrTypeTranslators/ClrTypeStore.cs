@@ -23,6 +23,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             clrTypeStore.Clear();
             CreateClrTypeFromSystemType(typeof(bool));
             CreateClrTypeFromSystemType(typeof(int));
+            CreateClrTypeFromSystemType(typeof(long));
             CreateClrTypeFromSystemType(typeof(double));
             CreateClrTypeFromSystemType(typeof(string));
             CreateClrTypeFromSystemType(typeof(object));
@@ -136,26 +137,31 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             switch (type.FullName)
             {
-                case "System.Boolean":
+                case string fullName when fullName == typeof(bool).FullName:
                     clrTypeInfo.CSharpName = "bool";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     clrTypeInfo.IsNullable = false;
                     break;
-                case "System.Int32":
+                case string fullName when fullName == typeof(int).FullName:
                     clrTypeInfo.CSharpName = "int";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     clrTypeInfo.IsNullable = false;
                     break;
-                case "System.Double":
+                case string fullName when fullName == typeof(long).FullName:
+                    clrTypeInfo.CSharpName = "long";
+                    clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
+                    clrTypeInfo.IsNullable = false;
+                    break;
+                case string fullName when fullName == typeof(double).FullName:
                     clrTypeInfo.CSharpName = "double";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     clrTypeInfo.IsNullable = false;
                     break;
-                case "System.String":
+                case string fullName when fullName == typeof(string).FullName:
                     clrTypeInfo.CSharpName = "string";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     break;
-                case "System.Object":
+                case string fullName when fullName == typeof(object).FullName:
                     clrTypeInfo.CSharpName = "object";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     break;
@@ -231,16 +237,41 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 return $"{Constants.RelativeNamespaceToken}.{namespaceEntity.FullFormattedName}.{typeReference.Ref.ToCapitalCase()}";
             }
 
+            if (IsEpochMillisecondsType(typeReference))
+            {
+                return GetTypeFullName(typeof(long));
+            }
+
             return typeReference.Type switch
             {
                 ObjectType.Array => GetTypeId(typeReference.ArrayItems, namespaceEntity) + "Array",
-                ObjectType.Boolean => "System.Boolean",
+                ObjectType.Boolean => GetTypeFullName(typeof(bool)),
                 ObjectType.Function => throw new InvalidOperationException($"Functions should be handled by the method '{nameof(GetFunctionClrType)}'."),
-                ObjectType.Integer => "System.Int32",
-                ObjectType.Number => "System.Double",
-                ObjectType.String => "System.String",
-                _ => "System.Object"
+                ObjectType.Integer => GetTypeFullName(typeof(int)),
+                ObjectType.Number => GetTypeFullName(typeof(double)),
+                ObjectType.String => GetTypeFullName(typeof(string)),
+                _ => GetTypeFullName(typeof(object))
             };
+        }
+
+        private static string GetTypeFullName(Type type)
+        {
+            return type.FullName ?? throw new InvalidOperationException("Type full name should not be null.");
+        }
+
+        private static bool IsEpochMillisecondsType(TypeReference typeReference)
+        {
+            if (typeReference.Type != ObjectType.Integer && typeReference.Type != ObjectType.Number)
+            {
+                return false;
+            }
+
+            if (typeReference is PropertyDefinition propertyDefinition && propertyDefinition.Description is not null)
+            {
+                return propertyDefinition.Description.Contains("milliseconds");
+            }
+
+            return false;
         }
     }
 }

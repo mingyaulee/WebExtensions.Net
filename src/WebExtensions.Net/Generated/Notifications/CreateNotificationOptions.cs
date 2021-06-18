@@ -9,7 +9,7 @@ namespace WebExtensions.Net.Notifications
     {
         private string _appIconMaskUrl;
         private string _contextMessage;
-        private double? _eventTime;
+        private long? _eventTime;
         private string _iconUrl;
         private string _imageUrl;
         private bool? _isClickable;
@@ -55,7 +55,7 @@ namespace WebExtensions.Net.Notifications
         /// <summary>A timestamp associated with the notification, in milliseconds past the epoch.</summary>
         [JsonPropertyName("eventTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public double? EventTime
+        public long? EventTime
         {
             get
             {

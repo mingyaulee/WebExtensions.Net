@@ -19,7 +19,7 @@ namespace WebExtensions.Net.Proxy
         private string _requestId;
         private int _tabId;
         private bool _thirdParty;
-        private double _timeStamp;
+        private long _timeStamp;
         private ResourceType _type;
         private string _url;
         private UrlClassification _urlClassification;
@@ -213,7 +213,7 @@ namespace WebExtensions.Net.Proxy
 
         /// <summary>The time when this signal is triggered, in milliseconds since the epoch.</summary>
         [JsonPropertyName("timeStamp")]
-        public double TimeStamp
+        public long TimeStamp
         {
             get
             {

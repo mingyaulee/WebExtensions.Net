@@ -8,7 +8,7 @@ namespace WebExtensions.Net.WebNavigation
     {
         private int _frameId;
         private int _tabId;
-        private double _timeStamp;
+        private long _timeStamp;
         private string _url;
 
         /// <summary>0 indicates the navigation happens in the tab content window; a positive value indicates navigation in a subframe. Frame IDs are unique within a tab.</summary>
@@ -43,7 +43,7 @@ namespace WebExtensions.Net.WebNavigation
 
         /// <summary>The time when the error occurred, in milliseconds since the epoch.</summary>
         [JsonPropertyName("timeStamp")]
-        public double TimeStamp
+        public long TimeStamp
         {
             get
             {

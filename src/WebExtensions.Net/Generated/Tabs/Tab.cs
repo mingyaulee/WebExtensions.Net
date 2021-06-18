@@ -20,7 +20,7 @@ namespace WebExtensions.Net.Tabs
         private int _index;
         private bool? _isArticle;
         private bool? _isInReaderMode;
-        private int? _lastAccessed;
+        private long? _lastAccessed;
         private MutedInfo _mutedInfo;
         private int? _openerTabId;
         private bool _pinned;
@@ -256,7 +256,7 @@ namespace WebExtensions.Net.Tabs
         /// <summary>The last time the tab was accessed as the number of milliseconds since epoch.</summary>
         [JsonPropertyName("lastAccessed")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? LastAccessed
+        public long? LastAccessed
         {
             get
             {
