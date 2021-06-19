@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WebExtensions.Net.Generator.Models;
@@ -32,6 +34,16 @@ namespace WebExtensions.Net.Generator
             }
             else
             {
+                foreach (var additionalNamespaceSourceDefinition in sourceOptions.AdditionalNamespaceSourceDefinitions)
+                {
+                    if (additionalNamespaceSourceDefinition.HttpUrl is null)
+                    {
+                        throw new InvalidOperationException("Additional namespace source definition should have value for HttpUrl.");
+                    }
+
+                    additionalNamespaceSourceDefinition.Schema = Path.GetFileName(additionalNamespaceSourceDefinition.HttpUrl);
+                }
+
                 var namespaceDefinitions = await namespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.Sources, sourceOptions.AdditionalNamespaceSourceDefinitions, sourceOptions.RunInParallel);
                 LocalNamespaceDefinitionsClient.StoreNamespaceDefinitions(sourceOptions.LocalDirectory, namespaceDefinitions);
                 return namespaceDefinitions;

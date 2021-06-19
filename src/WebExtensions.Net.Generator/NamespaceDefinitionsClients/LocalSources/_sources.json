@@ -1,0 +1,757 @@
+[
+  {
+    "schema": "chrome://extensions/content/schemas/extension_types.json",
+    "scopes": []
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-alarms.js",
+    "schema": "chrome://extensions/content/schemas/alarms.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "alarms"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-browserSettings.js",
+    "schema": "chrome://extensions/content/schemas/browser_settings.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "browserSettings"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-clipboard.js",
+    "schema": "chrome://extensions/content/schemas/clipboard.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "clipboard"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-contentScripts.js",
+    "schema": "chrome://extensions/content/schemas/content_scripts.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "contentScripts"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-contextualIdentities.js",
+    "schema": "chrome://extensions/content/schemas/contextual_identities.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "startup"
+    ],
+    "permissions": [
+      "contextualIdentities"
+    ],
+    "paths": [
+      [
+        "contextualIdentities"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-cookies.js",
+    "schema": "chrome://extensions/content/schemas/cookies.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "cookies"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-dns.js",
+    "schema": "chrome://extensions/content/schemas/dns.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "dns"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-downloads.js",
+    "schema": "chrome://extensions/content/schemas/downloads.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "downloads"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-extension.js",
+    "schema": "chrome://extensions/content/schemas/extension.json",
+    "scopes": [
+      "addon_parent",
+      "content_child"
+    ],
+    "paths": [
+      [
+        "extension"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-activityLog.js",
+    "schema": "chrome://extensions/content/schemas/activity_log.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "activityLog"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-i18n.js",
+    "schema": "chrome://extensions/content/schemas/i18n.json",
+    "scopes": [
+      "addon_parent",
+      "content_child",
+      "devtools_child"
+    ],
+    "paths": [
+      [
+        "i18n"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-idle.js",
+    "schema": "chrome://extensions/content/schemas/idle.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "idle"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-management.js",
+    "schema": "chrome://extensions/content/schemas/management.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "management"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-networkStatus.js",
+    "schema": "chrome://extensions/content/schemas/network_status.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "networkStatus"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-notifications.js",
+    "schema": "chrome://extensions/content/schemas/notifications.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "notifications"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-permissions.js",
+    "schema": "chrome://extensions/content/schemas/permissions.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "permissions"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-privacy.js",
+    "schema": "chrome://extensions/content/schemas/privacy.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "privacy"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-protocolHandlers.js",
+    "schema": "chrome://extensions/content/schemas/extension_protocol_handlers.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "manifest": [
+      "protocol_handlers"
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-proxy.js",
+    "schema": "chrome://extensions/content/schemas/proxy.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "proxy"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-runtime.js",
+    "schema": "chrome://extensions/content/schemas/runtime.json",
+    "scopes": [
+      "addon_parent",
+      "content_parent",
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "runtime"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-storage.js",
+    "schema": "chrome://extensions/content/schemas/storage.json",
+    "scopes": [
+      "addon_parent",
+      "content_parent",
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "storage"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-telemetry.js",
+    "schema": "chrome://extensions/content/schemas/telemetry.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "telemetry"
+      ]
+    ]
+  },
+  {
+    "schema": "chrome://extensions/content/schemas/test.json",
+    "scopes": [
+      "content_child"
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-theme.js",
+    "schema": "chrome://extensions/content/schemas/theme.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "theme"
+      ]
+    ],
+    "manifest": [
+      "theme"
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-userScripts.js",
+    "schema": "chrome://extensions/content/schemas/user_scripts.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "userScripts"
+      ]
+    ]
+  },
+  {
+    "schema": "chrome://extensions/content/schemas/user_scripts_content.json",
+    "scopes": [
+      "content_child"
+    ],
+    "paths": [
+      [
+        "userScripts",
+        "onBeforeScript"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-webNavigation.js",
+    "schema": "chrome://extensions/content/schemas/web_navigation.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "webNavigation"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-webRequest.js",
+    "schema": "chrome://extensions/content/schemas/web_request.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "webRequest"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-bookmarks.js",
+    "schema": "chrome://browser/content/schemas/bookmarks.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "bookmarks"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-browserAction.js",
+    "schema": "chrome://extensions/content/schemas/browser_action.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "update",
+      "uninstall",
+      "disable"
+    ],
+    "paths": [
+      [
+        "browserAction"
+      ],
+      [
+        "action"
+      ]
+    ],
+    "manifest": [
+      "browser_action",
+      "action"
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-browsingData.js",
+    "schema": "chrome://extensions/content/schemas/browsing_data.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "browsingData"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-captivePortal.js",
+    "schema": "chrome://extensions/content/schemas/captive_portal.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "captivePortal"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-chrome-settings-overrides.js",
+    "schema": "chrome://browser/content/schemas/chrome_settings_overrides.json",
+    "scopes": [],
+    "events": [
+      "update",
+      "uninstall",
+      "disable"
+    ],
+    "manifest": [
+      "chrome_settings_overrides"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-commands.js",
+    "schema": "chrome://browser/content/schemas/commands.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "uninstall"
+    ],
+    "paths": [
+      [
+        "commands"
+      ]
+    ],
+    "manifest": [
+      "commands"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-devtools.js",
+    "schema": "chrome://browser/content/schemas/devtools.json",
+    "scopes": [
+      "devtools_parent"
+    ],
+    "events": [
+      "uninstall"
+    ],
+    "paths": [
+      [
+        "devtools"
+      ]
+    ],
+    "manifest": [
+      "devtools_page"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-devtools-inspectedWindow.js",
+    "schema": "chrome://browser/content/schemas/devtools_inspected_window.json",
+    "scopes": [
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "devtools",
+        "inspectedWindow"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-devtools-network.js",
+    "schema": "chrome://browser/content/schemas/devtools_network.json",
+    "scopes": [
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "devtools",
+        "network"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-devtools-panels.js",
+    "schema": "chrome://browser/content/schemas/devtools_panels.json",
+    "scopes": [
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "devtools",
+        "panels"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-find.js",
+    "schema": "chrome://browser/content/schemas/find.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "find"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-history.js",
+    "schema": "chrome://browser/content/schemas/history.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "history"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-identity.js",
+    "schema": "chrome://extensions/content/schemas/identity.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "identity"
+      ]
+    ]
+  },
+  {
+    "schema": "chrome://browser/content/schemas/menus_child.json",
+    "scopes": [
+      "addon_child",
+      "content_child",
+      "devtools_child"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-menus.js",
+    "schema": "chrome://browser/content/schemas/menus.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "contextMenus"
+      ],
+      [
+        "menus"
+      ],
+      [
+        "menusInternal"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-normandyAddonStudy.js",
+    "schema": "chrome://browser/content/schemas/normandyAddonStudy.json",
+    "scopes": [
+      "addon_parent",
+      "content_parent",
+      "devtools_parent"
+    ],
+    "paths": [
+      [
+        "normandyAddonStudy"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-omnibox.js",
+    "schema": "chrome://browser/content/schemas/omnibox.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "omnibox"
+      ]
+    ],
+    "manifest": [
+      "omnibox"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-pageAction.js",
+    "schema": "chrome://extensions/content/schemas/page_action.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "update",
+      "uninstall",
+      "disable"
+    ],
+    "paths": [
+      [
+        "pageAction"
+      ]
+    ],
+    "manifest": [
+      "page_action"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-pkcs11.js",
+    "schema": "chrome://browser/content/schemas/pkcs11.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "pkcs11"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://extensions/content/parent/ext-geckoProfiler.js",
+    "schema": "chrome://extensions/content/schemas/geckoProfiler.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "geckoProfiler"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-search.js",
+    "schema": "chrome://browser/content/schemas/search.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "search"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-sessions.js",
+    "schema": "chrome://browser/content/schemas/sessions.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "sessions"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-sidebarAction.js",
+    "schema": "chrome://browser/content/schemas/sidebar_action.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "uninstall"
+    ],
+    "paths": [
+      [
+        "sidebarAction"
+      ]
+    ],
+    "manifest": [
+      "sidebar_action"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-tabs.js",
+    "schema": "chrome://browser/content/schemas/tabs.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "update",
+      "disable"
+    ],
+    "paths": [
+      [
+        "tabs"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-topSites.js",
+    "schema": "chrome://browser/content/schemas/top_sites.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "topSites"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-urlbar.js",
+    "schema": "chrome://browser/content/schemas/urlbar.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "urlbar"
+      ]
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-url-overrides.js",
+    "schema": "chrome://browser/content/schemas/url_overrides.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "update",
+      "uninstall",
+      "disable",
+      "enabling"
+    ],
+    "paths": [
+      [
+        "urlOverrides"
+      ]
+    ],
+    "manifest": [
+      "chrome_url_overrides"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-windows.js",
+    "schema": "chrome://browser/content/schemas/windows.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "windows"
+      ]
+    ]
+  },
+  {
+    "schema": "manifest.json"
+  },
+  {
+    "schema": "events.json"
+  },
+  {
+    "schema": "types.json"
+  }
+]
