@@ -31,6 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net.Integrati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37728F80-FC95-4451-B92C-3D915C0D11B6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{4C80786C-7306-4DCC-A96F-9305D50DF7D5}"
+	ProjectSection(SolutionItems) = preProject
+		tool\LanguageCodeUpdater.ps1 = tool\LanguageCodeUpdater.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

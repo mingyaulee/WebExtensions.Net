@@ -1,5 +1,5 @@
 ﻿$url = "https://chromium.googlesource.com/chromium/+/refs/heads/trunk/third_party/cld/languages/internal/languages.cc?format=TEXT"
-$relativeLanguageCodePath = "../Extensions/I18n"
+$relativeLanguageCodePath = "../src/WebExtensions.Net/Extensions/I18n"
 $languageCodeFileName = "GeneratedLanguageCode.cs"
 
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
