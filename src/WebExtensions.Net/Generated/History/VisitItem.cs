@@ -10,7 +10,7 @@ namespace WebExtensions.Net.History
         private string _referringVisitId;
         private TransitionType _transition;
         private string _visitId;
-        private long? _visitTime;
+        private double? _visitTime;
 
         /// <summary>The unique identifier for the item.</summary>
         [JsonPropertyName("id")]
@@ -78,7 +78,7 @@ namespace WebExtensions.Net.History
         /// <summary>When this visit occurred, represented in milliseconds since the epoch.</summary>
         [JsonPropertyName("visitTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public long? VisitTime
+        public double? VisitTime
         {
             get
             {

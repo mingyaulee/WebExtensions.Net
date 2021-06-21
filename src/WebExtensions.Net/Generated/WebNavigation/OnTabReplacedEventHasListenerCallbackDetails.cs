@@ -8,7 +8,7 @@ namespace WebExtensions.Net.WebNavigation
     {
         private int _replacedTabId;
         private int _tabId;
-        private long _timeStamp;
+        private double _timeStamp;
 
         /// <summary>The ID of the tab that was replaced.</summary>
         [JsonPropertyName("replacedTabId")]
@@ -42,7 +42,7 @@ namespace WebExtensions.Net.WebNavigation
 
         /// <summary>The time when the replacement happened, in milliseconds since the epoch.</summary>
         [JsonPropertyName("timeStamp")]
-        public long TimeStamp
+        public double TimeStamp
         {
             get
             {

@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Alarms
     {
         private string _name;
         private double? _periodInMinutes;
-        private long _scheduledTime;
+        private double _scheduledTime;
 
         /// <summary>Name of this alarm.</summary>
         [JsonPropertyName("name")]
@@ -44,7 +44,7 @@ namespace WebExtensions.Net.Alarms
 
         /// <summary>Time when the alarm is scheduled to fire, in milliseconds past the epoch.</summary>
         [JsonPropertyName("scheduledTime")]
-        public long ScheduledTime
+        public double ScheduledTime
         {
             get
             {

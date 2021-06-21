@@ -23,7 +23,6 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             clrTypeStore.Clear();
             CreateClrTypeFromSystemType(typeof(bool));
             CreateClrTypeFromSystemType(typeof(int));
-            CreateClrTypeFromSystemType(typeof(long));
             CreateClrTypeFromSystemType(typeof(double));
             CreateClrTypeFromSystemType(typeof(string));
             CreateClrTypeFromSystemType(typeof(object));
@@ -147,11 +146,6 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     clrTypeInfo.IsNullable = false;
                     break;
-                case string fullName when fullName == typeof(long).FullName:
-                    clrTypeInfo.CSharpName = "long";
-                    clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
-                    clrTypeInfo.IsNullable = false;
-                    break;
                 case string fullName when fullName == typeof(double).FullName:
                     clrTypeInfo.CSharpName = "double";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
@@ -239,7 +233,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             if (IsEpochMillisecondsType(typeReference))
             {
-                return GetTypeFullName(typeof(long));
+                return GetTypeFullName(typeof(double));
             }
 
             return typeReference.Type switch

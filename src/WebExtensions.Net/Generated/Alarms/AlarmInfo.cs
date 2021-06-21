@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Alarms
     {
         private double? _delayInMinutes;
         private double? _periodInMinutes;
-        private long? _when;
+        private double? _when;
 
         /// <summary>Number of minutes from the current time after which the alarm should first fire.</summary>
         [JsonPropertyName("delayInMinutes")]
@@ -45,7 +45,7 @@ namespace WebExtensions.Net.Alarms
         /// <summary>Time when the alarm is scheduled to first fire, in milliseconds past the epoch.</summary>
         [JsonPropertyName("when")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public long? When
+        public double? When
         {
             get
             {

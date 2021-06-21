@@ -10,7 +10,7 @@ namespace WebExtensions.Net.WebNavigation
         private int _sourceProcessId;
         private int _sourceTabId;
         private int _tabId;
-        private long _timeStamp;
+        private double _timeStamp;
         private string _url;
 
         /// <summary>The ID of the frame with sourceTabId in which the navigation is triggered. 0 indicates the main frame.</summary>
@@ -75,7 +75,7 @@ namespace WebExtensions.Net.WebNavigation
 
         /// <summary>The time when the browser was about to create a new view, in milliseconds since the epoch.</summary>
         [JsonPropertyName("timeStamp")]
-        public long TimeStamp
+        public double TimeStamp
         {
             get
             {
