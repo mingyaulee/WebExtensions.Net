@@ -13,6 +13,11 @@ export default class WebExtensions {
   _objectReferencesCount = 0;
 
   /**
+   * @type {object} The last invocation result, stored for logging when JSON exception is thrown in .Net.
+   */
+  _lastInvocationResult = null;
+
+  /**
    * Invoke on an object reference.
    * @param {object} invokeOption The option for invocation. 
    * @param {string} invokeOption.referenceId The identifier of the JavaScript object.
@@ -54,6 +59,7 @@ export default class WebExtensions {
         this._objectReferences[returnObjectReferenceId] = result;
       }
 
+      this._lastInvocationResult = result;
       return result;
     } catch (error) {
       console.error(referenceId, targetPath, processedArgs, targetObject, targetMember, args);
@@ -86,13 +92,22 @@ export default class WebExtensions {
   GetObjectReferencesCount() { return this._objectReferencesCount; }
 
   /**
-   * Invoke a function reference.
+   * Invoke a function reference synchronously.
    * @param {object} invokeOption The option for invocation. 
    * @param {string} invokeOption.referenceId The identifier of the function. 
    * @param  {...any} args The arguments to invoke the delegate.
    * @returns {object} The result of the function invocation.
    */
   InvokeFunctionFromDotNet({ referenceId }, ...args) {
-    return FunctionReferenceHandler.InvokeFunctionFromDotNet(referenceId, args);
+    const result = FunctionReferenceHandler.InvokeFunctionFromDotNet(referenceId, args);
+    this._lastInvocationResult = result;
+    return result;
+  }
+
+  /**
+   * Returns the last invocation result, called when JSON exception is thrown in .Net.
+   */
+  GetLastInvocationResult() {
+    return JSON.stringify(this._lastInvocationResult);
   }
 }

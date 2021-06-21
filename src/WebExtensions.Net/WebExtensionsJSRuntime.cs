@@ -1,6 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net
@@ -11,6 +12,7 @@ namespace WebExtensions.Net
     public class WebExtensionsJSRuntime : IWebExtensionsJSRuntime
     {
         private readonly IJSRuntime jsRuntime;
+        private const string GetLastInvocationResultIdentifier = "WebExtensionsNet.GetLastInvocationResult";
 
         /// <summary>
         /// Creates a new instance of WebExtensionsJSRuntime.
@@ -30,7 +32,18 @@ namespace WebExtensions.Net
                 invokeOption.ReturnObjectReferenceId = Guid.NewGuid().ToString();
             }
             var invokeArgs = new object[] { invokeOption }.Concat(ArgumentsHandler.ProcessOutgoingArguments(args)).ToArray();
-            var result = await jsRuntime.InvokeAsync<TValue>(identifier, invokeArgs);
+
+            TValue result;
+            try
+            {
+                result = await jsRuntime.InvokeAsync<TValue>(identifier, invokeArgs);
+            }
+            catch (JsonException jsonException)
+            {
+                var json = await jsRuntime.InvokeAsync<string>(GetLastInvocationResultIdentifier);
+                throw new JsonException($"Last invocation result: {json}", jsonException);
+            }
+
             if (!string.IsNullOrEmpty(invokeOption.ReturnObjectReferenceId) && result is BaseObject baseObject)
             {
                 baseObject.Initialize(this, invokeOption.ReturnObjectReferenceId, null);
@@ -53,7 +66,23 @@ namespace WebExtensions.Net
                 invokeOption.ReturnObjectReferenceId = Guid.NewGuid().ToString();
             }
             var invokeArgs = new object[] { invokeOption }.Concat(ArgumentsHandler.ProcessOutgoingArguments(args)).ToArray();
-            var result = ((IJSInProcessRuntime)jsRuntime).Invoke<TValue>(identifier, invokeArgs);
+
+            if (jsRuntime is not IJSInProcessRuntime jsInProcessRuntime)
+            {
+                throw new InvalidOperationException($"Unable to cast JS runtime to type {nameof(IJSInProcessRuntime)}");
+            }
+
+            TValue result;
+            try
+            {
+                result = jsInProcessRuntime.Invoke<TValue>(identifier, invokeArgs);
+            }
+            catch (JsonException jsonException)
+            {
+                var json = jsInProcessRuntime.Invoke<string>(GetLastInvocationResultIdentifier);
+                throw new JsonException($"Last invocation result: {json}", jsonException);
+            }
+
             if (!string.IsNullOrEmpty(invokeOption.ReturnObjectReferenceId) && result is BaseObject baseObject)
             {
                 baseObject.Initialize(this, invokeOption.ReturnObjectReferenceId, null);

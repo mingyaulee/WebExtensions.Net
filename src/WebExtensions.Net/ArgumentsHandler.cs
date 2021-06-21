@@ -30,7 +30,14 @@ namespace WebExtensions.Net
                     }
 
                     var json = jsonElementArg.GetRawText();
-                    incomingArgument = JsonSerializer.Deserialize(json, argumentType);
+                    try
+                    {
+                        incomingArgument = JsonSerializer.Deserialize(json, argumentType);
+                    }
+                    catch (JsonException jsonException)
+                    {
+                        throw new JsonException($"Error when deserializing JSON: {json}", jsonException);
+                    }
                 }
 
                 index++;
