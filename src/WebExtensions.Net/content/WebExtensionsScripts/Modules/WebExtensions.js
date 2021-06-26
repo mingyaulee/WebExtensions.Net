@@ -37,17 +37,17 @@ export default class WebExtensions {
       if (i === targetPaths.length - 1) {
         targetMember = targetPaths[i];
       } else {
-        targetObject = targetObject?.[targetPaths[i]];
+        targetObject = targetObject[targetPaths[i]];
       }
     }
 
-    if (isFunction && !targetObject?.[targetMember]) {
+    if (isFunction && !targetObject[targetMember]) {
       throw new Error(`Unable to find function ${targetPath} on object '${referenceId}'.`);
     }
 
     const processedArgs = ArgumentsHandler.ProcessIncomingArguments(args);
     try {
-      let result = isFunction ? targetObject[targetMember].apply(targetObject, processedArgs) : targetObject?.[targetMember];
+      let result = isFunction ? targetObject[targetMember].apply(targetObject, processedArgs) : targetObject[targetMember];
       if (result instanceof Promise) {
         result = await result;
       }

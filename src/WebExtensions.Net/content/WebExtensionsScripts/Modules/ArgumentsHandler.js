@@ -42,7 +42,7 @@ export default class ArgumentsHandler {
       return FunctionReferenceHandler.GetJSFunctionReference(outgoingArgument);
     }
 
-    if (outgoingArgument instanceof Window || outgoingArgument?.["window"] === outgoingArgument) {
+    if (outgoingArgument instanceof Window || outgoingArgument["window"] === outgoingArgument) {
       return this._ProcessWindowArgument(outgoingArgument);
     }
 
