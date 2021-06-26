@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.Cookies
 {
@@ -17,5 +17,9 @@ namespace WebExtensions.Net.Cookies
         /// <summary>strict</summary>
         [EnumValue("strict")]
         Strict,
+
+        /// <summary>unspecified</summary>
+        [EnumMember("unspecified")]
+        Unspecified
     }
 }
