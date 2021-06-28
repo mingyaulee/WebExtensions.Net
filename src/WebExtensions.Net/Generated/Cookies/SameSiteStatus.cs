@@ -17,5 +17,9 @@ namespace WebExtensions.Net.Cookies
         /// <summary>strict</summary>
         [EnumValue("strict")]
         Strict,
+
+        /// <summary>unspecified</summary>
+        [EnumValue("unspecified")]
+        Unspecified,
     }
 }
