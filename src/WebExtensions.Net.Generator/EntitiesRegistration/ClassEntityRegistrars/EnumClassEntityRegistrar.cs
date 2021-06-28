@@ -9,8 +9,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
     public class EnumClassEntityRegistrar : BaseClassEntityRegistrar
     {
-        public EnumClassEntityRegistrar(EntitiesContext entitiesContext) : base(entitiesContext)
+        private readonly RegistrationOptions registrationOptions;
+
+        public EnumClassEntityRegistrar(EntitiesContext entitiesContext, RegistrationOptions registrationOptions) : base(entitiesContext)
         {
+            this.registrationOptions = registrationOptions;
         }
 
         protected override ClassType GetClassType() => ClassType.EnumClass;
@@ -30,6 +33,20 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                     var propertyDefinitionPair = KeyValuePair.Create(enumValueDefinition.Name, new PropertyDefinition()
                     {
                         Description = enumValueDefinition.Description
+                    });
+                    classProperties.Add(propertyDefinitionPair);
+                }
+            }
+
+            if (registrationOptions.EnumClassExtensions is not null &&
+                registrationOptions.EnumClassExtensions.TryGetValue(typeEntity.NamespaceQualifiedId, out var enumClassExtensions) &&
+                enumClassExtensions is not null)
+            {
+                foreach (var enumClassExtension in enumClassExtensions)
+                {
+                    var propertyDefinitionPair = KeyValuePair.Create(enumClassExtension.Name, new PropertyDefinition()
+                    {
+                        Description = enumClassExtension.Description
                     });
                     classProperties.Add(propertyDefinitionPair);
                 }

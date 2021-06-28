@@ -14,7 +14,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
             codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(clrEnumValueInfo.Description ?? clrEnumValueInfo.Name))
+                .WriteWithConverter(new CommentSummaryCodeConverter(!string.IsNullOrEmpty(clrEnumValueInfo.Description) ? clrEnumValueInfo.Description : clrEnumValueInfo.Name))
                 .WriteLine($"[EnumValue(\"{clrEnumValueInfo.Name}\")]")
                 .WriteLine($"{clrEnumValueInfo.CSharpName},");
         }

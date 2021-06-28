@@ -22,6 +22,7 @@ namespace WebExtensions.Net.Generator.Models
         public string TypeChoicesTypeNameSuffix { get; init; }
         public string ArrayItemTypeNameSuffix { get; init; }
         public string FunctionReturnTypeNameSuffix { get; init; }
+        public IDictionary<string, IEnumerable<EnumClassExtension>> EnumClassExtensions { get; init; }
 #pragma warning restore CS8618
     }
 }
