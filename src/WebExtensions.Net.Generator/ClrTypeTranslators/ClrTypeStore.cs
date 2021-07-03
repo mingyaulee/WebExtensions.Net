@@ -26,6 +26,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             CreateClrTypeFromSystemType(typeof(double));
             CreateClrTypeFromSystemType(typeof(string));
             CreateClrTypeFromSystemType(typeof(object));
+            CreateClrTypeFromSystemType(typeof(EpochTime));
         }
 
         public void AddClrType(ClrTypeInfo clrTypeInfo)
@@ -108,7 +109,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 CSharpName = type.Name,
                 IsEnum = type.IsEnum,
                 EnumValues = null,
-                IsNullable = true,
+                IsNullable = type.IsClass,
                 IsInterface = type.IsInterface,
                 IsNullType = type == typeof(void),
                 IsGenericType = type.IsGenericType,
@@ -139,17 +140,14 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 case string fullName when fullName == typeof(bool).FullName:
                     clrTypeInfo.CSharpName = "bool";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
-                    clrTypeInfo.IsNullable = false;
                     break;
                 case string fullName when fullName == typeof(int).FullName:
                     clrTypeInfo.CSharpName = "int";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
-                    clrTypeInfo.IsNullable = false;
                     break;
                 case string fullName when fullName == typeof(double).FullName:
                     clrTypeInfo.CSharpName = "double";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
-                    clrTypeInfo.IsNullable = false;
                     break;
                 case string fullName when fullName == typeof(string).FullName:
                     clrTypeInfo.CSharpName = "string";
@@ -159,8 +157,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                     clrTypeInfo.CSharpName = "object";
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     break;
-                case "System.Void":
+                case string fullName when fullName == typeof(void).FullName:
                     clrTypeInfo.CSharpName = "void";
+                    clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
+                    break;
+                case string fullName when fullName == typeof(EpochTime).FullName:
                     clrTypeInfo.ReferenceNamespaces.Remove(type.Namespace);
                     break;
             }
@@ -233,7 +234,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             if (IsEpochMillisecondsType(typeReference))
             {
-                return GetTypeFullName(typeof(double));
+                return GetTypeFullName(typeof(EpochTime));
             }
 
             return typeReference.Type switch
