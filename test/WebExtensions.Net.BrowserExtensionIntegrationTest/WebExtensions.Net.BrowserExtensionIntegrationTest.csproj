@@ -8,26 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.BrowserExtension" Version="0.4.*" />
-    <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.4" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    <PackageReference Include="Blazor.BrowserExtension" Version="0.5.*" />
+    <PackageReference Include="FluentAssertions" Version="5.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.*" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.*" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\**\*" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="wwwroot\css\tests.css" />
-    <Content Remove="wwwroot\Icon.png" />
-    <Content Remove="wwwroot\TestRunner\BlazorTestRunner.js" />
-    <Content Remove="wwwroot\TestRunner\Jasmine\boot.min.js" />
-    <Content Remove="wwwroot\TestRunner\Jasmine\jasmine-html.min.js" />
-    <Content Remove="wwwroot\TestRunner\Jasmine\jasmine.min.css" />
-    <Content Remove="wwwroot\TestRunner\Jasmine\jasmine.min.js" />
-    <Content Remove="wwwroot\tests.html" />
   </ItemGroup>
 
   <!-- Import project reference and build props and targets as if we are referencing the built NuGet package -->
