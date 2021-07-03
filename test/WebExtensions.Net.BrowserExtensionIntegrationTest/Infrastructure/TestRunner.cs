@@ -93,6 +93,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
         public async Task GetTestCoverageInfo()
         {
             // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtensions.Net
+            // This is a hack to get into the module injected by Coverlet
+            // Reference: https://github.com/coverlet-coverage/coverlet/blob/master/src/coverlet.core/Instrumentation/ModuleTrackerTemplate.cs
             var webExtensionsAssembly = typeof(WebExtensions.Net.IWebExtensionsApi).Assembly;
             var types = webExtensionsAssembly.GetTypes();
             var coverletType = types.FirstOrDefault(type => type.Namespace?.Contains("Coverlet", StringComparison.OrdinalIgnoreCase) ?? false);
