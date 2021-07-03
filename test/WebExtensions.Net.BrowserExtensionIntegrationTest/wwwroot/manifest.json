@@ -4,10 +4,13 @@
   "description": "A browser extension for integration test of WebExtensions.Net",
   "version": "1.0",
   "background": {
-    "page": "index.html?path=background",
+    "page": "background.html",
     "persistent": true
   },
-  "options_page": "index.html?path=options",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "content_security_policy": "script-src 'self' 'unsafe-eval' 'wasm-eval' 'sha256-v8v3RKRPmN4odZ1CWM5gw80QKPCCWMcpNeOmimNL2AA='; object-src 'self'",
   "web_accessible_resources": [
     "framework/*",
@@ -15,9 +18,6 @@
     "WebExtensionsScripts/*"
   ],
   "permissions": [
-    "*://*/*",
-    "webRequest",
-    "webRequestBlocking",
     "notifications",
     "storage",
     "tabs",
