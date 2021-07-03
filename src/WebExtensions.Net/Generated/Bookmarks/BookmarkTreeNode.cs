@@ -8,8 +8,8 @@ namespace WebExtensions.Net.Bookmarks
     public partial class BookmarkTreeNode : BaseObject
     {
         private IEnumerable<BookmarkTreeNode> _children;
-        private double? _dateAdded;
-        private double? _dateGroupModified;
+        private EpochTime? _dateAdded;
+        private EpochTime? _dateGroupModified;
         private string _id;
         private int? _index;
         private string _parentId;
@@ -37,7 +37,7 @@ namespace WebExtensions.Net.Bookmarks
         /// <summary>When this node was created, in milliseconds since the epoch (<c>new Date(dateAdded)</c>).</summary>
         [JsonPropertyName("dateAdded")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public double? DateAdded
+        public EpochTime? DateAdded
         {
             get
             {
@@ -53,7 +53,7 @@ namespace WebExtensions.Net.Bookmarks
         /// <summary>When the contents of this folder last changed, in milliseconds since the epoch.</summary>
         [JsonPropertyName("dateGroupModified")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public double? DateGroupModified
+        public EpochTime? DateGroupModified
         {
             get
             {

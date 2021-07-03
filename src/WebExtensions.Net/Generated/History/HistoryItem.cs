@@ -7,7 +7,7 @@ namespace WebExtensions.Net.History
     public partial class HistoryItem : BaseObject
     {
         private string _id;
-        private double? _lastVisitTime;
+        private EpochTime? _lastVisitTime;
         private string _title;
         private int? _typedCount;
         private string _url;
@@ -32,7 +32,7 @@ namespace WebExtensions.Net.History
         /// <summary>When this page was last loaded, represented in milliseconds since the epoch.</summary>
         [JsonPropertyName("lastVisitTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public double? LastVisitTime
+        public EpochTime? LastVisitTime
         {
             get
             {

@@ -23,7 +23,7 @@ namespace WebExtensions.Net.WebRequest
         private string _statusLine;
         private int _tabId;
         private bool _thirdParty;
-        private double _timeStamp;
+        private EpochTime _timeStamp;
         private ResourceType _type;
         private string _url;
         private UrlClassification _urlClassification;
@@ -296,7 +296,7 @@ namespace WebExtensions.Net.WebRequest
 
         /// <summary>The time when this signal is triggered, in milliseconds since the epoch.</summary>
         [JsonPropertyName("timeStamp")]
-        public double TimeStamp
+        public EpochTime TimeStamp
         {
             get
             {
