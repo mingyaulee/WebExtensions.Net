@@ -17,6 +17,12 @@ namespace WebExtensions.Net
             dateTimeValue = dateTime;
         }
 
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return dateTimeValue.ToString();
+        }
+
         /// <summary>Converts from <see cref="EpochTime" /> to <see cref="DateTime" />.</summary>
         /// <param name="value">The value to convert from.</param>
         public static implicit operator DateTime(EpochTime value) => value.dateTimeValue;
