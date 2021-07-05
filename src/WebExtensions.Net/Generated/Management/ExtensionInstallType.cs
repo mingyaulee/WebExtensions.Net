@@ -21,5 +21,9 @@ namespace WebExtensions.Net.Management
         /// <summary>other</summary>
         [EnumValue("other")]
         Other,
+
+        /// <summary>admin</summary>
+        [EnumValue("admin")]
+        Admin,
     }
 }
