@@ -14,7 +14,11 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
         {
             var testNamespace = TestNamespace;
             var testTypes = GetTestAssembly().GetTypes().Where(type => type.Namespace != null && type.Namespace.Contains(testNamespace));
-            return testTypes.Select(GetTestClassInfoFromType).Where(classInfo => classInfo != null).ToArray();
+            return testTypes
+                .Select(GetTestClassInfoFromType)
+                .Where(classInfo => classInfo != null)
+                .OrderBy(classInfo => classInfo.FullName)
+                .ToList();
         }
 
         private static Assembly GetTestAssembly()

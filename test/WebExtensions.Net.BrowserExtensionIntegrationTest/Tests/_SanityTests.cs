@@ -8,12 +8,12 @@ using WebExtensions.Net.Tabs;
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "Sanity Tests")]
-    public class SanityTests
+    public class _SanityTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
         private string testStorageArea;
 
-        public SanityTests(IWebExtensionsApi webExtensionsApi)
+        public _SanityTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
         }
