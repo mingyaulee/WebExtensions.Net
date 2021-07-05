@@ -6,13 +6,13 @@ using WebExtensions.Net.Notifications;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
-    [TestClass(Description = "browser.notifications")]
-    public class NotificationsTests
+    [TestClass(Description = "browser.notifications API")]
+    public class NotificationsApiTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
         private readonly string testNotificationId;
 
-        public NotificationsTests(IWebExtensionsApi webExtensionsApi)
+        public NotificationsApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
             testNotificationId = Guid.NewGuid().ToString();
@@ -22,7 +22,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var createdNotificationId = await webExtensionsApi.Notifications.Create(testNotificationId, new CreateNotificationOptions()
+            var createdNotificationId = await webExtensionsApi.Notifications.Create(testNotificationId, new()
             {
                 Title = "Testing notification",
                 Message = "Test notification message",
@@ -38,7 +38,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Update()
         {
             // Act
-            var notificationUpdated = await webExtensionsApi.Notifications.Update(testNotificationId, new CreateNotificationOptions()
+            var notificationUpdated = await webExtensionsApi.Notifications.Update(testNotificationId, new()
             {
                 Title = "Updated notification",
                 Message = "Updated notification message"

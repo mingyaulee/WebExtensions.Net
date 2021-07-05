@@ -6,13 +6,13 @@ using WebExtensions.Net.Windows;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
-    [TestClass(Description = "browser.windows")]
-    public class WindowsTests
+    [TestClass(Description = "browser.windows API")]
+    public class WindowsApiTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
         private int? testWindowId;
 
-        public WindowsTests(IWebExtensionsApi webExtensionsApi)
+        public WindowsApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
         }
@@ -21,7 +21,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var window = await webExtensionsApi.Windows.Create(new CreateData()
+            var window = await webExtensionsApi.Windows.Create(new()
             {
                 Url = "https://google.com",
                 Top = 0,
@@ -53,7 +53,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var windowLeft = 100;
 
             // Act
-            var window = await webExtensionsApi.Windows.Update(testWindowId.Value, new UpdateInfo()
+            var window = await webExtensionsApi.Windows.Update(testWindowId.Value, new()
             {
                 Top = windowTop,
                 Left = windowLeft

@@ -1,0 +1,26 @@
+// used in I18nApiTests
+{
+  "message_key_1": {
+    "message": "Message",
+    "description": "Test message",
+    "placeholders": {
+      "detail1": {
+        "content": "$1"
+      }
+    }
+  },
+  "message_key_2": {
+    "message": "Message with placeholders $detail1$ and $detail2$.",
+    "description": "Test message with placeholders.",
+    "placeholders": {
+      "detail1": {
+        "content": "$1",
+        "example": "First placeholer"
+      },
+      "detail2": {
+        "content": "$2",
+        "example": "Second placeholder"
+      }
+    }
+  }
+}

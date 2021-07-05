@@ -17,10 +17,30 @@
     "BrowserExtensionScripts/*",
     "WebExtensionsScripts/*"
   ],
+  // used in CommandsApiTests
+  "commands": {
+    "dummy-command": {
+      "suggested_key": "Ctrl+Shift+Y",
+      "description": "This is a dummy command"
+    }
+  },
+  // used in I18nApiTests
+  "default_locale": "en",
   "permissions": [
+    "alarms",
+    "bookmarks",
+    "cookies",
+    "downloads",
+    "history",
+    "identity",
+    "idle",
+    "management",
     "notifications",
+    "privacy",
     "storage",
     "tabs",
-    "windows"
+    "windows",
+    // used in CookiesApiTests
+    "http://*.non-existent-domain.com/"
   ]
 }

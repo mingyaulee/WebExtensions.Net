@@ -7,8 +7,8 @@ using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
-    [TestClass(Description = "browser.storage")]
-    public class StorageTests
+    [TestClass(Description = "browser.storage API")]
+    public class StorageApiTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
         private readonly string storageTestKey1;
@@ -16,7 +16,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         private readonly string storageTestKey2;
         private readonly string storageTestValue2;
 
-        public StorageTests(IWebExtensionsApi webExtensionsApi)
+        public StorageApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
             storageTestKey1 = "test";

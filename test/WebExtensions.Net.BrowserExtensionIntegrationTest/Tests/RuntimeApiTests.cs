@@ -5,12 +5,12 @@ using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
-    [TestClass(Description = "browser.runtime")]
-    public class RuntimeTests
+    [TestClass(Description = "browser.runtime API")]
+    public class RuntimeApiTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
 
-        public RuntimeTests(IWebExtensionsApi webExtensionsApi)
+        public RuntimeApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
         }

@@ -3,20 +3,19 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtensions.Net.ExtensionTypes;
 using WebExtensions.Net.Tabs;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
-    [TestClass(Description = "browser.tabs")]
-    public class TabsTests
+    [TestClass(Description = "browser.tabs API")]
+    public class TabsApiTests
     {
         private readonly IWebExtensionsApi webExtensionsApi;
         private int? testTabId;
         private readonly string testTabUrl;
         private readonly string testTabUpdateUrl;
 
-        public TabsTests(IWebExtensionsApi webExtensionsApi)
+        public TabsApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
             testTabUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtensions.Net/main/README.md?testId=" + Guid.NewGuid().ToString();
@@ -85,7 +84,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Create()
         {
             // Act
-            var tab = await webExtensionsApi.Tabs.Create(new CreateProperties()
+            var tab = await webExtensionsApi.Tabs.Create(new()
             {
                 Url = testTabUrl
             });
@@ -122,13 +121,13 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Query()
         {
             // Act
-            var tabs = await webExtensionsApi.Tabs.Query(new QueryInfo()
+            var tabs = await webExtensionsApi.Tabs.Query(new()
             {
                 Url = testTabUrl
             });
 
             // Assert
-            tabs.Should().NotBeEmpty();
+            tabs.Should().NotBeNullOrEmpty();
             tabs.Should().HaveCount(1);
             tabs.Single().Id.Should().Be(testTabId);
         }
@@ -140,7 +139,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var url = testTabUpdateUrl;
 
             // Act
-            var tab = await webExtensionsApi.Tabs.Update(testTabId.Value, new UpdateProperties()
+            var tab = await webExtensionsApi.Tabs.Update(testTabId.Value, new()
             {
                 Url = url
             });

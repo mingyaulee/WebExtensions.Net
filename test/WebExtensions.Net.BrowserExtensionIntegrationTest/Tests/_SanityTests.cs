@@ -42,37 +42,35 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteAPIWithEnumerableReturnType()
         {
             // Act
-            var tab = await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true });
+            var tabs = await webExtensionsApi.Tabs.Query(new() { Active = true });
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Should().NotBeEmpty();
-            tab.First().Id.Should().BeGreaterThan(0);
+            tabs.Should().NotBeNullOrEmpty();
+            tabs.First().Id.Should().BeGreaterThan(0);
         }
 
         [Fact(Description = "Execute API with multitype class argument type", Order = 3)]
         public async Task ExecuteAPIWithMultitypeClassArgumentType()
         {
             // Arrange
-            var activeTab = (await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+            var activeTab = (await webExtensionsApi.Tabs.Query(new() { Active = true })).First();
 
             // Act
-            var tab = await webExtensionsApi.Tabs.Query(new QueryInfo() { Url = activeTab.Url });
+            var tabs = await webExtensionsApi.Tabs.Query(new() { Url = activeTab.Url });
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Should().NotBeEmpty();
-            tab.First().Id.Should().BeGreaterThan(0);
+            tabs.Should().NotBeNullOrEmpty();
+            tabs.First().Id.Should().BeGreaterThan(0);
         }
 
         [Fact(Description = "Execute API with multitype class return type", Order = 3)]
         public async Task ExecuteAPIWithMultitypeClassReturnType()
         {
             // Arrange
-            var activeTab = (await webExtensionsApi.Tabs.Query(new QueryInfo() { Active = true })).First();
+            var activeTab = (await webExtensionsApi.Tabs.Query(new() { Active = true })).First();
 
             // Act
-            var tab = await webExtensionsApi.Tabs.Move(activeTab.Id.Value, new MoveProperties() { Index = 1 });
+            var tab = await webExtensionsApi.Tabs.Move(activeTab.Id.Value, new() { Index = 1 });
 
             // Assert
             tab.Should().NotBeNull();
