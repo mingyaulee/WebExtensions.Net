@@ -20,7 +20,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         {
             this.webExtensionsApi = webExtensionsApi;
             testCookieName = "TestCookie";
-            testCookieUrl = "http://non-existent-domain.com/";
+            testCookieUrl = "https://non-existent-domain.com/";
             testCookieDomain = "non-existent-domain.com";
             testCookieValue = Guid.NewGuid().ToString();
         }
@@ -33,6 +33,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             {
                 Name = testCookieName,
                 Url = testCookieUrl,
+                Secure = true,
                 Value = testCookieValue
             });
 

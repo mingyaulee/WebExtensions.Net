@@ -41,6 +41,6 @@
     "tabs",
     "windows",
     // used in CookiesApiTests
-    "http://*.non-existent-domain.com/"
+    "https://*.non-existent-domain.com/"
   ]
 }

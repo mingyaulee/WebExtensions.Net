@@ -18,7 +18,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public HistoryApiTests(IWebExtensionsApi webExtensionsApi)
         {
             this.webExtensionsApi = webExtensionsApi;
-            testHistoryUrl = "http://non-existent-url.com/";
+            testHistoryUrl = "https://non-existent-url.com/";
             testHistorySearchText = "non-existent-url";
             testHistoryTime = DateTime.UtcNow;
         }
