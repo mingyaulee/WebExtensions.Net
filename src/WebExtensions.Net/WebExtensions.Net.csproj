@@ -18,7 +18,7 @@
     <RepositoryUrl>https://github.com/mingyaulee/WebExtensions.Net</RepositoryUrl>
     <PackageTags>Browser Chrome Firefox Edge Extension Addons .Net</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>icon.png</PackageIcon>
+    <PackageIcon>Icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +30,7 @@
       <Pack>true</Pack>
       <PackagePath>content</PackagePath>
     </Content>
-    <Content Include="icon.png">
+    <Content Include="..\Icon\Icon.png">
       <Pack>true</Pack>
       <PackagePath></PackagePath>
     </Content>
