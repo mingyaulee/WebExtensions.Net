@@ -1,9 +1,11 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Devtools.Panels
 {
     // Type Class
     /// <summary>Represents the Elements panel.</summary>
+    [BindAllProperties]
     public partial class ElementsPanel : BaseObject
     {
         /// <summary>Creates a pane within panel's sidebar.</summary>

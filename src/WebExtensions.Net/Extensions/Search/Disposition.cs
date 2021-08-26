@@ -17,6 +17,5 @@ namespace WebExtensions.Net.Search
         /// <summary>New Window</summary>
         [EnumValue("NEW_WINDOW")]
         NewWindow
-
     }
 }

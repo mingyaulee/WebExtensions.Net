@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Proxy
 {
     // Type Class
     /// <summary>Notifies about errors caused by the invalid use of the proxy API.</summary>
+    [BindAllProperties]
     public partial class OnErrorEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

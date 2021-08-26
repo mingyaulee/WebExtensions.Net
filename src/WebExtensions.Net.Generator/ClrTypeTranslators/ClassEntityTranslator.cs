@@ -57,7 +57,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Metadata = new Dictionary<string, object>()
                 {
                     { Constants.TypeMetadata.ClassType, classEntity.Type },
-                    { Constants.TypeMetadata.ApiNamespace, classEntity.NamespaceEntity.FullName }
+                    { Constants.TypeMetadata.ApiNamespace, classEntity.NamespaceEntity.Name }
                 }
             };
 

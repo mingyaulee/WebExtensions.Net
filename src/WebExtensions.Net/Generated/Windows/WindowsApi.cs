@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace WebExtensions.Net.Windows
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="WindowsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public WindowsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "windows")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public WindowsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "windows"))
         {
         }
 
@@ -24,7 +26,7 @@ namespace WebExtensions.Net.Windows
                 if (_onCreated is null)
                 {
                     _onCreated = new OnCreatedEvent();
-                    InitializeProperty("onCreated", _onCreated);
+                    _onCreated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCreated"));
                 }
                 return _onCreated;
             }
@@ -38,7 +40,7 @@ namespace WebExtensions.Net.Windows
                 if (_onFocusChanged is null)
                 {
                     _onFocusChanged = new OnFocusChangedEvent();
-                    InitializeProperty("onFocusChanged", _onFocusChanged);
+                    _onFocusChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onFocusChanged"));
                 }
                 return _onFocusChanged;
             }
@@ -52,7 +54,7 @@ namespace WebExtensions.Net.Windows
                 if (_onRemoved is null)
                 {
                     _onRemoved = new OnRemovedEvent();
-                    InitializeProperty("onRemoved", _onRemoved);
+                    _onRemoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRemoved"));
                 }
                 return _onRemoved;
             }

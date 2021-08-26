@@ -19,11 +19,8 @@
     <None Include="wwwroot\**\*" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
-  <!-- Import project reference and build props and targets as if we are referencing the built NuGet package -->
   <ItemGroup>
     <ProjectReference Include="..\..\src\WebExtensions.Net\WebExtensions.Net.csproj" />
   </ItemGroup>
-  <Import Project="..\..\src\WebExtensions.Net\build\WebExtensions.Net.props" />
-  <Import Project="..\..\src\WebExtensions.Net\build\WebExtensions.Net.targets" />
 
 </Project>

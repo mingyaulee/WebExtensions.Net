@@ -1,9 +1,11 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Types
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class Setting : BaseObject
     {
         /// <summary>Clears the setting, restoring any default value.</summary>

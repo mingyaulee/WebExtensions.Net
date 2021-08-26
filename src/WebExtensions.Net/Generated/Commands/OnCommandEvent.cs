@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Commands
 {
     // Type Class
     /// <summary>Fired when a registered command is activated using a keyboard shortcut.</summary>
+    [BindAllProperties]
     public partial class OnCommandEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Types;
@@ -8,8 +9,9 @@ namespace WebExtensions.Net.BrowserSettings
     public partial class BrowserSettingsApi : BaseApi, IBrowserSettingsApi
     {
         /// <summary>Creates a new instance of <see cref="BrowserSettingsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public BrowserSettingsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "browserSettings")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public BrowserSettingsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browserSettings"))
         {
         }
 

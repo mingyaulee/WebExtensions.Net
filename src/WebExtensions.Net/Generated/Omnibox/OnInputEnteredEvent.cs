@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Omnibox
 {
     // Type Class
     /// <summary>User has accepted what is typed into the omnibox.</summary>
+    [BindAllProperties]
     public partial class OnInputEnteredEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

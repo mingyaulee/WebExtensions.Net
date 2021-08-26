@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Downloads
 {
     // Type Class
     /// <summary>This event fires with the <see href='#type-DownloadItem'>DownloadItem</see> object when a download begins.</summary>
+    [BindAllProperties]
     public partial class OnCreatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

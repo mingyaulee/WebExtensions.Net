@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired before sending an HTTP request, once the request headers are available. This may occur after a TCP connection is made to the server, but before any HTTP data is sent. </summary>
+    [BindAllProperties]
     public partial class OnBeforeSendHeadersEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

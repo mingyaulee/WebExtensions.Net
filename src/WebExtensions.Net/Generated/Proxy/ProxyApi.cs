@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
@@ -10,8 +11,9 @@ namespace WebExtensions.Net.Proxy
         private OnRequestEvent _onRequest;
 
         /// <summary>Creates a new instance of <see cref="ProxyApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public ProxyApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "proxy")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ProxyApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "proxy"))
         {
         }
 
@@ -23,7 +25,7 @@ namespace WebExtensions.Net.Proxy
                 if (_onError is null)
                 {
                     _onError = new OnErrorEvent();
-                    InitializeProperty("onError", _onError);
+                    _onError.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onError"));
                 }
                 return _onError;
             }
@@ -37,7 +39,7 @@ namespace WebExtensions.Net.Proxy
                 if (_onRequest is null)
                 {
                     _onRequest = new OnRequestEvent();
-                    InitializeProperty("onRequest", _onRequest);
+                    _onRequest.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRequest"));
                 }
                 return _onRequest;
             }

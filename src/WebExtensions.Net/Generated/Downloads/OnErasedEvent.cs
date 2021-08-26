@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Downloads
 {
     // Type Class
     /// <summary>Fires with the <c>downloadId</c> when a download is erased from history.</summary>
+    [BindAllProperties]
     public partial class OnErasedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

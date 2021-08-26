@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,8 +14,9 @@ namespace WebExtensions.Net.Menus
         private OnShownEvent _onShown;
 
         /// <summary>Creates a new instance of <see cref="MenusApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public MenusApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "menus")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public MenusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "menus"))
         {
         }
 
@@ -29,7 +31,7 @@ namespace WebExtensions.Net.Menus
                 if (_onClicked is null)
                 {
                     _onClicked = new OnClickedEvent();
-                    InitializeProperty("onClicked", _onClicked);
+                    _onClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClicked"));
                 }
                 return _onClicked;
             }
@@ -43,7 +45,7 @@ namespace WebExtensions.Net.Menus
                 if (_onHidden is null)
                 {
                     _onHidden = new Event();
-                    InitializeProperty("onHidden", _onHidden);
+                    _onHidden.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onHidden"));
                 }
                 return _onHidden;
             }
@@ -57,7 +59,7 @@ namespace WebExtensions.Net.Menus
                 if (_onShown is null)
                 {
                     _onShown = new OnShownEvent();
-                    InitializeProperty("onShown", _onShown);
+                    _onShown.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onShown"));
                 }
                 return _onShown;
             }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when HTTP response headers of a request have been received.</summary>
+    [BindAllProperties]
     public partial class OnHeadersReceivedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

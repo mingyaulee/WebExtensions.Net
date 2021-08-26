@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Devtools.Network
 {
     // Type Class
     /// <summary>Fired when a network request is finished and all request data are available.</summary>
+    [BindAllProperties]
     public partial class OnRequestFinishedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

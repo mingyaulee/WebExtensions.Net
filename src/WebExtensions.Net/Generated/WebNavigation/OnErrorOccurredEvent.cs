@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when an error occurs and the navigation is aborted. This can happen if either a network error occurred, or the user aborted the navigation.</summary>
+    [BindAllProperties]
     public partial class OnErrorOccurredEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

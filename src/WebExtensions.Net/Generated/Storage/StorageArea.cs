@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -5,6 +6,7 @@ namespace WebExtensions.Net.Storage
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class StorageArea : BaseObject
     {
         /// <summary>Removes all items from storage.</summary>

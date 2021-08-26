@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Devtools.Panels
 {
     // Type Class
     /// <summary>Fired when the devtools theme changes.</summary>
+    [BindAllProperties]
     public partial class OnThemeChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

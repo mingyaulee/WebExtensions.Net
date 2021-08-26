@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Bookmarks
 {
     // Type Class
     /// <summary>Fired when a bookmark or folder changes.  'b'Note:'/b' Currently, only title and url changes trigger this.</summary>
+    [BindAllProperties]
     public partial class OnChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

@@ -29,6 +29,9 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             {
                 // Event property
                 var privatePropertyName = clrPropertyInfo.PrivateName;
+
+                codeWriter.WriteUsingStatement("JsBind.Net");
+
                 codeWriter.Properties
                     .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
 
@@ -44,7 +47,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                             .WriteLine($"if (_{privatePropertyName} is null)")
                             .WriteStartBlock()
                                 .WriteLine($"_{privatePropertyName} = new {clrPropertyInfo.PropertyType.CSharpName}();")
-                                .WriteLine($"InitializeProperty(\"{privatePropertyName}\", _{privatePropertyName});")
+                                .WriteLine($"_{privatePropertyName}.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, \"{privatePropertyName}\"));")
                             .WriteEndBlock()
                             .WriteLine($"return _{privatePropertyName};")
                         // end property get

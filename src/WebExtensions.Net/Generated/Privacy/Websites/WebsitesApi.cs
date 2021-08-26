@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
@@ -7,8 +8,9 @@ namespace WebExtensions.Net.Privacy.Websites
     public partial class WebsitesApi : BaseApi, IWebsitesApi
     {
         /// <summary>Creates a new instance of <see cref="WebsitesApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public WebsitesApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "privacy.websites")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public WebsitesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "websites"))
         {
         }
 

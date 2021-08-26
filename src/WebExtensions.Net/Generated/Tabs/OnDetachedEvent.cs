@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when a tab is detached from a window, for example because it is being moved between windows.</summary>
+    [BindAllProperties]
     public partial class OnDetachedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

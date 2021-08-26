@@ -11,14 +11,13 @@
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.Properties
-                .WriteLine($"private readonly IWebExtensionsJSRuntime webExtensionsJSRuntime;");
+            codeWriter.WriteUsingStatement("JsBind.Net");
 
             codeWriter.Constructors
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{apiRootName}\" />."))
-                .WriteLine($"public {apiRootName}(IWebExtensionsJSRuntime webExtensionsJSRuntime)")
+                .WriteWithConverter(new CommentParamCodeSectionConverter("jsRuntime", "The JS runtime adapter."))
+                .WriteLine($"public {apiRootName}(IJsRuntimeAdapter jsRuntime) : base(jsRuntime, \"browser\")")
                 .WriteStartBlock()
-                .WriteLine($"this.webExtensionsJSRuntime = webExtensionsJSRuntime;")
                 .WriteEndBlock();
         }
     }

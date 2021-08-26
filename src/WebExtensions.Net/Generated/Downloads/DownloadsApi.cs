@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace WebExtensions.Net.Downloads
         private OnErasedEvent _onErased;
 
         /// <summary>Creates a new instance of <see cref="DownloadsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public DownloadsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "downloads")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public DownloadsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "downloads"))
         {
         }
 
@@ -24,7 +26,7 @@ namespace WebExtensions.Net.Downloads
                 if (_onChanged is null)
                 {
                     _onChanged = new OnChangedEvent();
-                    InitializeProperty("onChanged", _onChanged);
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
                 }
                 return _onChanged;
             }
@@ -38,7 +40,7 @@ namespace WebExtensions.Net.Downloads
                 if (_onCreated is null)
                 {
                     _onCreated = new OnCreatedEvent();
-                    InitializeProperty("onCreated", _onCreated);
+                    _onCreated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCreated"));
                 }
                 return _onCreated;
             }
@@ -52,7 +54,7 @@ namespace WebExtensions.Net.Downloads
                 if (_onErased is null)
                 {
                     _onErased = new OnErasedEvent();
-                    InitializeProperty("onErased", _onErased);
+                    _onErased.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onErased"));
                 }
                 return _onErased;
             }

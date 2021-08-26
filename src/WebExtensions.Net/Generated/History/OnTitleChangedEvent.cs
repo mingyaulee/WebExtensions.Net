@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.History
 {
     // Type Class
     /// <summary>Fired when the title of a URL is changed in the browser history.</summary>
+    [BindAllProperties]
     public partial class OnTitleChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

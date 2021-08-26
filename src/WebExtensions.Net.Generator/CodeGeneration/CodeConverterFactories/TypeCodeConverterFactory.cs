@@ -13,8 +13,11 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
 
         public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
+            codeFile.UsingNamespaces.Add("JsBind.Net");
+
             codeFile.Comments.Add(new CommentCodeConverter("Type Class"));
             codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
+            codeFile.Comments.Add(new AttributeCodeConverter("BindAllProperties"));
 
             if (clrTypeInfo.IsObsolete)
             {

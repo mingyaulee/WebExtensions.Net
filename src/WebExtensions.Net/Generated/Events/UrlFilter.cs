@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -5,347 +6,107 @@ namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>Filters URLs for various criteria. See <see href='events#filtered'>event filtering</see>. All criteria are case sensitive.</summary>
+    [BindAllProperties]
     public partial class UrlFilter : BaseObject
     {
-        private string _hostContains;
-        private string _hostEquals;
-        private string _hostPrefix;
-        private string _hostSuffix;
-        private string _originAndPathMatches;
-        private string _pathContains;
-        private string _pathEquals;
-        private string _pathPrefix;
-        private string _pathSuffix;
-        private IEnumerable<PortsArrayItem> _ports;
-        private string _queryContains;
-        private string _queryEquals;
-        private string _queryPrefix;
-        private string _querySuffix;
-        private IEnumerable<string> _schemes;
-        private string _urlContains;
-        private string _urlEquals;
-        private string _urlMatches;
-        private string _urlPrefix;
-        private string _urlSuffix;
-
         /// <summary>Matches if the host name of the URL contains a specified string. To test whether a host name component has a prefix 'foo', use hostContains: '.foo'. This matches 'www.foobar.com' and 'foo.com', because an implicit dot is added at the beginning of the host name. Similarly, hostContains can be used to match against component suffix ('foo.') and to exactly match against components ('.foo.'). Suffix- and exact-matching for the last components need to be done separately using hostSuffix, because no implicit dot is added at the end of the host name.</summary>
         [JsonPropertyName("hostContains")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string HostContains
-        {
-            get
-            {
-                InitializeProperty("hostContains", _hostContains);
-                return _hostContains;
-            }
-            set
-            {
-                _hostContains = value;
-            }
-        }
+        public string HostContains { get; set; }
 
         /// <summary>Matches if the host name of the URL is equal to a specified string.</summary>
         [JsonPropertyName("hostEquals")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string HostEquals
-        {
-            get
-            {
-                InitializeProperty("hostEquals", _hostEquals);
-                return _hostEquals;
-            }
-            set
-            {
-                _hostEquals = value;
-            }
-        }
+        public string HostEquals { get; set; }
 
         /// <summary>Matches if the host name of the URL starts with a specified string.</summary>
         [JsonPropertyName("hostPrefix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string HostPrefix
-        {
-            get
-            {
-                InitializeProperty("hostPrefix", _hostPrefix);
-                return _hostPrefix;
-            }
-            set
-            {
-                _hostPrefix = value;
-            }
-        }
+        public string HostPrefix { get; set; }
 
         /// <summary>Matches if the host name of the URL ends with a specified string.</summary>
         [JsonPropertyName("hostSuffix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string HostSuffix
-        {
-            get
-            {
-                InitializeProperty("hostSuffix", _hostSuffix);
-                return _hostSuffix;
-            }
-            set
-            {
-                _hostSuffix = value;
-            }
-        }
+        public string HostSuffix { get; set; }
 
         /// <summary>Matches if the URL without query segment and fragment identifier matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the <see href="https://github.com/google/re2/blob/master/doc/syntax.txt">RE2 syntax</see>.</summary>
         [JsonPropertyName("originAndPathMatches")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string OriginAndPathMatches
-        {
-            get
-            {
-                InitializeProperty("originAndPathMatches", _originAndPathMatches);
-                return _originAndPathMatches;
-            }
-            set
-            {
-                _originAndPathMatches = value;
-            }
-        }
+        public string OriginAndPathMatches { get; set; }
 
         /// <summary>Matches if the path segment of the URL contains a specified string.</summary>
         [JsonPropertyName("pathContains")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string PathContains
-        {
-            get
-            {
-                InitializeProperty("pathContains", _pathContains);
-                return _pathContains;
-            }
-            set
-            {
-                _pathContains = value;
-            }
-        }
+        public string PathContains { get; set; }
 
         /// <summary>Matches if the path segment of the URL is equal to a specified string.</summary>
         [JsonPropertyName("pathEquals")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string PathEquals
-        {
-            get
-            {
-                InitializeProperty("pathEquals", _pathEquals);
-                return _pathEquals;
-            }
-            set
-            {
-                _pathEquals = value;
-            }
-        }
+        public string PathEquals { get; set; }
 
         /// <summary>Matches if the path segment of the URL starts with a specified string.</summary>
         [JsonPropertyName("pathPrefix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string PathPrefix
-        {
-            get
-            {
-                InitializeProperty("pathPrefix", _pathPrefix);
-                return _pathPrefix;
-            }
-            set
-            {
-                _pathPrefix = value;
-            }
-        }
+        public string PathPrefix { get; set; }
 
         /// <summary>Matches if the path segment of the URL ends with a specified string.</summary>
         [JsonPropertyName("pathSuffix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string PathSuffix
-        {
-            get
-            {
-                InitializeProperty("pathSuffix", _pathSuffix);
-                return _pathSuffix;
-            }
-            set
-            {
-                _pathSuffix = value;
-            }
-        }
+        public string PathSuffix { get; set; }
 
         /// <summary>Matches if the port of the URL is contained in any of the specified port lists. For example <c>[80, 443, [1000, 1200]]</c> matches all requests on port 80, 443 and in the range 1000-1200.</summary>
         [JsonPropertyName("ports")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<PortsArrayItem> Ports
-        {
-            get
-            {
-                InitializeProperty("ports", _ports);
-                return _ports;
-            }
-            set
-            {
-                _ports = value;
-            }
-        }
+        public IEnumerable<PortsArrayItem> Ports { get; set; }
 
         /// <summary>Matches if the query segment of the URL contains a specified string.</summary>
         [JsonPropertyName("queryContains")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string QueryContains
-        {
-            get
-            {
-                InitializeProperty("queryContains", _queryContains);
-                return _queryContains;
-            }
-            set
-            {
-                _queryContains = value;
-            }
-        }
+        public string QueryContains { get; set; }
 
         /// <summary>Matches if the query segment of the URL is equal to a specified string.</summary>
         [JsonPropertyName("queryEquals")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string QueryEquals
-        {
-            get
-            {
-                InitializeProperty("queryEquals", _queryEquals);
-                return _queryEquals;
-            }
-            set
-            {
-                _queryEquals = value;
-            }
-        }
+        public string QueryEquals { get; set; }
 
         /// <summary>Matches if the query segment of the URL starts with a specified string.</summary>
         [JsonPropertyName("queryPrefix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string QueryPrefix
-        {
-            get
-            {
-                InitializeProperty("queryPrefix", _queryPrefix);
-                return _queryPrefix;
-            }
-            set
-            {
-                _queryPrefix = value;
-            }
-        }
+        public string QueryPrefix { get; set; }
 
         /// <summary>Matches if the query segment of the URL ends with a specified string.</summary>
         [JsonPropertyName("querySuffix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string QuerySuffix
-        {
-            get
-            {
-                InitializeProperty("querySuffix", _querySuffix);
-                return _querySuffix;
-            }
-            set
-            {
-                _querySuffix = value;
-            }
-        }
+        public string QuerySuffix { get; set; }
 
         /// <summary>Matches if the scheme of the URL is equal to any of the schemes specified in the array.</summary>
         [JsonPropertyName("schemes")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<string> Schemes
-        {
-            get
-            {
-                InitializeProperty("schemes", _schemes);
-                return _schemes;
-            }
-            set
-            {
-                _schemes = value;
-            }
-        }
+        public IEnumerable<string> Schemes { get; set; }
 
         /// <summary>Matches if the URL (without fragment identifier) contains a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlContains")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UrlContains
-        {
-            get
-            {
-                InitializeProperty("urlContains", _urlContains);
-                return _urlContains;
-            }
-            set
-            {
-                _urlContains = value;
-            }
-        }
+        public string UrlContains { get; set; }
 
         /// <summary>Matches if the URL (without fragment identifier) is equal to a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlEquals")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UrlEquals
-        {
-            get
-            {
-                InitializeProperty("urlEquals", _urlEquals);
-                return _urlEquals;
-            }
-            set
-            {
-                _urlEquals = value;
-            }
-        }
+        public string UrlEquals { get; set; }
 
         /// <summary>Matches if the URL (without fragment identifier) matches a specified regular expression. Port numbers are stripped from the URL if they match the default port number. The regular expressions use the <see href="https://github.com/google/re2/blob/master/doc/syntax.txt">RE2 syntax</see>.</summary>
         [JsonPropertyName("urlMatches")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UrlMatches
-        {
-            get
-            {
-                InitializeProperty("urlMatches", _urlMatches);
-                return _urlMatches;
-            }
-            set
-            {
-                _urlMatches = value;
-            }
-        }
+        public string UrlMatches { get; set; }
 
         /// <summary>Matches if the URL (without fragment identifier) starts with a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlPrefix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UrlPrefix
-        {
-            get
-            {
-                InitializeProperty("urlPrefix", _urlPrefix);
-                return _urlPrefix;
-            }
-            set
-            {
-                _urlPrefix = value;
-            }
-        }
+        public string UrlPrefix { get; set; }
 
         /// <summary>Matches if the URL (without fragment identifier) ends with a specified string. Port numbers are stripped from the URL if they match the default port number.</summary>
         [JsonPropertyName("urlSuffix")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string UrlSuffix
-        {
-            get
-            {
-                InitializeProperty("urlSuffix", _urlSuffix);
-                return _urlSuffix;
-            }
-            set
-            {
-                _urlSuffix = value;
-            }
-        }
+        public string UrlSuffix { get; set; }
     }
 }

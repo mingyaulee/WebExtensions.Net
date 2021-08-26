@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -10,8 +11,9 @@ namespace WebExtensions.Net.Sessions
         private Event _onChanged;
 
         /// <summary>Creates a new instance of <see cref="SessionsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public SessionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "sessions")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public SessionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "sessions"))
         {
         }
 
@@ -26,7 +28,7 @@ namespace WebExtensions.Net.Sessions
                 if (_onChanged is null)
                 {
                     _onChanged = new Event();
-                    InitializeProperty("onChanged", _onChanged);
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
                 }
                 return _onChanged;
             }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary>Fired when the user clicked in a non-button area of the notification.</summary>
+    [BindAllProperties]
     public partial class OnClickedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

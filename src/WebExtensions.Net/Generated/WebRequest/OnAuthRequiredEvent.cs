@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.WebRequest
 {
     // Type Class
     /// <summary>Fired when an authentication failure is received. The listener has three options: it can provide authentication credentials, it can cancel the request and display the error page, or it can take no action on the challenge. If bad user credentials are provided, this may be called multiple times for the same request.</summary>
+    [BindAllProperties]
     public partial class OnAuthRequiredEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

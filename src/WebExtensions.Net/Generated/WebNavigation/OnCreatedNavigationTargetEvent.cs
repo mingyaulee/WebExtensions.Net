@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a new window, or a new tab in an existing window, is created to host a navigation.</summary>
+    [BindAllProperties]
     public partial class OnCreatedNavigationTargetEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

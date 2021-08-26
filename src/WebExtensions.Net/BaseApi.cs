@@ -1,19 +1,16 @@
-﻿namespace WebExtensions.Net
+﻿using JsBind.Net;
+
+namespace WebExtensions.Net
 {
     /// <summary>
     /// Base API class.
     /// </summary>
-    public class BaseApi : BaseObject
+    public class BaseApi : ObjectBindingBase<BaseApi>
     {
-        /// <summary>
-        /// Gets the WebExtensionsJsRuntime instance.
-        /// </summary>
-        protected new IWebExtensionsJSRuntime webExtensionsJSRuntime;
-
-        internal BaseApi(IWebExtensionsJSRuntime webExtensionsJSRuntime, string apiNamespace)
+        internal BaseApi(IJsRuntimeAdapter jsRuntime, string apiNamespace)
         {
-            this.webExtensionsJSRuntime = webExtensionsJSRuntime;
-            Initialize(webExtensionsJSRuntime, "browser", apiNamespace);
+            SetAccessPath(apiNamespace);
+            Initialize(jsRuntime);
         }
     }
 }

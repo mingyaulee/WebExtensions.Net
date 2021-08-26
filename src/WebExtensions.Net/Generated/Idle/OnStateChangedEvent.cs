@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Idle
 {
     // Type Class
     /// <summary>Fired when the system changes to an active or idle state. The event fires with "idle" if the the user has not generated any input for a specified number of seconds, and "active" when the user generates input on an idle system.</summary>
+    [BindAllProperties]
     public partial class OnStateChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

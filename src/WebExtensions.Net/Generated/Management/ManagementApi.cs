@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebExtensions.Net.Manifest;
@@ -13,8 +14,9 @@ namespace WebExtensions.Net.Management
         private OnUninstalledEvent _onUninstalled;
 
         /// <summary>Creates a new instance of <see cref="ManagementApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public ManagementApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "management")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ManagementApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "management"))
         {
         }
 
@@ -26,7 +28,7 @@ namespace WebExtensions.Net.Management
                 if (_onDisabled is null)
                 {
                     _onDisabled = new OnDisabledEvent();
-                    InitializeProperty("onDisabled", _onDisabled);
+                    _onDisabled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onDisabled"));
                 }
                 return _onDisabled;
             }
@@ -40,7 +42,7 @@ namespace WebExtensions.Net.Management
                 if (_onEnabled is null)
                 {
                     _onEnabled = new OnEnabledEvent();
-                    InitializeProperty("onEnabled", _onEnabled);
+                    _onEnabled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onEnabled"));
                 }
                 return _onEnabled;
             }
@@ -54,7 +56,7 @@ namespace WebExtensions.Net.Management
                 if (_onInstalled is null)
                 {
                     _onInstalled = new OnInstalledEvent();
-                    InitializeProperty("onInstalled", _onInstalled);
+                    _onInstalled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onInstalled"));
                 }
                 return _onInstalled;
             }
@@ -68,7 +70,7 @@ namespace WebExtensions.Net.Management
                 if (_onUninstalled is null)
                 {
                     _onUninstalled = new OnUninstalledEvent();
-                    InitializeProperty("onUninstalled", _onUninstalled);
+                    _onUninstalled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUninstalled"));
                 }
                 return _onUninstalled;
             }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,8 +10,9 @@ namespace WebExtensions.Net.Commands
         private OnCommandEvent _onCommand;
 
         /// <summary>Creates a new instance of <see cref="CommandsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public CommandsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "commands")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public CommandsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "commands"))
         {
         }
 
@@ -22,7 +24,7 @@ namespace WebExtensions.Net.Commands
                 if (_onCommand is null)
                 {
                     _onCommand = new OnCommandEvent();
-                    InitializeProperty("onCommand", _onCommand);
+                    _onCommand.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCommand"));
                 }
                 return _onCommand;
             }

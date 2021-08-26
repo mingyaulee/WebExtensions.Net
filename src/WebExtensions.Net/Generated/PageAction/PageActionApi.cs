@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.PageAction
@@ -8,8 +9,9 @@ namespace WebExtensions.Net.PageAction
         private OnClickedEvent _onClicked;
 
         /// <summary>Creates a new instance of <see cref="PageActionApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public PageActionApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "pageAction")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public PageActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "pageAction"))
         {
         }
 
@@ -21,7 +23,7 @@ namespace WebExtensions.Net.PageAction
                 if (_onClicked is null)
                 {
                     _onClicked = new OnClickedEvent();
-                    InitializeProperty("onClicked", _onClicked);
+                    _onClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClicked"));
                 }
                 return _onClicked;
             }

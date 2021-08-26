@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -22,8 +23,9 @@ namespace WebExtensions.Net.Tabs
         private OnZoomChangeEvent _onZoomChange;
 
         /// <summary>Creates a new instance of <see cref="TabsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public TabsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "tabs")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public TabsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "tabs"))
         {
         }
 
@@ -35,7 +37,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onActivated is null)
                 {
                     _onActivated = new OnActivatedEvent();
-                    InitializeProperty("onActivated", _onActivated);
+                    _onActivated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onActivated"));
                 }
                 return _onActivated;
             }
@@ -49,7 +51,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onAttached is null)
                 {
                     _onAttached = new OnAttachedEvent();
-                    InitializeProperty("onAttached", _onAttached);
+                    _onAttached.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onAttached"));
                 }
                 return _onAttached;
             }
@@ -63,7 +65,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onCreated is null)
                 {
                     _onCreated = new OnCreatedEvent();
-                    InitializeProperty("onCreated", _onCreated);
+                    _onCreated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCreated"));
                 }
                 return _onCreated;
             }
@@ -77,7 +79,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onDetached is null)
                 {
                     _onDetached = new OnDetachedEvent();
-                    InitializeProperty("onDetached", _onDetached);
+                    _onDetached.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onDetached"));
                 }
                 return _onDetached;
             }
@@ -91,7 +93,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onHighlighted is null)
                 {
                     _onHighlighted = new OnHighlightedEvent();
-                    InitializeProperty("onHighlighted", _onHighlighted);
+                    _onHighlighted.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onHighlighted"));
                 }
                 return _onHighlighted;
             }
@@ -105,7 +107,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onMoved is null)
                 {
                     _onMoved = new OnMovedEvent();
-                    InitializeProperty("onMoved", _onMoved);
+                    _onMoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onMoved"));
                 }
                 return _onMoved;
             }
@@ -119,7 +121,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onRemoved is null)
                 {
                     _onRemoved = new OnRemovedEvent();
-                    InitializeProperty("onRemoved", _onRemoved);
+                    _onRemoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRemoved"));
                 }
                 return _onRemoved;
             }
@@ -133,7 +135,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onReplaced is null)
                 {
                     _onReplaced = new OnReplacedEvent();
-                    InitializeProperty("onReplaced", _onReplaced);
+                    _onReplaced.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onReplaced"));
                 }
                 return _onReplaced;
             }
@@ -147,7 +149,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onUpdated is null)
                 {
                     _onUpdated = new OnUpdatedEvent();
-                    InitializeProperty("onUpdated", _onUpdated);
+                    _onUpdated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUpdated"));
                 }
                 return _onUpdated;
             }
@@ -161,7 +163,7 @@ namespace WebExtensions.Net.Tabs
                 if (_onZoomChange is null)
                 {
                     _onZoomChange = new OnZoomChangeEvent();
-                    InitializeProperty("onZoomChange", _onZoomChange);
+                    _onZoomChange.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onZoomChange"));
                 }
                 return _onZoomChange;
             }

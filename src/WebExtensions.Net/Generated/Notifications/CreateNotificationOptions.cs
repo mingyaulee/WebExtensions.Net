@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -5,210 +6,66 @@ namespace WebExtensions.Net.Notifications
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class CreateNotificationOptions : BaseObject
     {
-        private string _appIconMaskUrl;
-        private string _contextMessage;
-        private EpochTime? _eventTime;
-        private string _iconUrl;
-        private string _imageUrl;
-        private bool? _isClickable;
-        private IEnumerable<NotificationItem> _items;
-        private string _message;
-        private int? _priority;
-        private int? _progress;
-        private string _title;
-        private TemplateType _type;
-
         /// <summary>A URL to the app icon mask.</summary>
         [JsonPropertyName("appIconMaskUrl")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string AppIconMaskUrl
-        {
-            get
-            {
-                InitializeProperty("appIconMaskUrl", _appIconMaskUrl);
-                return _appIconMaskUrl;
-            }
-            set
-            {
-                _appIconMaskUrl = value;
-            }
-        }
+        public string AppIconMaskUrl { get; set; }
 
         /// <summary>Alternate notification content with a lower-weight font.</summary>
         [JsonPropertyName("contextMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string ContextMessage
-        {
-            get
-            {
-                InitializeProperty("contextMessage", _contextMessage);
-                return _contextMessage;
-            }
-            set
-            {
-                _contextMessage = value;
-            }
-        }
+        public string ContextMessage { get; set; }
 
         /// <summary>A timestamp associated with the notification, in milliseconds past the epoch.</summary>
         [JsonPropertyName("eventTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public EpochTime? EventTime
-        {
-            get
-            {
-                InitializeProperty("eventTime", _eventTime);
-                return _eventTime;
-            }
-            set
-            {
-                _eventTime = value;
-            }
-        }
+        public EpochTime? EventTime { get; set; }
 
         /// <summary>A URL to the sender's avatar, app icon, or a thumbnail for image notifications.</summary>
         [JsonPropertyName("iconUrl")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string IconUrl
-        {
-            get
-            {
-                InitializeProperty("iconUrl", _iconUrl);
-                return _iconUrl;
-            }
-            set
-            {
-                _iconUrl = value;
-            }
-        }
+        public string IconUrl { get; set; }
 
         /// <summary>A URL to the image thumbnail for image-type notifications.</summary>
         [JsonPropertyName("imageUrl")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string ImageUrl
-        {
-            get
-            {
-                InitializeProperty("imageUrl", _imageUrl);
-                return _imageUrl;
-            }
-            set
-            {
-                _imageUrl = value;
-            }
-        }
+        public string ImageUrl { get; set; }
 
         /// <summary>Whether to show UI indicating that the app will visibly respond to clicks on the body of a notification.</summary>
         [JsonPropertyName("isClickable")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? IsClickable
-        {
-            get
-            {
-                InitializeProperty("isClickable", _isClickable);
-                return _isClickable;
-            }
-            set
-            {
-                _isClickable = value;
-            }
-        }
+        public bool? IsClickable { get; set; }
 
         /// <summary>Items for multi-item notifications.</summary>
         [JsonPropertyName("items")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<NotificationItem> Items
-        {
-            get
-            {
-                InitializeProperty("items", _items);
-                return _items;
-            }
-            set
-            {
-                _items = value;
-            }
-        }
+        public IEnumerable<NotificationItem> Items { get; set; }
 
         /// <summary>Main notification content.</summary>
         [JsonPropertyName("message")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Message
-        {
-            get
-            {
-                InitializeProperty("message", _message);
-                return _message;
-            }
-            set
-            {
-                _message = value;
-            }
-        }
+        public string Message { get; set; }
 
         /// <summary>Priority ranges from -2 to 2. -2 is lowest priority. 2 is highest. Zero is default.</summary>
         [JsonPropertyName("priority")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? Priority
-        {
-            get
-            {
-                InitializeProperty("priority", _priority);
-                return _priority;
-            }
-            set
-            {
-                _priority = value;
-            }
-        }
+        public int? Priority { get; set; }
 
         /// <summary>Current progress ranges from 0 to 100.</summary>
         [JsonPropertyName("progress")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? Progress
-        {
-            get
-            {
-                InitializeProperty("progress", _progress);
-                return _progress;
-            }
-            set
-            {
-                _progress = value;
-            }
-        }
+        public int? Progress { get; set; }
 
         /// <summary>Title of the notification (e.g. sender name for email).</summary>
         [JsonPropertyName("title")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Title
-        {
-            get
-            {
-                InitializeProperty("title", _title);
-                return _title;
-            }
-            set
-            {
-                _title = value;
-            }
-        }
+        public string Title { get; set; }
 
         /// <summary>Which type of notification to display.</summary>
         [JsonPropertyName("type")]
-        public TemplateType Type
-        {
-            get
-            {
-                InitializeProperty("type", _type);
-                return _type;
-            }
-            set
-            {
-                _type = value;
-            }
-        }
+        public TemplateType Type { get; set; }
     }
 }

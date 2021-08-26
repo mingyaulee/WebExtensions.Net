@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.Omnibox
 {
     // Type Class
     /// <summary>User has changed what is typed into the omnibox.</summary>
+    [BindAllProperties]
     public partial class OnInputChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

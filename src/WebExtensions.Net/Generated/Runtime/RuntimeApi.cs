@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -16,8 +17,9 @@ namespace WebExtensions.Net.Runtime
         private OnUpdateAvailableEvent _onUpdateAvailable;
 
         /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public RuntimeApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "runtime")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public RuntimeApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "runtime"))
         {
         }
 
@@ -29,7 +31,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onConnect is null)
                 {
                     _onConnect = new OnConnectEvent();
-                    InitializeProperty("onConnect", _onConnect);
+                    _onConnect.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onConnect"));
                 }
                 return _onConnect;
             }
@@ -43,7 +45,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onConnectExternal is null)
                 {
                     _onConnectExternal = new OnConnectExternalEvent();
-                    InitializeProperty("onConnectExternal", _onConnectExternal);
+                    _onConnectExternal.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onConnectExternal"));
                 }
                 return _onConnectExternal;
             }
@@ -57,7 +59,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onInstalled is null)
                 {
                     _onInstalled = new OnInstalledEvent();
-                    InitializeProperty("onInstalled", _onInstalled);
+                    _onInstalled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onInstalled"));
                 }
                 return _onInstalled;
             }
@@ -71,7 +73,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onMessage is null)
                 {
                     _onMessage = new OnMessageEvent();
-                    InitializeProperty("onMessage", _onMessage);
+                    _onMessage.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onMessage"));
                 }
                 return _onMessage;
             }
@@ -85,7 +87,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onMessageExternal is null)
                 {
                     _onMessageExternal = new OnMessageExternalEvent();
-                    InitializeProperty("onMessageExternal", _onMessageExternal);
+                    _onMessageExternal.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onMessageExternal"));
                 }
                 return _onMessageExternal;
             }
@@ -99,7 +101,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onStartup is null)
                 {
                     _onStartup = new Event();
-                    InitializeProperty("onStartup", _onStartup);
+                    _onStartup.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onStartup"));
                 }
                 return _onStartup;
             }
@@ -113,7 +115,7 @@ namespace WebExtensions.Net.Runtime
                 if (_onUpdateAvailable is null)
                 {
                     _onUpdateAvailable = new OnUpdateAvailableEvent();
-                    InitializeProperty("onUpdateAvailable", _onUpdateAvailable);
+                    _onUpdateAvailable.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUpdateAvailable"));
                 }
                 return _onUpdateAvailable;
             }

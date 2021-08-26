@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Devtools.InspectedWindow
@@ -6,8 +7,9 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
     public partial class InspectedWindowApi : BaseApi, IInspectedWindowApi
     {
         /// <summary>Creates a new instance of <see cref="InspectedWindowApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public InspectedWindowApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "devtools.inspectedWindow")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public InspectedWindowApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "inspectedWindow"))
         {
         }
 

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Downloads
 {
     // Type Class
     /// <summary>When any of a <see href='#type-DownloadItem'>DownloadItem</see>'s properties except <c>bytesReceived</c> changes, this event fires with the <c>downloadId</c> and an object containing the properties that changed.</summary>
+    [BindAllProperties]
     public partial class OnChangedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

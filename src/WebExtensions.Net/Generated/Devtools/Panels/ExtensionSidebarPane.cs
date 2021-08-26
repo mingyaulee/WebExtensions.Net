@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 using WebExtensions.Net.Manifest;
 
@@ -5,6 +6,7 @@ namespace WebExtensions.Net.Devtools.Panels
 {
     // Type Class
     /// <summary>A sidebar created by the extension.</summary>
+    [BindAllProperties]
     public partial class ExtensionSidebarPane : BaseObject
     {
         /// <summary>Sets an expression that is evaluated within the inspected page. The result is displayed in the sidebar pane.</summary>

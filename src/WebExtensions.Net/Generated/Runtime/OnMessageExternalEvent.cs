@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Runtime
 {
     // Type Class
     /// <summary>Fired when a message is sent from another extension/app. Cannot be used in a content script.</summary>
+    [BindAllProperties]
     public partial class OnMessageExternalEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

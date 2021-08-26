@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Storage
@@ -8,8 +9,9 @@ namespace WebExtensions.Net.Storage
         private OnChangedEvent _onChanged;
 
         /// <summary>Creates a new instance of <see cref="StorageApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public StorageApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "storage")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public StorageApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "storage"))
         {
         }
 
@@ -21,7 +23,7 @@ namespace WebExtensions.Net.Storage
                 if (_onChanged is null)
                 {
                     _onChanged = new OnChangedEvent();
-                    InitializeProperty("onChanged", _onChanged);
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
                 }
                 return _onChanged;
             }

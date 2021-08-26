@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,8 +18,9 @@ namespace WebExtensions.Net.WebNavigation
         private OnTabReplacedEvent _onTabReplaced;
 
         /// <summary>Creates a new instance of <see cref="WebNavigationApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public WebNavigationApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "webNavigation")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public WebNavigationApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "webNavigation"))
         {
         }
 
@@ -30,7 +32,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onBeforeNavigate is null)
                 {
                     _onBeforeNavigate = new OnBeforeNavigateEvent();
-                    InitializeProperty("onBeforeNavigate", _onBeforeNavigate);
+                    _onBeforeNavigate.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onBeforeNavigate"));
                 }
                 return _onBeforeNavigate;
             }
@@ -44,7 +46,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onCommitted is null)
                 {
                     _onCommitted = new OnCommittedEvent();
-                    InitializeProperty("onCommitted", _onCommitted);
+                    _onCommitted.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCommitted"));
                 }
                 return _onCommitted;
             }
@@ -58,7 +60,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onCompleted is null)
                 {
                     _onCompleted = new OnCompletedEvent();
-                    InitializeProperty("onCompleted", _onCompleted);
+                    _onCompleted.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCompleted"));
                 }
                 return _onCompleted;
             }
@@ -72,7 +74,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onCreatedNavigationTarget is null)
                 {
                     _onCreatedNavigationTarget = new OnCreatedNavigationTargetEvent();
-                    InitializeProperty("onCreatedNavigationTarget", _onCreatedNavigationTarget);
+                    _onCreatedNavigationTarget.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCreatedNavigationTarget"));
                 }
                 return _onCreatedNavigationTarget;
             }
@@ -86,7 +88,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onDOMContentLoaded is null)
                 {
                     _onDOMContentLoaded = new OnDomContentLoadedEvent();
-                    InitializeProperty("onDOMContentLoaded", _onDOMContentLoaded);
+                    _onDOMContentLoaded.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onDOMContentLoaded"));
                 }
                 return _onDOMContentLoaded;
             }
@@ -100,7 +102,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onErrorOccurred is null)
                 {
                     _onErrorOccurred = new OnErrorOccurredEvent();
-                    InitializeProperty("onErrorOccurred", _onErrorOccurred);
+                    _onErrorOccurred.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onErrorOccurred"));
                 }
                 return _onErrorOccurred;
             }
@@ -114,7 +116,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onHistoryStateUpdated is null)
                 {
                     _onHistoryStateUpdated = new OnHistoryStateUpdatedEvent();
-                    InitializeProperty("onHistoryStateUpdated", _onHistoryStateUpdated);
+                    _onHistoryStateUpdated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onHistoryStateUpdated"));
                 }
                 return _onHistoryStateUpdated;
             }
@@ -128,7 +130,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onReferenceFragmentUpdated is null)
                 {
                     _onReferenceFragmentUpdated = new OnReferenceFragmentUpdatedEvent();
-                    InitializeProperty("onReferenceFragmentUpdated", _onReferenceFragmentUpdated);
+                    _onReferenceFragmentUpdated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onReferenceFragmentUpdated"));
                 }
                 return _onReferenceFragmentUpdated;
             }
@@ -142,7 +144,7 @@ namespace WebExtensions.Net.WebNavigation
                 if (_onTabReplaced is null)
                 {
                     _onTabReplaced = new OnTabReplacedEvent();
-                    InitializeProperty("onTabReplaced", _onTabReplaced);
+                    _onTabReplaced.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onTabReplaced"));
                 }
                 return _onTabReplaced;
             }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.Menus
 {
     // Type Class
     /// <summary>Fired when a context menu item is clicked.</summary>
+    [BindAllProperties]
     public partial class OnClickedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

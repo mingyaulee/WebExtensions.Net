@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
@@ -7,8 +8,9 @@ namespace WebExtensions.Net.Privacy.Network
     public partial class NetworkApi : BaseApi, INetworkApi
     {
         /// <summary>Creates a new instance of <see cref="NetworkApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public NetworkApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "privacy.network")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public NetworkApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "network"))
         {
         }
 

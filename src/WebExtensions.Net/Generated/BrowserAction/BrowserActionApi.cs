@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.BrowserAction
@@ -8,8 +9,9 @@ namespace WebExtensions.Net.BrowserAction
         private OnClickedEvent _onClicked;
 
         /// <summary>Creates a new instance of <see cref="BrowserActionApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public BrowserActionApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "browserAction")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public BrowserActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browserAction"))
         {
         }
 
@@ -21,7 +23,7 @@ namespace WebExtensions.Net.BrowserAction
                 if (_onClicked is null)
                 {
                     _onClicked = new OnClickedEvent();
-                    InitializeProperty("onClicked", _onClicked);
+                    _onClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClicked"));
                 }
                 return _onClicked;
             }

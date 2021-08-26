@@ -19,7 +19,7 @@ namespace WebExtensions.Net.Mock
             IsConfiguring = true;
             IsConfigured = false;
 
-            var webExtensionsApi = new WebExtensionsApi(new MockWebExtensionsJSRuntime());
+            var webExtensionsApi = new WebExtensionsApi(new MockJsRuntimeAdapter());
             var configurator = new MockConfigurator(webExtensionsApi);
             DefaultMockResolver.Configure(configurator);
             ConfiguredMockResolver.Configure(configurator);

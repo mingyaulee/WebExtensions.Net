@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 using WebExtensions.Net.Manifest;
 
@@ -9,8 +10,9 @@ namespace WebExtensions.Net.Devtools.Panels
         private OnThemeChangedEvent _onThemeChanged;
 
         /// <summary>Creates a new instance of <see cref="PanelsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public PanelsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "devtools.panels")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public PanelsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "panels"))
         {
         }
 
@@ -22,7 +24,7 @@ namespace WebExtensions.Net.Devtools.Panels
                 if (_onThemeChanged is null)
                 {
                     _onThemeChanged = new OnThemeChangedEvent();
-                    InitializeProperty("onThemeChanged", _onThemeChanged);
+                    _onThemeChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onThemeChanged"));
                 }
                 return _onThemeChanged;
             }

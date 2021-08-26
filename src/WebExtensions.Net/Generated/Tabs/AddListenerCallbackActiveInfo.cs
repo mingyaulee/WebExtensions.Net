@@ -1,59 +1,24 @@
+using JsBind.Net;
 using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class AddListenerCallbackActiveInfo : BaseObject
     {
-        private int? _previousTabId;
-        private int _tabId;
-        private int _windowId;
-
         /// <summary>The ID of the tab that was previously active, if that tab is still open.</summary>
         [JsonPropertyName("previousTabId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? PreviousTabId
-        {
-            get
-            {
-                InitializeProperty("previousTabId", _previousTabId);
-                return _previousTabId;
-            }
-            set
-            {
-                _previousTabId = value;
-            }
-        }
+        public int? PreviousTabId { get; set; }
 
         /// <summary>The ID of the tab that has become active.</summary>
         [JsonPropertyName("tabId")]
-        public int TabId
-        {
-            get
-            {
-                InitializeProperty("tabId", _tabId);
-                return _tabId;
-            }
-            set
-            {
-                _tabId = value;
-            }
-        }
+        public int TabId { get; set; }
 
         /// <summary>The ID of the window the active tab changed inside of.</summary>
         [JsonPropertyName("windowId")]
-        public int WindowId
-        {
-            get
-            {
-                InitializeProperty("windowId", _windowId);
-                return _windowId;
-            }
-            set
-            {
-                _windowId = value;
-            }
-        }
+        public int WindowId { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Permissions
 {
     // Type Class
     /// <summary>Fired when the extension acquires new permissions.</summary>
+    [BindAllProperties]
     public partial class OnAddedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

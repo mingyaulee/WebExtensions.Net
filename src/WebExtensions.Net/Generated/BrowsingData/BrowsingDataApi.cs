@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.BrowsingData
@@ -6,8 +7,9 @@ namespace WebExtensions.Net.BrowsingData
     public partial class BrowsingDataApi : BaseApi, IBrowsingDataApi
     {
         /// <summary>Creates a new instance of <see cref="BrowsingDataApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public BrowsingDataApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "browsingData")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public BrowsingDataApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browsingData"))
         {
         }
 

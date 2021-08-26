@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -5,40 +6,16 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class AddListenerCallbackHighlightInfo : BaseObject
     {
-        private IEnumerable<int> _tabIds;
-        private int _windowId;
-
         /// <summary>All highlighted tabs in the window.</summary>
         [JsonPropertyName("tabIds")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<int> TabIds
-        {
-            get
-            {
-                InitializeProperty("tabIds", _tabIds);
-                return _tabIds;
-            }
-            set
-            {
-                _tabIds = value;
-            }
-        }
+        public IEnumerable<int> TabIds { get; set; }
 
         /// <summary>The window whose tabs changed.</summary>
         [JsonPropertyName("windowId")]
-        public int WindowId
-        {
-            get
-            {
-                InitializeProperty("windowId", _windowId);
-                return _windowId;
-            }
-            set
-            {
-                _windowId = value;
-            }
-        }
+        public int WindowId { get; set; }
     }
 }

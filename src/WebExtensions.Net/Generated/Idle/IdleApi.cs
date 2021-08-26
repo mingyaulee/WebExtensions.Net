@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Idle
@@ -8,8 +9,9 @@ namespace WebExtensions.Net.Idle
         private OnStateChangedEvent _onStateChanged;
 
         /// <summary>Creates a new instance of <see cref="IdleApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public IdleApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "idle")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public IdleApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "idle"))
         {
         }
 
@@ -21,7 +23,7 @@ namespace WebExtensions.Net.Idle
                 if (_onStateChanged is null)
                 {
                     _onStateChanged = new OnStateChangedEvent();
-                    InitializeProperty("onStateChanged", _onStateChanged);
+                    _onStateChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onStateChanged"));
                 }
                 return _onStateChanged;
             }

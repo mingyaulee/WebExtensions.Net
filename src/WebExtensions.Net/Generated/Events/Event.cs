@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 
@@ -5,6 +6,7 @@ namespace WebExtensions.Net.Events
 {
     // Type Class
     /// <summary>An object which allows the addition and removal of listeners for a Chrome event.</summary>
+    [BindAllProperties]
     public partial class Event : BaseObject
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

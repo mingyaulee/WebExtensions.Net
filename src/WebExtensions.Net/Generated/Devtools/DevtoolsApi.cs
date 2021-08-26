@@ -1,3 +1,4 @@
+using JsBind.Net;
 using WebExtensions.Net.Devtools.InspectedWindow;
 using WebExtensions.Net.Devtools.Network;
 using WebExtensions.Net.Devtools.Panels;
@@ -12,8 +13,9 @@ namespace WebExtensions.Net.Devtools
         private IPanelsApi _panels;
 
         /// <summary>Creates a new instance of <see cref="DevtoolsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public DevtoolsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "devtools")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public DevtoolsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "devtools"))
         {
         }
 
@@ -24,7 +26,7 @@ namespace WebExtensions.Net.Devtools
             {
                 if (_inspectedWindow is null)
                 {
-                    _inspectedWindow = new InspectedWindowApi(webExtensionsJSRuntime);
+                    _inspectedWindow = new InspectedWindowApi(JsRuntime, AccessPath);
                 }
                 return _inspectedWindow;
             }
@@ -37,7 +39,7 @@ namespace WebExtensions.Net.Devtools
             {
                 if (_network is null)
                 {
-                    _network = new NetworkApi(webExtensionsJSRuntime);
+                    _network = new NetworkApi(JsRuntime, AccessPath);
                 }
                 return _network;
             }
@@ -50,7 +52,7 @@ namespace WebExtensions.Net.Devtools
             {
                 if (_panels is null)
                 {
-                    _panels = new PanelsApi(webExtensionsJSRuntime);
+                    _panels = new PanelsApi(JsRuntime, AccessPath);
                 }
                 return _panels;
             }

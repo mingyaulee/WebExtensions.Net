@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Permissions
@@ -9,8 +10,9 @@ namespace WebExtensions.Net.Permissions
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="PermissionsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public PermissionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "permissions")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public PermissionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "permissions"))
         {
         }
 
@@ -22,7 +24,7 @@ namespace WebExtensions.Net.Permissions
                 if (_onAdded is null)
                 {
                     _onAdded = new OnAddedEvent();
-                    InitializeProperty("onAdded", _onAdded);
+                    _onAdded.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onAdded"));
                 }
                 return _onAdded;
             }
@@ -36,7 +38,7 @@ namespace WebExtensions.Net.Permissions
                 if (_onRemoved is null)
                 {
                     _onRemoved = new OnRemovedEvent();
-                    InitializeProperty("onRemoved", _onRemoved);
+                    _onRemoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRemoved"));
                 }
                 return _onRemoved;
             }

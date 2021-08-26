@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -10,8 +11,9 @@ namespace WebExtensions.Net.Devtools.Network
         private OnRequestFinishedEvent _onRequestFinished;
 
         /// <summary>Creates a new instance of <see cref="NetworkApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public NetworkApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "devtools.network")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public NetworkApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "network"))
         {
         }
 
@@ -23,7 +25,7 @@ namespace WebExtensions.Net.Devtools.Network
                 if (_onNavigated is null)
                 {
                     _onNavigated = new OnNavigatedEvent();
-                    InitializeProperty("onNavigated", _onNavigated);
+                    _onNavigated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onNavigated"));
                 }
                 return _onNavigated;
             }
@@ -37,7 +39,7 @@ namespace WebExtensions.Net.Devtools.Network
                 if (_onRequestFinished is null)
                 {
                     _onRequestFinished = new OnRequestFinishedEvent();
-                    InitializeProperty("onRequestFinished", _onRequestFinished);
+                    _onRequestFinished.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRequestFinished"));
                 }
                 return _onRequestFinished;
             }

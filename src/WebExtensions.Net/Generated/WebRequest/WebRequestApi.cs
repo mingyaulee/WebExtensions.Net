@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -17,8 +18,9 @@ namespace WebExtensions.Net.WebRequest
         private OnSendHeadersEvent _onSendHeaders;
 
         /// <summary>Creates a new instance of <see cref="WebRequestApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public WebRequestApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "webRequest")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public WebRequestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "webRequest"))
         {
         }
 
@@ -33,7 +35,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onAuthRequired is null)
                 {
                     _onAuthRequired = new OnAuthRequiredEvent();
-                    InitializeProperty("onAuthRequired", _onAuthRequired);
+                    _onAuthRequired.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onAuthRequired"));
                 }
                 return _onAuthRequired;
             }
@@ -47,7 +49,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onBeforeRedirect is null)
                 {
                     _onBeforeRedirect = new OnBeforeRedirectEvent();
-                    InitializeProperty("onBeforeRedirect", _onBeforeRedirect);
+                    _onBeforeRedirect.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onBeforeRedirect"));
                 }
                 return _onBeforeRedirect;
             }
@@ -61,7 +63,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onBeforeRequest is null)
                 {
                     _onBeforeRequest = new OnBeforeRequestEvent();
-                    InitializeProperty("onBeforeRequest", _onBeforeRequest);
+                    _onBeforeRequest.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onBeforeRequest"));
                 }
                 return _onBeforeRequest;
             }
@@ -75,7 +77,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onBeforeSendHeaders is null)
                 {
                     _onBeforeSendHeaders = new OnBeforeSendHeadersEvent();
-                    InitializeProperty("onBeforeSendHeaders", _onBeforeSendHeaders);
+                    _onBeforeSendHeaders.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onBeforeSendHeaders"));
                 }
                 return _onBeforeSendHeaders;
             }
@@ -89,7 +91,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onCompleted is null)
                 {
                     _onCompleted = new OnCompletedEvent();
-                    InitializeProperty("onCompleted", _onCompleted);
+                    _onCompleted.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCompleted"));
                 }
                 return _onCompleted;
             }
@@ -103,7 +105,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onErrorOccurred is null)
                 {
                     _onErrorOccurred = new OnErrorOccurredEvent();
-                    InitializeProperty("onErrorOccurred", _onErrorOccurred);
+                    _onErrorOccurred.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onErrorOccurred"));
                 }
                 return _onErrorOccurred;
             }
@@ -117,7 +119,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onHeadersReceived is null)
                 {
                     _onHeadersReceived = new OnHeadersReceivedEvent();
-                    InitializeProperty("onHeadersReceived", _onHeadersReceived);
+                    _onHeadersReceived.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onHeadersReceived"));
                 }
                 return _onHeadersReceived;
             }
@@ -131,7 +133,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onResponseStarted is null)
                 {
                     _onResponseStarted = new OnResponseStartedEvent();
-                    InitializeProperty("onResponseStarted", _onResponseStarted);
+                    _onResponseStarted.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onResponseStarted"));
                 }
                 return _onResponseStarted;
             }
@@ -145,7 +147,7 @@ namespace WebExtensions.Net.WebRequest
                 if (_onSendHeaders is null)
                 {
                     _onSendHeaders = new OnSendHeadersEvent();
-                    InitializeProperty("onSendHeaders", _onSendHeaders);
+                    _onSendHeaders.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onSendHeaders"));
                 }
                 return _onSendHeaders;
             }

@@ -29,7 +29,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                     .WriteStartBlock()
                         .WriteLine($"if (_{privatePropertyName} is null)")
                         .WriteStartBlock()
-                            .WriteLine($"_{privatePropertyName} = new {propertyType}(webExtensionsJSRuntime);")
+                            .WriteLine($"_{privatePropertyName} = new {propertyType}(JsRuntime, AccessPath);")
                         .WriteEndBlock()
                         .WriteLine($"return _{privatePropertyName};")
                     // end property get

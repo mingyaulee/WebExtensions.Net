@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Clipboard
@@ -6,8 +7,9 @@ namespace WebExtensions.Net.Clipboard
     public partial class ClipboardApi : BaseApi, IClipboardApi
     {
         /// <summary>Creates a new instance of <see cref="ClipboardApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public ClipboardApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "clipboard")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ClipboardApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "clipboard"))
         {
         }
 

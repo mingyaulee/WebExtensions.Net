@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace WebExtensions.Net.Proxy
 {
     // Type Class
     /// <summary>Fired when proxy data is needed for a request.</summary>
+    [BindAllProperties]
     public partial class OnRequestEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

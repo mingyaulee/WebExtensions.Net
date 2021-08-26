@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the contents of the tab is replaced by a different (usually previously pre-rendered) tab.</summary>
+    [BindAllProperties]
     public partial class OnTabReplacedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

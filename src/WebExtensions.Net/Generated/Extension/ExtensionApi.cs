@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -9,8 +10,9 @@ namespace WebExtensions.Net.Extension
     public partial class ExtensionApi : BaseApi, IExtensionApi
     {
         /// <summary>Creates a new instance of <see cref="ExtensionApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public ExtensionApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "extension")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ExtensionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "extension"))
         {
         }
 

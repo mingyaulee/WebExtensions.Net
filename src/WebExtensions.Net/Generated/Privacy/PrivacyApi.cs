@@ -1,3 +1,4 @@
+using JsBind.Net;
 using WebExtensions.Net.Privacy.Network;
 using WebExtensions.Net.Privacy.Services;
 using WebExtensions.Net.Privacy.Websites;
@@ -12,8 +13,9 @@ namespace WebExtensions.Net.Privacy
         private IWebsitesApi _websites;
 
         /// <summary>Creates a new instance of <see cref="PrivacyApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public PrivacyApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "privacy")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public PrivacyApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "privacy"))
         {
         }
 
@@ -24,7 +26,7 @@ namespace WebExtensions.Net.Privacy
             {
                 if (_network is null)
                 {
-                    _network = new NetworkApi(webExtensionsJSRuntime);
+                    _network = new NetworkApi(JsRuntime, AccessPath);
                 }
                 return _network;
             }
@@ -37,7 +39,7 @@ namespace WebExtensions.Net.Privacy
             {
                 if (_services is null)
                 {
-                    _services = new ServicesApi(webExtensionsJSRuntime);
+                    _services = new ServicesApi(JsRuntime, AccessPath);
                 }
                 return _services;
             }
@@ -50,7 +52,7 @@ namespace WebExtensions.Net.Privacy
             {
                 if (_websites is null)
                 {
-                    _websites = new WebsitesApi(webExtensionsJSRuntime);
+                    _websites = new WebsitesApi(JsRuntime, AccessPath);
                 }
                 return _websites;
             }

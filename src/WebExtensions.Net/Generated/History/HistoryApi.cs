@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace WebExtensions.Net.History
         private OnVisitRemovedEvent _onVisitRemoved;
 
         /// <summary>Creates a new instance of <see cref="HistoryApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public HistoryApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "history")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public HistoryApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "history"))
         {
         }
 
@@ -24,7 +26,7 @@ namespace WebExtensions.Net.History
                 if (_onTitleChanged is null)
                 {
                     _onTitleChanged = new OnTitleChangedEvent();
-                    InitializeProperty("onTitleChanged", _onTitleChanged);
+                    _onTitleChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onTitleChanged"));
                 }
                 return _onTitleChanged;
             }
@@ -38,7 +40,7 @@ namespace WebExtensions.Net.History
                 if (_onVisited is null)
                 {
                     _onVisited = new OnVisitedEvent();
-                    InitializeProperty("onVisited", _onVisited);
+                    _onVisited.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onVisited"));
                 }
                 return _onVisited;
             }
@@ -52,7 +54,7 @@ namespace WebExtensions.Net.History
                 if (_onVisitRemoved is null)
                 {
                     _onVisitRemoved = new OnVisitRemovedEvent();
-                    InitializeProperty("onVisitRemoved", _onVisitRemoved);
+                    _onVisitRemoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onVisitRemoved"));
                 }
                 return _onVisitRemoved;
             }

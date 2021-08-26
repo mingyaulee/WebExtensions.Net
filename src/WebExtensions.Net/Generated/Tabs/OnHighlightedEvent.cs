@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary>Fired when the highlighted or selected tabs in a window changes.</summary>
+    [BindAllProperties]
     public partial class OnHighlightedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

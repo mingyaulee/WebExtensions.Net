@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 
@@ -5,6 +6,7 @@ namespace WebExtensions.Net.Devtools.Network
 {
     // Type Class
     /// <summary>Represents a network request for a document resource (script, image and so on). See HAR Specification for reference.</summary>
+    [BindAllProperties]
     public partial class Request : BaseObject
     {
         /// <summary>Returns content of the response body.</summary>

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,8 +13,9 @@ namespace WebExtensions.Net.Bookmarks
         private OnRemovedEvent _onRemoved;
 
         /// <summary>Creates a new instance of <see cref="BookmarksApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public BookmarksApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "bookmarks")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public BookmarksApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "bookmarks"))
         {
         }
 
@@ -25,7 +27,7 @@ namespace WebExtensions.Net.Bookmarks
                 if (_onChanged is null)
                 {
                     _onChanged = new OnChangedEvent();
-                    InitializeProperty("onChanged", _onChanged);
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
                 }
                 return _onChanged;
             }
@@ -39,7 +41,7 @@ namespace WebExtensions.Net.Bookmarks
                 if (_onCreated is null)
                 {
                     _onCreated = new OnCreatedEvent();
-                    InitializeProperty("onCreated", _onCreated);
+                    _onCreated.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onCreated"));
                 }
                 return _onCreated;
             }
@@ -53,7 +55,7 @@ namespace WebExtensions.Net.Bookmarks
                 if (_onMoved is null)
                 {
                     _onMoved = new OnMovedEvent();
-                    InitializeProperty("onMoved", _onMoved);
+                    _onMoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onMoved"));
                 }
                 return _onMoved;
             }
@@ -67,7 +69,7 @@ namespace WebExtensions.Net.Bookmarks
                 if (_onRemoved is null)
                 {
                     _onRemoved = new OnRemovedEvent();
-                    InitializeProperty("onRemoved", _onRemoved);
+                    _onRemoved.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onRemoved"));
                 }
                 return _onRemoved;
             }

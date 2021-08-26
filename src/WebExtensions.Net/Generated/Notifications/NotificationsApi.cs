@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -12,8 +13,9 @@ namespace WebExtensions.Net.Notifications
         private OnShownEvent _onShown;
 
         /// <summary>Creates a new instance of <see cref="NotificationsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public NotificationsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "notifications")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public NotificationsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "notifications"))
         {
         }
 
@@ -25,7 +27,7 @@ namespace WebExtensions.Net.Notifications
                 if (_onButtonClicked is null)
                 {
                     _onButtonClicked = new OnButtonClickedEvent();
-                    InitializeProperty("onButtonClicked", _onButtonClicked);
+                    _onButtonClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onButtonClicked"));
                 }
                 return _onButtonClicked;
             }
@@ -39,7 +41,7 @@ namespace WebExtensions.Net.Notifications
                 if (_onClicked is null)
                 {
                     _onClicked = new OnClickedEvent();
-                    InitializeProperty("onClicked", _onClicked);
+                    _onClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClicked"));
                 }
                 return _onClicked;
             }
@@ -53,7 +55,7 @@ namespace WebExtensions.Net.Notifications
                 if (_onClosed is null)
                 {
                     _onClosed = new OnClosedEvent();
-                    InitializeProperty("onClosed", _onClosed);
+                    _onClosed.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClosed"));
                 }
                 return _onClosed;
             }
@@ -67,7 +69,7 @@ namespace WebExtensions.Net.Notifications
                 if (_onShown is null)
                 {
                     _onShown = new OnShownEvent();
-                    InitializeProperty("onShown", _onShown);
+                    _onShown.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onShown"));
                 }
                 return _onShown;
             }

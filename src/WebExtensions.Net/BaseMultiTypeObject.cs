@@ -1,4 +1,5 @@
 ﻿using System;
+using JsBind.Net;
 
 namespace WebExtensions.Net
 {
@@ -20,21 +21,20 @@ namespace WebExtensions.Net
             ValueType = valueType;
         }
 
+        /// <inheritdoc />
+        protected override void Initialize(IJsRuntimeAdapter jsRuntime)
+        {
+            base.Initialize(jsRuntime);
+            if (value is BaseObject baseObject)
+            {
+                baseObject.Initialize(jsRuntime, AccessPath);
+            }
+        }
+
         /// <summary>
         /// The value.
         /// </summary>
-        public object Value
-        {
-            get
-            {
-                if (value is BaseObject baseObject && IsInitialized)
-                {
-                    baseObject.Initialize(webExtensionsJSRuntime, referenceId, accessPath);
-                }
-
-                return value;
-            }
-        }
+        public object Value => value;
 
         /// <summary>
         /// The type of the value.

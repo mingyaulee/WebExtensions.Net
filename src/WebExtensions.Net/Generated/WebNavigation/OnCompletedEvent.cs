@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when a document, including the resources it refers to, is completely loaded and initialized.</summary>
+    [BindAllProperties]
     public partial class OnCompletedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

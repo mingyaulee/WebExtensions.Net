@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,8 +10,9 @@ namespace WebExtensions.Net.Cookies
         private OnChangedEvent _onChanged;
 
         /// <summary>Creates a new instance of <see cref="CookiesApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public CookiesApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "cookies")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public CookiesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "cookies"))
         {
         }
 
@@ -22,7 +24,7 @@ namespace WebExtensions.Net.Cookies
                 if (_onChanged is null)
                 {
                     _onChanged = new OnChangedEvent();
-                    InitializeProperty("onChanged", _onChanged);
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
                 }
                 return _onChanged;
             }

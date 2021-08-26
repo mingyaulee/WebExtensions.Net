@@ -15,30 +15,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         {
             codeWriter.WriteUsingStatement("System.Text.Json.Serialization");
 
-            var privatePropertyName = clrPropertyInfo.PrivateName;
-            codeWriter.Properties
-                .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
-
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
                 .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{privatePropertyName}\")"))
+                .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{clrPropertyInfo.Name}\")"))
                 .WriteWithConverter(clrPropertyInfo.PropertyType.IsNullable ? new AttributeCodeConverter($"JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)") : null)
-                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
-                // start property body
-                .WriteStartBlock()
-                    .WriteLine($"get")
-                    .WriteStartBlock()
-                        .WriteLine($"InitializeProperty(\"{privatePropertyName}\", _{privatePropertyName});")
-                        .WriteLine($"return _{privatePropertyName};")
-                    .WriteEndBlock()
-
-                    .WriteLine($"set")
-                    .WriteStartBlock()
-                        .WriteLine($"_{privatePropertyName} = value;")
-                    .WriteEndBlock()
-                // end property body
-                .WriteEndBlock();
+                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; set; }}");
         }
     }
 }

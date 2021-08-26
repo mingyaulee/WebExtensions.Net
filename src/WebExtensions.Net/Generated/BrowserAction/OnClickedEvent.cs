@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -7,6 +8,7 @@ namespace WebExtensions.Net.BrowserAction
 {
     // Type Class
     /// <summary>Fired when a browser action icon is clicked.  This event will not fire if the browser action has a popup.</summary>
+    [BindAllProperties]
     public partial class OnClickedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

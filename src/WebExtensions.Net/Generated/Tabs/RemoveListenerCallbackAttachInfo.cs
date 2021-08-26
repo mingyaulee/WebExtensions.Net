@@ -1,42 +1,19 @@
+using JsBind.Net;
 using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.Tabs
 {
     // Type Class
     /// <summary></summary>
+    [BindAllProperties]
     public partial class RemoveListenerCallbackAttachInfo : BaseObject
     {
-        private int _newPosition;
-        private int _newWindowId;
-
         /// <summary></summary>
         [JsonPropertyName("newPosition")]
-        public int NewPosition
-        {
-            get
-            {
-                InitializeProperty("newPosition", _newPosition);
-                return _newPosition;
-            }
-            set
-            {
-                _newPosition = value;
-            }
-        }
+        public int NewPosition { get; set; }
 
         /// <summary></summary>
         [JsonPropertyName("newWindowId")]
-        public int NewWindowId
-        {
-            get
-            {
-                InitializeProperty("newWindowId", _newWindowId);
-                return _newWindowId;
-            }
-            set
-            {
-                _newWindowId = value;
-            }
-        }
+        public int NewWindowId { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System.Threading.Tasks;
 
 namespace WebExtensions.Net.ContentScripts
@@ -6,8 +7,9 @@ namespace WebExtensions.Net.ContentScripts
     public partial class ContentScriptsApi : BaseApi, IContentScriptsApi
     {
         /// <summary>Creates a new instance of <see cref="ContentScriptsApi" />.</summary>
-        /// <param name="webExtensionsJSRuntime">Web Extension JS Runtime</param>
-        public ContentScriptsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime) : base(webExtensionsJSRuntime, "contentScripts")
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ContentScriptsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "contentScripts"))
         {
         }
 

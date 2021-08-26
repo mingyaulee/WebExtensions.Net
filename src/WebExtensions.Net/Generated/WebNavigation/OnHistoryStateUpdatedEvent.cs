@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the frame's history was updated to a new URL. All future events for that frame will use the updated URL.</summary>
+    [BindAllProperties]
     public partial class OnHistoryStateUpdatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

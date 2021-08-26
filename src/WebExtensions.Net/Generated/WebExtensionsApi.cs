@@ -1,3 +1,4 @@
+using JsBind.Net;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
@@ -35,9 +36,8 @@ using WebExtensions.Net.Windows;
 namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public partial class WebExtensionsApi : IWebExtensionsApi
+    public partial class WebExtensionsApi : BaseApi, IWebExtensionsApi
     {
-        private readonly IWebExtensionsJSRuntime webExtensionsJSRuntime;
         private IAlarmsApi _alarms;
         private IBookmarksApi _bookmarks;
         private IBrowserActionApi _browserAction;
@@ -73,9 +73,9 @@ namespace WebExtensions.Net
         private IWindowsApi _windows;
 
         /// <summary>Creates a new instance of <see cref="WebExtensionsApi" />.</summary>
-        public WebExtensionsApi(IWebExtensionsJSRuntime webExtensionsJSRuntime)
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        public WebExtensionsApi(IJsRuntimeAdapter jsRuntime) : base(jsRuntime, "browser")
         {
-            this.webExtensionsJSRuntime = webExtensionsJSRuntime;
         }
 
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace WebExtensions.Net
             {
                 if (_alarms is null)
                 {
-                    _alarms = new AlarmsApi(webExtensionsJSRuntime);
+                    _alarms = new AlarmsApi(JsRuntime, AccessPath);
                 }
                 return _alarms;
             }
@@ -98,7 +98,7 @@ namespace WebExtensions.Net
             {
                 if (_bookmarks is null)
                 {
-                    _bookmarks = new BookmarksApi(webExtensionsJSRuntime);
+                    _bookmarks = new BookmarksApi(JsRuntime, AccessPath);
                 }
                 return _bookmarks;
             }
@@ -111,7 +111,7 @@ namespace WebExtensions.Net
             {
                 if (_browserAction is null)
                 {
-                    _browserAction = new BrowserActionApi(webExtensionsJSRuntime);
+                    _browserAction = new BrowserActionApi(JsRuntime, AccessPath);
                 }
                 return _browserAction;
             }
@@ -124,7 +124,7 @@ namespace WebExtensions.Net
             {
                 if (_browserSettings is null)
                 {
-                    _browserSettings = new BrowserSettingsApi(webExtensionsJSRuntime);
+                    _browserSettings = new BrowserSettingsApi(JsRuntime, AccessPath);
                 }
                 return _browserSettings;
             }
@@ -137,7 +137,7 @@ namespace WebExtensions.Net
             {
                 if (_browsingData is null)
                 {
-                    _browsingData = new BrowsingDataApi(webExtensionsJSRuntime);
+                    _browsingData = new BrowsingDataApi(JsRuntime, AccessPath);
                 }
                 return _browsingData;
             }
@@ -150,7 +150,7 @@ namespace WebExtensions.Net
             {
                 if (_clipboard is null)
                 {
-                    _clipboard = new ClipboardApi(webExtensionsJSRuntime);
+                    _clipboard = new ClipboardApi(JsRuntime, AccessPath);
                 }
                 return _clipboard;
             }
@@ -163,7 +163,7 @@ namespace WebExtensions.Net
             {
                 if (_commands is null)
                 {
-                    _commands = new CommandsApi(webExtensionsJSRuntime);
+                    _commands = new CommandsApi(JsRuntime, AccessPath);
                 }
                 return _commands;
             }
@@ -176,7 +176,7 @@ namespace WebExtensions.Net
             {
                 if (_contentScripts is null)
                 {
-                    _contentScripts = new ContentScriptsApi(webExtensionsJSRuntime);
+                    _contentScripts = new ContentScriptsApi(JsRuntime, AccessPath);
                 }
                 return _contentScripts;
             }
@@ -189,7 +189,7 @@ namespace WebExtensions.Net
             {
                 if (_cookies is null)
                 {
-                    _cookies = new CookiesApi(webExtensionsJSRuntime);
+                    _cookies = new CookiesApi(JsRuntime, AccessPath);
                 }
                 return _cookies;
             }
@@ -202,7 +202,7 @@ namespace WebExtensions.Net
             {
                 if (_devtools is null)
                 {
-                    _devtools = new DevtoolsApi(webExtensionsJSRuntime);
+                    _devtools = new DevtoolsApi(JsRuntime, AccessPath);
                 }
                 return _devtools;
             }
@@ -215,7 +215,7 @@ namespace WebExtensions.Net
             {
                 if (_downloads is null)
                 {
-                    _downloads = new DownloadsApi(webExtensionsJSRuntime);
+                    _downloads = new DownloadsApi(JsRuntime, AccessPath);
                 }
                 return _downloads;
             }
@@ -228,7 +228,7 @@ namespace WebExtensions.Net
             {
                 if (_extension is null)
                 {
-                    _extension = new ExtensionApi(webExtensionsJSRuntime);
+                    _extension = new ExtensionApi(JsRuntime, AccessPath);
                 }
                 return _extension;
             }
@@ -241,7 +241,7 @@ namespace WebExtensions.Net
             {
                 if (_history is null)
                 {
-                    _history = new HistoryApi(webExtensionsJSRuntime);
+                    _history = new HistoryApi(JsRuntime, AccessPath);
                 }
                 return _history;
             }
@@ -254,7 +254,7 @@ namespace WebExtensions.Net
             {
                 if (_i18n is null)
                 {
-                    _i18n = new I18nApi(webExtensionsJSRuntime);
+                    _i18n = new I18nApi(JsRuntime, AccessPath);
                 }
                 return _i18n;
             }
@@ -267,7 +267,7 @@ namespace WebExtensions.Net
             {
                 if (_identity is null)
                 {
-                    _identity = new IdentityApi(webExtensionsJSRuntime);
+                    _identity = new IdentityApi(JsRuntime, AccessPath);
                 }
                 return _identity;
             }
@@ -280,7 +280,7 @@ namespace WebExtensions.Net
             {
                 if (_idle is null)
                 {
-                    _idle = new IdleApi(webExtensionsJSRuntime);
+                    _idle = new IdleApi(JsRuntime, AccessPath);
                 }
                 return _idle;
             }
@@ -293,7 +293,7 @@ namespace WebExtensions.Net
             {
                 if (_management is null)
                 {
-                    _management = new ManagementApi(webExtensionsJSRuntime);
+                    _management = new ManagementApi(JsRuntime, AccessPath);
                 }
                 return _management;
             }
@@ -306,7 +306,7 @@ namespace WebExtensions.Net
             {
                 if (_menus is null)
                 {
-                    _menus = new MenusApi(webExtensionsJSRuntime);
+                    _menus = new MenusApi(JsRuntime, AccessPath);
                 }
                 return _menus;
             }
@@ -319,7 +319,7 @@ namespace WebExtensions.Net
             {
                 if (_notifications is null)
                 {
-                    _notifications = new NotificationsApi(webExtensionsJSRuntime);
+                    _notifications = new NotificationsApi(JsRuntime, AccessPath);
                 }
                 return _notifications;
             }
@@ -332,7 +332,7 @@ namespace WebExtensions.Net
             {
                 if (_omnibox is null)
                 {
-                    _omnibox = new OmniboxApi(webExtensionsJSRuntime);
+                    _omnibox = new OmniboxApi(JsRuntime, AccessPath);
                 }
                 return _omnibox;
             }
@@ -345,7 +345,7 @@ namespace WebExtensions.Net
             {
                 if (_pageAction is null)
                 {
-                    _pageAction = new PageActionApi(webExtensionsJSRuntime);
+                    _pageAction = new PageActionApi(JsRuntime, AccessPath);
                 }
                 return _pageAction;
             }
@@ -358,7 +358,7 @@ namespace WebExtensions.Net
             {
                 if (_permissions is null)
                 {
-                    _permissions = new PermissionsApi(webExtensionsJSRuntime);
+                    _permissions = new PermissionsApi(JsRuntime, AccessPath);
                 }
                 return _permissions;
             }
@@ -371,7 +371,7 @@ namespace WebExtensions.Net
             {
                 if (_privacy is null)
                 {
-                    _privacy = new PrivacyApi(webExtensionsJSRuntime);
+                    _privacy = new PrivacyApi(JsRuntime, AccessPath);
                 }
                 return _privacy;
             }
@@ -384,7 +384,7 @@ namespace WebExtensions.Net
             {
                 if (_proxy is null)
                 {
-                    _proxy = new ProxyApi(webExtensionsJSRuntime);
+                    _proxy = new ProxyApi(JsRuntime, AccessPath);
                 }
                 return _proxy;
             }
@@ -397,7 +397,7 @@ namespace WebExtensions.Net
             {
                 if (_runtime is null)
                 {
-                    _runtime = new RuntimeApi(webExtensionsJSRuntime);
+                    _runtime = new RuntimeApi(JsRuntime, AccessPath);
                 }
                 return _runtime;
             }
@@ -410,7 +410,7 @@ namespace WebExtensions.Net
             {
                 if (_search is null)
                 {
-                    _search = new SearchApi(webExtensionsJSRuntime);
+                    _search = new SearchApi(JsRuntime, AccessPath);
                 }
                 return _search;
             }
@@ -423,7 +423,7 @@ namespace WebExtensions.Net
             {
                 if (_sessions is null)
                 {
-                    _sessions = new SessionsApi(webExtensionsJSRuntime);
+                    _sessions = new SessionsApi(JsRuntime, AccessPath);
                 }
                 return _sessions;
             }
@@ -436,7 +436,7 @@ namespace WebExtensions.Net
             {
                 if (_storage is null)
                 {
-                    _storage = new StorageApi(webExtensionsJSRuntime);
+                    _storage = new StorageApi(JsRuntime, AccessPath);
                 }
                 return _storage;
             }
@@ -449,7 +449,7 @@ namespace WebExtensions.Net
             {
                 if (_tabs is null)
                 {
-                    _tabs = new TabsApi(webExtensionsJSRuntime);
+                    _tabs = new TabsApi(JsRuntime, AccessPath);
                 }
                 return _tabs;
             }
@@ -462,7 +462,7 @@ namespace WebExtensions.Net
             {
                 if (_topSites is null)
                 {
-                    _topSites = new TopSitesApi(webExtensionsJSRuntime);
+                    _topSites = new TopSitesApi(JsRuntime, AccessPath);
                 }
                 return _topSites;
             }
@@ -475,7 +475,7 @@ namespace WebExtensions.Net
             {
                 if (_webNavigation is null)
                 {
-                    _webNavigation = new WebNavigationApi(webExtensionsJSRuntime);
+                    _webNavigation = new WebNavigationApi(JsRuntime, AccessPath);
                 }
                 return _webNavigation;
             }
@@ -488,7 +488,7 @@ namespace WebExtensions.Net
             {
                 if (_webRequest is null)
                 {
-                    _webRequest = new WebRequestApi(webExtensionsJSRuntime);
+                    _webRequest = new WebRequestApi(JsRuntime, AccessPath);
                 }
                 return _webRequest;
             }
@@ -501,7 +501,7 @@ namespace WebExtensions.Net
             {
                 if (_windows is null)
                 {
-                    _windows = new WindowsApi(webExtensionsJSRuntime);
+                    _windows = new WindowsApi(JsRuntime, AccessPath);
                 }
                 return _windows;
             }

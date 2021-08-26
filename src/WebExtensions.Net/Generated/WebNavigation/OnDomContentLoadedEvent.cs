@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.WebNavigation
 {
     // Type Class
     /// <summary>Fired when the page's DOM is fully constructed, but the referenced resources may not finish loading.</summary>
+    [BindAllProperties]
     public partial class OnDomContentLoadedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>

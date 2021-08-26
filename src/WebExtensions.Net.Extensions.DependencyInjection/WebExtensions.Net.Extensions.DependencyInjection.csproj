@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Build properties. -->
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsShippingPackage>true</IsShippingPackage>
+    <HasReferenceAssembly>false</HasReferenceAssembly>
+  </PropertyGroup>
+
+  <!-- Package properties. -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageOutputPath>..\PackageOutput</PackageOutputPath>
+    <Authors>mingyaulee</Authors>
+    <Description>A package for service registration in WebExtensions.Net.</Description>
+    <RepositoryUrl>https://github.com/mingyaulee/WebExtensions.Net</RepositoryUrl>
+    <PackageTags>Browser Chrome Firefox Edge Extension Addons .Net</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\Icon\Icon.png">
+      <Pack>true</Pack>
+      <PackagePath></PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsBind.Net.Extensions.DependencyInjection" Version="0.1.3" PrivateAssets="contentfiles" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebExtensions.Net\WebExtensions.Net.csproj" PrivateAssets="contentfiles" />
+  </ItemGroup>
+
+</Project>

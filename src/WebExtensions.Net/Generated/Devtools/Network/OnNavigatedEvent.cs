@@ -1,3 +1,4 @@
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Devtools.Network
 {
     // Type Class
     /// <summary>Fired when the inspected window navigates to a new page.</summary>
+    [BindAllProperties]
     public partial class OnNavigatedEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
