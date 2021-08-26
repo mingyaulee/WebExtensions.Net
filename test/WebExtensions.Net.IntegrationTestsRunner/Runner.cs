@@ -26,7 +26,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             var configuration = "release";
 #endif
 
-            var extensionPath = $"{solutionDirectory}\\test\\WebExtensions.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\wwwroot";
+            var extensionPath = $"{solutionDirectory}\\test\\WebExtensions.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net5.0\\browserextension";
 
             if (!Directory.Exists(resultsPath))
             {
