@@ -24,29 +24,35 @@ Create a browser extension using Blazor. Refer to the package [Blazor.BrowserExt
 ### Without Blazor
 Create a standard browser extension using JavaScript and load the WebAssembly manually. The .Net source code can be compiled into wasm using Mono.
 
-1. Install `WebExtensions.Net` from Nuget.
-2. A JavaScript file will be added to your project at the path `wwwroot/WebExtensionsScripts/WebExtensionsNet.js`. This `.js` file needs to be included in your  application, either by using a `<script>` element in HTML or using `import` from JavaScript code.
+1. Install `WebExtensions.Net` (if you intend to use the API without dependency injection) or `WebExtensions.Net.Extensions.DependencyInjection` from Nuget.
+2. Import the `JsBind.Net` scripts with `<script src="_content/JsBind.Net/JsBindNet.js"></script>`. If your project does not support Razor Class Library contents, add the property `<LinkJsBindAssets>true</LinkJsBindAssets>` to your project.
 3. Import the [WebExtensions polyfill](https://github.com/mozilla/webextension-polyfill) by Mozilla for cross browser compatibility. This polyfill helps to convert the callback based Chrome extensions API to a Promise based API for asynchronous functions.
 4. Consume the WebExtensions API by creating an instance of `WebExtensionsApi` as shown below.
 
 ```csharp
+using JsBind.Net;
+using JsBind.Net.Configurations;
 using WebExtensions.Net;
 ...
+var options = new JsBindOptionsConfigurator()
+    .UseInProcessJsRuntime()
+    .Options;
 // iJsRuntime is an instance of MonoWebAssemblyJSRuntime
-var webExtensionsJsRuntime = new WebExtensionsJSRuntime(iJsRuntime);
-var webExtensionsApi = new WebExtensionsApi(webExtensionsJsRuntime);
+var jsRuntimeAdapter = new JsRuntimeAdapter(iJsRuntime, options);
+var webExtensionsApi = new WebExtensionsApi(jsRuntimeAdapter);
+// Use the WebExtensions API
 var manifest = await webExtensionsApi.Runtime.GetManifest();
 ```
 
 #### Debugging and testing
-For the purpose of debugging and testing outside of the browser extension environment, there is a `MockWebExtensionsJSRuntime` class under the `WebExtensions.Net.Mock` namespace.
+For the purpose of debugging and testing outside of the browser extension environment, there is a `MockJsRuntimeAdapter` class under the `WebExtensions.Net.Mock` namespace.
 Initialize an instance of the mock API with:
 ```csharp
 using WebExtensions.Net;
 using WebExtensions.Net.Mock;
 ...
-var webExtensionsJsRuntime = new MockWebExtensionsJSRuntime();
-var webExtensionsApi = new WebExtensionsApi(webExtensionsJsRuntime);
+var jsRuntimeAdapter = new MockJsRuntimeAdapter();
+var webExtensionsApi = new WebExtensionsApi(jsRuntimeAdapter);
 ```
 
 To configure the behaviour of the mock API, you may use any combination of the following:
@@ -138,20 +144,3 @@ MockResolvers.Configure(configure =>
 ### API References
 - [Chrome Extensions API Reference](https://developer.chrome.com/docs/extensions/reference/)
 - [Firefox Browser Extensions JavaScript API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
-
-## Limitations
-
-- The browser extension API namespaces that are enabled at the moment is 44 out of a total of 60.
-- ~~For callback functions with more than one parameter, it is not converted to async operation with the callback parameter as the return value.~~ __Since v0.7.*__
-- ~~Parameter callback is not supported.~~ __Since v0.4.*__
-- ~~Event listener is not supported.~~ __Since v0.4.*__
-- ~~Function invocation on returned object is not supported.~~ __Since v0.2.*__
-
-## Customize build
-
-The following MSBuild properties can be specified in your project file or when running `dotnet build` command.
-
-| Property                   | Default value | Description                                                               |
-| -------------------------- | ------------- | ------------------------------------------------------------------------- |
-| WebExtensionsAssetsPath    | wwwroot       | The root folder where the JavaScript file should be added as link.        |
-| IncludeWebExtensionsAssets | true          | If set to false, the JavaScript file will not be added as to the project. |

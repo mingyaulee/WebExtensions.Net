@@ -27,8 +27,9 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 
 ## Working in this repository
 ### Packages shipped by this repository
-There is one package that is shipped from the repository:
+There are two packages that are shipped from the repository:
 1. WebExtensions.Net
+2. WebExtensions.Net.Extensions.DependencyInjection
 
 ### Project Details
 #### The terms used
