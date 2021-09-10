@@ -32,7 +32,7 @@ namespace Microsoft.Extensions.DependencyInjection
             AddWebExtensions(services);
             // Replace registered IJsRuntimeAdapter with the mock adapter
             services.Remove(services.First(service => service.ServiceType == typeof(IJsRuntimeAdapter)));
-            services.AddSingleton<IJsRuntimeAdapter, MockJsRuntimeAdapter>();
+            services.AddScoped<IJsRuntimeAdapter, MockJsRuntimeAdapter>();
             return services;
         }
     }

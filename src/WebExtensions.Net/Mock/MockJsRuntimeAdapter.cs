@@ -40,6 +40,12 @@ namespace WebExtensions.Net.Mock
             return ValueTask.CompletedTask;
         }
 
+        /// <inheritdoc />
+        public bool IsJsRuntimeEqual(IJsRuntimeAdapter other)
+        {
+            return Equals(other);
+        }
+
         private TValue MockInvoke<TValue>(InvokeOption invokeOption)
         {
             if (!MockConfigurationContext.IsConfigured && !MockConfigurationContext.IsConfiguring)
