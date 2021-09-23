@@ -1,4 +1,4 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System;
 using System.Text.Json.Serialization;
 using WebExtensions.Net.Events;
@@ -13,7 +13,7 @@ namespace WebExtensions.Net.Runtime
         /// <summary></summary>
         [JsonPropertyName("disconnect")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Action Disconnect { get; set; }
+        public Action<object> Disconnect { get; set; }
 
         /// <summary></summary>
         [JsonPropertyName("name")]
@@ -28,12 +28,12 @@ namespace WebExtensions.Net.Runtime
         /// <summary></summary>
         [JsonPropertyName("onMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Event OnMessage { get; set; }
+        public OnMessageEvent OnMessage { get; set; }
 
         /// <summary></summary>
         [JsonPropertyName("postMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Action PostMessage { get; set; }
+        public Action<object> PostMessage { get; set; }
 
         /// <summary>This property will 'b'only'/b' be present on ports passed to onConnect/onConnectExternal listeners.</summary>
         [JsonPropertyName("sender")]
