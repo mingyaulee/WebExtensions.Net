@@ -1,4 +1,4 @@
-﻿using JsBind.Net;
+using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
