@@ -5,9 +5,6 @@ using JsBind.Net;
 
 namespace WebExtensions.Net.Runtime
 {
-    // Type Class
-    /// <summary>Fired when a message is sent from either an extension process or a content script.</summary>
-    /// 
     public partial class OnMessageEvent
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
@@ -16,6 +13,7 @@ namespace WebExtensions.Net.Runtime
         {
             return InvokeVoidAsync("addListener", callback);
         }
+
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
@@ -23,6 +21,7 @@ namespace WebExtensions.Net.Runtime
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
+
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         public virtual ValueTask RemoveListener(Func<object, MessageSender, Action<object>, bool> callback)
