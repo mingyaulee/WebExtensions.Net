@@ -1,8 +1,8 @@
 # WebExtensions.Net
-[![Nuget](https://img.shields.io/nuget/v/WebExtensions.Net?style=flat-square&color=blue)](https://www.nuget.org/packages/WebExtensions.Net/)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtensions.Net/Build?style=flat-square&color=blue)](https://github.com/mingyaulee/WebExtensions.Net/actions/workflows/WebExtensions.Net-Build.yml)
-[![Sonar Tests](https://img.shields.io/sonar/tests/WebExtensions.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
-[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtensions.Net?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
+[![Nuget](https://img.shields.io/nuget/v/WebExtensions.Net?style=for-the-badge&color=blue)](https://www.nuget.org/packages/WebExtensions.Net/)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mingyaulee/WebExtensions.Net/Build?style=for-the-badge&color=blue)](https://github.com/mingyaulee/WebExtensions.Net/actions/workflows/WebExtensions.Net-Build.yml)
+[![Sonar Tests](https://img.shields.io/sonar/tests/WebExtensions.Net?compact_message&server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
+[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/WebExtensions.Net?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/dashboard?id=WebExtensions.Net)
 
 A package for consuming WebExtensions API in a browser extension.
 
