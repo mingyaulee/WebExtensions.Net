@@ -2,7 +2,7 @@
 
   <!-- Build properties. -->
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
