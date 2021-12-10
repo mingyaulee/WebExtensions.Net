@@ -110,7 +110,8 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 .Where(namespaceDescription => !string.IsNullOrEmpty(namespaceDescription)));
             var permissions = string.Join(", ", classEntity.NamespaceEntity.NamespaceDefinitions
                 .SelectMany(namespaceDefinition => namespaceDefinition.Permissions ?? Enumerable.Empty<string>())
-                .Where(permission => !string.IsNullOrEmpty(permission)));
+                .Where(permission => !string.IsNullOrEmpty(permission))
+                .Distinct());
             if (!string.IsNullOrEmpty(permissions))
             {
                 description += $"<br>Requires manifest permission {permissions}.";
