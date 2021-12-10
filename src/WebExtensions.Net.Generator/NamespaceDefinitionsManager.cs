@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WebExtensions.Net.Generator.Models;
@@ -27,10 +28,11 @@ namespace WebExtensions.Net.Generator
 
         public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions()
         {
+            IEnumerable<NamespaceDefinition> namespaceDefinitions;
             if (sourceOptions.UseLocalSources)
             {
                 logger.LogInformation("Using local namespace definition sources.");
-                return LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.LocalDirectory);
+                namespaceDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.LocalDirectory);
             }
             else
             {
@@ -44,10 +46,18 @@ namespace WebExtensions.Net.Generator
                     additionalNamespaceSourceDefinition.Schema = Path.GetFileName(additionalNamespaceSourceDefinition.HttpUrl);
                 }
 
-                var namespaceDefinitions = await namespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.Sources, sourceOptions.AdditionalNamespaceSourceDefinitions, sourceOptions.RunInParallel);
+                namespaceDefinitions = await namespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.Sources, sourceOptions.AdditionalNamespaceSourceDefinitions, sourceOptions.RunInParallel);
+
                 LocalNamespaceDefinitionsClient.StoreNamespaceDefinitions(sourceOptions.LocalDirectory, namespaceDefinitions);
-                return namespaceDefinitions;
             }
+
+            if (Directory.Exists(sourceOptions.AdditionalLocalDefinitions))
+            {
+                var additionalLocalDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.AdditionalLocalDefinitions);
+                return namespaceDefinitions.Concat(additionalLocalDefinitions);
+            }
+
+            return namespaceDefinitions;
         }
     }
 }
