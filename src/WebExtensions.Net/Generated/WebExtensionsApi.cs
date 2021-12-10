@@ -1,4 +1,5 @@
 using JsBind.Net;
+using WebExtensions.Net.Action;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
@@ -38,6 +39,7 @@ namespace WebExtensions.Net
     /// <summary>Web Extension Api</summary>
     public partial class WebExtensionsApi : BaseApi, IWebExtensionsApi
     {
+        private IActionApi _action;
         private IAlarmsApi _alarms;
         private IBookmarksApi _bookmarks;
         private IBrowserActionApi _browserAction;
@@ -76,6 +78,19 @@ namespace WebExtensions.Net
         /// <param name="jsRuntime">The JS runtime adapter.</param>
         public WebExtensionsApi(IJsRuntimeAdapter jsRuntime) : base(jsRuntime, "browser")
         {
+        }
+
+        /// <inheritdoc />
+        public IActionApi Action
+        {
+            get
+            {
+                if (_action is null)
+                {
+                    _action = new ActionApi(JsRuntime, AccessPath);
+                }
+                return _action;
+            }
         }
 
         /// <inheritdoc />

@@ -1,0 +1,22 @@
+[
+  {
+    "url": "chrome://browser/content/parent/ext-browserAction.js",
+    "schema": "chrome://extensions/content/schemas/browser_action.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "update",
+      "uninstall",
+      "disable"
+    ],
+    "paths": [
+      [
+        "browserAction"
+      ]
+    ],
+    "manifest": [
+      "browser_action"
+    ]
+  }
+]

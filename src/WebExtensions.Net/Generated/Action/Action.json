@@ -1,58 +1,5 @@
 [
   {
-    "namespace": "manifest",
-    "types": [
-      {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "browser_action": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "default_title": {
-                "optional": true,
-                "type": "string"
-              },
-              "default_icon": {
-                "optional": true,
-                "$ref": "IconPath"
-              },
-              "theme_icons": {
-                "description": "Specifies icons to use for dark and light themes",
-                "optional": true,
-                "type": "array",
-                "minItems": 1,
-                "items": {
-                  "$ref": "ThemeIcons"
-                }
-              },
-              "default_popup": {
-                "optional": true,
-                "type": "string",
-                "format": "relativeUrl"
-              },
-              "browser_style": {
-                "optional": true,
-                "type": "boolean"
-              },
-              "default_area": {
-                "description": "Defines the location the browserAction will appear by default.  The default location is navbar.",
-                "optional": true,
-                "type": "string",
-                "enum": [
-                  "navbar",
-                  "menupanel",
-                  "tabstrip",
-                  "personaltoolbar"
-                ]
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  {
     "namespace": "action",
     "description": "Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.",
     "permissions": [

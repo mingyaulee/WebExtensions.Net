@@ -1,3 +1,4 @@
+using WebExtensions.Net.Action;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
@@ -37,6 +38,9 @@ namespace WebExtensions.Net
     /// <summary>Web Extension Api</summary>
     public partial interface IWebExtensionsApi
     {
+        /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:browser_action.</summary>
+        IActionApi Action { get; }
+
         /// <summary><br />Requires manifest permission alarms.</summary>
         IAlarmsApi Alarms { get; }
 
