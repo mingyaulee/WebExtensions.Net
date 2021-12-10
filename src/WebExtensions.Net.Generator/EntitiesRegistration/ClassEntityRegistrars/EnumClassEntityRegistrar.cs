@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
@@ -23,19 +24,12 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
         {
             if (typeEntity.Definition.EnumValues is not null)
             {
-                foreach (var enumValueDefinition in typeEntity.Definition.EnumValues)
-                {
-                    if (enumValueDefinition.Name is null)
-                    {
-                        throw new InvalidOperationException("Enum value definition should have a name property.");
-                    }
+                AddEnumValueProperties(typeEntity.Definition.EnumValues, classProperties);
+            }
 
-                    var propertyDefinitionPair = KeyValuePair.Create(enumValueDefinition.Name, new PropertyDefinition()
-                    {
-                        Description = enumValueDefinition.Description
-                    });
-                    classProperties.Add(propertyDefinitionPair);
-                }
+            if (typeEntity.Definition.TypeChoices is not null)
+            {
+                AddEnumValueProperties(typeEntity.Definition.TypeChoices.SelectMany(typeChoice => typeChoice.EnumValues ?? Enumerable.Empty<EnumValueDefinition>()), classProperties);
             }
 
             if (registrationOptions.EnumClassExtensions is not null &&
@@ -50,6 +44,23 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                     });
                     classProperties.Add(propertyDefinitionPair);
                 }
+            }
+        }
+
+        private static void AddEnumValueProperties(IEnumerable<EnumValueDefinition> enumValueDefinitions, List<KeyValuePair<string, PropertyDefinition>> classProperties)
+        {
+            foreach (var enumValueDefinition in enumValueDefinitions)
+            {
+                if (enumValueDefinition.Name is null)
+                {
+                    throw new InvalidOperationException("Enum value definition should have a name property.");
+                }
+
+                var propertyDefinitionPair = KeyValuePair.Create(enumValueDefinition.Name, new PropertyDefinition()
+                {
+                    Description = enumValueDefinition.Description
+                });
+                classProperties.Add(propertyDefinitionPair);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using WebExtensions.Net.Generator.Models.Schema;
 
@@ -29,7 +30,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 
         public BaseClassEntityRegistrar? GetClassEntityRegistrar(TypeDefinition typeDefinition)
         {
-            if (typeDefinition.Type == ObjectType.Object || typeDefinition.Type == ObjectType.ApiObject)
+            if (IsTypeClassEntity(typeDefinition))
             {
                 return typeClassEntityRegistrar;
             }
@@ -41,15 +42,15 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             {
                 return combinedCallbackParameterClassEntityRegistrar;
             }
-            else if (typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null)
+            else if (IsEnumClassEntity(typeDefinition))
             {
                 return enumClassEntityRegistrar;
             }
-            else if (typeDefinition.Type == ObjectType.String && (!string.IsNullOrEmpty(typeDefinition.StringFormat) || !string.IsNullOrEmpty(typeDefinition.StringPattern)))
+            else if (IsStringFormatClassEntity(typeDefinition))
             {
                 return stringFormatClassEntityRegistrar;
             }
-            else if (typeDefinition.Type == ObjectType.Array && typeDefinition.ArrayItems is not null)
+            else if (IsArrayClassEntity(typeDefinition))
             {
                 return arrayClassEntityRegistrar;
             }
@@ -63,6 +64,46 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             }
 
             return null;
+        }
+
+        private static bool IsTypeClassEntity(TypeDefinition typeDefinition)
+        {
+            return typeDefinition.Type == ObjectType.Object || typeDefinition.Type == ObjectType.ApiObject;
+        }
+
+        private static bool IsEnumClassEntity(TypeDefinition typeDefinition)
+        {
+            if (typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null)
+            {
+                return true;
+            }
+
+            if (typeDefinition.TypeChoices is not null && typeDefinition.TypeChoices.All(IsEnumClassEntity))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsStringFormatClassEntity(TypeDefinition typeDefinition)
+        {
+            if (typeDefinition.Type == ObjectType.String && !string.IsNullOrEmpty(typeDefinition.StringFormat))
+            {
+                return true;
+            }
+
+            if (typeDefinition.Type == ObjectType.String && !string.IsNullOrEmpty(typeDefinition.StringPattern))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        private static bool IsArrayClassEntity(TypeDefinition typeDefinition)
+        {
+            return typeDefinition.Type == ObjectType.Array && typeDefinition.ArrayItems is not null;
         }
     }
 }
