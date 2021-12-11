@@ -1,6 +1,7 @@
 using JsBind.Net;
 using System;
 using System.Threading.Tasks;
+using WebExtensions.Net.BrowserSettings.ColorManagement;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.BrowserSettings
@@ -8,11 +9,26 @@ namespace WebExtensions.Net.BrowserSettings
     /// <inheritdoc />
     public partial class BrowserSettingsApi : BaseApi, IBrowserSettingsApi
     {
+        private IColorManagementApi _colorManagement;
+
         /// <summary>Creates a new instance of <see cref="BrowserSettingsApi" />.</summary>
         /// <param name="jsRuntime">The JS runtime adapter.</param>
         /// <param name="accessPath">The base API access path.</param>
         public BrowserSettingsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browserSettings"))
         {
+        }
+
+        /// <inheritdoc />
+        public IColorManagementApi ColorManagement
+        {
+            get
+            {
+                if (_colorManagement is null)
+                {
+                    _colorManagement = new ColorManagementApi(JsRuntime, AccessPath);
+                }
+                return _colorManagement;
+            }
         }
 
         /// <inheritdoc />
@@ -86,6 +102,12 @@ namespace WebExtensions.Net.BrowserSettings
         public virtual ValueTask<Setting> GetOpenUrlbarResultsInNewTabs()
         {
             return GetPropertyAsync<Setting>("openUrlbarResultsInNewTabs");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<Setting> GetOverrideContentColorScheme()
+        {
+            return GetPropertyAsync<Setting>("overrideContentColorScheme");
         }
 
         /// <inheritdoc />

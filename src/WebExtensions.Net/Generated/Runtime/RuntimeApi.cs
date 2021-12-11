@@ -146,6 +146,12 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
+        public virtual ValueTask<double> GetFrameId(object target)
+        {
+            return InvokeAsync<double>("getFrameId", target);
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask<JsonElement> GetManifest()
         {
             return InvokeAsync<JsonElement>("getManifest");

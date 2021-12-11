@@ -47,6 +47,11 @@ namespace WebExtensions.Net.Runtime
         /// <returns></returns>
         ValueTask<BrowserInfo> GetBrowserInfo();
 
+        /// <summary>Get the frameId of any window global or frame element.</summary>
+        /// <param name="target">A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.</param>
+        /// <returns>The frameId of the target frame, or -1 if it doesn't exist.</returns>
+        ValueTask<double> GetFrameId(object target);
+
         /// <summary>Returns details about the app or extension from the manifest. The object returned is a serialization of the full $(topic:manifest)[manifest file].</summary>
         /// <returns>The manifest details.</returns>
         ValueTask<JsonElement> GetManifest();

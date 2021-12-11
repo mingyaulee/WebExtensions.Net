@@ -54,6 +54,14 @@ namespace WebExtensions.Net.Menus
         [EnumValue("bookmark")]
         Bookmark,
 
+        /// <summary>tab</summary>
+        [EnumValue("tab")]
+        Tab,
+
+        /// <summary>tools_menu</summary>
+        [EnumValue("tools_menu")]
+        ToolsMenu,
+
         /// <summary>browser_action</summary>
         [EnumValue("browser_action")]
         BrowserAction,
@@ -62,12 +70,8 @@ namespace WebExtensions.Net.Menus
         [EnumValue("page_action")]
         PageAction,
 
-        /// <summary>tab</summary>
-        [EnumValue("tab")]
-        Tab,
-
-        /// <summary>tools_menu</summary>
-        [EnumValue("tools_menu")]
-        ToolsMenu,
+        /// <summary>action</summary>
+        [EnumValue("action")]
+        Action,
     }
 }

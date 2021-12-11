@@ -1,0 +1,107 @@
+[
+  {
+    "namespace": "scripting",
+    "description": "Use the scripting API to execute script in different contexts.",
+    "permissions": [
+      "scripting"
+    ],
+    "types": [
+      {
+        "id": "ScriptInjection",
+        "description": "Details of a script injection",
+        "type": "object",
+        "properties": {
+          "args": {
+            "description": "The arguments to curry into a provided function. This is only valid if the \u003Ccode\u003Efunc\u003C/code\u003E parameter is specified. These arguments must be JSON-serializable.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "any"
+            }
+          },
+          "files": {
+            "description": "The path of the JS or CSS files to inject, relative to the extension\u0027s root directory. Exactly one of \u003Ccode\u003Efiles\u003C/code\u003E and \u003Ccode\u003Efunc\u003C/code\u003E must be specified.",
+            "optional": true,
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "func": {
+            "description": "A JavaScript function to inject. This function will be serialized, and then deserialized for injection. This means that any bound parameters and execution context will be lost. Exactly one of \u003Ccode\u003Efiles\u003C/code\u003E and \u003Ccode\u003Efunc\u003C/code\u003E must be specified.",
+            "optional": true,
+            "type": "function"
+          },
+          "target": {
+            "description": "Details specifying the target into which to inject the script.",
+            "$ref": "InjectionTarget"
+          }
+        }
+      },
+      {
+        "id": "InjectionResult",
+        "description": "Result of a script injection.",
+        "type": "object",
+        "properties": {
+          "frameId": {
+            "description": "The frame ID associated with the injection.",
+            "type": "number"
+          },
+          "result": {
+            "description": "The result of the script execution.",
+            "optional": true,
+            "type": "any"
+          }
+        }
+      },
+      {
+        "id": "InjectionTarget",
+        "type": "object",
+        "properties": {
+          "frameIds": {
+            "description": "The IDs of specific frames to inject into.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "tabId": {
+            "description": "The ID of the tab into which to inject.",
+            "type": "number"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "executeScript",
+        "description": "Injects a script into a target context. The script will be run at \u003Ccode\u003Edocument_idle\u003C/code\u003E.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "injection",
+            "description": "The details of the script which to inject.",
+            "$ref": "ScriptInjection"
+          },
+          {
+            "name": "callback",
+            "description": "Invoked upon completion of the injection. The resulting array contains the result of execution for each frame where the injection succeeded.",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "InjectionResult"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

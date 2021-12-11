@@ -24,6 +24,16 @@
           "mouseup",
           "mousedown"
         ]
+      },
+      {
+        "id": "ColorManagementMode",
+        "description": "Color management mode.",
+        "type": "string",
+        "enum": [
+          "off",
+          "full",
+          "tagged_only"
+        ]
       }
     ],
     "properties": {
@@ -82,6 +92,10 @@
       },
       "overrideDocumentColors": {
         "description": "This setting controls whether the user-chosen colors override the page\u0027s colors.",
+        "$ref": "types.Setting"
+      },
+      "overrideContentColorScheme": {
+        "description": "This setting controls whether a light or dark color scheme overrides the page\u0027s preferred color scheme.",
         "$ref": "types.Setting"
       },
       "useDocumentFonts": {

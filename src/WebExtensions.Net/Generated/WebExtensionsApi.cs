@@ -25,6 +25,7 @@ using WebExtensions.Net.Permissions;
 using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Scripting;
 using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
 using WebExtensions.Net.Storage;
@@ -65,6 +66,7 @@ namespace WebExtensions.Net
         private IPrivacyApi _privacy;
         private IProxyApi _proxy;
         private IRuntimeApi _runtime;
+        private IScriptingApi _scripting;
         private ISearchApi _search;
         private ISessionsApi _sessions;
         private IStorageApi _storage;
@@ -415,6 +417,19 @@ namespace WebExtensions.Net
                     _runtime = new RuntimeApi(JsRuntime, AccessPath);
                 }
                 return _runtime;
+            }
+        }
+
+        /// <inheritdoc />
+        public IScriptingApi Scripting
+        {
+            get
+            {
+                if (_scripting is null)
+                {
+                    _scripting = new ScriptingApi(JsRuntime, AccessPath);
+                }
+                return _scripting;
             }
         }
 

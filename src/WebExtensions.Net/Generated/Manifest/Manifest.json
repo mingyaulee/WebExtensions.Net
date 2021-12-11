@@ -282,6 +282,22 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "scripting"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "telemetry": {
@@ -577,6 +593,10 @@
                 "optional": true,
                 "$ref": "ThemeColor"
               },
+              "ntp_card_background": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
               "ntp_text": {
                 "optional": true,
                 "$ref": "ThemeColor"
@@ -740,7 +760,8 @@
             "type": "string",
             "enum": [
               "webRequest",
-              "webRequestBlocking"
+              "webRequestBlocking",
+              "webRequestFilterResponse.serviceWorkerScript"
             ]
           }
         ]
@@ -767,50 +788,63 @@
     "namespace": "manifest",
     "types": [
       {
+        "id": "ActionManifest",
+        "type": "object",
+        "properties": {
+          "default_title": {
+            "optional": true,
+            "type": "string"
+          },
+          "default_icon": {
+            "optional": true,
+            "$ref": "IconPath"
+          },
+          "theme_icons": {
+            "description": "Specifies icons to use for dark and light themes",
+            "optional": true,
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "ThemeIcons"
+            }
+          },
+          "default_popup": {
+            "optional": true,
+            "type": "string",
+            "format": "relativeUrl"
+          },
+          "browser_style": {
+            "optional": true,
+            "type": "boolean"
+          },
+          "default_area": {
+            "description": "Defines the location the browserAction will appear by default.  The default location is navbar.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "navbar",
+              "menupanel",
+              "tabstrip",
+              "personaltoolbar"
+            ]
+          }
+        }
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "action": {
+            "optional": true,
+            "$ref": "ActionManifest"
+          }
+        }
+      },
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "browser_action": {
             "optional": true,
-            "type": "object",
-            "properties": {
-              "default_title": {
-                "optional": true,
-                "type": "string"
-              },
-              "default_icon": {
-                "optional": true,
-                "$ref": "IconPath"
-              },
-              "theme_icons": {
-                "description": "Specifies icons to use for dark and light themes",
-                "optional": true,
-                "type": "array",
-                "minItems": 1,
-                "items": {
-                  "$ref": "ThemeIcons"
-                }
-              },
-              "default_popup": {
-                "optional": true,
-                "type": "string",
-                "format": "relativeUrl"
-              },
-              "browser_style": {
-                "optional": true,
-                "type": "boolean"
-              },
-              "default_area": {
-                "description": "Defines the location the browserAction will appear by default.  The default location is navbar.",
-                "optional": true,
-                "type": "string",
-                "enum": [
-                  "navbar",
-                  "menupanel",
-                  "tabstrip",
-                  "personaltoolbar"
-                ]
-              }
-            }
+            "$ref": "ActionManifest"
           }
         }
       }
@@ -1448,28 +1482,13 @@
             "maximum": 3
           },
           "applications": {
+            "description": "The applications property is deprecated, please use \u0027browser_specific_settings\u0027",
             "optional": true,
-            "type": "object",
-            "properties": {
-              "gecko": {
-                "optional": true,
-                "$ref": "FirefoxSpecificProperties"
-              }
-            }
+            "$ref": "BrowserSpecificSettings"
           },
           "browser_specific_settings": {
             "optional": true,
-            "type": "object",
-            "properties": {
-              "gecko": {
-                "optional": true,
-                "$ref": "FirefoxSpecificProperties"
-              },
-              "edge": {
-                "optional": true,
-                "type": "object"
-              }
-            }
+            "$ref": "BrowserSpecificSettings"
           },
           "name": {
             "optional": false,
@@ -1495,6 +1514,29 @@
             "optional": true,
             "type": "string",
             "format": "url"
+          },
+          "install_origins": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "origin"
+            }
+          },
+          "developer": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "name": {
+                "optional": true,
+                "type": "string"
+              },
+              "url": {
+                "optional": true,
+                "type": "string",
+                "format": "url"
+              }
+            }
           }
         }
       },
@@ -1613,9 +1655,26 @@
           },
           "permissions": {
             "optional": true,
+            "choices": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "PermissionOrOrigin"
+                }
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "Permission"
+                }
+              }
+            ]
+          },
+          "host_permissions": {
+            "optional": true,
             "type": "array",
             "items": {
-              "$ref": "PermissionOrOrigin"
+              "$ref": "MatchPattern"
             }
           },
           "optional_permissions": {
@@ -1655,20 +1714,6 @@
                 }
               }
             ]
-          },
-          "developer": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "name": {
-                "optional": true,
-                "type": "string"
-              },
-              "url": {
-                "optional": true,
-                "type": "string"
-              }
-            }
           },
           "hidden": {
             "optional": true,
@@ -1865,6 +1910,16 @@
           "strict_max_version": {
             "optional": true,
             "type": "string"
+          }
+        }
+      },
+      {
+        "id": "BrowserSpecificSettings",
+        "type": "object",
+        "properties": {
+          "gecko": {
+            "optional": true,
+            "$ref": "FirefoxSpecificProperties"
           }
         }
       },

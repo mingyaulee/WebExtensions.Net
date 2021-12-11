@@ -102,6 +102,10 @@
       "httpsOnlyMode": {
         "description": "Allow users to query the mode for \u0027HTTPS-Only Mode\u0027. This setting\u0027s value is of type HTTPSOnlyModeOption, defaulting to \u003Ccode\u003Enever\u003C/code\u003E.",
         "$ref": "types.Setting"
+      },
+      "globalPrivacyControl": {
+        "description": "Allow users to query the status of \u0027Global Privacy Control\u0027. This setting\u0027s value is of type boolean, defaulting to \u003Ccode\u003Efalse\u003C/code\u003E.",
+        "$ref": "types.Setting"
       }
     }
   },

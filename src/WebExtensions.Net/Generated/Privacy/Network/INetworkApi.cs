@@ -6,6 +6,10 @@ namespace WebExtensions.Net.Privacy.Network
     /// <summary>Use the <c>browser.privacy</c> API to control usage of the features in the browser that can affect a user's privacy.</summary>
     public partial interface INetworkApi
     {
+        /// <summary>Gets the 'globalPrivacyControl' property.</summary>
+        /// <returns>Allow users to query the status of 'Global Privacy Control'. This setting's value is of type boolean, defaulting to <c>false</c>.</returns>
+        ValueTask<Setting> GetGlobalPrivacyControl();
+
         /// <summary>Gets the 'httpsOnlyMode' property.</summary>
         /// <returns>Allow users to query the mode for 'HTTPS-Only Mode'. This setting's value is of type HTTPSOnlyModeOption, defaulting to <c>never</c>.</returns>
         ValueTask<Setting> GetHttpsOnlyMode();

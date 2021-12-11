@@ -1,0 +1,23 @@
+[
+  {
+    "namespace": "browserSettings.colorManagement",
+    "description": "Use the \u003Ccode\u003EbrowserSettings.colorManagement\u003C/code\u003E API to query and set items related to color management.",
+    "permissions": [
+      "browserSettings"
+    ],
+    "properties": {
+      "mode": {
+        "description": "This setting controls the mode used for color management and must be a string from $(ref:browserSettings.ColorManagementMode)",
+        "$ref": "types.Setting"
+      },
+      "useNativeSRGB": {
+        "description": "This boolean setting controls whether or not native sRGB color management is used.",
+        "$ref": "types.Setting"
+      },
+      "useWebRenderCompositor": {
+        "description": "This boolean setting controls whether or not the WebRender compositor is used.",
+        "$ref": "types.Setting"
+      }
+    }
+  }
+]

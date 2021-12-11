@@ -18,6 +18,11 @@ namespace WebExtensions.Net.Cookies
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Name { get; set; }
 
+        /// <summary>The storage partition, if the cookie is part of partitioned storage. By default, non-partitioned storage is used.</summary>
+        [JsonPropertyName("partitionKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public PartitionKey PartitionKey { get; set; }
+
         /// <summary>The ID of the cookie store to look in for the cookie. If unspecified, the cookie is looked for by default in the current execution context's cookie store.</summary>
         [JsonPropertyName("storeId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

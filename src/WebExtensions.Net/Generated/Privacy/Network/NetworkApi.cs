@@ -15,6 +15,12 @@ namespace WebExtensions.Net.Privacy.Network
         }
 
         /// <inheritdoc />
+        public virtual ValueTask<Setting> GetGlobalPrivacyControl()
+        {
+            return GetPropertyAsync<Setting>("globalPrivacyControl");
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask<Setting> GetHttpsOnlyMode()
         {
             return GetPropertyAsync<Setting>("httpsOnlyMode");

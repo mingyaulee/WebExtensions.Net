@@ -228,6 +228,10 @@
                 "optional": true,
                 "$ref": "ThemeColor"
               },
+              "ntp_card_background": {
+                "optional": true,
+                "$ref": "ThemeColor"
+              },
               "ntp_text": {
                 "optional": true,
                 "$ref": "ThemeColor"

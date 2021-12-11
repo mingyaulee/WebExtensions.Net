@@ -52,6 +52,11 @@
             "description": "The scale of the resulting image.  Defaults to \u003Ccode\u003EdevicePixelRatio\u003C/code\u003E.",
             "optional": true,
             "type": "number"
+          },
+          "resetScrollPosition": {
+            "description": "If true, temporarily resets the scroll position of the document to 0. Only takes effect if rect is also specified.",
+            "optional": true,
+            "type": "boolean"
           }
         }
       },

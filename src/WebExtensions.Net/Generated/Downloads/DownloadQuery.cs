@@ -14,6 +14,11 @@ namespace WebExtensions.Net.Downloads
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public double? BytesReceived { get; set; }
 
+        /// <summary>The cookie store ID of the contextual identity.</summary>
+        [JsonPropertyName("cookieStoreId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string CookieStoreId { get; set; }
+
         /// <summary>Indication of whether this download is thought to be safe or known to be suspicious.</summary>
         [JsonPropertyName("danger")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

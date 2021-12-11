@@ -933,7 +933,17 @@
               "cookieStoreId": {
                 "description": "The CookieStoreId used for the tab.",
                 "optional": true,
-                "type": "string"
+                "choices": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
               },
               "openerTabId": {
                 "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",

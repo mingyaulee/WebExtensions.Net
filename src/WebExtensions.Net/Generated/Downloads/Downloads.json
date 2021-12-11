@@ -93,6 +93,11 @@
             "description": "False if this download is recorded in the history, true if it is not recorded.",
             "type": "boolean"
           },
+          "cookieStoreId": {
+            "description": "The cookie store ID of the contextual identity.",
+            "optional": true,
+            "type": "string"
+          },
           "danger": {
             "description": "Indication of whether this download is thought to be safe or known to be suspicious.",
             "$ref": "DangerType"
@@ -291,6 +296,11 @@
             "optional": true,
             "type": "string"
           },
+          "cookieStoreId": {
+            "description": "The cookie store ID of the contextual identity.",
+            "optional": true,
+            "type": "string"
+          },
           "danger": {
             "description": "Indication of whether this download is thought to be safe or known to be suspicious.",
             "optional": true,
@@ -372,6 +382,11 @@
                 "description": "Whether to associate the download with a private browsing session.",
                 "optional": true,
                 "type": "boolean"
+              },
+              "cookieStoreId": {
+                "description": "The cookie store ID of the contextual identity; requires \u0022cookies\u0022 permission.",
+                "optional": true,
+                "type": "string"
               },
               "conflictAction": {
                 "optional": true,

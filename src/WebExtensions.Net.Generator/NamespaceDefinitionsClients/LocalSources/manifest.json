@@ -14,28 +14,13 @@
             "maximum": 3
           },
           "applications": {
+            "description": "The applications property is deprecated, please use \u0027browser_specific_settings\u0027",
             "optional": true,
-            "type": "object",
-            "properties": {
-              "gecko": {
-                "optional": true,
-                "$ref": "FirefoxSpecificProperties"
-              }
-            }
+            "$ref": "BrowserSpecificSettings"
           },
           "browser_specific_settings": {
             "optional": true,
-            "type": "object",
-            "properties": {
-              "gecko": {
-                "optional": true,
-                "$ref": "FirefoxSpecificProperties"
-              },
-              "edge": {
-                "optional": true,
-                "type": "object"
-              }
-            }
+            "$ref": "BrowserSpecificSettings"
           },
           "name": {
             "optional": false,
@@ -61,6 +46,29 @@
             "optional": true,
             "type": "string",
             "format": "url"
+          },
+          "install_origins": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "origin"
+            }
+          },
+          "developer": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "name": {
+                "optional": true,
+                "type": "string"
+              },
+              "url": {
+                "optional": true,
+                "type": "string",
+                "format": "url"
+              }
+            }
           }
         }
       },
@@ -179,9 +187,26 @@
           },
           "permissions": {
             "optional": true,
+            "choices": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "PermissionOrOrigin"
+                }
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "Permission"
+                }
+              }
+            ]
+          },
+          "host_permissions": {
+            "optional": true,
             "type": "array",
             "items": {
-              "$ref": "PermissionOrOrigin"
+              "$ref": "MatchPattern"
             }
           },
           "optional_permissions": {
@@ -221,20 +246,6 @@
                 }
               }
             ]
-          },
-          "developer": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "name": {
-                "optional": true,
-                "type": "string"
-              },
-              "url": {
-                "optional": true,
-                "type": "string"
-              }
-            }
           },
           "hidden": {
             "optional": true,
@@ -431,6 +442,16 @@
           "strict_max_version": {
             "optional": true,
             "type": "string"
+          }
+        }
+      },
+      {
+        "id": "BrowserSpecificSettings",
+        "type": "object",
+        "properties": {
+          "gecko": {
+            "optional": true,
+            "$ref": "FirefoxSpecificProperties"
           }
         }
       },

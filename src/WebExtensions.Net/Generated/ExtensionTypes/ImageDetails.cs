@@ -23,6 +23,11 @@ namespace WebExtensions.Net.ExtensionTypes
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Rect Rect { get; set; }
 
+        /// <summary>If true, temporarily resets the scroll position of the document to 0. Only takes effect if rect is also specified.</summary>
+        [JsonPropertyName("resetScrollPosition")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? ResetScrollPosition { get; set; }
+
         /// <summary>The scale of the resulting image.  Defaults to <c>devicePixelRatio</c>.</summary>
         [JsonPropertyName("scale")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

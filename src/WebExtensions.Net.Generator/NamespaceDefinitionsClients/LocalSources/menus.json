@@ -32,30 +32,6 @@
     "description": "Use the browser.contextMenus API to add items to the browser\u0027s context menu. You can choose what types of objects your context menu additions apply to, such as images, hyperlinks, and pages.",
     "permissions": [
       "contextMenus"
-    ],
-    "types": [
-      {
-        "id": "ContextType",
-        "description": "The different contexts a menu can appear in. Specifying \u0027all\u0027 is equivalent to the combination of all other contexts except for \u0027tab\u0027 and \u0027tools_menu\u0027.",
-        "type": "string",
-        "enum": [
-          "all",
-          "page",
-          "frame",
-          "selection",
-          "link",
-          "editable",
-          "password",
-          "image",
-          "video",
-          "audio",
-          "launcher",
-          "bookmark",
-          "browser_action",
-          "page_action",
-          "tab"
-        ]
-      }
     ]
   },
   {
@@ -68,24 +44,39 @@
       {
         "id": "ContextType",
         "description": "The different contexts a menu can appear in. Specifying \u0027all\u0027 is equivalent to the combination of all other contexts except for \u0027tab\u0027 and \u0027tools_menu\u0027.",
-        "type": "string",
-        "enum": [
-          "all",
-          "page",
-          "frame",
-          "selection",
-          "link",
-          "editable",
-          "password",
-          "image",
-          "video",
-          "audio",
-          "launcher",
-          "bookmark",
-          "browser_action",
-          "page_action",
-          "tab",
-          "tools_menu"
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "all",
+              "page",
+              "frame",
+              "selection",
+              "link",
+              "editable",
+              "password",
+              "image",
+              "video",
+              "audio",
+              "launcher",
+              "bookmark",
+              "tab",
+              "tools_menu"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "browser_action",
+              "page_action"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "action"
+            ]
+          }
         ]
       },
       {
@@ -332,9 +323,31 @@
                 "type": "boolean"
               },
               "command": {
-                "description": "Specifies a command to issue for the context click.  Currently supports internal commands _execute_page_action, _execute_browser_action and _execute_sidebar_action.",
+                "description": "Specifies a command to issue for the context click.",
                 "optional": true,
-                "type": "string"
+                "choices": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "description": "Manifest V2 supports internal commands _execute_page_action, _execute_browser_action and _execute_sidebar_action.",
+                    "type": "string",
+                    "enum": [
+                      "_execute_browser_action",
+                      "_execute_page_action",
+                      "_execute_sidebar_action"
+                    ]
+                  },
+                  {
+                    "description": "Manifest V3 supports internal commands _execute_page_action, _execute_action and _execute_sidebar_action.",
+                    "type": "string",
+                    "enum": [
+                      "_execute_action",
+                      "_execute_page_action",
+                      "_execute_sidebar_action"
+                    ]
+                  }
+                ]
               }
             }
           },

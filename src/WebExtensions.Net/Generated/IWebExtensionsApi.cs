@@ -24,6 +24,7 @@ using WebExtensions.Net.Permissions;
 using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
+using WebExtensions.Net.Scripting;
 using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
 using WebExtensions.Net.Storage;
@@ -38,7 +39,7 @@ namespace WebExtensions.Net
     /// <summary>Web Extension Api</summary>
     public partial interface IWebExtensionsApi
     {
-        /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:browser_action.</summary>
+        /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:action, manifest:browser_action.</summary>
         IActionApi Action { get; }
 
         /// <summary><br />Requires manifest permission alarms.</summary>
@@ -47,7 +48,7 @@ namespace WebExtensions.Net
         /// <summary>Use the <c>browser.bookmarks</c> API to create, organize, and otherwise manipulate bookmarks. Also see $(topic:override)[Override Pages], which you can use to create a custom Bookmark Manager page.<br />Requires manifest permission bookmarks.</summary>
         IBookmarksApi Bookmarks { get; }
 
-        /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:browser_action.</summary>
+        /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:action, manifest:browser_action.</summary>
         IBrowserActionApi BrowserAction { get; }
 
         /// <summary>Use the <c>browser.browserSettings</c> API to control global settings of the browser.<br />Requires manifest permission browserSettings.</summary>
@@ -115,6 +116,9 @@ namespace WebExtensions.Net
 
         /// <summary>Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.</summary>
         IRuntimeApi Runtime { get; }
+
+        /// <summary>Use the scripting API to execute script in different contexts.<br />Requires manifest permission scripting.</summary>
+        IScriptingApi Scripting { get; }
 
         /// <summary>Use browser.search to interact with search engines.<br />Requires manifest permission search.</summary>
         ISearchApi Search { get; }

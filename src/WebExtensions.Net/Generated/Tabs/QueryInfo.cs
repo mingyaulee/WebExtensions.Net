@@ -31,7 +31,7 @@ namespace WebExtensions.Net.Tabs
         /// <summary>The CookieStoreId used for the tab.</summary>
         [JsonPropertyName("cookieStoreId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string CookieStoreId { get; set; }
+        public CookieStoreId CookieStoreId { get; set; }
 
         /// <summary>Whether the tabs are in the $(topic:current-window)[current window].</summary>
         [JsonPropertyName("currentWindow")]

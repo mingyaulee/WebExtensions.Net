@@ -24,6 +24,11 @@ namespace WebExtensions.Net.Downloads
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public FilenameConflictAction? ConflictAction { get; set; }
 
+        /// <summary>The cookie store ID of the contextual identity; requires "cookies" permission.</summary>
+        [JsonPropertyName("cookieStoreId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string CookieStoreId { get; set; }
+
         /// <summary>A file path relative to the Downloads directory to contain the downloaded file.</summary>
         [JsonPropertyName("filename")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

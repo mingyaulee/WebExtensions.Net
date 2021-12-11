@@ -17,10 +17,10 @@ namespace WebExtensions.Net.Menus
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Checked { get; set; }
 
-        /// <summary>Specifies a command to issue for the context click.  Currently supports internal commands _execute_page_action, _execute_browser_action and _execute_sidebar_action.</summary>
+        /// <summary>Specifies a command to issue for the context click.</summary>
         [JsonPropertyName("command")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Command { get; set; }
+        public Command Command { get; set; }
 
         /// <summary>List of contexts this menu item will appear in. Defaults to ['page'] if not specified.</summary>
         [JsonPropertyName("contexts")]

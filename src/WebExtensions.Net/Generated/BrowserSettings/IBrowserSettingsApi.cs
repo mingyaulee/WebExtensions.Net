@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using WebExtensions.Net.BrowserSettings.ColorManagement;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.BrowserSettings
@@ -7,6 +8,9 @@ namespace WebExtensions.Net.BrowserSettings
     /// <summary>Use the <c>browser.browserSettings</c> API to control global settings of the browser.</summary>
     public partial interface IBrowserSettingsApi
     {
+        /// <summary>Use the <c>browserSettings.colorManagement</c> API to query and set items related to color management.<br />Requires manifest permission browserSettings.</summary>
+        IColorManagementApi ColorManagement { get; }
+
         /// <summary>Gets the 'allowPopupsForUserEvents' property.</summary>
         /// <returns>Allows or disallows pop-up windows from opening in response to user events.</returns>
         ValueTask<Setting> GetAllowPopupsForUserEvents();
@@ -55,6 +59,10 @@ namespace WebExtensions.Net.BrowserSettings
         /// <summary>Gets the 'openUrlbarResultsInNewTabs' property.</summary>
         /// <returns>This boolean setting controls whether urlbar results are opened in the current tab or in a new tab.</returns>
         ValueTask<Setting> GetOpenUrlbarResultsInNewTabs();
+
+        /// <summary>Gets the 'overrideContentColorScheme' property.</summary>
+        /// <returns>This setting controls whether a light or dark color scheme overrides the page's preferred color scheme.</returns>
+        ValueTask<Setting> GetOverrideContentColorScheme();
 
         /// <summary>Gets the 'overrideDocumentColors' property.</summary>
         /// <returns>This setting controls whether the user-chosen colors override the page's colors.</returns>

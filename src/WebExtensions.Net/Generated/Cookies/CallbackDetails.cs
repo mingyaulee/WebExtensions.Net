@@ -18,6 +18,11 @@ namespace WebExtensions.Net.Cookies
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Name { get; set; }
 
+        /// <summary>The storage partition, if the cookie is part of partitioned storage. null if not partitioned.</summary>
+        [JsonPropertyName("partitionKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public PartitionKey PartitionKey { get; set; }
+
         /// <summary>The ID of the cookie store from which the cookie was removed.</summary>
         [JsonPropertyName("storeId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

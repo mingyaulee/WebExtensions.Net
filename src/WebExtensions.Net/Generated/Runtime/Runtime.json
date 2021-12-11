@@ -245,6 +245,22 @@
         }
       },
       {
+        "name": "getFrameId",
+        "description": "Get the frameId of any window global or frame element.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "target",
+            "description": "A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.",
+            "type": "any"
+          }
+        ],
+        "returns": {
+          "description": "The frameId of the target frame, or -1 if it doesn\u0027t exist.",
+          "type": "number"
+        }
+      },
+      {
         "name": "setUninstallURL",
         "description": "Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 255 characters.",
         "async": "callback",

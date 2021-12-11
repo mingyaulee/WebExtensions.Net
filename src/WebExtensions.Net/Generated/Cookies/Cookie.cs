@@ -36,6 +36,11 @@ namespace WebExtensions.Net.Cookies
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Name { get; set; }
 
+        /// <summary>The cookie's storage partition, if any. null if not partitioned.</summary>
+        [JsonPropertyName("partitionKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public PartitionKey PartitionKey { get; set; }
+
         /// <summary>The path of the cookie.</summary>
         [JsonPropertyName("path")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
