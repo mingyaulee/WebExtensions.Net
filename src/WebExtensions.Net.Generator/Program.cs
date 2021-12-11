@@ -104,6 +104,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<NamespaceRegistrationFilter>();
             services.AddTransient<TypeEntityRegistrar>();
             services.AddTransient<TypeUsageProcessor>();
+            services.AddTransient<RegisteredClassEntityProcessor>();
 
             // clr type translators
             services.AddTransient<ClassEntityTranslator>();

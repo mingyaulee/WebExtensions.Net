@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars;
 using WebExtensions.Net.Generator.Extensions;
@@ -92,15 +93,17 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             rootApiClassEntityRegistrar.RegisterClass(typeEntity);
         }
 
-        public void RegisterTypeEntity(TypeEntity typeEntity)
+        public bool TryRegisterTypeEntity(TypeEntity typeEntity, [MaybeNullWhen(false)] out ClassEntity classEntity)
         {
             var registrar = classEntityRegistrarFactory.GetClassEntityRegistrar(typeEntity.Definition);
             if (registrar is null)
             {
-                return;
+                classEntity = null;
+                return false;
             }
 
-            registrar.RegisterClass(typeEntity);
+            classEntity = registrar.RegisterClass(typeEntity);
+            return true;
         }
 
         private static PropertyDefinition GetPropertyDefinition(ClassEntity classEntity)

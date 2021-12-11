@@ -30,11 +30,6 @@ namespace WebExtensions.Net.Runtime
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Event OnMessage { get; set; }
 
-        /// <summary></summary>
-        [JsonPropertyName("postMessage")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Action PostMessage { get; set; }
-
         /// <summary>This property will 'b'only'/b' be present on ports passed to onConnect/onConnectExternal listeners.</summary>
         [JsonPropertyName("sender")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

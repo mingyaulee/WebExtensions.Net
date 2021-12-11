@@ -17,6 +17,7 @@ namespace WebExtensions.Net.Generator
         private readonly AnonymousTypeProcessor anonymousTypeProcessor;
         private readonly TypeUsageProcessor typeUsageProcessor;
         private readonly ClassEntityRegistrar classEntityRegistrar;
+        private readonly RegisteredClassEntityProcessor registeredClassEntityProcessor;
 
         public EntitiesRegistrationManager(
             ILogger logger,
@@ -25,7 +26,8 @@ namespace WebExtensions.Net.Generator
             TypeEntityRegistrar typeEntityRegistrar,
             AnonymousTypeProcessor anonymousTypeProcessor,
             TypeUsageProcessor typeUsageProcessor,
-            ClassEntityRegistrar classEntityRegistrar)
+            ClassEntityRegistrar classEntityRegistrar,
+            RegisteredClassEntityProcessor registeredClassEntityProcessor)
         {
             this.logger = logger;
             this.namespaceRegistrationFilter = namespaceRegistrationFilter;
@@ -34,6 +36,7 @@ namespace WebExtensions.Net.Generator
             this.anonymousTypeProcessor = anonymousTypeProcessor;
             this.typeUsageProcessor = typeUsageProcessor;
             this.classEntityRegistrar = classEntityRegistrar;
+            this.registeredClassEntityProcessor = registeredClassEntityProcessor;
         }
 
         public IEnumerable<ClassEntity> RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
@@ -155,7 +158,11 @@ namespace WebExtensions.Net.Generator
                     logger.LogWarning($"Skipped Type '{typeEntity.NamespaceQualifiedId}' because it is not referenced.");
                     continue;
                 }
-                classEntityRegistrar.RegisterTypeEntity(typeEntity);
+
+                if (classEntityRegistrar.TryRegisterTypeEntity(typeEntity, out var classEntity))
+                {
+                    registeredClassEntityProcessor.Process(classEntity);
+                }
             }
         }
     }
