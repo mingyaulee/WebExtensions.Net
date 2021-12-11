@@ -33,13 +33,13 @@ namespace WebExtensions.Net.Generator
                 {
                     foreach (var directory in Directory.GetDirectories(options.RootDirectory))
                     {
-                        logger.LogInformation($"Deleting directory {directory}");
+                        logger.LogInformation("Deleting directory {Directory}", directory);
                         DeleteDirectory(directory);
                     }
 
                     foreach (var file in Directory.GetFiles(options.RootDirectory))
                     {
-                        logger.LogInformation($"Deleting file {file}");
+                        logger.LogInformation("Deleting file {File}", file);
                         DeleteFile(file);
                     }
                 }
@@ -141,7 +141,7 @@ namespace WebExtensions.Net.Generator
         {
             if (!Directory.Exists(directory))
             {
-                logger.LogInformation($"Creating directory {directory}");
+                logger.LogInformation("Creating directory {Directory}", directory);
                 Directory.CreateDirectory(directory);
             }
         }

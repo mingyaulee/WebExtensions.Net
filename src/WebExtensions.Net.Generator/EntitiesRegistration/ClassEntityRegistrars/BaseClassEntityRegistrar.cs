@@ -59,13 +59,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                 classFunctions.AddRange(typeEntity.Definition.ObjectFunctions);
             }
 
-            foreach (var typeExtension in typeEntity.Extensions)
-            {
-                if (typeExtension.ObjectFunctions is not null)
-                {
-                    classFunctions.AddRange(typeExtension.ObjectFunctions);
-                }
-            }
+            var typeExtensionFunctions = typeEntity.Extensions
+                .Where(typeExtension => typeExtension.ObjectFunctions is not null)
+                .SelectMany(typeExtension => typeExtension.ObjectFunctions!);
+            classFunctions.AddRange(typeExtensionFunctions);
         }
 
         protected virtual void AddClassProperties(TypeEntity typeEntity, List<KeyValuePair<string, PropertyDefinition>> classProperties)
@@ -75,13 +72,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                 classProperties.AddRange(typeEntity.Definition.ObjectProperties);
             }
 
-            foreach (var typeExtension in typeEntity.Extensions)
-            {
-                if (typeExtension.ObjectProperties is not null)
-                {
-                    classProperties.AddRange(typeExtension.ObjectProperties);
-                }
-            }
+            var typeExtensionProperties = typeEntity.Extensions
+                .Where(typeExtension => typeExtension.ObjectProperties is not null)
+                .SelectMany(typeExtension => typeExtension.ObjectProperties!);
+            classProperties.AddRange(typeExtensionProperties);
         }
 
         private static void AddPropertiesToClassEntity(IEnumerable<KeyValuePair<string, PropertyDefinition>> propertyDefinitionPairs, ClassEntity classEntity)

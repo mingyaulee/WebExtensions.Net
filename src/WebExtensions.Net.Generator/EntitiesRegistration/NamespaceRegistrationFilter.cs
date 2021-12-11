@@ -21,13 +21,13 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         {
             if (registrationOptions.ExcludeNamespaces is not null && registrationOptions.ExcludeNamespaces.Contains(namespaceEntity.FullName))
             {
-                logger.LogWarning($"Skipped namespace '{namespaceEntity.FullName}'.");
+                logger.LogWarning("Skipped namespace '{FullName}'.", namespaceEntity.FullName);
                 return false;
             }
 
             if (registrationOptions.IncludeNamespaces is not null && !registrationOptions.IncludeNamespaces.Contains(namespaceEntity.FullName))
             {
-                logger.LogError($"Namespace '{namespaceEntity.FullName}' is not recognized.");
+                logger.LogError("Namespace '{FullName}' is not recognized.", namespaceEntity.FullName);
                 return false;
             }
 

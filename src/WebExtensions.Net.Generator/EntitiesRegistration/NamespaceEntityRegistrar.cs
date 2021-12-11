@@ -33,13 +33,13 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         {
             if (namespaceDefinition.Namespace is null)
             {
-                logger.LogInformation($"Namespace is null for namespace definition in source '{namespaceDefinition.Source?.HttpUrl}'");
+                logger.LogInformation("Namespace is null for namespace definition in source '{HttpUrl}'", namespaceDefinition.Source?.HttpUrl);
                 return null;
             }
 
             NamespaceEntity? parentEntity = null;
             var @namespace = namespaceDefinition.Namespace;
-            if (@namespace.Contains("."))
+            if (@namespace.Contains('.'))
             {
                 var parentNamespaces = @namespace.Split('.');
                 @namespace = parentNamespaces.Last();

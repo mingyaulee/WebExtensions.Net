@@ -225,7 +225,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             if (typeReference.Ref is not null)
             {
-                if (typeReference.Ref.Contains(".") || string.IsNullOrEmpty(namespaceEntity.FullFormattedName))
+                if (typeReference.Ref.Contains('.') || string.IsNullOrEmpty(namespaceEntity.FullFormattedName))
                 {
                     var capitalizedRef = string.Join('.', typeReference.Ref.Split('.').Select(x => x.ToCapitalCase()));
                     return $"{Constants.RelativeNamespaceToken}.{capitalizedRef}";

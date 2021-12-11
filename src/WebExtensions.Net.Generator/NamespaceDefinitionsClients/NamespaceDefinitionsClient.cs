@@ -62,7 +62,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
 
         private async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinition(NamespaceSourceDefinition namespaceSourceDefinition)
         {
-            logger.LogInformation($"Reading from URL {namespaceSourceDefinition.HttpUrl}");
+            logger.LogInformation("Reading from URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
 
             IEnumerable<NamespaceDefinition>? namespaceDefinitionsResponse;
             try
@@ -82,7 +82,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
                 namespaceDefinition.Source = namespaceSourceDefinition;
             }
 
-            logger.LogInformation($"Reading complete for URL {namespaceSourceDefinition.HttpUrl}");
+            logger.LogInformation("Reading complete for URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
             return namespaceDefinitionsResponse;
         }
 
@@ -94,7 +94,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
                 var namespaceSourceDefinitionDictionary = await GetFromHttpWithRetry<IDictionary<string, NamespaceSourceDefinition>>(source.BaseUrl + source.FileName);
                 if (namespaceSourceDefinitionDictionary is null)
                 {
-                    logger.LogError($"Failed to retrieve namespace source definitions from source url. Source url: '{source}'");
+                    logger.LogError("Failed to retrieve namespace source definitions from source url. Source url: '{Source}'", source);
                     continue;
                 }
 
@@ -105,7 +105,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
 
                     if (namespaceSourceDefinition.Schema is null)
                     {
-                        logger.LogWarning($"Skipping source definition: Namespace definition schema url is null. Key: '{item.Key}'");
+                        logger.LogWarning("Skipping source definition: Namespace definition schema url is null. Key: '{Key}'", item.Key);
                         continue;
                     }
                     var namespaceSource = sources.Single(s => namespaceSourceDefinition.Schema.StartsWith(s.SchemaBaseUrl));

@@ -155,7 +155,7 @@ namespace WebExtensions.Net.Generator
             {
                 if (!typeEntity.IsReferenced)
                 {
-                    logger.LogWarning($"Skipped Type '{typeEntity.NamespaceQualifiedId}' because it is not referenced.");
+                    logger.LogWarning("Skipped Type '{NamespaceQualifiedId}' because it is not referenced.", typeEntity.NamespaceQualifiedId);
                     continue;
                 }
 

@@ -35,7 +35,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
             else
             {
-                logger.LogError($"Type definition in namespace '{namespaceEntity.FullName}' must have an ID or extends another type. {JsonSerializer.Serialize(typeDefinition)}");
+                logger.LogError("Type definition in namespace '{FullName}' must have an ID or extends another type. {TypeDefinition}", namespaceEntity.FullName, JsonSerializer.Serialize(typeDefinition));
             }
         }
 
