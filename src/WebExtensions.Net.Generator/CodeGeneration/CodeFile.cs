@@ -4,12 +4,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration
 {
     public class CodeFile
     {
-        public CodeFile(string fileName, string relativeNamespace, string declaration)
+        public CodeFile(string fileName, string? relativePath, string relativeNamespace, string declaration)
         {
             FileName = fileName;
+            RelativePath = relativePath;
             UsingNamespaces = new HashSet<string>();
             Namespace = string.IsNullOrEmpty(relativeNamespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{relativeNamespace}";
-            RelativeNamespace = relativeNamespace;
             Comments = new List<ICodeConverter>();
             Attributes = new List<ICodeConverter>();
             Declaration = declaration;
@@ -19,9 +19,9 @@ namespace WebExtensions.Net.Generator.CodeGeneration
         }
 
         public string FileName { get; }
+        public string? RelativePath { get; }
         public ISet<string> UsingNamespaces { get; }
         public string Namespace { get; }
-        public string RelativeNamespace { get; }
         public IList<ICodeConverter> Comments { get; }
         public IList<ICodeConverter> Attributes { get; }
         public string Declaration { get; set; }

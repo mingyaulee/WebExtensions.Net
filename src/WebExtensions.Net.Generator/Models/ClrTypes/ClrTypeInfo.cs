@@ -24,6 +24,7 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
         public string? ObsoleteMessage { get; set; }
         public bool IsGenerated { get; set; }
         public string? GeneratedNamespace { get; set; }
+        public string? InitialGeneratedNamespace { get; set; }
         public ISet<string> ReferenceNamespaces { get; set; }
         public ISet<string> RequiredNamespaces { get; set; }
         public ISet<string> Interfaces { get; set; }
@@ -56,6 +57,7 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
                 ObsoleteMessage = ObsoleteMessage,
                 IsGenerated = IsGenerated,
                 GeneratedNamespace = GeneratedNamespace,
+                InitialGeneratedNamespace = InitialGeneratedNamespace,
                 RequiredNamespaces = new HashSet<string>(RequiredNamespaces),
                 ReferenceNamespaces = new HashSet<string>(ReferenceNamespaces),
                 Interfaces = new HashSet<string>(Interfaces),

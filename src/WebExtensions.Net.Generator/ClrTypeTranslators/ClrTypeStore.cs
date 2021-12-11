@@ -118,6 +118,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 ObsoleteMessage = null,
                 IsGenerated = false,
                 GeneratedNamespace = null,
+                InitialGeneratedNamespace = null,
                 RequiredNamespaces = new HashSet<string>(),
                 ReferenceNamespaces = new HashSet<string>() { type.Namespace },
                 Interfaces = new HashSet<string>(),

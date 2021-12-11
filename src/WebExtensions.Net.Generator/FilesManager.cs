@@ -127,7 +127,7 @@ namespace WebExtensions.Net.Generator
 
         private void WriteCodeFile(CodeFileConverter codeFileConverter)
         {
-            var directoryPath = Path.Combine(options.RootDirectory, NormalizePath(codeFileConverter.CodeFile.RelativeNamespace));
+            var directoryPath = Path.Combine(options.RootDirectory, NormalizePath(codeFileConverter.CodeFile.RelativePath));
             var filePath = Path.Combine(directoryPath, $"{codeFileConverter.CodeFile.FileName}.cs");
 
             CreateDirectoryIfNotExist(directoryPath);
@@ -146,8 +146,13 @@ namespace WebExtensions.Net.Generator
             }
         }
 
-        private static string NormalizePath(string path)
+        private static string NormalizePath(string? path)
         {
+            if (path is null)
+            {
+                return string.Empty;
+            }
+
             return path.Replace('.', Path.DirectorySeparatorChar);
         }
     }

@@ -30,10 +30,16 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 classEntityName = classTranslationOptions.Aliases[classEntityName];
             }
 
-            var @namespace = string.IsNullOrEmpty(classEntity.NamespaceEntity.FullFormattedName) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{classEntity.NamespaceEntity.FullFormattedName}";
+            var namespaceName = classEntity.NamespaceEntity.FullFormattedName;
+            if (namespaceName is not null && classTranslationOptions.NamespaceAliases.ContainsKey(namespaceName))
+            {
+                namespaceName = classTranslationOptions.NamespaceAliases[namespaceName];
+            }
+            var @namespace = FullyQualifyNamespace(namespaceName);
+
             var clrTypeInfo = new ClrTypeInfo()
             {
-                Id = $"{@namespace}.{classEntity.FormattedName}",
+                Id = $"{FullyQualifyNamespace(classEntity.NamespaceEntity.FullFormattedName)}.{classEntity.FormattedName}",
                 Namespace = @namespace,
                 Name = classEntity.Name,
                 FullName = $"{@namespace}.{classEntity.FormattedName}",
@@ -48,7 +54,8 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsObsolete = classEntity.TypeDefinition.IsDeprecated,
                 ObsoleteMessage = classEntity.TypeDefinition.Deprecated,
                 IsGenerated = true,
-                GeneratedNamespace = classEntity.NamespaceEntity.FullFormattedName,
+                GeneratedNamespace = namespaceName,
+                InitialGeneratedNamespace = classEntity.NamespaceEntity.FullFormattedName,
                 RequiredNamespaces = new HashSet<string>(),
                 ReferenceNamespaces = new HashSet<string>() { @namespace },
                 Interfaces = new HashSet<string>(),
@@ -123,6 +130,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                     clrTypeInfo.Metadata.Add(Constants.TypeMetadata.StringPattern, classEntity.TypeDefinition.StringPattern);
                 }
             }
+        }
+
+        private string FullyQualifyNamespace(string? @namespace)
+        {
+            return string.IsNullOrEmpty(@namespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{@namespace}";
         }
     }
 }
