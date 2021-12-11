@@ -1,4 +1,4 @@
-using WebExtensions.Net.Action;
+using WebExtensions.Net.ActionNs;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
@@ -92,7 +92,7 @@ namespace WebExtensions.Net
         /// <summary>The <c>browser.management</c> API provides ways to manage the list of extensions that are installed and running.</summary>
         IManagementApi Management { get; }
 
-        /// <summary>The part of the menus API that is available in all extension contexts, including content scripts. Use the browser.menus API to add items to the browser's menus. You can choose what types of objects your context menu additions apply to, such as images, hyperlinks, and pages.<br />Requires manifest permission menus, menus.</summary>
+        /// <summary>The part of the menus API that is available in all extension contexts, including content scripts. Use the browser.menus API to add items to the browser's menus. You can choose what types of objects your context menu additions apply to, such as images, hyperlinks, and pages.<br />Requires manifest permission menus.</summary>
         IMenusApi Menus { get; }
 
         /// <summary><br />Requires manifest permission notifications.</summary>

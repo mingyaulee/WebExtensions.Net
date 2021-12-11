@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Multitype Class
     /// <summary>An array of four integers in the range [0,255] that make up the RGBA color of the badge. For example, opaque red is <c>[255, 0, 0, 255]</c>. Can also be a string with a CSS value, with opaque red being <c>#FF0000</c> or <c>#F00</c>.</summary>

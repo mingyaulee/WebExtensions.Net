@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Multitype Class
     /// <summary>The string the browser action should display when moused over.</summary>

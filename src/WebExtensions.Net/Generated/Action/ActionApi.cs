@@ -1,7 +1,7 @@
 using JsBind.Net;
 using System.Threading.Tasks;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     /// <inheritdoc />
     public partial class ActionApi : BaseApi, IActionApi

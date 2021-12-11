@@ -1,5 +1,5 @@
 using JsBind.Net;
-using WebExtensions.Net.Action;
+using WebExtensions.Net.ActionNs;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;

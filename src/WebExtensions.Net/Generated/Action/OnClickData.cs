@@ -2,7 +2,7 @@ using JsBind.Net;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Type Class
     /// <summary>Information sent when a browser action is clicked.</summary>

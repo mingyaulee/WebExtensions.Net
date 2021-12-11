@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.</summary>
     public partial interface IActionApi

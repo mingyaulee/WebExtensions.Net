@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using WebExtensions.Net.Events;
 using WebExtensions.Net.Tabs;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Type Class
     /// <summary>Fired when a browser action icon is clicked.  This event will not fire if the browser action has a popup.</summary>

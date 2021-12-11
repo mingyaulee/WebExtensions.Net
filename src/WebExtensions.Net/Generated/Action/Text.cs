@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Multitype Class
     /// <summary>Any number of characters can be passed, but only about four can fit in the space.</summary>

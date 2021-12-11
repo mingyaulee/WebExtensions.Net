@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Array Class
     /// <summary></summary>

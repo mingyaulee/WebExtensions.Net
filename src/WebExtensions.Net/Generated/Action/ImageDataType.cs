@@ -1,6 +1,6 @@
 using JsBind.Net;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Type Class
     /// <summary>Pixel data for an image. Must be an ImageData object (for example, from a <c>canvas</c> element).</summary>

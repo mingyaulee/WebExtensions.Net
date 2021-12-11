@@ -1,7 +1,7 @@
 using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Type Class
     /// <summary>Specifies to which tab or window the value should be set, or from which one it should be retrieved. If no tab nor window is specified, the global value is set or retrieved.</summary>

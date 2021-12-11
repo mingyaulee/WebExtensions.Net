@@ -1,7 +1,7 @@
 using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Type Class
     /// <summary></summary>

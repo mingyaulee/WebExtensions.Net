@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Action
+namespace WebExtensions.Net.ActionNs
 {
     // Multitype Class
     /// <summary>The html file to show in a popup.  If set to the empty string (''), no popup is shown.</summary>
