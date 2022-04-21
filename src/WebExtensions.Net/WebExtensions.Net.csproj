@@ -2,7 +2,7 @@
 
   <!-- Build properties. -->
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net5.0</TargetFrameworks>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsBind.Net" Version="0.3.2" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net" Version="0.4.0" PrivateAssets="contentfiles" />
   </ItemGroup>
 
 </Project>
