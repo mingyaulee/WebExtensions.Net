@@ -61,8 +61,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 
             // Assert
             window.Should().NotBeNull();
-            window.Top.Should().BeCloseTo(windowTop, 5);
-            window.Left.Should().BeCloseTo(windowLeft, 5);
+            window.Top.Should().BeInRange(windowTop - 5, windowTop + 5);
+            window.Left.Should().BeInRange(windowLeft - 5, windowLeft + 5);
         }
 
         [Fact(Order = 4)]

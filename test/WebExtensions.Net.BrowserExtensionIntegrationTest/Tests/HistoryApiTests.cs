@@ -47,7 +47,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 
             // Assert
             visits.Should().NotBeNullOrEmpty();
-            ((DateTime)visits.Single().VisitTime).Should().BeCloseTo(testHistoryTime, precision: 1000);
+            ((DateTime)visits.Single().VisitTime).Should().BeCloseTo(testHistoryTime, precision: TimeSpan.FromSeconds(1));
         }
 
         [Fact(Order = 2)]

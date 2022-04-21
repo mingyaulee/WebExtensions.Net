@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -70,14 +70,14 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
         }
 
-        private static RemoteWebDriver GetWebDriver(string driverPath, string extensionPath)
+        private static WebDriver GetWebDriver(string driverPath, string extensionPath)
         {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument($"load-extension={extensionPath}");
             return new ChromeDriver(driverPath, chromeOptions);
         }
 
-        private static async Task WaitForExtensionPageLoaded(RemoteWebDriver webDriver)
+        private static async Task WaitForExtensionPageLoaded(WebDriver webDriver)
         {
             // wait for 10 seconds
             var waitTime = 10 * 1000;
@@ -100,14 +100,14 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
         }
 
-        private static void LaunchTestPage(RemoteWebDriver webDriver)
+        private static void LaunchTestPage(WebDriver webDriver)
         {
             var extensionUri = new Uri(webDriver.Url);
             var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false&coverlet";
             webDriver.Navigate().GoToUrl(testPageUrl);
         }
 
-        private static async Task WaitForTestToFinish(RemoteWebDriver webDriver)
+        private static async Task WaitForTestToFinish(WebDriver webDriver)
         {
             // wait for 30 seconds
             var waitTime = 30 * 1000;
@@ -132,7 +132,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
         }
 
-        private static TestRunInfo GetTestResults(RemoteWebDriver webDriver)
+        private static TestRunInfo GetTestResults(WebDriver webDriver)
         {
             var resultsObject = (string)webDriver.ExecuteScript("return JSON.stringify(TestRunner.GetTestResults());");
             var testRunResult = JsonSerializer.Deserialize<TestRunInfo>(resultsObject, new JsonSerializerOptions()
@@ -156,7 +156,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             return testRunResult;
         }
 
-        private static async Task<TestCoverage> GetTestCoverageHits(RemoteWebDriver webDriver)
+        private static async Task<TestCoverage> GetTestCoverageHits(WebDriver webDriver)
         {
             // wait for 5 seconds
             var waitTime = 5 * 1000;
