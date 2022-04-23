@@ -25,6 +25,12 @@ namespace WebExtensions.Net.Runtime
         /// <summary>Fired when a profile that has this extension installed first starts up. This event is not fired for incognito profiles.</summary>
         Event OnStartup { get; }
 
+        /// <summary>Sent to the event page just before it is unloaded. This gives the extension opportunity to do some clean up. Note that since the page is unloading, any asynchronous operations started while handling this event are not guaranteed to complete. If more activity for the event page occurs before it gets unloaded the onSuspendCanceled event will be sent and the page won't be unloaded. </summary>
+        Event OnSuspend { get; }
+
+        /// <summary>Sent after onSuspend to indicate that the app won't be unloaded after all.</summary>
+        Event OnSuspendCanceled { get; }
+
         /// <summary>Fired when an update is available, but isn't installed immediately because the app is currently running. If you do nothing, the update will be installed the next time the background page gets unloaded, if you want it to be installed sooner you can explicitly call $(ref:runtime.reload). If your extension is using a persistent background page, the background page of course never gets unloaded, so unless you call $(ref:runtime.reload) manually in response to this event the update will not get installed until the next time the browser itself restarts. If no handlers are listening for this event, and your extension has a persistent background page, it behaves as if $(ref:runtime.reload) is called in response to this event.</summary>
         OnUpdateAvailableEvent OnUpdateAvailable { get; }
 

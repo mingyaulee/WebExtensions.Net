@@ -33,5 +33,9 @@ namespace WebExtensions.Net.Runtime
         /// <summary>x86-64</summary>
         [EnumValue("x86-64")]
         X86_64,
+
+        /// <summary>noarch</summary>
+        [EnumValue("noarch")]
+        Noarch,
     }
 }

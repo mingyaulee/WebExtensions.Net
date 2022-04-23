@@ -16,6 +16,11 @@ namespace WebExtensions.Net.ContentScripts
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? AllFrames { get; set; }
 
+        /// <summary>limit the set of matched tabs to those that belong to the given cookie store id</summary>
+        [JsonPropertyName("cookieStoreId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public CookieStoreId CookieStoreId { get; set; }
+
         /// <summary>The list of CSS files to inject</summary>
         [JsonPropertyName("css")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

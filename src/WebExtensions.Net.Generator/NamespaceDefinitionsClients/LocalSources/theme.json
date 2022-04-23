@@ -307,6 +307,26 @@
                     "repeat-y"
                   ]
                 }
+              },
+              "color_scheme": {
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "light",
+                  "dark",
+                  "system"
+                ]
+              },
+              "content_color_scheme": {
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "light",
+                  "dark",
+                  "system"
+                ]
               }
             }
           }

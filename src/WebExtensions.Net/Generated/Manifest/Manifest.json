@@ -672,6 +672,26 @@
                     "repeat-y"
                   ]
                 }
+              },
+              "color_scheme": {
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "light",
+                  "dark",
+                  "system"
+                ]
+              },
+              "content_color_scheme": {
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "light",
+                  "dark",
+                  "system"
+                ]
               }
             }
           }
@@ -1576,7 +1596,7 @@
                   },
                   "persistent": {
                     "optional": true,
-                    "$ref": "PersistentBackgroundProperty"
+                    "type": "boolean"
                   }
                 }
               },
@@ -1591,7 +1611,7 @@
                   },
                   "persistent": {
                     "optional": true,
-                    "$ref": "PersistentBackgroundProperty"
+                    "type": "boolean"
                   }
                 }
               },
@@ -1669,6 +1689,10 @@
                 }
               }
             ]
+          },
+          "granted_host_permissions": {
+            "optional": true,
+            "type": "boolean"
           },
           "host_permissions": {
             "optional": true,
@@ -1756,6 +1780,29 @@
           },
           "dictionaries": {
             "type": "object"
+          }
+        }
+      },
+      {
+        "id": "WebExtensionSitePermissionsManifest",
+        "description": "Represents a WebExtension site permissions manifest.json file",
+        "type": "object",
+        "properties": {
+          "site_permissions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "SitePermission"
+            }
+          },
+          "install_origins": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "type": "string",
+              "format": "origin"
+            }
           }
         }
       },
@@ -1852,6 +1899,18 @@
           },
           {
             "$ref": "MatchPattern"
+          }
+        ]
+      },
+      {
+        "id": "SitePermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "midi",
+              "midi-sysex"
+            ]
           }
         ]
       },
@@ -2062,24 +2121,6 @@
         "id": "UnrecognizedProperty",
         "type": "any",
         "deprecated": "An unexpected property was found in the WebExtension manifest."
-      },
-      {
-        "id": "PersistentBackgroundProperty",
-        "choices": [
-          {
-            "type": "boolean",
-            "enum": [
-              true
-            ]
-          },
-          {
-            "type": "boolean",
-            "deprecated": "Event pages are not currently supported. This will run as a persistent background page.",
-            "enum": [
-              false
-            ]
-          }
-        ]
       }
     ]
   },

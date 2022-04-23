@@ -105,7 +105,7 @@ namespace WebExtensions.Net
         /// <summary>Use the <c>browser.pageAction</c> API to put icons inside the address bar. Page actions represent actions that can be taken on the current page, but that aren't applicable to all pages.<br />Requires manifest permission manifest:page_action.</summary>
         IPageActionApi PageAction { get; }
 
-        /// <summary><br />Requires manifest permission manifest:optional_permissions.</summary>
+        /// <summary></summary>
         IPermissionsApi Permissions { get; }
 
         /// <summary><br />Requires manifest permission privacy.</summary>

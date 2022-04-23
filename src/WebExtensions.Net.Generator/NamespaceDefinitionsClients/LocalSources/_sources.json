@@ -557,6 +557,13 @@
     "scopes": [
       "addon_parent"
     ],
+    "events": [
+      "startup"
+    ],
+    "permissions": [
+      "menus",
+      "contextMenus"
+    ],
     "paths": [
       [
         "contextMenus"

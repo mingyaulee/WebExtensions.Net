@@ -1,5 +1,6 @@
 [
   {
+    "_reason": "Manifest V2 compatibility",
     "url": "chrome://browser/content/parent/ext-browserAction.js",
     "schema": "chrome://extensions/content/schemas/browser_action.json",
     "scopes": [

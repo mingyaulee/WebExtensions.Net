@@ -14,6 +14,8 @@ namespace WebExtensions.Net.Runtime
         private OnMessageEvent _onMessage;
         private OnMessageExternalEvent _onMessageExternal;
         private Event _onStartup;
+        private Event _onSuspend;
+        private Event _onSuspendCanceled;
         private OnUpdateAvailableEvent _onUpdateAvailable;
 
         /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
@@ -104,6 +106,34 @@ namespace WebExtensions.Net.Runtime
                     _onStartup.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onStartup"));
                 }
                 return _onStartup;
+            }
+        }
+
+        /// <inheritdoc />
+        public Event OnSuspend
+        {
+            get
+            {
+                if (_onSuspend is null)
+                {
+                    _onSuspend = new Event();
+                    _onSuspend.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onSuspend"));
+                }
+                return _onSuspend;
+            }
+        }
+
+        /// <inheritdoc />
+        public Event OnSuspendCanceled
+        {
+            get
+            {
+                if (_onSuspendCanceled is null)
+                {
+                    _onSuspendCanceled = new Event();
+                    _onSuspendCanceled.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onSuspendCanceled"));
+                }
+                return _onSuspendCanceled;
             }
         }
 

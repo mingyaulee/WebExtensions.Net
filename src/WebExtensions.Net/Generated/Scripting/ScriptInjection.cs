@@ -15,7 +15,7 @@ namespace WebExtensions.Net.Scripting
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<object> Args { get; set; }
 
-        /// <summary>The path of the JS or CSS files to inject, relative to the extension's root directory. Exactly one of <c>files</c> and <c>func</c> must be specified.</summary>
+        /// <summary>The path of the JS files to inject, relative to the extension's root directory. Exactly one of <c>files</c> and <c>func</c> must be specified.</summary>
         [JsonPropertyName("files")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> Files { get; set; }
@@ -29,5 +29,10 @@ namespace WebExtensions.Net.Scripting
         [JsonPropertyName("target")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public InjectionTarget Target { get; set; }
+
+        /// <summary></summary>
+        [JsonPropertyName("world")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ExecutionWorld? World { get; set; }
     }
 }

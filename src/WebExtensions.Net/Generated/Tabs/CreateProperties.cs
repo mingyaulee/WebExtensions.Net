@@ -28,6 +28,11 @@ namespace WebExtensions.Net.Tabs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Index { get; set; }
 
+        /// <summary>Whether the tab should be muted when created.</summary>
+        [JsonPropertyName("muted")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? Muted { get; set; }
+
         /// <summary>The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as the newly created tab.</summary>
         [JsonPropertyName("openerTabId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

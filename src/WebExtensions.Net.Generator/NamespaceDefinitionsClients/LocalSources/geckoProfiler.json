@@ -36,7 +36,6 @@
           "screenshots",
           "seqstyle",
           "stackwalk",
-          "threads",
           "jstracer",
           "jsallocations",
           "nostacksampling",
@@ -50,6 +49,7 @@
           "samplingallthreads",
           "markersallthreads",
           "unregisteredthreads",
+          "processcpu",
           "responsiveness"
         ]
       },
