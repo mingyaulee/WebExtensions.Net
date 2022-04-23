@@ -20,11 +20,17 @@ namespace WebExtensions.Net.Generator
         {
             var configuration = GetConfiguration();
             var sourceOptions = configuration.GetSection("sourceOptions").Get<SourceOptions>();
-            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, sourceOptions.LocalDirectory));
             var codeWriterOptions = configuration.GetSection("codeWriterOptions").Get<CodeWriterOptions>();
-            codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, codeWriterOptions.RootDirectory));
             var registrationOptions = configuration.GetSection("registrationOptions").Get<RegistrationOptions>();
             var classTranslationOptions = configuration.GetSection("classTranslationOptions").Get<ClassTranslationOptions>();
+            
+            if (sourceOptions is null || codeWriterOptions is null || registrationOptions is null || classTranslationOptions is null)
+            {
+                throw new InvalidOperationException("Invalid appsettings file.");
+            }
+
+            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, sourceOptions.LocalDirectory));
+            codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, codeWriterOptions.RootDirectory));
 
             var services = new ServiceCollection();
             RegisterServices(services);
