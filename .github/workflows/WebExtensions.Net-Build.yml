@@ -8,8 +8,7 @@ jobs:
   version:
     runs-on: ubuntu-latest
     outputs:
-      SemVer: ${{ steps.gitversion.outputs.SemVer }}
-      FullSemVer: ${{ steps.gitversion.outputs.FullSemVer }}
+      NuGetVersion: ${{ steps.gitversion.outputs.NuGetVersion }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -76,7 +75,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.FullSemVer }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.NuGetVersion }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
         dotnet build --no-restore --configuration Release
         .\.coverlet\console\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net7.0/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
@@ -91,7 +90,7 @@ jobs:
       uses: mukunku/tag-exists-action@v1.0.0
       id: tagExistsCheck
       with: 
-        tag: 'v${{ needs.version.outputs.SemVer }}'
+        tag: 'v${{ needs.version.outputs.NuGetVersion }}'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create tag
@@ -99,4 +98,4 @@ jobs:
       uses: negz/create-tag@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        version: v${{ needs.version.outputs.SemVer }}
+        version: v${{ needs.version.outputs.NuGetVersion }}
