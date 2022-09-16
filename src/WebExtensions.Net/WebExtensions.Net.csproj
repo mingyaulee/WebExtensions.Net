@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsBind.Net" Version="0.4.0" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net" Version="0.4.1" PrivateAssets="contentfiles" />
   </ItemGroup>
 
 </Project>
