@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Scripting
     [BindAllProperties]
     public partial class ScriptsArrayItem : BaseObject
     {
-        /// <summary>Specifies if this content script will persist into future sessions. This is currently NOT supported.</summary>
+        /// <summary>Specifies if this content script will persist into future sessions.</summary>
         [JsonPropertyName("persistAcrossSessions")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? PersistAcrossSessions { get; set; }

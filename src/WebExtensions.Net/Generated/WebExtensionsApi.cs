@@ -9,6 +9,7 @@ using WebExtensions.Net.Clipboard;
 using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
 using WebExtensions.Net.Cookies;
+using WebExtensions.Net.DeclarativeNetRequest;
 using WebExtensions.Net.Devtools;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
@@ -50,6 +51,7 @@ namespace WebExtensions.Net
         private ICommandsApi _commands;
         private IContentScriptsApi _contentScripts;
         private ICookiesApi _cookies;
+        private IDeclarativeNetRequestApi _declarativeNetRequest;
         private IDevtoolsApi _devtools;
         private IDownloadsApi _downloads;
         private IExtensionApi _extension;
@@ -209,6 +211,19 @@ namespace WebExtensions.Net
                     _cookies = new CookiesApi(JsRuntime, AccessPath);
                 }
                 return _cookies;
+            }
+        }
+
+        /// <inheritdoc />
+        public IDeclarativeNetRequestApi DeclarativeNetRequest
+        {
+            get
+            {
+                if (_declarativeNetRequest is null)
+                {
+                    _declarativeNetRequest = new DeclarativeNetRequestApi(JsRuntime, AccessPath);
+                }
+                return _declarativeNetRequest;
             }
         }
 

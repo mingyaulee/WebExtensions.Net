@@ -8,6 +8,7 @@ using WebExtensions.Net.Clipboard;
 using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
 using WebExtensions.Net.Cookies;
+using WebExtensions.Net.DeclarativeNetRequest;
 using WebExtensions.Net.Devtools;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
@@ -68,6 +69,9 @@ namespace WebExtensions.Net
 
         /// <summary>Use the <c>browser.cookies</c> API to query and modify cookies, and to be notified when they change.<br />Requires manifest permission cookies.</summary>
         ICookiesApi Cookies { get; }
+
+        /// <summary>Use the declarativeNetRequest API to block or modify network requests by specifying declarative rules.<br />Requires manifest permission declarativeNetRequest, declarativeNetRequestWithHostAccess.</summary>
+        IDeclarativeNetRequestApi DeclarativeNetRequest { get; }
 
         /// <summary><br />Requires manifest permission manifest:devtools_page.</summary>
         IDevtoolsApi Devtools { get; }

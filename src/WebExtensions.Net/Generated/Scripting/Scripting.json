@@ -40,6 +40,11 @@
           "world": {
             "optional": true,
             "$ref": "ExecutionWorld"
+          },
+          "injectImmediately": {
+            "description": "Whether the injection should be triggered in the target as soon as possible (but not necessarily prior to page load).",
+            "optional": true,
+            "type": "boolean"
           }
         }
       },
@@ -191,11 +196,9 @@
             "$ref": "extensionTypes.RunAt"
           },
           "persistAcrossSessions": {
-            "description": "Specifies if this content script will persist into future sessions. This is currently NOT supported.",
-            "type": "boolean",
-            "enum": [
-              false
-            ]
+            "description": "Specifies if this content script will persist into future sessions. Defaults to true.",
+            "optional": true,
+            "type": "boolean"
           },
           "css": {
             "description": "The list of CSS files to be injected into matching pages. These are injected in the order they appear in this array.",
@@ -358,12 +361,9 @@
               "type": "object",
               "properties": {
                 "persistAcrossSessions": {
-                  "description": "Specifies if this content script will persist into future sessions. This is currently NOT supported.",
+                  "description": "Specifies if this content script will persist into future sessions.",
                   "optional": true,
-                  "type": "boolean",
-                  "enum": [
-                    false
-                  ]
+                  "type": "boolean"
                 }
               }
             }

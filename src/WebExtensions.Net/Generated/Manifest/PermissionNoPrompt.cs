@@ -7,14 +7,22 @@ namespace WebExtensions.Net.Manifest
     [JsonConverter(typeof(MultiTypeJsonConverter<PermissionNoPrompt>))]
     public partial class PermissionNoPrompt : BaseMultiTypeObject
     {
-        private readonly OptionalPermission valueOptionalPermission;
+        private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
+        private readonly PermissionPrivileged valuePermissionPrivileged;
         private readonly string valueString;
 
         /// <summary>Creates a new instance of <see cref="PermissionNoPrompt" />.</summary>
         /// <param name="value">The value.</param>
-        public PermissionNoPrompt(OptionalPermission value) : base(value, typeof(OptionalPermission))
+        public PermissionNoPrompt(OptionalPermissionNoPrompt value) : base(value, typeof(OptionalPermissionNoPrompt))
         {
-            valueOptionalPermission = value;
+            valueOptionalPermissionNoPrompt = value;
+        }
+
+        /// <summary>Creates a new instance of <see cref="PermissionNoPrompt" />.</summary>
+        /// <param name="value">The value.</param>
+        public PermissionNoPrompt(PermissionPrivileged value) : base(value, typeof(PermissionPrivileged))
+        {
+            valuePermissionPrivileged = value;
         }
 
         /// <summary>Creates a new instance of <see cref="PermissionNoPrompt" />.</summary>
@@ -24,13 +32,21 @@ namespace WebExtensions.Net.Manifest
             valueString = value;
         }
 
-        /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="OptionalPermission" />.</summary>
+        /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="OptionalPermissionNoPrompt" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator OptionalPermission(PermissionNoPrompt value) => value.valueOptionalPermission;
+        public static implicit operator OptionalPermissionNoPrompt(PermissionNoPrompt value) => value.valueOptionalPermissionNoPrompt;
 
-        /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="PermissionNoPrompt" />.</summary>
+        /// <summary>Converts from <see cref="OptionalPermissionNoPrompt" /> to <see cref="PermissionNoPrompt" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator PermissionNoPrompt(OptionalPermission value) => new(value);
+        public static implicit operator PermissionNoPrompt(OptionalPermissionNoPrompt value) => new(value);
+
+        /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="PermissionPrivileged" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator PermissionPrivileged(PermissionNoPrompt value) => value.valuePermissionPrivileged;
+
+        /// <summary>Converts from <see cref="PermissionPrivileged" /> to <see cref="PermissionNoPrompt" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator PermissionNoPrompt(PermissionPrivileged value) => new(value);
 
         /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="string" />.</summary>
         /// <param name="value">The value to convert from.</param>

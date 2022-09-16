@@ -22,6 +22,14 @@ namespace WebExtensions.Net.WebRequest
         [EnumValue("cryptomining_content")]
         CryptominingContent,
 
+        /// <summary>emailtracking</summary>
+        [EnumValue("emailtracking")]
+        Emailtracking,
+
+        /// <summary>emailtracking_content</summary>
+        [EnumValue("emailtracking_content")]
+        EmailtrackingContent,
+
         /// <summary>tracking</summary>
         [EnumValue("tracking")]
         Tracking,

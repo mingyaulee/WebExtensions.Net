@@ -41,9 +41,10 @@ namespace WebExtensions.Net.Scripting
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> Matches { get; set; }
 
-        /// <summary>Specifies if this content script will persist into future sessions. This is currently NOT supported.</summary>
+        /// <summary>Specifies if this content script will persist into future sessions. Defaults to true.</summary>
         [JsonPropertyName("persistAcrossSessions")]
-        public bool PersistAcrossSessions { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? PersistAcrossSessions { get; set; }
 
         /// <summary>Specifies when JavaScript files are injected into the web page. The preferred and default value is <c>document_idle</c>.</summary>
         [JsonPropertyName("runAt")]

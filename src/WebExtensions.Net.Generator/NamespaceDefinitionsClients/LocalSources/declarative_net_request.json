@@ -1,0 +1,424 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "Permission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "declarativeNetRequest"
+            ]
+          }
+        ]
+      },
+      {
+        "$extend": "PermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "declarativeNetRequestFeedback",
+              "declarativeNetRequestWithHostAccess"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "declarativeNetRequest",
+    "description": "Use the declarativeNetRequest API to block or modify network requests by specifying declarative rules.",
+    "permissions": [
+      "declarativeNetRequest",
+      "declarativeNetRequestWithHostAccess"
+    ],
+    "types": [
+      {
+        "id": "ResourceType",
+        "description": "How the requested resource will be used. Comparable to the webRequest.ResourceType type.",
+        "type": "string",
+        "enum": [
+          "main_frame",
+          "sub_frame",
+          "stylesheet",
+          "script",
+          "image",
+          "object",
+          "object_subrequest",
+          "xmlhttprequest",
+          "xslt",
+          "ping",
+          "beacon",
+          "xml_dtd",
+          "font",
+          "media",
+          "websocket",
+          "csp_report",
+          "imageset",
+          "web_manifest",
+          "speculative",
+          "other"
+        ]
+      },
+      {
+        "id": "MatchedRule",
+        "type": "object",
+        "properties": {
+          "ruleId": {
+            "description": "A matching rule\u0027s ID.",
+            "type": "integer"
+          },
+          "rulesetId": {
+            "description": "ID of the Ruleset this rule belongs to.",
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "Rule",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "An id which uniquely identifies a rule. Mandatory and should be \u003E= 1.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "priority": {
+            "description": "Rule priority. Defaults to 1. When specified, should be \u003E= 1",
+            "optional": true,
+            "type": "integer",
+            "minimum": 1
+          },
+          "condition": {
+            "description": "The condition under which this rule is triggered.",
+            "type": "object",
+            "properties": {
+              "urlFilter": {
+                "description": "TODO: link to doc explaining supported pattern. The pattern which is matched against the network request url. Only one of \u0027urlFilter\u0027 or \u0027regexFilter\u0027 can be specified.",
+                "optional": true,
+                "type": "string"
+              },
+              "regexFilter": {
+                "description": "Regular expression to match against the network request url. Only one of \u0027urlFilter\u0027 or \u0027regexFilter\u0027 can be specified.",
+                "optional": true,
+                "type": "string"
+              },
+              "isUrlFilterCaseSensitive": {
+                "description": "Whether \u0027urlFilter\u0027 or \u0027regexFilter\u0027 is case-sensitive. Defaults to true.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "initiatorDomains": {
+                "description": "The rule will only match network requests originating from the list of \u0027initiatorDomains\u0027. If the list is omitted, the rule is applied to requests from all domains.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excludedInitiatorDomains": {
+                "description": "The rule will not match network requests originating from the list of \u0027initiatorDomains\u0027. If the list is empty or omitted, no domains are excluded. This takes precedence over \u0027initiatorDomains\u0027.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "requestDomains": {
+                "description": "The rule will only match network requests when the domain matches one from the list of \u0027requestDomains\u0027. If the list is omitted, the rule is applied to requests from all domains.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excludedRequestDomains": {
+                "description": "The rule will not match network requests when the domains matches one from the list of \u0027excludedRequestDomains\u0027. If the list is empty or omitted, no domains are excluded. This takes precedence over \u0027requestDomains\u0027.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "resourceTypes": {
+                "description": "List of resource types which the rule can match. When the rule action is \u0027allowAllRequests\u0027, this must be specified and may only contain \u0027main_frame\u0027 or \u0027sub_frame\u0027. Cannot be specified if \u0027excludedResourceTypes\u0027 is specified. If neither of them is specified, all resource types except \u0027main_frame\u0027 are matched.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "ResourceType"
+                }
+              },
+              "excludedResourceTypes": {
+                "description": "List of resource types which the rule won\u0027t match. Cannot be specified if \u0027resourceTypes\u0027 is specified. If neither of them is specified, all resource types except \u0027main_frame\u0027 are matched.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "ResourceType"
+                }
+              },
+              "requestMethods": {
+                "description": "List of HTTP request methods which the rule can match. Should be a lower-case method such as \u0027connect\u0027, \u0027delete\u0027, \u0027get\u0027, \u0027head\u0027, \u0027options\u0027, \u0027patch\u0027, \u0027post\u0027, \u0027put\u0027.\u0027",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "excludedRequestMethods": {
+                "description": "List of request methods which the rule won\u0027t match. Cannot be specified if \u0027requestMethods\u0027 is specified. If neither of them is specified, all request methods are matched.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "domainType": {
+                "description": "Specifies whether the network request is first-party or third-party to the domain from which it originated. If omitted, all requests are matched.",
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "firstParty",
+                  "thirdParty"
+                ]
+              },
+              "tabIds": {
+                "description": "List of tabIds which the rule should match. An ID of -1 matches requests which don\u0027t originate from a tab. Only supported for session-scoped rules.",
+                "optional": true,
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "excludedTabIds": {
+                "description": "List of tabIds which the rule should not match. An ID of -1 excludes requests which don\u0027t originate from a tab. Only supported for session-scoped rules.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "action": {
+            "description": "The action to take if this rule is matched.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "block",
+                  "redirect",
+                  "allow",
+                  "upgradeScheme",
+                  "modifyHeaders",
+                  "allowAllRequests"
+                ]
+              },
+              "redirect": {
+                "description": "Describes how the redirect should be performed. Only valid when type is \u0027redirect\u0027.",
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "extensionPath": {
+                    "description": "Path relative to the extension directory. Should start with \u0027/\u0027.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "transform": {
+                    "description": "TODO: URLTransform - Url transformations to perform.",
+                    "optional": true,
+                    "type": "object"
+                  },
+                  "url": {
+                    "description": "The redirect url. Redirects to JavaScript urls are not allowed.",
+                    "optional": true,
+                    "type": "string"
+                  },
+                  "regexSubstitution": {
+                    "description": "TODO with regexFilter \u002B Substitution pattern for rules which specify a \u0027regexFilter\u0027.",
+                    "optional": true,
+                    "type": "string"
+                  }
+                }
+              },
+              "requestHeaders": {
+                "description": "The request headers to modify for the request. Only valid when type is \u0027modifyHeaders\u0027.",
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "header": {
+                    "description": "The name of the request header to be modified.",
+                    "type": "string"
+                  },
+                  "operation": {
+                    "description": "The operation to be performed on a header. The \u0027append\u0027 operation is not supported for request headers.",
+                    "type": "string",
+                    "enum": [
+                      "set",
+                      "remove"
+                    ]
+                  },
+                  "value": {
+                    "description": "The new value for the header. Must be specified for the \u0027set\u0027 operation.",
+                    "optional": true,
+                    "type": "string"
+                  }
+                }
+              },
+              "responseHeaders": {
+                "description": "The response headers to modify for the request. Only valid when type is \u0027modifyHeaders\u0027.",
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "header": {
+                    "description": "The name of the response header to be modified.",
+                    "type": "string"
+                  },
+                  "operation": {
+                    "description": "The operation to be performed on a header.",
+                    "type": "string",
+                    "enum": [
+                      "append",
+                      "set",
+                      "remove"
+                    ]
+                  },
+                  "value": {
+                    "description": "The new value for the header. Must be specified for the \u0027append\u0027 and \u0027set\u0027 operations.",
+                    "optional": true,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "updateSessionRules",
+        "description": "Modifies the current set of session scoped rules for the extension. The rules with IDs listed in options.removeRuleIds are first removed, and then the rules given in options.addRules are added. These rules are not persisted across sessions and are backed in memory.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "removeRuleIds": {
+                "description": "IDs of the rules to remove. Any invalid IDs will be ignored.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "addRules": {
+                "description": "Rules to add.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "description": "Called when the session rules have been updated",
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getSessionRules",
+        "description": "Returns the current set of session scoped rules for the extension.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "testMatchOutcome",
+        "description": "Checks if any of the extension\u0027s declarativeNetRequest rules would match a hypothetical request.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "request",
+            "description": "The details of the request to test.",
+            "type": "object",
+            "properties": {
+              "url": {
+                "description": "The URL of the hypothetical request.",
+                "type": "string"
+              },
+              "initiator": {
+                "description": "The initiator URL (if any) for the hypothetical request.",
+                "optional": true,
+                "type": "string"
+              },
+              "method": {
+                "description": "Standard HTTP method of the hypothetical request.",
+                "optional": true,
+                "type": "string"
+              },
+              "type": {
+                "description": "The resource type of the hypothetical request.",
+                "$ref": "ResourceType"
+              },
+              "tabId": {
+                "description": "The ID of the tab in which the hypothetical request takes place. Does not need to correspond to a real tab ID. Default is -1, meaning that the request isn\u0027t related to a tab.",
+                "optional": true,
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "description": "Called with the details of matched rules.",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "object",
+                "properties": {
+                  "matchedRules": {
+                    "description": "The rules (if any) that match the hypothetical request.",
+                    "type": "array",
+                    "items": {
+                      "$ref": "MatchedRule"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -25,6 +25,11 @@ namespace WebExtensions.Net.Scripting
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Action Func { get; set; }
 
+        /// <summary>Whether the injection should be triggered in the target as soon as possible (but not necessarily prior to page load).</summary>
+        [JsonPropertyName("injectImmediately")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? InjectImmediately { get; set; }
+
         /// <summary>Details specifying the target into which to inject the script.</summary>
         [JsonPropertyName("target")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

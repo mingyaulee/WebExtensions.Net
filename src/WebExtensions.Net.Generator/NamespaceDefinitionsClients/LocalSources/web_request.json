@@ -347,21 +347,34 @@
               "$ref": "CertificateInfo"
             }
           },
+          "overridableErrorCategory": {
+            "description": "The type of certificate error that was overridden for this connection, if any.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "trust_error",
+              "domain_mismatch",
+              "expired_or_not_yet_valid"
+            ]
+          },
           "isDomainMismatch": {
             "description": "The domain name does not match the certificate domain.",
             "optional": true,
-            "type": "boolean"
-          },
-          "isExtendedValidation": {
-            "optional": true,
-            "type": "boolean"
+            "type": "boolean",
+            "deprecated": "Please use $(ref:SecurityInfo.overridableErrorCategory)."
           },
           "isNotValidAtThisTime": {
             "description": "The certificate is either expired or is not yet valid.  See \u003Ccode\u003ECertificateInfo.validity\u003C/code\u003E for start and end dates.",
             "optional": true,
-            "type": "boolean"
+            "type": "boolean",
+            "deprecated": "Please use $(ref:SecurityInfo.overridableErrorCategory)."
           },
           "isUntrusted": {
+            "optional": true,
+            "type": "boolean",
+            "deprecated": "Please use $(ref:SecurityInfo.overridableErrorCategory)."
+          },
+          "isExtendedValidation": {
             "optional": true,
             "type": "boolean"
           },
@@ -416,6 +429,8 @@
           "fingerprinting_content",
           "cryptomining",
           "cryptomining_content",
+          "emailtracking",
+          "emailtracking_content",
           "tracking",
           "tracking_ad",
           "tracking_analytics",

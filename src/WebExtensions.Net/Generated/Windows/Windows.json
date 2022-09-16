@@ -271,14 +271,12 @@
                 "optional": true,
                 "choices": [
                   {
-                    "type": "string",
-                    "format": "relativeUrl"
+                    "type": "string"
                   },
                   {
                     "type": "array",
                     "items": {
-                      "type": "string",
-                      "format": "relativeUrl"
+                      "type": "string"
                     }
                   }
                 ]

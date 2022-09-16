@@ -179,9 +179,8 @@
         ]
       },
       {
-        "name": "checkDeepEq",
+        "name": "assertDeepEq",
         "type": "function",
-        "unsupported": true,
         "parameters": [
           {
             "name": "expected",
@@ -190,6 +189,11 @@
           {
             "name": "actual",
             "type": "any"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
           }
         ]
       },

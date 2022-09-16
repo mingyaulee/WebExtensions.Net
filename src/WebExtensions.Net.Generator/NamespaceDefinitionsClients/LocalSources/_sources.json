@@ -82,6 +82,18 @@
     ]
   },
   {
+    "url": "chrome://extensions/content/parent/ext-declarativeNetRequest.js",
+    "schema": "chrome://extensions/content/schemas/declarative_net_request.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "declarativeNetRequest"
+      ]
+    ]
+  },
+  {
     "url": "chrome://extensions/content/parent/ext-dns.js",
     "schema": "chrome://extensions/content/schemas/dns.json",
     "scopes": [

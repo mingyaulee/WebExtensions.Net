@@ -160,7 +160,8 @@
           "nonPersistentCookies": {
             "description": "Whether to create all cookies as nonPersistent (i.e., session) cookies.",
             "optional": true,
-            "type": "boolean"
+            "type": "boolean",
+            "deprecated": "This property has no effect anymore and its value is always \u003Ccode\u003Efalse\u003Ccode\u003E."
           }
         }
       }

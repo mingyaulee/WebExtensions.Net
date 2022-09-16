@@ -28,7 +28,6 @@
         "enum": [
           "java",
           "js",
-          "leaf",
           "mainthreadio",
           "fileio",
           "fileioall",
@@ -36,7 +35,6 @@
           "screenshots",
           "seqstyle",
           "stackwalk",
-          "jstracer",
           "jsallocations",
           "nostacksampling",
           "preferencereads",
@@ -50,6 +48,7 @@
           "markersallthreads",
           "unregisteredthreads",
           "processcpu",
+          "power",
           "responsiveness"
         ]
       },

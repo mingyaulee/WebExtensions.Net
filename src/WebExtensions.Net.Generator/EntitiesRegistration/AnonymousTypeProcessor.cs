@@ -282,6 +282,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             {
                 if (parameterDefinition.Name is null)
                 {
+                    if (nameHierarchy.Count() > 2)
+                    {
+                        // in a class method's parameter the name is optional
+                        continue;
+                    }
                     throw new InvalidOperationException("Function parameter should have a name.");
                 }
 
