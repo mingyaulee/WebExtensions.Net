@@ -100,6 +100,7 @@ namespace WebExtensions.Net.Generator
             services.AddTransient<TypeClassEntityRegistrar>();
             services.AddTransient<EmptyClassEntityRegistrar>();
 
+            services.AddTransient<RegistrarFactory>();
             services.AddTransient<AnonymousTypeProcessor>();
             services.AddTransient<AnonymousTypeRegistrar>();
             services.AddTransient<ClassEntityRegistrar>();

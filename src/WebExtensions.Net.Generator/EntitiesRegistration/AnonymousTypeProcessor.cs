@@ -11,16 +11,14 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
     public class AnonymousTypeProcessor
     {
-        private readonly AnonymousTypeRegistrar anonymousTypeRegistrar;
-        private readonly TypeEntityRegistrar typeEntityRegistrar;
+        private readonly RegistrarFactory registrarFactory;
         private readonly RegistrationOptions registrationOptions;
         private readonly IDictionary<TypeReference, AnonymousTypeEntityRegistrationInfo> typesToRegister;
         private readonly ISet<string> typeReferencesProcessed;
 
-        public AnonymousTypeProcessor(AnonymousTypeRegistrar anonymousTypeRegistrar, TypeEntityRegistrar typeEntityRegistrar, RegistrationOptions registrationOptions)
+        public AnonymousTypeProcessor(RegistrarFactory registrarFactory, RegistrationOptions registrationOptions)
         {
-            this.anonymousTypeRegistrar = anonymousTypeRegistrar;
-            this.typeEntityRegistrar = typeEntityRegistrar;
+            this.registrarFactory = registrarFactory;
             this.registrationOptions = registrationOptions;
             typesToRegister = new Dictionary<TypeReference, AnonymousTypeEntityRegistrationInfo>();
             typeReferencesProcessed = new HashSet<string>();
@@ -60,7 +58,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 {
                     anonymousTypeRegistrationInfo.TypeReference.Type = ObjectType.Object;
                 }
-                anonymousTypeRegistrationInfo.TypeReference.Ref = anonymousTypeRegistrar.RegisterType(anonymousTypeRegistrationInfo);
+                anonymousTypeRegistrationInfo.TypeReference.Ref = registrarFactory.AnonymousTypeRegistrar.RegisterType(anonymousTypeRegistrationInfo);
                 ClearTypeReferenceProperties(anonymousTypeRegistrationInfo.TypeReference);
             }
         }
@@ -112,7 +110,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
             if (typeReference.Ref is not null)
             {
-                var typeEntity = typeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
+                var typeEntity = registrarFactory.TypeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
                 if (typeReferencesProcessed.Add(typeEntity.NamespaceQualifiedId))
                 {
                     ProcessTypeDefinition(typeEntity.FormattedName, typeEntity.Definition, typeEntity.NamespaceEntity);
