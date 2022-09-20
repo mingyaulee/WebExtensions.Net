@@ -7,7 +7,7 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
-    public static class EnumPropertyDefinitionTranslator
+    public static partial class EnumPropertyDefinitionTranslator
     {
         public static ClrEnumValueInfo TranslatePropertyDefinition(KeyValuePair<string, PropertyDefinition> propertyDefinitionPair)
         {
@@ -24,10 +24,16 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             var tokenizedNameSegments = valueName.Split(new[] { '-', '_' });
             return string.Join("", tokenizedNameSegments.Select(tokenizedNameSegment =>
             {
-                if (Regex.IsMatch(tokenizedNameSegment, "^[a-zA-Z]"))
+                if (tokenizedNameSegment.Length == 0)
+                {
+                    return tokenizedNameSegment;
+                }
+
+                if (char.IsAsciiLetter(tokenizedNameSegment[0]))
                 {
                     return tokenizedNameSegment.ToCapitalCase();
                 }
+
                 return $"_{tokenizedNameSegment}";
             }));
         }

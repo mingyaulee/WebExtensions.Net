@@ -2,7 +2,7 @@
 
 namespace WebExtensions.Net.Generator.Extensions
 {
-    public static class StringExtensions
+    public static partial class StringExtensions
     {
         public static string ToCamelCase(this string name)
         {
@@ -26,10 +26,13 @@ namespace WebExtensions.Net.Generator.Extensions
         {
             if (content is not null)
             {
-                return Regex.Replace(content, @"(?'mdash'&mdash;)|(?'ampersand'&)|(?'tag'</?\w+\s*(?'tagAttributes'([^>])*)>)", XmlContentMatchEvaluator);
+                return ReplacePattern().Replace(content, XmlContentMatchEvaluator);
             }
             return string.Empty;
         }
+
+        [GeneratedRegex(@"(?'mdash'&mdash;)|(?'ampersand'&)|(?'tag'</?\w+\s*(?'tagAttributes'([^>])*)>)")]
+        private static partial Regex ReplacePattern();
 
         private static string XmlContentMatchEvaluator(Match match)
         {

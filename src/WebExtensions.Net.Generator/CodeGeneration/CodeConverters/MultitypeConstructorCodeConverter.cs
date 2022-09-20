@@ -6,7 +6,7 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class MultitypeConstructorCodeConverter : ICodeConverter
+    public partial class MultitypeConstructorCodeConverter : ICodeConverter
     {
         private readonly string className;
         private readonly IEnumerable<ClrTypeInfo> typeChoices;
@@ -75,9 +75,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             }
         }
 
+        [GeneratedRegex("(-|<|>)")]
+        private static partial Regex ReplacePattern();
+
         private static string SanitizeVariableName(string variableName)
         {
-            return Regex.Replace(variableName, "(-|<|>)", "");
+            return ReplacePattern().Replace(variableName, "");
         }
     }
 }
