@@ -159,10 +159,8 @@ namespace WebExtensions.Net.Mock
 
         private static object MockInvokeObjectReference(string referenceId, string targetPath, object[] arguments)
         {
-            if (objectReferences.ContainsKey(referenceId))
+            if (objectReferences.TryGetValue(referenceId, out var objectReference))
             {
-                var objectReference = objectReferences[referenceId];
-
                 if (MockConfigurationContext.IsConfiguring)
                 {
                     MockConfigurationContext.ObjectReferenceInvoked(objectReference, targetPath);

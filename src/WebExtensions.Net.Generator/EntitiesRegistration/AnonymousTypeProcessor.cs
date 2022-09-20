@@ -130,9 +130,9 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                     nameHierarchy = SetNameSuffix(nameHierarchy, registrationOptions.EventTypeNameSuffix);
                 }
 
-                if (typesToRegister.ContainsKey(typeReference))
+                if (typesToRegister.TryGetValue(typeReference, out var typeEntityRegistrationInfo))
                 {
-                    ThrowIfNameHierarchyDifferent(nameHierarchy, typesToRegister[typeReference].NameHierarchy);
+                    ThrowIfNameHierarchyDifferent(nameHierarchy, typeEntityRegistrationInfo.NameHierarchy);
                     return;
                 }
 

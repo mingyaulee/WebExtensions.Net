@@ -45,9 +45,9 @@ namespace WebExtensions.Net.Generator.Repositories
             if (entity is null)
             {
                 // The type to be extended is not yet registered, store the definition in a dictionary first
-                if (typeExtensions.ContainsKey(namespaceQualifiedId))
+                if (typeExtensions.TryGetValue(namespaceQualifiedId, out var namespaceTypeDefinitions))
                 {
-                    typeExtensions[namespaceQualifiedId].Add(typeDefinition);
+                    namespaceTypeDefinitions.Add(typeDefinition);
                 }
                 else
                 {

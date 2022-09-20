@@ -24,8 +24,8 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
 
             codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(StringFormatJsonConverter<{clrTypeInfo.CSharpName}>))"));
 
-            var stringFormat = clrTypeInfo.Metadata.ContainsKey(Constants.TypeMetadata.StringFormat) ? (string)clrTypeInfo.Metadata[Constants.TypeMetadata.StringFormat] : null;
-            var stringPattern = clrTypeInfo.Metadata.ContainsKey(Constants.TypeMetadata.StringPattern) ? (string)clrTypeInfo.Metadata[Constants.TypeMetadata.StringPattern] : null;
+            var stringFormat = clrTypeInfo.Metadata.TryGetValue(Constants.TypeMetadata.StringFormat, out var stringFormatObj) ? (string)stringFormatObj : null;
+            var stringPattern = clrTypeInfo.Metadata.TryGetValue(Constants.TypeMetadata.StringPattern, out var stringPatternObj) ? (string)stringPatternObj : null;
             codeFile.Constructors.Add(new StringFormatConstructorCodeConverter(clrTypeInfo.CSharpName, stringFormat, stringPattern));
 
             codeFile.Methods.Add(new StringFormatCastOperatorCodeConverter(clrTypeInfo.CSharpName));
