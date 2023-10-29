@@ -2,7 +2,8 @@
 
   <!-- Build properties. -->
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;net5.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
@@ -29,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsBind.Net.Extensions.DependencyInjection" Version="0.4.1" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net.Extensions.DependencyInjection" Version="1.0.0" PrivateAssets="contentfiles" />
   </ItemGroup>
 
   <ItemGroup>

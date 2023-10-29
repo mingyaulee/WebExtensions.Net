@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebExtensions.Net.IntegrationTestsRunner.Helpers;
@@ -16,8 +17,8 @@ namespace WebExtensions.Net.IntegrationTestsRunner
         [TestMethod]
         public async Task RunTests()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
-            var solutionDirectory = currentDirectory.Substring(0, currentDirectory.IndexOf("\\test"));
+            var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var solutionDirectory = currentDirectory[..currentDirectory.LastIndexOf("\\test")];
             var driverPath = "C:\\SeleniumWebDrivers\\ChromeDriver";
             var resultsPath = $"{solutionDirectory}\\test\\TestResults";
 #if DEBUG
@@ -26,7 +27,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             var configuration = "release";
 #endif
 
-            var extensionPath = $"{solutionDirectory}\\test\\WebExtensions.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net7.0\\browserextension";
+            var extensionPath = $"{solutionDirectory}\\test\\WebExtensions.Net.BrowserExtensionIntegrationTest\\bin\\{configuration}\\net8.0\\browserextension";
 
             if (!Directory.Exists(resultsPath))
             {
@@ -35,7 +36,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
 
             if (!Directory.Exists(driverPath))
             {
-                throw new NotSupportedException($"Download the chromedriver from and extract the executable file to {driverPath}. Check available versions at http://chromedriver.storage.googleapis.com/");
+                throw new NotSupportedException($"Download the chromedriver from and extract the executable file to {driverPath}. Download the latest version from https://googlechromelabs.github.io/chrome-for-testing/");
             }
 
             try
@@ -66,11 +67,11 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
             catch (Exception exception)
             {
-                Assert.Fail("Failed to create WebDriver. Exception message: " + exception.Message);
+                Assert.Fail("Failed to create WebDriver. Exception message: " + exception.Message + Environment.NewLine + "Download the latest version from https://googlechromelabs.github.io/chrome-for-testing/");
             }
         }
 
-        private static WebDriver GetWebDriver(string driverPath, string extensionPath)
+        private static ChromeDriver GetWebDriver(string driverPath, string extensionPath)
         {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument($"load-extension={extensionPath}");
@@ -79,6 +80,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
 
         private static async Task WaitForExtensionPageLoaded(WebDriver webDriver)
         {
+            await Task.Delay(1000);
             // wait for 10 seconds
             var waitTime = 10 * 1000;
             var interval = 500;
@@ -86,13 +88,16 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             while (count > 0)
             {
                 count--;
-                var windowHandles = webDriver.WindowHandles;
-                if (windowHandles.Count == 2)
+                if (webDriver.WindowHandles.Count == 2)
                 {
-                    webDriver.SwitchTo().Window(windowHandles[1]);
+                    webDriver.SwitchTo().Window(webDriver.WindowHandles[1]);
                     break;
                 }
                 await Task.Delay(interval);
+            }
+            if (!webDriver.Url.StartsWith("chrome-extension://"))
+            {
+                webDriver.SwitchTo().Window(webDriver.WindowHandles[0]);
             }
             if (!webDriver.Url.StartsWith("chrome-extension://"))
             {
@@ -128,6 +133,15 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
             if (!finished)
             {
+                var logs = webDriver.Manage().Logs
+                    .GetLog(LogType.Browser)
+                    .Where(log => !log.Message.Contains("ThrowExceptionInTest"))
+                    .Select(log => log.Message)
+                    .ToList();
+                if (logs.Count > 0)
+                {
+                    throw new TestRunnerException($"Failed to wait for tests to finish. Browser logs: {string.Join(Environment.NewLine, logs)}");
+                }
                 throw new TestRunnerException("Failed to wait for tests to finish.");
             }
         }

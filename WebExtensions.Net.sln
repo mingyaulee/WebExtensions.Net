@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31025.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebExtensions.Net.Generator", "src\WebExtensions.Net.Generator\WebExtensions.Net.Generator.csproj", "{195216E0-B4BF-4058-AF5E-5F6ECA4634EC}"
 EndProject
@@ -15,12 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{790DED5B-7057-4D11-BD7D-79AFA689C68E}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\WebExtensions.Net-Build.yml = .github\workflows\WebExtensions.Net-Build.yml
-		.github\workflows\WebExtensions.Net-Release.yml = .github\workflows\WebExtensions.Net-Release.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{402C7B21-F25A-4EB2-AAAE-A8F827CD0ED4}"

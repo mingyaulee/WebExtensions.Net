@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <BlazorEnableCompression>false</BlazorEnableCompression>
-    <!-- Disable caching so that we can skip integrity check. This is for coverlet to inject the hits counter into the assembly which will change the integrity hash. -->
-    <BlazorCacheBootResources>false</BlazorCacheBootResources>
+    <!-- Disable conversion of DLLs to webcil-in-wasm format. This is for coverlet to inject the hits counter into the assembly which only works for DLLs. -->
+    <WasmEnableWebcil>false</WasmEnableWebcil>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.BrowserExtension" Version="0.9.*" />
+    <PackageReference Include="Blazor.BrowserExtension" Version="0.12.*" />
     <PackageReference Include="FluentAssertions" Version="6.*" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.*-*" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.*-*" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="7.*-*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.*-*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.*-*" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.*-*" />
   </ItemGroup>
 
   <ItemGroup>

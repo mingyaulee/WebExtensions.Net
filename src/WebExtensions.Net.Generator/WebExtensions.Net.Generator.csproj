@@ -3,7 +3,7 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <!-- Change the default location where NuGet will put the build output -->
     <OutDir>BuildOutput</OutDir>
@@ -26,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0-*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0-*" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0-*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0-*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0-*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0-*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0-*" />
   </ItemGroup>
 
 </Project>
