@@ -13,7 +13,7 @@ namespace WebExtensions.Net.Mock
     /// </summary>
     public class MockJsRuntimeAdapter : IJsRuntimeAdapter
     {
-        private static readonly IDictionary<string, object> objectReferences = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> objectReferences = new Dictionary<string, object>();
 
         /// <inheritdoc />
         public TValue Invoke<TValue>(string identifier, InvokeOptionWithReturnValue invokeOption)
@@ -100,12 +100,12 @@ namespace WebExtensions.Net.Mock
         private static object MockGetProperty(IGetPropertyOption getPropertyOption)
         {
             var accessPaths = AccessPaths.Split(getPropertyOption.AccessPath);
-            if (accessPaths is null || !accessPaths.Any())
+            if (accessPaths is null || accessPaths.Length == 0)
             {
                 return null;
             }
 
-            var accessPathIdentifier = accessPaths.First();
+            var accessPathIdentifier = accessPaths[0];
             var targetPath = AccessPaths.Combine(accessPaths.Skip(1).Concat(new[] { getPropertyOption.PropertyName }).ToArray());
             
             if (accessPathIdentifier == "browser")
@@ -124,12 +124,12 @@ namespace WebExtensions.Net.Mock
         private static object MockInvokeFunction(IInvokeFunctionOption invokeFunctionOption)
         {
             var accessPaths = AccessPaths.Split(invokeFunctionOption.AccessPath);
-            if (accessPaths is null || !accessPaths.Any())
+            if (accessPaths is null || accessPaths.Length == 0)
             {
                 return null;
             }
 
-            var accessPathIdentifier = accessPaths.First();
+            var accessPathIdentifier = accessPaths[0];
             var targetPath = AccessPaths.Combine(accessPaths.Skip(1).Concat(new[] { invokeFunctionOption.FunctionName }).ToArray());
             var functionArguments = invokeFunctionOption.FunctionArguments?.ToArray() ?? Array.Empty<object>();
 

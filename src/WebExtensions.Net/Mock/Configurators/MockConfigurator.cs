@@ -11,8 +11,8 @@ namespace WebExtensions.Net.Mock.Configurators
     /// </summary>
     public class MockConfigurator : IMockConfigurator
     {
-        private readonly IList<IMockHandler> apiHandlers;
-        private readonly IList<IMockHandler> objectReferenceHandlers;
+        private readonly List<IMockHandler> apiHandlers;
+        private readonly List<IMockHandler> objectReferenceHandlers;
         private readonly ApiConfigurator apiConfigurator;
         private readonly IWebExtensionsApi webExtensionsApi;
 

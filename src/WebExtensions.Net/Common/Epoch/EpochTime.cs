@@ -9,7 +9,7 @@ namespace WebExtensions.Net
     [JsonConverter(typeof(EpochTimeConverter))]
     public struct EpochTime
     {
-        private static readonly DateTime epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime epoch = DateTime.UnixEpoch;
         private readonly DateTime dateTimeValue;
 
         private EpochTime(DateTime dateTime)

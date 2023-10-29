@@ -18,7 +18,7 @@ namespace WebExtensions.Net
         {
             Value = value;
 
-            if (!string.IsNullOrEmpty(pattern) && !Regex.IsMatch(value, pattern))
+            if (!string.IsNullOrEmpty(pattern) && !Regex.IsMatch(value, pattern, RegexOptions.None, TimeSpan.FromSeconds(30)))
             {
                 throw new ArgumentException($"The value '{value}' does not match the pattern '{pattern}' specified for type {GetType().Name}.");
             }
@@ -57,7 +57,9 @@ namespace WebExtensions.Net
 
             if (format == "date")
             {
+#pragma warning disable S6580 // Use a format provider when parsing date and time
                 return DateTime.TryParse(value, out _);
+#pragma warning restore S6580 // Use a format provider when parsing date and time
             }
 
             return true;

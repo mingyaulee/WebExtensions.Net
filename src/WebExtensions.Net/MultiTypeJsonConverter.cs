@@ -43,14 +43,14 @@ namespace WebExtensions.Net
             JsonSerializer.Serialize(writer, value?.Value, options);
         }
 
-        private static IEnumerable<KeyValuePair<Type, ConstructorInfo>> GetTypeChoices(Type type)
+        private static KeyValuePair<Type, ConstructorInfo>[] GetTypeChoices(Type type)
         {
             return type
                 .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
                 .Select(constructor =>
                 {
                     var parameterInfo = constructor.GetParameters().SingleOrDefault();
-                    return KeyValuePair.Create(parameterInfo.ParameterType, constructor);
+                    return KeyValuePair.Create(parameterInfo?.ParameterType, constructor);
                 })
                 .Where(typeChoice => typeChoice.Key is not null)
                 .OrderBy(typeChoice => GetOrderForType(typeChoice.Key))
@@ -81,7 +81,7 @@ namespace WebExtensions.Net
 
             if (IsArrayType(type))
             {
-                var arrayItemType = type.GenericTypeArguments.First();
+                var arrayItemType = type.GenericTypeArguments[0];
                 return 20 + GetOrderForType(arrayItemType);
             }
 
