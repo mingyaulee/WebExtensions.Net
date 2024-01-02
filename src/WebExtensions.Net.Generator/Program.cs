@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace WebExtensions.Net.Generator
 {
     public static class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
             var configuration = GetConfiguration();
             var sourceOptions = configuration.GetSection("sourceOptions").Get<SourceOptions>();
@@ -39,11 +40,11 @@ namespace WebExtensions.Net.Generator
             services.AddSingleton(registrationOptions);
             services.AddSingleton(classTranslationOptions);
 
-            var serviceProvicer = services.BuildServiceProvider();
-            using var scope = serviceProvicer.CreateScope();
+            var serviceProvider = services.BuildServiceProvider();
+            using var scope = serviceProvider.CreateScope();
 
             var namespaceDefinitionsManager = scope.ServiceProvider.GetRequiredService<NamespaceDefinitionsManager>();
-            var namespaceDefinitions = namespaceDefinitionsManager.GetNamespaceDefinitions().GetAwaiter().GetResult();
+            var namespaceDefinitions = await namespaceDefinitionsManager.GetNamespaceDefinitions();
 
             var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
             var classEntities = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);

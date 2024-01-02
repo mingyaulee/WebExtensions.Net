@@ -42,7 +42,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             if (@namespace.Contains('.'))
             {
                 var parentNamespaces = @namespace.Split('.');
-                @namespace = parentNamespaces.Last();
+                @namespace = parentNamespaces[parentNamespaces.Length - 1];
                 foreach (var parentNamespace in parentNamespaces.SkipLast(1))
                 {
                     parentEntity = entitiesContext.Namespaces.RegisterNamespace(parentEntity, parentNamespace);
