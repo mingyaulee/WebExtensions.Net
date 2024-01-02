@@ -48,6 +48,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 namespaceDefinition = new NamespaceDefinition()
                 {
                     Description = namespaceDefinitions.FirstOrDefault(definition => definition.Description is not null)?.Description,
+                    Deprecated = namespaceDefinitions.FirstOrDefault(definition => definition.Deprecated is not null)?.Deprecated,
                     Events = namespaceDefinitions.SelectMany(definition => definition.Events ?? Enumerable.Empty<EventDefinition>()).ToArray(),
                     Functions = namespaceDefinitions.SelectMany(definition => definition.Functions ?? Enumerable.Empty<FunctionDefinition>()).ToArray(),
                     Namespace = namespaceDefinition.Namespace,
@@ -123,6 +124,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return new PropertyDefinition()
             {
                 Description = description,
+                Deprecated = classEntity.TypeDefinition.Deprecated,
                 Type = ObjectType.ApiObject,
                 Ref = classEntity.NamespaceQualifiedId
             };

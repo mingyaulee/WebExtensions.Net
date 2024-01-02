@@ -26,6 +26,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             {
                 Id = namespaceEntity.FormattedName + registrationOptions.ApiClassNamePostfix,
                 Description = namespaceDefinition.Description,
+                Deprecated = namespaceDefinition.Deprecated,
                 Type = ObjectType.Object,
                 ObjectFunctions = GetNamespaceApiFunctionDefinitions(namespaceDefinition),
                 ObjectProperties = GetNamespaceApiPropertyDefinitions(namespaceDefinition, namespaceEntity),
