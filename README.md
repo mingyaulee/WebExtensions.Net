@@ -13,9 +13,6 @@ These API classes are generated based on the [Mozilla documentation for WebExten
 
 ## How to use this package
 
-> **Important for v0.\*.\*:**<br />
-> This package is still in pre-release stage so the versioning does not comply with semantic versioning. Feature and bug fix increments the patch version and breaking change increments the minor version. So be sure to check the release note before upgrading between minor version.
-
 This package can be consumed in two methods.
 
 ### With Blazor (Recommended)
