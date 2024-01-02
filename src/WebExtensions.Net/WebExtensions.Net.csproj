@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsBind.Net" Version="1.0.0" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net" Version="1.0.1" PrivateAssets="contentfiles" />
   </ItemGroup>
 
 </Project>
