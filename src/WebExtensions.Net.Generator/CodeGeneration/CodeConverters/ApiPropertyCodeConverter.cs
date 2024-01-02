@@ -21,9 +21,18 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             }
             else if (clrPropertyInfo.IsConstant)
             {
-                codeWriter.PublicProperties
-                    .WriteWithConverter(new CommentInheritDocCodeConverter())
-                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
+                if (clrPropertyInfo.PropertyType.FullName == typeof(string).FullName)
+                {
+                    codeWriter.PublicProperties
+                        .WriteWithConverter(new CommentInheritDocCodeConverter())
+                        .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => \"{clrPropertyInfo.ConstantValue}\";");
+                }
+                else
+                {
+                    codeWriter.PublicProperties
+                        .WriteWithConverter(new CommentInheritDocCodeConverter())
+                        .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
+                }
             }
             else
             {
