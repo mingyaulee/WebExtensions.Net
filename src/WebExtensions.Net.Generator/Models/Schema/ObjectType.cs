@@ -23,8 +23,6 @@ namespace WebExtensions.Net.Generator.Models.Schema
         Object,
         [EnumValue("function")]
         Function,
-        [EnumValue("PropertyGetterFunction")]
-        PropertyGetterFunction,
         [EnumValue("ApiObject")]
         ApiObject,
         [EnumValue("EventTypeObject")]

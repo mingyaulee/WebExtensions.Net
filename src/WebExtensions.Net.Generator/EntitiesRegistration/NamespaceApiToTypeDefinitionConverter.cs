@@ -28,46 +28,9 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 Description = namespaceDefinition.Description,
                 Deprecated = namespaceDefinition.Deprecated,
                 Type = ObjectType.Object,
-                ObjectFunctions = GetNamespaceApiFunctionDefinitions(namespaceDefinition),
+                ObjectFunctions = namespaceDefinition.Functions,
                 ObjectProperties = GetNamespaceApiPropertyDefinitions(namespaceDefinition, namespaceEntity),
             };
-        }
-
-        private static IEnumerable<FunctionDefinition>? GetNamespaceApiFunctionDefinitions(NamespaceDefinition namespaceDefinition)
-        {
-            var functions = new List<FunctionDefinition>();
-
-            if (namespaceDefinition.Functions is not null)
-            {
-                functions.AddRange(namespaceDefinition.Functions);
-            }
-
-            if (namespaceDefinition.Properties is not null)
-            {
-                foreach (var propertyDefinitionPair in namespaceDefinition.Properties)
-                {
-                    var propertyName = propertyDefinitionPair.Key;
-                    var propertyDefinition = propertyDefinitionPair.Value;
-                    if (propertyDefinition.IsConstant)
-                    {
-                        continue;
-                    }
-
-                    // If this is not a constant property, convert it to a function
-                    functions.Add(new FunctionDefinition()
-                    {
-                        Name = propertyName,
-                        Description = $"Gets the '{propertyName}' property.",
-                        Deprecated = propertyDefinition.Deprecated,
-                        IsUnsupported = propertyDefinition.IsUnsupported,
-                        Type = ObjectType.PropertyGetterFunction,
-                        Async = "true",
-                        FunctionReturns = SerializationHelper.DeserializeTo<FunctionReturnDefinition>(propertyDefinition)
-                    });
-                }
-            }
-
-            return functions.Any() ? functions : null;
         }
 
         private IDictionary<string, PropertyDefinition>? GetNamespaceApiPropertyDefinitions(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
@@ -83,6 +46,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                     if (propertyDefinition.IsConstant)
                     {
                         properties.Add(propertyName, GetConstantPropertyDefinition(propertyDefinition));
+                    }
+                    else
+                    {
+                        properties.Add(propertyName, propertyDefinition);
                     }
                 }
             }

@@ -58,11 +58,6 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Metadata = new Dictionary<string, object>()
             };
 
-            if (functionDefinition.Type == ObjectType.PropertyGetterFunction)
-            {
-                methodInfo.Metadata.Add(Constants.MethodMetadata.IsPropertyGetterMethod, true);
-            }
-
             return methodInfo;
         }
 

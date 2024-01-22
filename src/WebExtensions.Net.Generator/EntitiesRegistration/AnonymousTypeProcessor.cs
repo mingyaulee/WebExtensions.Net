@@ -139,8 +139,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
             Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
             ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
-            var functionReturnTypeName = typeReference.Type == ObjectType.PropertyGetterFunction ? nameHierarchy : SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix);
-            Process(functionReturnTypeName, typeReference.FunctionReturns, namespaceEntity);
+            Process(SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), typeReference.FunctionReturns, namespaceEntity);
             ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity);
             ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
             ProcessTypeChoices(nameHierarchy, typeReference.TypeChoices, namespaceEntity);
@@ -265,8 +264,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
             var functionName = functionDefinition.Name.ToCapitalCase();
             ProcessFunctionParameters(ConcatName(nameHierarchy, functionName), functionDefinition.FunctionParameters, namespaceEntity);
-            var functionReturnTypeName = functionDefinition.Type == ObjectType.PropertyGetterFunction ? functionName : functionName + registrationOptions.FunctionReturnTypeNameSuffix;
-            Process(ConcatName(nameHierarchy, functionReturnTypeName), functionDefinition.FunctionReturns, namespaceEntity);
+            Process(ConcatName(nameHierarchy, functionName + registrationOptions.FunctionReturnTypeNameSuffix), functionDefinition.FunctionReturns, namespaceEntity);
         }
 
         private void ProcessFunctionParameters(IEnumerable<string> nameHierarchy, IEnumerable<ParameterDefinition>? parameterDefinitions, NamespaceEntity namespaceEntity)

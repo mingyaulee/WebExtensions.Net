@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace WebExtensions.Net.Generator.Models.ClrTypes
@@ -17,6 +18,7 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
         public JsonElement? ConstantValue { get; set; }
         public bool IsObsolete { get; set; }
         public string? ObsoleteMessage { get; set; }
+        public IDictionary<string, object> Metadata { get; set; }
 #pragma warning restore CS8618
     }
 }

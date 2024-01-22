@@ -44,12 +44,11 @@ The APIs in WebExtensions.Net/Generated is generated from the WebExtensions.Net.
 The code generation process is summarised as follows:
 1. Namespace Definitions are retrieved by the NamespaceDefinitionsClient
 0. The raw Namespace Definitions are then processed by the EntitiesRegistrationManager. In this stage:
-    - The namespace is registered as an Namespace Entity
+    - The namespace is registered as a Namespace Entity
     - The namespace is registered as an Api Class Entity
     - The types in a namespace is registered as a Type Entity
     - The types are checked for reference/usage
     - The unused or unsupported types are filtered out
-    - The non-constant properties in the namespace is registered as a property getter function definition
     - The events in the namespace is registered as property definitions
     - The root namespace is registered as an ApiRoot Class Entity
 0. The Class Entities are translated into Clr Types by the ClrTypeManager. In this stage:

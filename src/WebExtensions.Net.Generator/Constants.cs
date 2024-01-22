@@ -13,9 +13,9 @@
             public const string StringPattern = nameof(StringPattern);
         }
 
-        public static class MethodMetadata
+        public static class PropertyMetadata
         {
-            public const string IsPropertyGetterMethod = nameof(IsPropertyGetterMethod);
+            public const string EventProperty = nameof(EventProperty);
         }
     }
 }

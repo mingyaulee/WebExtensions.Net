@@ -16,8 +16,6 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         {
             codeWriter.WriteUsingStatement("System.Threading.Tasks");
 
-            var isPropertyGetterMethod = clrMethodInfo.Metadata.ContainsKey(Constants.MethodMetadata.IsPropertyGetterMethod);
-            var methodNamePrefix = isPropertyGetterMethod ? "Get" : string.Empty;
             var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter => $"{parameter.ParameterType.CSharpName} {parameter.Name}"));
             var methodReturnType = "ValueTask";
             if (clrMethodInfo.Return.HasReturnType)
@@ -30,7 +28,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                 .WriteWithConverters(clrMethodInfo.Parameters.Select(parameterInfo => new CommentParamCodeSectionConverter(parameterInfo.Name, parameterInfo.Description)))
                 .WriteWithConverter(clrMethodInfo.Return.HasReturnType ? new CommentReturnsCodeConverter(clrMethodInfo.Return.Description) : null)
                 .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
-                .WriteLine($"{methodReturnType} {methodNamePrefix}{clrMethodInfo.PublicName}({methodArguments});");
+                .WriteLine($"{methodReturnType} {clrMethodInfo.PublicName}({methodArguments});");
         }
     }
 }

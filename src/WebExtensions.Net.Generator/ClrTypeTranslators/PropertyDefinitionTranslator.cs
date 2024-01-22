@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using WebExtensions.Net.Generator.Extensions;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.ClrTypes;
@@ -40,7 +41,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 clrTypeInfo.CSharpName = $"{clrTypeInfo.CSharpName}Type";
             }
 
-            return new ClrPropertyInfo()
+            var propertyInfo = new ClrPropertyInfo()
             {
                 Name = propertyName,
                 PrivateName = propertyName.ToCamelCase(),
@@ -51,8 +52,16 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsConstant = propertyDefinition.IsConstant,
                 ConstantValue = propertyDefinition.ConstantValue,
                 IsObsolete = propertyDefinition.IsDeprecated,
-                ObsoleteMessage = propertyDefinition.Deprecated
+                ObsoleteMessage = propertyDefinition.Deprecated,
+                Metadata = new Dictionary<string, object>()
             };
+
+            if (propertyDefinition.Type == ObjectType.EventTypeObject)
+            {
+                propertyInfo.Metadata.Add(Constants.PropertyMetadata.EventProperty, true);
+            }
+
+            return propertyInfo;
         }
     }
 }

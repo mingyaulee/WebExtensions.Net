@@ -21,21 +21,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentInheritDocCodeConverter())
-                .WriteLine($"public I{propertyType} {clrPropertyInfo.PublicName}")
-                // start property body
-                .WriteStartBlock()
-                    .WriteLine($"get")
-                    // start property get
-                    .WriteStartBlock()
-                        .WriteLine($"if (_{privatePropertyName} is null)")
-                        .WriteStartBlock()
-                            .WriteLine($"_{privatePropertyName} = new {propertyType}(JsRuntime, AccessPath);")
-                        .WriteEndBlock()
-                        .WriteLine($"return _{privatePropertyName};")
-                    // end property get
-                    .WriteEndBlock()
-                // end property body
-                .WriteEndBlock();
+                .WriteLine($"public I{propertyType} {clrPropertyInfo.PublicName} => _{privatePropertyName} ??= new {propertyType}(JsRuntime, AccessPath);");
         }
     }
 }

@@ -36,6 +36,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return new PropertyDefinition()
             {
                 Ref = registrationOptions.BaseEventTypeName,
+                Type = ObjectType.EventTypeObject,
                 Description = eventDefinition.Description,
                 IsUnsupported = eventDefinition.IsUnsupported,
                 Deprecated = eventDefinition.Deprecated
