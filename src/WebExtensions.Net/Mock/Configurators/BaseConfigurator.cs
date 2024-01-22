@@ -28,6 +28,13 @@ namespace WebExtensions.Net.Mock.Configurators
             this.mockHandlers = mockHandlers;
         }
 
+        /// <summary>Configures the mock handler for the property.</summary>
+        /// <typeparam name="T">The property type.</typeparam>
+        /// <param name="expression">The expression returning the property to mock.</param>
+        /// <returns>Property configurator.</returns>
+        public MockPropertyConfigurator<T> Property<T>(Expression<Func<TObject, T>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
         /// <summary>Configures the mock handler for the method.</summary>
         /// <param name="expression">The expression returning the method to mock.</param>
         /// <returns>Action configurator.</returns>

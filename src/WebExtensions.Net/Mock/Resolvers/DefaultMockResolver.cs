@@ -55,15 +55,15 @@ namespace WebExtensions.Net.Mock.Resolvers
 
         private static void ConfigureDefaultMock(MockConfigurator configure)
         {
-            configure.Api.Method<string>(api => api.Runtime.GetId)
+            configure.Api.Property(api => api.Runtime.Id)
                 .ReturnsForAnyArgs(string.Empty);
             configure.Api.Method<string, string>(api => api.Runtime.GetURL)
                 .Returns(path => $"/{path}");
-            configure.Api.Method<StorageArea>(api => api.Storage.GetLocal)
+            configure.Api.Property(api => api.Storage.Local)
                 .ReturnsForAnyArgs(DefaultMockObjects.LocalStorage);
-            configure.Api.Method<StorageArea>(api => api.Storage.GetManaged)
+            configure.Api.Property(api => api.Storage.Managed)
                 .ReturnsForAnyArgs(DefaultMockObjects.ManagedStorage);
-            configure.Api.Method<StorageAreaSync>(api => api.Storage.GetSync)
+            configure.Api.Property(api => api.Storage.Sync)
                 .ReturnsForAnyArgs(DefaultMockObjects.SyncStorage);
         }
     }
