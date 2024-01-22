@@ -15,6 +15,7 @@
 
         public static class PropertyMetadata
         {
+            public const string NestedApiProperty = nameof(NestedApiProperty);
             public const string EventProperty = nameof(EventProperty);
         }
     }

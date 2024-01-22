@@ -56,6 +56,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Metadata = new Dictionary<string, object>()
             };
 
+            if (propertyDefinition.Type == ObjectType.ApiObject)
+            {
+                propertyInfo.Metadata.Add(Constants.PropertyMetadata.NestedApiProperty, true);
+            }
+
             if (propertyDefinition.Type == ObjectType.EventTypeObject)
             {
                 propertyInfo.Metadata.Add(Constants.PropertyMetadata.EventProperty, true);
