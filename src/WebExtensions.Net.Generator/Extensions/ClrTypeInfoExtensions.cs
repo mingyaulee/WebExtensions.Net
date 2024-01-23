@@ -17,7 +17,7 @@ namespace WebExtensions.Net.Generator.Extensions
 #pragma warning disable CS8601 // Possible null reference assignment.
             enumerableClrType.FullName = typeof(IEnumerable<>).FullName;
 #pragma warning restore CS8601 // Possible null reference assignment.
-            enumerableClrType.CSharpName = $"IEnumerable<{clrTypeInfo.CSharpName}>";
+            enumerableClrType.CSharpNameGetter = () => $"IEnumerable<{clrTypeInfo.CSharpName}>";
             enumerableClrType.ReferenceNamespaces.Add("System.Collections.Generic");
             return enumerableClrType;
         }

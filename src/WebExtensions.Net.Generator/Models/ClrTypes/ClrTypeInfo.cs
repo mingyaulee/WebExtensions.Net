@@ -8,11 +8,18 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
     public class ClrTypeInfo : ICloneable
     {
 #pragma warning disable CS8618 // Properties are initialized when created
+        private string cSharpName;
+
         public string Id { get; set; }
         public string Namespace { get; set; }
         public string Name { get; set; }
         public string FullName { get; set; }
-        public string CSharpName { get; set; }
+        public string CSharpName
+        {
+            get => CSharpNameGetter?.Invoke() ?? cSharpName;
+            set => cSharpName = value;
+        }
+
         public bool IsNullable { get; set; }
         public bool IsEnum { get; set; }
         public IEnumerable<ClrEnumValueInfo>? EnumValues { get; set; }
@@ -69,5 +76,7 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
                 TypeChoices = TypeChoices
             };
         }
+
+        internal Func<string>? CSharpNameGetter { get; set; }
     }
 }

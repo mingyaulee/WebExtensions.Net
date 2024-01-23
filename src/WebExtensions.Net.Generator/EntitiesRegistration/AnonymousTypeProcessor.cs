@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using WebExtensions.Net.Generator.Extensions;
 using WebExtensions.Net.Generator.Helpers;
@@ -144,7 +145,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 typesToRegister.Add(typeReference, new AnonymousTypeEntityRegistrationInfo(nameHierarchy, typeReference, namespaceEntity));
             }
 
-            Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
+            ProcessArrayItem(nameHierarchy, typeReference.ArrayItems, namespaceEntity);
             ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
             Process(SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), typeReference.FunctionReturns, namespaceEntity);
             ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity, typeReference.Type);
@@ -246,6 +247,25 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             if (registeredNamePaths != currentNamePaths)
             {
                 throw new InvalidOperationException($"A registered type reference has more than one name hierarchy, [{registeredNamePaths}] and [{currentNamePaths}].");
+            }
+        }
+
+        private void ProcessArrayItem(IEnumerable<string> nameHierarchy, TypeReference? arrayItems, NamespaceEntity namespaceEntity)
+        {
+            if (arrayItems is null)
+            {
+                return;
+            }
+
+            var nameHierarchyList = nameHierarchy.ToList();
+            if (nameHierarchyList.Count > 0 && TryGetSingularName(nameHierarchyList[^1], out var singularName))
+            {
+                nameHierarchyList[^1] = singularName;
+                Process(nameHierarchyList, arrayItems, namespaceEntity);
+            }
+            else
+            {
+                Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), arrayItems, namespaceEntity);
             }
         }
 
@@ -385,6 +405,42 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         private static IEnumerable<string> ConcatName(IEnumerable<string> nameHierarchy, string name)
         {
             return nameHierarchy.Concat(new[] { name }).ToArray();
+        }
+
+        private static string[] IgnoreWords = ["Css", "Js"];
+        private static string[] SimplePlurals = ["Cookies", "Devices", "Files", "Hostnames", "Languages", "Resources", "Rules", "Schemes", "Scopes", "Stores", "Types"];
+        private static bool TryGetSingularName(string name, [NotNullWhen(true)] out string? singularName)
+        {
+            if (Array.IndexOf(IgnoreWords, name) > -1)
+            {
+                singularName = null;
+                return false;
+            }
+
+            if (Array.Exists(SimplePlurals, name.EndsWith))
+            {
+                singularName = name[..^1];
+                return true;
+            }
+
+            if (name.EndsWith("ies"))
+            {
+                singularName = name[..^3] + "y";
+                return true;
+            }
+            else if (name.EndsWith("es"))
+            {
+                singularName = name[..^2];
+                return true;
+            }
+            else if (name.EndsWith('s'))
+            {
+                singularName = name[..^1];
+                return true;
+            }
+
+            singularName = null;
+            return false;
         }
     }
 }
