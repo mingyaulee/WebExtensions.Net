@@ -60,6 +60,13 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 }
                 anonymousTypeRegistrationInfo.TypeReference.Ref = registrarFactory.AnonymousTypeRegistrar.RegisterType(anonymousTypeRegistrationInfo);
                 ClearTypeReferenceProperties(anonymousTypeRegistrationInfo.TypeReference);
+
+                foreach (var otherTypeReference in anonymousTypeRegistrationInfo.OtherReferences)
+                {
+                    otherTypeReference.Type = anonymousTypeRegistrationInfo.TypeReference.Type;
+                    otherTypeReference.Ref = anonymousTypeRegistrationInfo.TypeReference.Ref;
+                    ClearTypeReferenceProperties(otherTypeReference);
+                }
             }
         }
 
@@ -140,7 +147,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             Process(SetNameSuffix(nameHierarchy, registrationOptions.ArrayItemTypeNameSuffix), typeReference.ArrayItems, namespaceEntity);
             ProcessFunctionParameters(nameHierarchy, typeReference.FunctionParameters, namespaceEntity);
             Process(SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), typeReference.FunctionReturns, namespaceEntity);
-            ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity);
+            ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity, typeReference.Type);
             ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
             ProcessTypeChoices(nameHierarchy, typeReference.TypeChoices, namespaceEntity);
         }
@@ -242,29 +249,75 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
         }
 
-        private void ProcessFunctions(IEnumerable<string> nameHierarchy, IEnumerable<FunctionDefinition>? functionDefinitions, NamespaceEntity namespaceEntity)
+        private void ProcessFunctions(IEnumerable<string> nameHierarchy, IEnumerable<FunctionDefinition>? functionDefinitions, NamespaceEntity namespaceEntity, ObjectType objectType)
         {
             if (functionDefinitions is null)
             {
                 return;
             }
 
-            foreach (var functionDefinition in functionDefinitions)
+            if (objectType == ObjectType.EventTypeObject)
             {
-                ProcessFunction(nameHierarchy, functionDefinition, namespaceEntity);
+                var addListenerFunctionDefinitions = new List<FunctionDefinition>();
+                foreach (var functionDefinition in functionDefinitions)
+                {
+                    if (functionDefinition.Name == "addListener")
+                    {
+                        addListenerFunctionDefinitions.Add(functionDefinition);
+                        ProcessFunction(nameHierarchy, functionDefinition, namespaceEntity, false);
+                    }
+                    else
+                    {
+                        var functionParametersCount = functionDefinition.FunctionParameters!.Count();
+                        var addListenerFunctionDefinition = addListenerFunctionDefinitions.Single(addListenerFunctionDefinition => addListenerFunctionDefinition.FunctionParameters?.Count() == functionParametersCount);
+                        foreach (var (functionParameter, addListenerFunctionParameter) in functionDefinition.FunctionParameters!.Zip(addListenerFunctionDefinition.FunctionParameters!))
+                        {
+                            if (typesToRegister.TryGetValue(addListenerFunctionParameter, out var registrationInfo))
+                            {
+                                registrationInfo.OtherReferences.Add(functionParameter);
+                            }
+
+                            if (functionParameter.FunctionParameters is not null)
+                            {
+                                foreach (var (nestedFunctionParameter, addListenerNestedFunctionParameter) in functionParameter.FunctionParameters!.Zip(addListenerFunctionParameter.FunctionParameters!))
+                                {
+                                    if (typesToRegister.TryGetValue(addListenerNestedFunctionParameter, out var nestedRegistrationInfo))
+                                    {
+                                        nestedRegistrationInfo.OtherReferences.Add(nestedFunctionParameter);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var functionDefinition in functionDefinitions)
+                {
+                    ProcessFunction(nameHierarchy, functionDefinition, namespaceEntity, true);
+                }
             }
         }
 
-        private void ProcessFunction(IEnumerable<string> nameHierarchy, FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity)
+        private void ProcessFunction(IEnumerable<string> nameHierarchy, FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity, bool addFunctionNameToHierarchy)
         {
             if (functionDefinition.Name is null)
             {
                 throw new InvalidOperationException("Function definition should have a name.");
             }
 
-            var functionName = functionDefinition.Name.ToCapitalCase();
-            ProcessFunctionParameters(ConcatName(nameHierarchy, functionName), functionDefinition.FunctionParameters, namespaceEntity);
-            Process(ConcatName(nameHierarchy, functionName + registrationOptions.FunctionReturnTypeNameSuffix), functionDefinition.FunctionReturns, namespaceEntity);
+            if (addFunctionNameToHierarchy)
+            {
+                var functionName = functionDefinition.Name.ToCapitalCase();
+                ProcessFunctionParameters(ConcatName(nameHierarchy, functionName), functionDefinition.FunctionParameters, namespaceEntity);
+                Process(ConcatName(nameHierarchy, functionName + registrationOptions.FunctionReturnTypeNameSuffix), functionDefinition.FunctionReturns, namespaceEntity);
+            }
+            else
+            {
+                ProcessFunctionParameters(nameHierarchy, functionDefinition.FunctionParameters, namespaceEntity);
+                Process(ConcatName(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), functionDefinition.FunctionReturns, namespaceEntity);
+            }
         }
 
         private void ProcessFunctionParameters(IEnumerable<string> nameHierarchy, IEnumerable<ParameterDefinition>? parameterDefinitions, NamespaceEntity namespaceEntity)

@@ -12,12 +12,14 @@ namespace WebExtensions.Net.Generator.Models.Entities
             Name = string.Join('.', nameHierarchy);
             NameHierarchy = nameHierarchy;
             TypeReference = typeReference;
+            OtherReferences = [];
             NamespaceEntity = namespaceEntity;
         }
 
         public string Name { get; }
         public IEnumerable<string> NameHierarchy { get; set; }
         public TypeReference TypeReference { get; }
+        public ICollection<TypeReference> OtherReferences { get; }
         public NamespaceEntity NamespaceEntity { get; }
     }
 }
