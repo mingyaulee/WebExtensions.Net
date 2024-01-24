@@ -34,6 +34,6 @@ namespace WebExtensions.Net.Scripting
 
         /// <summary>Updates one or more content scripts for this extension.</summary>
         /// <param name="scripts">Contains a list of scripts to be updated. If there are errors during script parsing/file validation, or if the IDs specified do not already exist, then no scripts are updated.</param>
-        ValueTask UpdateContentScripts(IEnumerable<ScriptsArrayItem> scripts);
+        ValueTask UpdateContentScripts(IEnumerable<Script> scripts);
     }
 }

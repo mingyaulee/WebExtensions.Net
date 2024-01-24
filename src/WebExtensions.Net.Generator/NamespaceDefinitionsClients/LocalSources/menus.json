@@ -180,6 +180,7 @@
           },
           "bookmarkId": {
             "description": "The id of the bookmark where the context menu was clicked, if it was on a bookmark.",
+            "optional": true,
             "type": "string"
           },
           "modifiers": {

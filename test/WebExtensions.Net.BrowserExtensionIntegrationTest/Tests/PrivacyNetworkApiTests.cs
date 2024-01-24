@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -15,20 +14,20 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetNetworkPredictionEnabled()
+        public void GetNetworkPredictionEnabled()
         {
             // Act
-            var setting = await webExtensionsApi.Privacy.Network.GetNetworkPredictionEnabled();
+            var setting = webExtensionsApi.Privacy.Network.NetworkPredictionEnabled;
 
             // Assert
             setting.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task GetWebRTCIPHandlingPolicy()
+        public void GetWebRTCIPHandlingPolicy()
         {
             // Act
-            var setting = await webExtensionsApi.Privacy.Network.GetWebRTCIPHandlingPolicy();
+            var setting = webExtensionsApi.Privacy.Network.WebRTCIPHandlingPolicy;
 
             // Assert
             setting.Should().NotBeNull();

@@ -17,6 +17,9 @@ namespace WebExtensions.Net.Devtools.Panels
         }
 
         /// <inheritdoc />
+        public ElementsPanel Elements => GetProperty<ElementsPanel>("elements");
+
+        /// <inheritdoc />
         public OnThemeChangedEvent OnThemeChanged
         {
             get
@@ -31,6 +34,12 @@ namespace WebExtensions.Net.Devtools.Panels
         }
 
         /// <inheritdoc />
+        public SourcesPanel Sources => GetProperty<SourcesPanel>("sources");
+
+        /// <inheritdoc />
+        public string ThemeName => GetProperty<string>("themeName");
+
+        /// <inheritdoc />
         public virtual ValueTask<ExtensionPanel> Create(string title, string iconPath, ExtensionUrl pagePath)
         {
             return InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
@@ -40,24 +49,6 @@ namespace WebExtensions.Net.Devtools.Panels
         public virtual ValueTask<ExtensionPanel> Create(string title, ExtensionUrl iconPath, ExtensionUrl pagePath)
         {
             return InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<ElementsPanel> GetElements()
-        {
-            return GetPropertyAsync<ElementsPanel>("elements");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<SourcesPanel> GetSources()
-        {
-            return GetPropertyAsync<SourcesPanel>("sources");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<string> GetThemeName()
-        {
-            return GetPropertyAsync<string>("themeName");
         }
     }
 }

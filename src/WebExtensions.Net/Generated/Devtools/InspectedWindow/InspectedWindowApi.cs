@@ -14,6 +14,9 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         }
 
         /// <inheritdoc />
+        public int TabId => GetProperty<int>("tabId");
+
+        /// <inheritdoc />
         public virtual ValueTask<EvalResult> Eval(string expression, object options)
         {
             return InvokeAsync<EvalResult>("eval", expression, options);
@@ -23,12 +26,6 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         public virtual ValueTask Reload(ReloadOptions reloadOptions)
         {
             return InvokeVoidAsync("reload", reloadOptions);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<int> GetTabId()
-        {
-            return GetPropertyAsync<int>("tabId");
         }
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtensions.Net.Downloads;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {

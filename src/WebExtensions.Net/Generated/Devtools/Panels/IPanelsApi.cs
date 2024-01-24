@@ -6,8 +6,17 @@ namespace WebExtensions.Net.Devtools.Panels
     /// <summary>Use the <c>chrome.devtools.panels</c> API to integrate your extension into Developer Tools window UI: create your own panels, access existing panels, and add sidebars.</summary>
     public partial interface IPanelsApi
     {
+        /// <summary>Elements panel.</summary>
+        ElementsPanel Elements { get; }
+
         /// <summary>Fired when the devtools theme changes.</summary>
         OnThemeChangedEvent OnThemeChanged { get; }
+
+        /// <summary>Sources panel.</summary>
+        SourcesPanel Sources { get; }
+
+        /// <summary>The name of the current devtools theme.</summary>
+        string ThemeName { get; }
 
         /// <summary>Creates an extension panel.</summary>
         /// <param name="title">Title that is displayed next to the extension icon in the Developer Tools toolbar.</param>
@@ -22,17 +31,5 @@ namespace WebExtensions.Net.Devtools.Panels
         /// <param name="pagePath">Path of the panel's HTML page relative to the extension directory.</param>
         /// <returns>An ExtensionPanel object representing the created panel.</returns>
         ValueTask<ExtensionPanel> Create(string title, ExtensionUrl iconPath, ExtensionUrl pagePath);
-
-        /// <summary>Gets the 'elements' property.</summary>
-        /// <returns>Elements panel.</returns>
-        ValueTask<ElementsPanel> GetElements();
-
-        /// <summary>Gets the 'sources' property.</summary>
-        /// <returns>Sources panel.</returns>
-        ValueTask<SourcesPanel> GetSources();
-
-        /// <summary>Gets the 'themeName' property.</summary>
-        /// <returns>The name of the current devtools theme.</returns>
-        ValueTask<string> GetThemeName();
     }
 }

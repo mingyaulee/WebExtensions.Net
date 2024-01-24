@@ -37,7 +37,7 @@ namespace WebExtensions.Net.Downloads
         /// <summary>Extra HTTP headers to send with the request if the URL uses the HTTP[s] protocol. Each header is represented as a dictionary containing the keys <c>name</c> and either <c>value</c> or <c>binaryValue</c>, restricted to those allowed by XMLHttpRequest.</summary>
         [JsonPropertyName("headers")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<HeadersArrayItem> Headers { get; set; }
+        public IEnumerable<Header> Headers { get; set; }
 
         /// <summary>Whether to associate the download with a private browsing session.</summary>
         [JsonPropertyName("incognito")]

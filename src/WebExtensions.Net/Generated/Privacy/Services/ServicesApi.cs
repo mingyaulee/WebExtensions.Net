@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.Privacy.Services
@@ -15,9 +14,6 @@ namespace WebExtensions.Net.Privacy.Services
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetPasswordSavingEnabled()
-        {
-            return GetPropertyAsync<Setting>("passwordSavingEnabled");
-        }
+        public Setting PasswordSavingEnabled => GetProperty<Setting>("passwordSavingEnabled");
     }
 }

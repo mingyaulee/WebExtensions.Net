@@ -18,6 +18,7 @@
                 "$ref": "IconPath"
               },
               "browser_style": {
+                "description": "Defaults to true in Manifest V2; Deprecated in Manifest V3.",
                 "optional": true,
                 "type": "boolean"
               },

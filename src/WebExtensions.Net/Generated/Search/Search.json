@@ -27,6 +27,16 @@
             "format": "url"
           }
         }
+      },
+      {
+        "id": "Disposition",
+        "description": "Location where search results should be displayed.",
+        "type": "string",
+        "enum": [
+          "CURRENT_TAB",
+          "NEW_TAB",
+          "NEW_WINDOW"
+        ]
       }
     ],
     "functions": [
@@ -56,12 +66,51 @@
                 "optional": true,
                 "type": "string"
               },
+              "disposition": {
+                "description": "Location where search results should be displayed. NEW_TAB is the default.",
+                "optional": true,
+                "$ref": "Disposition"
+              },
               "tabId": {
-                "description": "The ID of the tab for the search results. If not specified, a new tab is created.",
+                "description": "The ID of the tab for the search results. If not specified, a new tab is created, unless disposition is set. tabId cannot be used with disposition.",
                 "optional": true,
                 "type": "integer"
               }
             }
+          }
+        ]
+      },
+      {
+        "name": "query",
+        "description": "Use the chrome.search API to search via the default provider.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "queryInfo",
+            "type": "object",
+            "properties": {
+              "text": {
+                "description": "String to query with the default search provider.",
+                "type": "string"
+              },
+              "disposition": {
+                "description": "Location where search results should be displayed. CURRENT_TAB is the default.",
+                "optional": true,
+                "$ref": "Disposition"
+              },
+              "tabId": {
+                "description": "Location where search results should be displayed. tabId cannot be used with disposition.",
+                "optional": true,
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": []
           }
         ]
       }

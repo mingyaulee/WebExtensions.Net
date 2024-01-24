@@ -17,6 +17,13 @@ namespace WebExtensions.Net.Extension
         }
 
         /// <inheritdoc />
+        public bool? InIncognitoContext => GetProperty<bool?>("inIncognitoContext");
+
+        /// <inheritdoc />
+        [Obsolete("Please use $(ref:runtime.lastError).")]
+        public LastError LastError => GetProperty<LastError>("lastError");
+
+        /// <inheritdoc />
         public virtual ValueTask<JsonElement> GetBackgroundPage()
         {
             return InvokeAsync<JsonElement>("getBackgroundPage");
@@ -36,12 +43,6 @@ namespace WebExtensions.Net.Extension
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<bool> GetInIncognitoContext()
-        {
-            return GetPropertyAsync<bool>("inIncognitoContext");
-        }
-
-        /// <inheritdoc />
         public virtual ValueTask<bool> IsAllowedFileSchemeAccess()
         {
             return InvokeAsync<bool>("isAllowedFileSchemeAccess");
@@ -51,13 +52,6 @@ namespace WebExtensions.Net.Extension
         public virtual ValueTask<bool> IsAllowedIncognitoAccess()
         {
             return InvokeAsync<bool>("isAllowedIncognitoAccess");
-        }
-
-        /// <inheritdoc />
-        [Obsolete("Please use $(ref:runtime.lastError).")]
-        public virtual ValueTask<LastError> GetLastError()
-        {
-            return GetPropertyAsync<LastError>("lastError");
         }
     }
 }

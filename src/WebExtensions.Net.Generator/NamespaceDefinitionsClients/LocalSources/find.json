@@ -50,6 +50,11 @@
                 "optional": true,
                 "type": "boolean"
               },
+              "matchDiacritics": {
+                "description": "Find only ranges with diacritic sensitive match.",
+                "optional": true,
+                "type": "boolean"
+              },
               "entireWord": {
                 "description": "Find only ranges that match entire word.",
                 "optional": true,

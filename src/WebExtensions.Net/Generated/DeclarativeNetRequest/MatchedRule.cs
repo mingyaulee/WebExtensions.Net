@@ -8,6 +8,11 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     [BindAllProperties]
     public partial class MatchedRule : BaseObject
     {
+        /// <summary>ID of the extension, if this rule belongs to a different extension.</summary>
+        [JsonPropertyName("extensionId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string ExtensionId { get; set; }
+
         /// <summary>A matching rule's ID.</summary>
         [JsonPropertyName("ruleId")]
         public int RuleId { get; set; }

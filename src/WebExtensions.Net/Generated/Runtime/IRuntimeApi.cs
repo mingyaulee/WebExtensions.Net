@@ -7,6 +7,12 @@ namespace WebExtensions.Net.Runtime
     /// <summary>Use the <c>browser.runtime</c> API to retrieve the background page, return details about the manifest, and listen for and respond to events in the app or extension lifecycle. You can also use this API to convert the relative path of URLs to fully-qualified URLs.</summary>
     public partial interface IRuntimeApi
     {
+        /// <summary>The ID of the extension/app.</summary>
+        string Id { get; }
+
+        /// <summary>This will be defined during an API method callback if there was an error</summary>
+        LastError LastError { get; }
+
         /// <summary>Fired when a connection is made from either an extension process or a content script.</summary>
         OnConnectEvent OnConnect { get; }
 
@@ -71,14 +77,6 @@ namespace WebExtensions.Net.Runtime
         /// <returns>The fully-qualified URL to the resource.</returns>
         ValueTask<string> GetURL(string path);
 
-        /// <summary>Gets the 'id' property.</summary>
-        /// <returns>The ID of the extension/app.</returns>
-        ValueTask<string> GetId();
-
-        /// <summary>Gets the 'lastError' property.</summary>
-        /// <returns>This will be defined during an API method callback if there was an error</returns>
-        ValueTask<LastError> GetLastError();
-
         /// <summary>Open your Extension's options page, if possible.<br />The precise behavior may depend on your manifest's <c>$(topic:optionsV2)[options_ui]</c> or <c>$(topic:options)[options_page]</c> key, or what the browser happens to support at the time.<br />If your Extension does not declare an options page, or the browser failed to create one for some other reason, the callback will set $(ref:lastError).<br /></summary>
         ValueTask OpenOptionsPage();
 
@@ -98,7 +96,7 @@ namespace WebExtensions.Net.Runtime
         /// <returns>The response message sent by the native messaging host. If an error occurs while connecting to the native messaging host, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message.</returns>
         ValueTask<JsonElement> SendNativeMessage(string application, object message);
 
-        /// <summary>Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 255 characters.</summary>
+        /// <summary>Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 1023 characters.</summary>
         /// <param name="url">URL to be opened after the extension is uninstalled. This URL must have an http: or https: scheme. Set an empty string to not open a new tab upon uninstallation.</param>
         ValueTask SetUninstallURL(string url);
     }

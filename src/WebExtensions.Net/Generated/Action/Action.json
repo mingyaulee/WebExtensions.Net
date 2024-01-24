@@ -135,6 +135,32 @@
         ]
       },
       {
+        "name": "getUserSettings",
+        "description": "Returns the user-specified settings relating to an extension\u0027s action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "userSettings",
+                "description": "The collection of user-specified settings relating to an extension\u0027s action.",
+                "type": "object",
+                "properties": {
+                  "isOnToolbar": {
+                    "description": "Whether the extension\u0027s action icon is visible on browser windows\u0027 top-level toolbar (i.e., whether the extension has been \u0027pinned\u0027 by the user).",
+                    "optional": true,
+                    "type": "boolean"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "setIcon",
         "description": "Sets the icon for the browser action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the \u003Cb\u003Epath\u003C/b\u003E or the \u003Cb\u003EimageData\u003C/b\u003E property must be specified.",
         "async": "callback",
@@ -410,10 +436,25 @@
       },
       {
         "name": "openPopup",
-        "description": "Opens the extension popup window in the active window.",
+        "description": "Opens the extension popup window in the specified window.",
         "async": true,
         "type": "function",
-        "parameters": []
+        "parameters": [
+          {
+            "name": "options",
+            "description": "An object with information about the popup to open.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "windowId": {
+                "description": "Defaults to the $(topic:current-window)[current window].",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
       }
     ],
     "events": [

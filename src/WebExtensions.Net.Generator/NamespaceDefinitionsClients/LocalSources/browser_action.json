@@ -29,6 +29,7 @@
             "format": "relativeUrl"
           },
           "browser_style": {
+            "description": "Deprecated in Manifest V3.",
             "optional": true,
             "type": "boolean"
           },
@@ -195,6 +196,32 @@
               {
                 "name": "result",
                 "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getUserSettings",
+        "description": "Returns the user-specified settings relating to an extension\u0027s action.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "userSettings",
+                "description": "The collection of user-specified settings relating to an extension\u0027s action.",
+                "type": "object",
+                "properties": {
+                  "isOnToolbar": {
+                    "description": "Whether the extension\u0027s action icon is visible on browser windows\u0027 top-level toolbar (i.e., whether the extension has been \u0027pinned\u0027 by the user).",
+                    "optional": true,
+                    "type": "boolean"
+                  }
+                }
               }
             ]
           }
@@ -476,10 +503,25 @@
       },
       {
         "name": "openPopup",
-        "description": "Opens the extension popup window in the active window.",
+        "description": "Opens the extension popup window in the specified window.",
         "async": true,
         "type": "function",
-        "parameters": []
+        "parameters": [
+          {
+            "name": "options",
+            "description": "An object with information about the popup to open.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "windowId": {
+                "description": "Defaults to the $(topic:current-window)[current window].",
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          }
+        ]
       }
     ],
     "events": [

@@ -72,15 +72,21 @@ namespace WebExtensions.Net.ActionNs
         }
 
         /// <inheritdoc />
+        public virtual ValueTask<UserSettings> GetUserSettings()
+        {
+            return InvokeAsync<UserSettings>("getUserSettings");
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask IsEnabled(Details details)
         {
             return InvokeVoidAsync("isEnabled", details);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask OpenPopup()
+        public virtual ValueTask OpenPopup(Options options)
         {
-            return InvokeVoidAsync("openPopup");
+            return InvokeVoidAsync("openPopup", options);
         }
 
         /// <inheritdoc />

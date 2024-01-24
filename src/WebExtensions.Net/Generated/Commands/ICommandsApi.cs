@@ -6,6 +6,9 @@ namespace WebExtensions.Net.Commands
     /// <summary>Use the commands API to add keyboard shortcuts that trigger actions in your extension, for example, an action to open the browser action or send a command to the xtension.</summary>
     public partial interface ICommandsApi
     {
+        /// <summary>Fired when a registered command's shortcut is changed.</summary>
+        OnChangedEvent OnChanged { get; }
+
         /// <summary>Fired when a registered command is activated using a keyboard shortcut.</summary>
         OnCommandEvent OnCommand { get; }
 

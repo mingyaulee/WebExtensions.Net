@@ -8,10 +8,10 @@ namespace WebExtensions.Net.Scripting
     [BindAllProperties]
     public partial class InjectionResult : BaseObject
     {
-        /// <summary>When the injection has failed, the error is exposed to the caller with this property.</summary>
+        /// <summary>The error property is set when the script execution failed. The value is typically an (Error) object with a message property, but could be any value (including primitives and undefined) if the script threw or rejected with such a value.</summary>
         [JsonPropertyName("error")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Error Error { get; set; }
+        public object Error { get; set; }
 
         /// <summary>The frame ID associated with the injection.</summary>
         [JsonPropertyName("frameId")]

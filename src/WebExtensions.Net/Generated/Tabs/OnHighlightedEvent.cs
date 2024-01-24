@@ -12,7 +12,7 @@ namespace WebExtensions.Net.Tabs
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the highlighted or selected tabs in a window changes.</param>
-        public virtual ValueTask AddListener(Action<AddListenerCallbackHighlightInfo> callback)
+        public virtual ValueTask AddListener(Action<CallbackHighlightInfo> callback)
         {
             return InvokeVoidAsync("addListener", callback);
         }
@@ -20,14 +20,14 @@ namespace WebExtensions.Net.Tabs
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Action<HasListenerCallbackHighlightInfo> callback)
+        public virtual ValueTask<bool> HasListener(Action<CallbackHighlightInfo> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
-        public virtual ValueTask RemoveListener(Action<RemoveListenerCallbackHighlightInfo> callback)
+        public virtual ValueTask RemoveListener(Action<CallbackHighlightInfo> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
         }

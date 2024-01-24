@@ -26,6 +26,12 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
+        public string Id => GetProperty<string>("id");
+
+        /// <inheritdoc />
+        public LastError LastError => GetProperty<LastError>("lastError");
+
+        /// <inheritdoc />
         public OnConnectEvent OnConnect
         {
             get
@@ -197,18 +203,6 @@ namespace WebExtensions.Net.Runtime
         public virtual ValueTask<string> GetURL(string path)
         {
             return InvokeAsync<string>("getURL", path);
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<string> GetId()
-        {
-            return GetPropertyAsync<string>("id");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<LastError> GetLastError()
-        {
-            return GetPropertyAsync<LastError>("lastError");
         }
 
         /// <inheritdoc />

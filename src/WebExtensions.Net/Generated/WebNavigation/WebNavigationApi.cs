@@ -151,9 +151,9 @@ namespace WebExtensions.Net.WebNavigation
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<DetailsArrayItem>> GetAllFrames(GetAllFramesDetails details)
+        public virtual ValueTask<IEnumerable<Detail>> GetAllFrames(GetAllFramesDetails details)
         {
-            return InvokeAsync<IEnumerable<DetailsArrayItem>>("getAllFrames", details);
+            return InvokeAsync<IEnumerable<Detail>>("getAllFrames", details);
         }
 
         /// <inheritdoc />

@@ -23,6 +23,11 @@ namespace WebExtensions.Net.Tabs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Audible { get; set; }
 
+        /// <summary>Whether the tab can be discarded automatically by the browser when resources are low.</summary>
+        [JsonPropertyName("autoDiscardable")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? AutoDiscardable { get; set; }
+
         /// <summary>True if the tab is using the camera.</summary>
         [JsonPropertyName("camera")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

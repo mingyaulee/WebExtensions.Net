@@ -125,6 +125,31 @@
             "type": "string"
           }
         ]
+      },
+      {
+        "name": "onChanged",
+        "description": "Fired when a registered command\u0027s shortcut is changed.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "changeInfo",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name of the shortcut.",
+                "type": "string"
+              },
+              "newShortcut": {
+                "description": "The new shortcut active for this command, or blank if not active.",
+                "type": "string"
+              },
+              "oldShortcut": {
+                "description": "The old shortcut which is no longer active for this command, or blank if the shortcut was previously inactive.",
+                "type": "string"
+              }
+            }
+          }
+        ]
       }
     ]
   }

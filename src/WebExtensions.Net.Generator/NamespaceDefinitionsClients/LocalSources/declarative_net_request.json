@@ -14,16 +14,59 @@
         ]
       },
       {
+        "$extend": "OptionalPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "declarativeNetRequestFeedback"
+            ]
+          }
+        ]
+      },
+      {
         "$extend": "PermissionNoPrompt",
         "choices": [
           {
             "type": "string",
             "enum": [
-              "declarativeNetRequestFeedback",
               "declarativeNetRequestWithHostAccess"
             ]
           }
         ]
+      },
+      {
+        "$extend": "WebExtensionManifest",
+        "properties": {
+          "declarative_net_request": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "rule_resources": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "description": "A non-empty string uniquely identifying the ruleset. IDs beginning with \u0027_\u0027 are reserved for internal use.",
+                      "type": "string",
+                      "pattern": "^[^_]"
+                    },
+                    "enabled": {
+                      "description": "Whether the ruleset is enabled by default.",
+                      "type": "boolean"
+                    },
+                    "path": {
+                      "description": "The path of the JSON ruleset relative to the extension directory.",
+                      "$ref": "manifest.ExtensionURL"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     ]
   },
@@ -63,6 +106,15 @@
         ]
       },
       {
+        "id": "UnsupportedRegexReason",
+        "description": "Describes the reason why a given regular expression isn\u0027t supported.",
+        "type": "string",
+        "enum": [
+          "syntaxError",
+          "memoryLimitExceeded"
+        ]
+      },
+      {
         "id": "MatchedRule",
         "type": "object",
         "properties": {
@@ -72,6 +124,99 @@
           },
           "rulesetId": {
             "description": "ID of the Ruleset this rule belongs to.",
+            "type": "string"
+          },
+          "extensionId": {
+            "description": "ID of the extension, if this rule belongs to a different extension.",
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "URLTransform",
+        "description": "Describes the type of the Rule.action.redirect.transform property.",
+        "type": "object",
+        "properties": {
+          "scheme": {
+            "description": "The new scheme for the request.",
+            "optional": true,
+            "type": "string",
+            "enum": [
+              "http",
+              "https",
+              "moz-extension"
+            ]
+          },
+          "username": {
+            "description": "The new username for the request.",
+            "optional": true,
+            "type": "string"
+          },
+          "password": {
+            "description": "The new password for the request.",
+            "optional": true,
+            "type": "string"
+          },
+          "host": {
+            "description": "The new host name for the request.",
+            "optional": true,
+            "type": "string"
+          },
+          "port": {
+            "description": "The new port for the request. If empty, the existing port is cleared.",
+            "optional": true,
+            "type": "string"
+          },
+          "path": {
+            "description": "The new path for the request. If empty, the existing path is cleared.",
+            "optional": true,
+            "type": "string"
+          },
+          "query": {
+            "description": "The new query for the request. Should be either empty, in which case the existing query is cleared; or should begin with \u0027?\u0027. Cannot be specified if \u0027queryTransform\u0027 is specified.",
+            "optional": true,
+            "type": "string"
+          },
+          "queryTransform": {
+            "description": "Add, remove or replace query key-value pairs. Cannot be specified if \u0027query\u0027 is specified.",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "removeParams": {
+                "description": "The list of query keys to be removed.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "addOrReplaceParams": {
+                "description": "The list of query key-value pairs to be added or replaced.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "replaceOnly": {
+                      "description": "If true, the query key is replaced only if it\u0027s already present. Otherwise, the key is also added if it\u0027s missing.",
+                      "optional": true,
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "fragment": {
+            "description": "The new fragment for the request. Should be either empty, in which case the existing fragment is cleared; or should begin with \u0027#\u0027.",
+            "optional": true,
             "type": "string"
           }
         }
@@ -106,7 +251,7 @@
                 "type": "string"
               },
               "isUrlFilterCaseSensitive": {
-                "description": "Whether \u0027urlFilter\u0027 or \u0027regexFilter\u0027 is case-sensitive. Defaults to true.",
+                "description": "Whether \u0027urlFilter\u0027 or \u0027regexFilter\u0027 is case-sensitive.",
                 "optional": true,
                 "type": "boolean"
               },
@@ -116,7 +261,8 @@
                 "type": "array",
                 "minItems": 1,
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "canonicalDomain"
                 }
               },
               "excludedInitiatorDomains": {
@@ -124,7 +270,8 @@
                 "optional": true,
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "canonicalDomain"
                 }
               },
               "requestDomains": {
@@ -133,7 +280,8 @@
                 "type": "array",
                 "minItems": 1,
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "canonicalDomain"
                 }
               },
               "excludedRequestDomains": {
@@ -141,7 +289,8 @@
                 "optional": true,
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "canonicalDomain"
                 }
               },
               "resourceTypes": {
@@ -157,7 +306,6 @@
                 "description": "List of resource types which the rule won\u0027t match. Cannot be specified if \u0027resourceTypes\u0027 is specified. If neither of them is specified, all resource types except \u0027main_frame\u0027 are matched.",
                 "optional": true,
                 "type": "array",
-                "minItems": 1,
                 "items": {
                   "$ref": "ResourceType"
                 }
@@ -175,7 +323,6 @@
                 "description": "List of request methods which the rule won\u0027t match. Cannot be specified if \u0027requestMethods\u0027 is specified. If neither of them is specified, all request methods are matched.",
                 "optional": true,
                 "type": "array",
-                "minItems": 1,
                 "items": {
                   "type": "string"
                 }
@@ -234,17 +381,18 @@
                     "type": "string"
                   },
                   "transform": {
-                    "description": "TODO: URLTransform - Url transformations to perform.",
+                    "description": "Url transformations to perform.",
                     "optional": true,
-                    "type": "object"
+                    "$ref": "URLTransform"
                   },
                   "url": {
                     "description": "The redirect url. Redirects to JavaScript urls are not allowed.",
                     "optional": true,
-                    "type": "string"
+                    "type": "string",
+                    "format": "url"
                   },
                   "regexSubstitution": {
-                    "description": "TODO with regexFilter \u002B Substitution pattern for rules which specify a \u0027regexFilter\u0027.",
+                    "description": "Substitution pattern for rules which specify a \u0027regexFilter\u0027. The first match of regexFilter within the url will be replaced with this pattern. Within regexSubstitution, backslash-escaped digits (\\1 to \\9) can be used to insert the corresponding capture groups. \\0 refers to the entire matching text.",
                     "optional": true,
                     "type": "string"
                   }
@@ -253,49 +401,58 @@
               "requestHeaders": {
                 "description": "The request headers to modify for the request. Only valid when type is \u0027modifyHeaders\u0027.",
                 "optional": true,
-                "type": "object",
-                "properties": {
-                  "header": {
-                    "description": "The name of the request header to be modified.",
-                    "type": "string"
-                  },
-                  "operation": {
-                    "description": "The operation to be performed on a header. The \u0027append\u0027 operation is not supported for request headers.",
-                    "type": "string",
-                    "enum": [
-                      "set",
-                      "remove"
-                    ]
-                  },
-                  "value": {
-                    "description": "The new value for the header. Must be specified for the \u0027set\u0027 operation.",
-                    "optional": true,
-                    "type": "string"
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "description": "The name of the request header to be modified.",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "description": "The operation to be performed on a header.",
+                      "type": "string",
+                      "enum": [
+                        "append",
+                        "set",
+                        "remove"
+                      ]
+                    },
+                    "value": {
+                      "description": "The new value for the header. Must be specified for the \u0027append\u0027 and \u0027set\u0027 operations.",
+                      "optional": true,
+                      "type": "string"
+                    }
                   }
                 }
               },
               "responseHeaders": {
                 "description": "The response headers to modify for the request. Only valid when type is \u0027modifyHeaders\u0027.",
                 "optional": true,
-                "type": "object",
-                "properties": {
-                  "header": {
-                    "description": "The name of the response header to be modified.",
-                    "type": "string"
-                  },
-                  "operation": {
-                    "description": "The operation to be performed on a header.",
-                    "type": "string",
-                    "enum": [
-                      "append",
-                      "set",
-                      "remove"
-                    ]
-                  },
-                  "value": {
-                    "description": "The new value for the header. Must be specified for the \u0027append\u0027 and \u0027set\u0027 operations.",
-                    "optional": true,
-                    "type": "string"
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "description": "The name of the response header to be modified.",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "description": "The operation to be performed on a header.",
+                      "type": "string",
+                      "enum": [
+                        "append",
+                        "set",
+                        "remove"
+                      ]
+                    },
+                    "value": {
+                      "description": "The new value for the header. Must be specified for the \u0027append\u0027 and \u0027set\u0027 operations.",
+                      "optional": true,
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -304,7 +461,75 @@
         }
       }
     ],
+    "properties": {
+      "DYNAMIC_RULESET_ID": {
+        "description": "Ruleset ID for the dynamic rules added by the extension.",
+        "value": "_dynamic",
+        "type": "string"
+      },
+      "GUARANTEED_MINIMUM_STATIC_RULES": {
+        "description": "The minimum number of static rules guaranteed to an extension across its enabled static rulesets. Any rules above this limit will count towards the global static rule limit.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_STATIC_RULESETS": {
+        "description": "The maximum number of static Rulesets an extension can specify as part of the rule_resources manifest key.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_ENABLED_STATIC_RULESETS": {
+        "description": "The maximum number of static Rulesets an extension can enable at any one time.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES": {
+        "description": "The maximum number of dynamic and session rules an extension can add. NOTE: in the Firefox we are enforcing this limit to the session and dynamic rules count separately, instead of enforcing it to the rules count for both combined as the Chrome implementation does.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_REGEX_RULES": {
+        "description": "The maximum number of regular expression rules that an extension can add. This limit is evaluated separately for the set of session rules, dynamic rules and those specified in the rule_resources file.",
+        "type": "number"
+      },
+      "SESSION_RULESET_ID": {
+        "description": "Ruleset ID for the session-scoped rules added by the extension.",
+        "value": "_session",
+        "type": "string"
+      }
+    },
     "functions": [
+      {
+        "name": "updateDynamicRules",
+        "description": "Modifies the current set of dynamic rules for the extension. The rules with IDs listed in options.removeRuleIds are first removed, and then the rules given in options.addRules are added. These rules are persisted across browser sessions and extension updates.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "removeRuleIds": {
+                "description": "IDs of the rules to remove. Any invalid IDs will be ignored.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "addRules": {
+                "description": "Rules to add.",
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "description": "Called when the dynamic rules have been updated",
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
       {
         "name": "updateSessionRules",
         "description": "Modifies the current set of session scoped rules for the extension. The rules with IDs listed in options.removeRuleIds are first removed, and then the rules given in options.addRules are added. These rules are not persisted across sessions and are backed in memory.",
@@ -342,6 +567,99 @@
         ]
       },
       {
+        "name": "getEnabledRulesets",
+        "description": "Returns the ids for the current set of enabled static rulesets.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "rulesetIds",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "updateEnabledRulesets",
+        "description": "Returns the ids for the current set of enabled static rulesets.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "updateRulesetOptions",
+            "type": "object",
+            "properties": {
+              "disableRulesetIds": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "enableRulesetIds": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "getAvailableStaticRuleCount",
+        "description": "Returns the remaining number of static rules an extension can enable",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "count",
+                "type": "integer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getDynamicRules",
+        "description": "Returns the current set of dynamic rules for the extension.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "dynamicRules",
+                "type": "array",
+                "items": {
+                  "$ref": "Rule"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "getSessionRules",
         "description": "Returns the current set of session scoped rules for the extension.",
         "async": "callback",
@@ -352,9 +670,59 @@
             "type": "function",
             "parameters": [
               {
+                "name": "sessionRules",
                 "type": "array",
                 "items": {
                   "$ref": "Rule"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "isRegexSupported",
+        "description": "Checks if the given regular expression will be supported as a \u0027regexFilter\u0027 rule condition.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "regexOptions",
+            "type": "object",
+            "properties": {
+              "regex": {
+                "description": "The regular expresson to check.",
+                "type": "string"
+              },
+              "isCaseSensitive": {
+                "description": "Whether the \u0027regex\u0027 specified is case sensitive.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "requireCapturing": {
+                "description": "Whether the \u0027regex\u0027 specified requires capturing. Capturing is only required for redirect rules which specify a \u0027regexSubstition\u0027 action.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "object",
+                "properties": {
+                  "isSupported": {
+                    "description": "Whether the given regex is supported",
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "description": "Specifies the reason why the regular expression is not supported. Only provided if \u0027isSupported\u0027 is false.",
+                    "optional": true,
+                    "$ref": "UnsupportedRegexReason"
+                  }
                 }
               }
             ]
@@ -394,6 +762,18 @@
                 "description": "The ID of the tab in which the hypothetical request takes place. Does not need to correspond to a real tab ID. Default is -1, meaning that the request isn\u0027t related to a tab.",
                 "optional": true,
                 "type": "integer"
+              }
+            }
+          },
+          {
+            "name": "options",
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "includeOtherExtensions": {
+                "description": "Whether to account for rules from other installed extensions during rule evaluation.",
+                "optional": true,
+                "type": "boolean"
               }
             }
           },

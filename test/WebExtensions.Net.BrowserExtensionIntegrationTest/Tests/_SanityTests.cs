@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtensions.Net.Tabs;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -77,10 +76,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Description = "Get primitive API property")]
-        public async Task GetPrimitiveAPIProperty()
+        public void GetPrimitiveAPIProperty()
         {
             // Act
-            var extensionId = await webExtensionsApi.Runtime.GetId();
+            var extensionId = webExtensionsApi.Runtime.Id;
 
             // Assert
             extensionId.Should().NotBeNullOrEmpty();
@@ -90,7 +89,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteReferenceObjectFunction()
         {
             // Arrange
-            var localStorageReference = await webExtensionsApi.Storage.GetLocal();
+            var localStorageReference = webExtensionsApi.Storage.Local;
 
             // Act
             Func<Task> action = async () => await localStorageReference.Set(new { test = true });
@@ -103,7 +102,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ExecuteReferenceObjectFunctionWithReturn()
         {
             // Arrange
-            var localStorageReference = await webExtensionsApi.Storage.GetLocal();
+            var localStorageReference = webExtensionsApi.Storage.Local;
             var testValue = Guid.NewGuid().ToString();
             await localStorageReference.Set(new { test = testValue });
 
@@ -140,7 +139,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task EventListenerIsInvokedWhenTheEventIsFired()
         {
             // Arrange
-            var localStorage = await webExtensionsApi.Storage.GetLocal();
+            var localStorage = webExtensionsApi.Storage.Local;
             await localStorage.Set(new { test = 1234 });
             await localStorage.Clear();
 

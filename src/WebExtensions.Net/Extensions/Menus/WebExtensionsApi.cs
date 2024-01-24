@@ -7,16 +7,6 @@ namespace WebExtensions.Net
         private IContextMenusApi _contextMenus;
 
         /// <inheritdoc />
-        public IContextMenusApi ContextMenus
-        {
-            get
-            {
-                if (_contextMenus is null)
-                {
-                    _contextMenus = new ContextMenusApi(JsRuntime, AccessPath);
-                }
-                return _contextMenus;
-            }
-        }
+        public IContextMenusApi ContextMenus => _contextMenus ??= new ContextMenusApi(JsRuntime, AccessPath);
     }
 }

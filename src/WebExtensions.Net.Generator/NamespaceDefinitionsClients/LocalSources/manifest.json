@@ -16,7 +16,7 @@
           "applications": {
             "description": "The applications property is deprecated, please use \u0027browser_specific_settings\u0027",
             "optional": true,
-            "$ref": "BrowserSpecificSettings"
+            "$ref": "DeprecatedApplications"
           },
           "browser_specific_settings": {
             "optional": true,
@@ -40,7 +40,8 @@
           },
           "version": {
             "optional": false,
-            "type": "string"
+            "type": "string",
+            "format": "versionString"
           },
           "homepage_url": {
             "optional": true,
@@ -121,6 +122,14 @@
                       "$ref": "ExtensionURL"
                     }
                   },
+                  "type": {
+                    "optional": true,
+                    "type": "string",
+                    "enum": [
+                      "module",
+                      "classic"
+                    ]
+                  },
                   "persistent": {
                     "optional": true,
                     "type": "boolean"
@@ -145,10 +154,12 @@
                 "$ref": "ExtensionURL"
               },
               "browser_style": {
+                "description": "Defaults to true in Manifest V2; Deprecated in Manifest V3.",
                 "optional": true,
                 "type": "boolean"
               },
               "chrome_style": {
+                "description": "chrome_style is ignored in Firefox. Its replacement (browser_style) has been deprecated.",
                 "optional": true,
                 "type": "boolean"
               },
@@ -231,13 +242,11 @@
               },
               {
                 "type": "array",
-                "minItems": 1,
                 "items": {
                   "type": "object",
                   "properties": {
                     "resources": {
                       "type": "array",
-                      "minItems": 1,
                       "items": {
                         "type": "string"
                       }
@@ -245,7 +254,6 @@
                     "matches": {
                       "optional": true,
                       "type": "array",
-                      "minItems": 1,
                       "items": {
                         "$ref": "MatchPattern"
                       }
@@ -253,7 +261,6 @@
                     "extension_ids": {
                       "optional": true,
                       "type": "array",
-                      "minItems": 1,
                       "items": {
                         "choices": [
                           {
@@ -284,11 +291,6 @@
         "description": "Represents a WebExtension language pack manifest.json file",
         "type": "object",
         "properties": {
-          "homepage_url": {
-            "optional": true,
-            "type": "string",
-            "format": "url"
-          },
           "langpack_id": {
             "type": "string",
             "pattern": "^[a-zA-Z][a-zA-Z-]\u002B$"
@@ -307,11 +309,6 @@
         "description": "Represents a WebExtension dictionary manifest.json file",
         "type": "object",
         "properties": {
-          "homepage_url": {
-            "optional": true,
-            "type": "string",
-            "format": "url"
-          },
           "dictionaries": {
             "type": "object"
           }
@@ -520,12 +517,45 @@
         }
       },
       {
+        "id": "GeckoAndroidSpecificProperties",
+        "type": "object",
+        "properties": {
+          "strict_min_version": {
+            "optional": true,
+            "type": "string"
+          },
+          "strict_max_version": {
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "DeprecatedApplications",
+        "type": "object",
+        "properties": {
+          "gecko": {
+            "optional": true,
+            "$ref": "FirefoxSpecificProperties"
+          },
+          "gecko_android": {
+            "optional": true,
+            "$ref": "GeckoAndroidSpecificProperties",
+            "unsupported": true
+          }
+        }
+      },
+      {
         "id": "BrowserSpecificSettings",
         "type": "object",
         "properties": {
           "gecko": {
             "optional": true,
             "$ref": "FirefoxSpecificProperties"
+          },
+          "gecko_android": {
+            "optional": true,
+            "$ref": "GeckoAndroidSpecificProperties"
           }
         }
       },

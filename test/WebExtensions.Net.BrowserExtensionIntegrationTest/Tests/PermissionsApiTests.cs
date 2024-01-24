@@ -2,7 +2,6 @@
 using FluentAssertions;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 using WebExtensions.Net.Manifest;
-using WebExtensions.Net.Permissions;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {

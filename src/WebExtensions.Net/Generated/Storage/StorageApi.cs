@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Storage
 {
@@ -16,6 +15,12 @@ namespace WebExtensions.Net.Storage
         }
 
         /// <inheritdoc />
+        public StorageArea Local => GetProperty<StorageArea>("local");
+
+        /// <inheritdoc />
+        public StorageArea Managed => GetProperty<StorageArea>("managed");
+
+        /// <inheritdoc />
         public OnChangedEvent OnChanged
         {
             get
@@ -30,21 +35,9 @@ namespace WebExtensions.Net.Storage
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<StorageArea> GetLocal()
-        {
-            return GetPropertyAsync<StorageArea>("local");
-        }
+        public StorageArea Session => GetProperty<StorageArea>("session");
 
         /// <inheritdoc />
-        public virtual ValueTask<StorageArea> GetManaged()
-        {
-            return GetPropertyAsync<StorageArea>("managed");
-        }
-
-        /// <inheritdoc />
-        public virtual ValueTask<StorageAreaSync> GetSync()
-        {
-            return GetPropertyAsync<StorageAreaSync>("sync");
-        }
+        public StorageAreaSync Sync => GetProperty<StorageAreaSync>("sync");
     }
 }

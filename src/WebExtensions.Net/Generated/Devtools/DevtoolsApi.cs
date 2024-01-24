@@ -20,42 +20,12 @@ namespace WebExtensions.Net.Devtools
         }
 
         /// <inheritdoc />
-        public IInspectedWindowApi InspectedWindow
-        {
-            get
-            {
-                if (_inspectedWindow is null)
-                {
-                    _inspectedWindow = new InspectedWindowApi(JsRuntime, AccessPath);
-                }
-                return _inspectedWindow;
-            }
-        }
+        public IInspectedWindowApi InspectedWindow => _inspectedWindow ??= new InspectedWindowApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public INetworkApi Network
-        {
-            get
-            {
-                if (_network is null)
-                {
-                    _network = new NetworkApi(JsRuntime, AccessPath);
-                }
-                return _network;
-            }
-        }
+        public INetworkApi Network => _network ??= new NetworkApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IPanelsApi Panels
-        {
-            get
-            {
-                if (_panels is null)
-                {
-                    _panels = new PanelsApi(JsRuntime, AccessPath);
-                }
-                return _panels;
-            }
-        }
+        public IPanelsApi Panels => _panels ??= new PanelsApi(JsRuntime, AccessPath);
     }
 }

@@ -275,13 +275,11 @@
               },
               "transitionType": {
                 "description": "Cause of the navigation.",
-                "$ref": "TransitionType",
-                "unsupported": true
+                "$ref": "TransitionType"
               },
               "transitionQualifiers": {
                 "description": "A list of transition qualifiers.",
                 "type": "array",
-                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }
@@ -502,13 +500,11 @@
               },
               "transitionType": {
                 "description": "Cause of the navigation.",
-                "$ref": "TransitionType",
-                "unsupported": true
+                "$ref": "TransitionType"
               },
               "transitionQualifiers": {
                 "description": "A list of transition qualifiers.",
                 "type": "array",
-                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }
@@ -581,13 +577,11 @@
               },
               "transitionType": {
                 "description": "Cause of the navigation.",
-                "$ref": "TransitionType",
-                "unsupported": true
+                "$ref": "TransitionType"
               },
               "transitionQualifiers": {
                 "description": "A list of transition qualifiers.",
                 "type": "array",
-                "unsupported": true,
                 "items": {
                   "$ref": "TransitionQualifier"
                 }

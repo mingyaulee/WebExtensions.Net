@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.Proxy
@@ -12,8 +11,7 @@ namespace WebExtensions.Net.Proxy
         /// <summary>Fired when proxy data is needed for a request.</summary>
         OnRequestEvent OnRequest { get; }
 
-        /// <summary>Gets the 'settings' property.</summary>
-        /// <returns>Configures proxy settings. This setting's value is an object of type ProxyConfig.</returns>
-        ValueTask<Setting> GetSettings();
+        /// <summary>Configures proxy settings. This setting's value is an object of type ProxyConfig.</summary>
+        Setting Settings { get; }
     }
 }

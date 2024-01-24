@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -15,10 +14,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetPasswordSavingEnabled()
+        public void GetPasswordSavingEnabled()
         {
             // Act
-            var setting = await webExtensionsApi.Privacy.Services.GetPasswordSavingEnabled();
+            var setting = webExtensionsApi.Privacy.Services.PasswordSavingEnabled;
 
             // Assert
             setting.Should().NotBeNull();

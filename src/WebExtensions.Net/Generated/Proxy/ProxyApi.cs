@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.Proxy
@@ -46,9 +45,6 @@ namespace WebExtensions.Net.Proxy
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetSettings()
-        {
-            return GetPropertyAsync<Setting>("settings");
-        }
+        public Setting Settings => GetProperty<Setting>("settings");
     }
 }

@@ -9,6 +9,6 @@ namespace WebExtensions.Net.TopSites
         /// <summary>Gets a list of top sites.</summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        ValueTask<IEnumerable<MostVisitedURL>> Get(Options options);
+        ValueTask<IEnumerable<MostVisitedUrl>> Get(Options options);
     }
 }

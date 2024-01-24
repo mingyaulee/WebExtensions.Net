@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.BrowserSettings.ColorManagement
@@ -15,21 +14,12 @@ namespace WebExtensions.Net.BrowserSettings.ColorManagement
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetMode()
-        {
-            return GetPropertyAsync<Setting>("mode");
-        }
+        public Setting Mode => GetProperty<Setting>("mode");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetUseNativeSRGB()
-        {
-            return GetPropertyAsync<Setting>("useNativeSRGB");
-        }
+        public Setting UseNativeSRGB => GetProperty<Setting>("useNativeSRGB");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetUseWebRenderCompositor()
-        {
-            return GetPropertyAsync<Setting>("useWebRenderCompositor");
-        }
+        public Setting UseWebRenderCompositor => GetProperty<Setting>("useWebRenderCompositor");
     }
 }

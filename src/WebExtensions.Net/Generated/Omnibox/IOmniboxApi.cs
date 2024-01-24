@@ -6,6 +6,9 @@ namespace WebExtensions.Net.Omnibox
     /// <summary>The omnibox API allows you to register a keyword with Firefox's address bar.</summary>
     public partial interface IOmniboxApi
     {
+        /// <summary>User has deleted a suggested result.</summary>
+        OnDeleteSuggestionEvent OnDeleteSuggestion { get; }
+
         /// <summary>User has ended the keyword input session without accepting the input.</summary>
         Event OnInputCancelled { get; }
 

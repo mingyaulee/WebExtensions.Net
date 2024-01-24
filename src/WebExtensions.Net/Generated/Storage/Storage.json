@@ -369,6 +369,10 @@
             "value": 5242880
           }
         }
+      },
+      "session": {
+        "description": "Items in the \u003Ccode\u003Esession\u003C/code\u003E storage area are kept in memory, and only until the either browser or extension is closed or reloaded.",
+        "$ref": "StorageArea"
       }
     },
     "events": [

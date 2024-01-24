@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using System;
 using System.Threading.Tasks;
-using WebExtensions.Net.Alarms;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests

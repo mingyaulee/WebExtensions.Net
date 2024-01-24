@@ -17,6 +17,6 @@ namespace WebExtensions.Net.Identity
         /// <summary></summary>
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public HttpURL Url { get; set; }
+        public HttpUrl Url { get; set; }
     }
 }

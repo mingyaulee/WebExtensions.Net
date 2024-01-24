@@ -7,6 +7,7 @@ namespace WebExtensions.Net.Omnibox
     /// <inheritdoc />
     public partial class OmniboxApi : BaseApi, IOmniboxApi
     {
+        private OnDeleteSuggestionEvent _onDeleteSuggestion;
         private Event _onInputCancelled;
         private OnInputChangedEvent _onInputChanged;
         private OnInputEnteredEvent _onInputEntered;
@@ -17,6 +18,20 @@ namespace WebExtensions.Net.Omnibox
         /// <param name="accessPath">The base API access path.</param>
         public OmniboxApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "omnibox"))
         {
+        }
+
+        /// <inheritdoc />
+        public OnDeleteSuggestionEvent OnDeleteSuggestion
+        {
+            get
+            {
+                if (_onDeleteSuggestion is null)
+                {
+                    _onDeleteSuggestion = new OnDeleteSuggestionEvent();
+                    _onDeleteSuggestion.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onDeleteSuggestion"));
+                }
+                return _onDeleteSuggestion;
+            }
         }
 
         /// <inheritdoc />

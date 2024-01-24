@@ -18,7 +18,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task Get()
         {
             // Arrange
-            var extensionId = await webExtensionsApi.Runtime.GetId();
+            var extensionId = webExtensionsApi.Runtime.Id;
 
             // Act
             var extension = await webExtensionsApi.Management.Get(extensionId);

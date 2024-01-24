@@ -7,6 +7,7 @@ namespace WebExtensions.Net.Commands
     /// <inheritdoc />
     public partial class CommandsApi : BaseApi, ICommandsApi
     {
+        private OnChangedEvent _onChanged;
         private OnCommandEvent _onCommand;
 
         /// <summary>Creates a new instance of <see cref="CommandsApi" />.</summary>
@@ -14,6 +15,20 @@ namespace WebExtensions.Net.Commands
         /// <param name="accessPath">The base API access path.</param>
         public CommandsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "commands"))
         {
+        }
+
+        /// <inheritdoc />
+        public OnChangedEvent OnChanged
+        {
+            get
+            {
+                if (_onChanged is null)
+                {
+                    _onChanged = new OnChangedEvent();
+                    _onChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onChanged"));
+                }
+                return _onChanged;
+            }
         }
 
         /// <inheritdoc />

@@ -8,6 +8,13 @@ namespace WebExtensions.Net.Extension
     /// <summary>The <c>browser.extension</c> API has utilities that can be used by any extension page. It includes support for exchanging messages between an extension and its content scripts or between extensions, as described in detail in $(topic:messaging)[Message Passing].</summary>
     public partial interface IExtensionApi
     {
+        /// <summary>True for content scripts running inside incognito tabs, and for extension pages running inside an incognito process. The latter only applies to extensions with 'split' incognito_behavior.</summary>
+        bool? InIncognitoContext { get; }
+
+        /// <summary>Set for the lifetime of a callback if an ansychronous extension api has resulted in an error. If no error has occured lastError will be <c>undefined</c>.</summary>
+        [Obsolete("Please use $(ref:runtime.lastError).")]
+        LastError LastError { get; }
+
         /// <summary>Returns the JavaScript 'window' object for the background page running inside the current extension. Returns null if the extension has no background page.</summary>
         /// <returns></returns>
         ValueTask<JsonElement> GetBackgroundPage();
@@ -23,10 +30,6 @@ namespace WebExtensions.Net.Extension
         /// <returns>Array of global objects</returns>
         ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties);
 
-        /// <summary>Gets the 'inIncognitoContext' property.</summary>
-        /// <returns>True for content scripts running inside incognito tabs, and for extension pages running inside an incognito process. The latter only applies to extensions with 'split' incognito_behavior.</returns>
-        ValueTask<bool> GetInIncognitoContext();
-
         /// <summary>Retrieves the state of the extension's access to the 'file://' scheme (as determined by the user-controlled 'Allow access to File URLs' checkbox.</summary>
         /// <returns>True if the extension can access the 'file://' scheme, false otherwise.</returns>
         ValueTask<bool> IsAllowedFileSchemeAccess();
@@ -34,10 +37,5 @@ namespace WebExtensions.Net.Extension
         /// <summary>Retrieves the state of the extension's access to Incognito-mode (as determined by the user-controlled 'Allowed in Incognito' checkbox.</summary>
         /// <returns>True if the extension has access to Incognito mode, false otherwise.</returns>
         ValueTask<bool> IsAllowedIncognitoAccess();
-
-        /// <summary>Gets the 'lastError' property.</summary>
-        /// <returns>Set for the lifetime of a callback if an ansychronous extension api has resulted in an error. If no error has occured lastError will be <c>undefined</c>.</returns>
-        [Obsolete("Please use $(ref:runtime.lastError).")]
-        ValueTask<LastError> GetLastError();
     }
 }

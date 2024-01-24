@@ -263,7 +263,7 @@
       },
       {
         "name": "setUninstallURL",
-        "description": "Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 255 characters.",
+        "description": "Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 1023 characters.",
         "async": "callback",
         "type": "function",
         "parameters": [

@@ -1,6 +1,5 @@
 using JsBind.Net;
 using System;
-using System.Threading.Tasks;
 using WebExtensions.Net.BrowserSettings.ColorManagement;
 using WebExtensions.Net.Types;
 
@@ -19,125 +18,61 @@ namespace WebExtensions.Net.BrowserSettings
         }
 
         /// <inheritdoc />
-        public IColorManagementApi ColorManagement
-        {
-            get
-            {
-                if (_colorManagement is null)
-                {
-                    _colorManagement = new ColorManagementApi(JsRuntime, AccessPath);
-                }
-                return _colorManagement;
-            }
-        }
+        public IColorManagementApi ColorManagement => _colorManagement ??= new ColorManagementApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetAllowPopupsForUserEvents()
-        {
-            return GetPropertyAsync<Setting>("allowPopupsForUserEvents");
-        }
+        public Setting AllowPopupsForUserEvents => GetProperty<Setting>("allowPopupsForUserEvents");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetCacheEnabled()
-        {
-            return GetPropertyAsync<Setting>("cacheEnabled");
-        }
+        public Setting CacheEnabled => GetProperty<Setting>("cacheEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetCloseTabsByDoubleClick()
-        {
-            return GetPropertyAsync<Setting>("closeTabsByDoubleClick");
-        }
+        public Setting CloseTabsByDoubleClick => GetProperty<Setting>("closeTabsByDoubleClick");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetContextMenuShowEvent()
-        {
-            return GetPropertyAsync<Setting>("contextMenuShowEvent");
-        }
+        public Setting ContextMenuShowEvent => GetProperty<Setting>("contextMenuShowEvent");
 
         /// <inheritdoc />
         [Obsolete("FTP support was removed from Firefox in bug 1574475")]
-        public virtual ValueTask<Setting> GetFtpProtocolEnabled()
-        {
-            return GetPropertyAsync<Setting>("ftpProtocolEnabled");
-        }
+        public Setting FtpProtocolEnabled => GetProperty<Setting>("ftpProtocolEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetHomepageOverride()
-        {
-            return GetPropertyAsync<Setting>("homepageOverride");
-        }
+        public Setting HomepageOverride => GetProperty<Setting>("homepageOverride");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetImageAnimationBehavior()
-        {
-            return GetPropertyAsync<Setting>("imageAnimationBehavior");
-        }
+        public Setting ImageAnimationBehavior => GetProperty<Setting>("imageAnimationBehavior");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetNewTabPageOverride()
-        {
-            return GetPropertyAsync<Setting>("newTabPageOverride");
-        }
+        public Setting NewTabPageOverride => GetProperty<Setting>("newTabPageOverride");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetNewTabPosition()
-        {
-            return GetPropertyAsync<Setting>("newTabPosition");
-        }
+        public Setting NewTabPosition => GetProperty<Setting>("newTabPosition");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetOpenBookmarksInNewTabs()
-        {
-            return GetPropertyAsync<Setting>("openBookmarksInNewTabs");
-        }
+        public Setting OpenBookmarksInNewTabs => GetProperty<Setting>("openBookmarksInNewTabs");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetOpenSearchResultsInNewTabs()
-        {
-            return GetPropertyAsync<Setting>("openSearchResultsInNewTabs");
-        }
+        public Setting OpenSearchResultsInNewTabs => GetProperty<Setting>("openSearchResultsInNewTabs");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetOpenUrlbarResultsInNewTabs()
-        {
-            return GetPropertyAsync<Setting>("openUrlbarResultsInNewTabs");
-        }
+        public Setting OpenUrlbarResultsInNewTabs => GetProperty<Setting>("openUrlbarResultsInNewTabs");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetOverrideContentColorScheme()
-        {
-            return GetPropertyAsync<Setting>("overrideContentColorScheme");
-        }
+        public Setting OverrideContentColorScheme => GetProperty<Setting>("overrideContentColorScheme");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetOverrideDocumentColors()
-        {
-            return GetPropertyAsync<Setting>("overrideDocumentColors");
-        }
+        public Setting OverrideDocumentColors => GetProperty<Setting>("overrideDocumentColors");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetUseDocumentFonts()
-        {
-            return GetPropertyAsync<Setting>("useDocumentFonts");
-        }
+        public Setting UseDocumentFonts => GetProperty<Setting>("useDocumentFonts");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetWebNotificationsDisabled()
-        {
-            return GetPropertyAsync<Setting>("webNotificationsDisabled");
-        }
+        public Setting WebNotificationsDisabled => GetProperty<Setting>("webNotificationsDisabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetZoomFullPage()
-        {
-            return GetPropertyAsync<Setting>("zoomFullPage");
-        }
+        public Setting ZoomFullPage => GetProperty<Setting>("zoomFullPage");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetZoomSiteSpecific()
-        {
-            return GetPropertyAsync<Setting>("zoomSiteSpecific");
-        }
+        public Setting ZoomSiteSpecific => GetProperty<Setting>("zoomSiteSpecific");
     }
 }

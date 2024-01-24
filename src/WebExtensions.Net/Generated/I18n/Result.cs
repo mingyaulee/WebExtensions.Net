@@ -16,6 +16,6 @@ namespace WebExtensions.Net.I18n
         /// <summary>array of detectedLanguage</summary>
         [JsonPropertyName("languages")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<LanguagesArrayItem> Languages { get; set; }
+        public IEnumerable<LanguageType> Languages { get; set; }
     }
 }

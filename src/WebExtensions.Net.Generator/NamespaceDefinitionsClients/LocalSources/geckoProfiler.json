@@ -31,13 +31,12 @@
           "mainthreadio",
           "fileio",
           "fileioall",
-          "noiostacks",
+          "nomarkerstacks",
           "screenshots",
           "seqstyle",
           "stackwalk",
           "jsallocations",
           "nostacksampling",
-          "preferencereads",
           "nativeallocations",
           "ipcmessages",
           "audiocallbacktracing",
@@ -49,7 +48,9 @@
           "unregisteredthreads",
           "processcpu",
           "power",
-          "responsiveness"
+          "responsiveness",
+          "cpufreq",
+          "bandwidth"
         ]
       },
       {

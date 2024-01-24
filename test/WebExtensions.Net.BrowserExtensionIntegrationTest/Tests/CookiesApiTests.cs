@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtensions.Net.Cookies;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {

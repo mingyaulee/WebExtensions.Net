@@ -36,7 +36,7 @@ namespace WebExtensions.Net.WebNavigation
         /// <summary>Retrieves information about all frames of a given tab.</summary>
         /// <param name="details">Information about the tab to retrieve all frames from.</param>
         /// <returns>A list of frames in the given tab, null if the specified tab ID is invalid.</returns>
-        ValueTask<IEnumerable<DetailsArrayItem>> GetAllFrames(GetAllFramesDetails details);
+        ValueTask<IEnumerable<Detail>> GetAllFrames(GetAllFramesDetails details);
 
         /// <summary>Retrieves information about the given frame. A frame refers to an &amp;lt;iframe&amp;gt; or a &amp;lt;frame&amp;gt; of a web page and is identified by a tab ID and a frame ID.</summary>
         /// <param name="details">Information about the frame to retrieve information about.</param>

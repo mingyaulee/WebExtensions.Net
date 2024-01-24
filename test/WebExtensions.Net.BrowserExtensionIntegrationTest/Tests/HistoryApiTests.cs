@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
-using WebExtensions.Net.History;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {

@@ -154,8 +154,36 @@
         ]
       },
       {
+        "name": "move",
+        "description": "Reorder one or more contextual identities by their cookieStoreIDs to a given position.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "cookieStoreIds",
+            "description": "The ID or list of IDs of the contextual identity cookie stores. ",
+            "choices": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "description": "The position the contextual identity should move to.",
+            "type": "integer"
+          }
+        ]
+      },
+      {
         "name": "remove",
-        "description": "Deletes a contetual identity by its cookie Store ID.",
+        "description": "Deletes a contextual identity by its cookie Store ID.",
         "async": true,
         "type": "function",
         "parameters": [

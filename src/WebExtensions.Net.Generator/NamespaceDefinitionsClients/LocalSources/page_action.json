@@ -23,6 +23,7 @@
                 "format": "relativeUrl"
               },
               "browser_style": {
+                "description": "Deprecated in Manifest V3.",
                 "optional": true,
                 "type": "boolean"
               },

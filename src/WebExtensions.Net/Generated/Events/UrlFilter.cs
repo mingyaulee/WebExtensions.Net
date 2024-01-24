@@ -57,7 +57,7 @@ namespace WebExtensions.Net.Events
         /// <summary>Matches if the port of the URL is contained in any of the specified port lists. For example <c>[80, 443, [1000, 1200]]</c> matches all requests on port 80, 443 and in the range 1000-1200.</summary>
         [JsonPropertyName("ports")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<PortsArrayItem> Ports { get; set; }
+        public IEnumerable<Port> Ports { get; set; }
 
         /// <summary>Matches if the query segment of the URL contains a specified string.</summary>
         [JsonPropertyName("queryContains")]

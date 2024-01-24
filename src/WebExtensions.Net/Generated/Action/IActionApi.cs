@@ -40,12 +40,17 @@ namespace WebExtensions.Net.ActionNs
         /// <returns></returns>
         ValueTask<string> GetTitle(Details details);
 
+        /// <summary>Returns the user-specified settings relating to an extension's action.</summary>
+        /// <returns>The collection of user-specified settings relating to an extension's action.</returns>
+        ValueTask<UserSettings> GetUserSettings();
+
         /// <summary>Checks whether the browser action is enabled.</summary>
         /// <param name="details"></param>
         ValueTask IsEnabled(Details details);
 
-        /// <summary>Opens the extension popup window in the active window.</summary>
-        ValueTask OpenPopup();
+        /// <summary>Opens the extension popup window in the specified window.</summary>
+        /// <param name="options">An object with information about the popup to open.</param>
+        ValueTask OpenPopup(Options options);
 
         /// <summary>Sets the background color for the badge.</summary>
         /// <param name="details"></param>

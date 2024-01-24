@@ -85,471 +85,111 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
-        public IActionApi Action
-        {
-            get
-            {
-                if (_action is null)
-                {
-                    _action = new ActionApi(JsRuntime, AccessPath);
-                }
-                return _action;
-            }
-        }
+        public IActionApi Action => _action ??= new ActionApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IAlarmsApi Alarms
-        {
-            get
-            {
-                if (_alarms is null)
-                {
-                    _alarms = new AlarmsApi(JsRuntime, AccessPath);
-                }
-                return _alarms;
-            }
-        }
+        public IAlarmsApi Alarms => _alarms ??= new AlarmsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IBookmarksApi Bookmarks
-        {
-            get
-            {
-                if (_bookmarks is null)
-                {
-                    _bookmarks = new BookmarksApi(JsRuntime, AccessPath);
-                }
-                return _bookmarks;
-            }
-        }
+        public IBookmarksApi Bookmarks => _bookmarks ??= new BookmarksApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IBrowserActionApi BrowserAction
-        {
-            get
-            {
-                if (_browserAction is null)
-                {
-                    _browserAction = new BrowserActionApi(JsRuntime, AccessPath);
-                }
-                return _browserAction;
-            }
-        }
+        public IBrowserActionApi BrowserAction => _browserAction ??= new BrowserActionApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IBrowserSettingsApi BrowserSettings
-        {
-            get
-            {
-                if (_browserSettings is null)
-                {
-                    _browserSettings = new BrowserSettingsApi(JsRuntime, AccessPath);
-                }
-                return _browserSettings;
-            }
-        }
+        public IBrowserSettingsApi BrowserSettings => _browserSettings ??= new BrowserSettingsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IBrowsingDataApi BrowsingData
-        {
-            get
-            {
-                if (_browsingData is null)
-                {
-                    _browsingData = new BrowsingDataApi(JsRuntime, AccessPath);
-                }
-                return _browsingData;
-            }
-        }
+        public IBrowsingDataApi BrowsingData => _browsingData ??= new BrowsingDataApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IClipboardApi Clipboard
-        {
-            get
-            {
-                if (_clipboard is null)
-                {
-                    _clipboard = new ClipboardApi(JsRuntime, AccessPath);
-                }
-                return _clipboard;
-            }
-        }
+        public IClipboardApi Clipboard => _clipboard ??= new ClipboardApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ICommandsApi Commands
-        {
-            get
-            {
-                if (_commands is null)
-                {
-                    _commands = new CommandsApi(JsRuntime, AccessPath);
-                }
-                return _commands;
-            }
-        }
+        public ICommandsApi Commands => _commands ??= new CommandsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IContentScriptsApi ContentScripts
-        {
-            get
-            {
-                if (_contentScripts is null)
-                {
-                    _contentScripts = new ContentScriptsApi(JsRuntime, AccessPath);
-                }
-                return _contentScripts;
-            }
-        }
+        public IContentScriptsApi ContentScripts => _contentScripts ??= new ContentScriptsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ICookiesApi Cookies
-        {
-            get
-            {
-                if (_cookies is null)
-                {
-                    _cookies = new CookiesApi(JsRuntime, AccessPath);
-                }
-                return _cookies;
-            }
-        }
+        public ICookiesApi Cookies => _cookies ??= new CookiesApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IDeclarativeNetRequestApi DeclarativeNetRequest
-        {
-            get
-            {
-                if (_declarativeNetRequest is null)
-                {
-                    _declarativeNetRequest = new DeclarativeNetRequestApi(JsRuntime, AccessPath);
-                }
-                return _declarativeNetRequest;
-            }
-        }
+        public IDeclarativeNetRequestApi DeclarativeNetRequest => _declarativeNetRequest ??= new DeclarativeNetRequestApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IDevtoolsApi Devtools
-        {
-            get
-            {
-                if (_devtools is null)
-                {
-                    _devtools = new DevtoolsApi(JsRuntime, AccessPath);
-                }
-                return _devtools;
-            }
-        }
+        public IDevtoolsApi Devtools => _devtools ??= new DevtoolsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IDownloadsApi Downloads
-        {
-            get
-            {
-                if (_downloads is null)
-                {
-                    _downloads = new DownloadsApi(JsRuntime, AccessPath);
-                }
-                return _downloads;
-            }
-        }
+        public IDownloadsApi Downloads => _downloads ??= new DownloadsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IExtensionApi Extension
-        {
-            get
-            {
-                if (_extension is null)
-                {
-                    _extension = new ExtensionApi(JsRuntime, AccessPath);
-                }
-                return _extension;
-            }
-        }
+        public IExtensionApi Extension => _extension ??= new ExtensionApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IHistoryApi History
-        {
-            get
-            {
-                if (_history is null)
-                {
-                    _history = new HistoryApi(JsRuntime, AccessPath);
-                }
-                return _history;
-            }
-        }
+        public IHistoryApi History => _history ??= new HistoryApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public II18nApi I18n
-        {
-            get
-            {
-                if (_i18n is null)
-                {
-                    _i18n = new I18nApi(JsRuntime, AccessPath);
-                }
-                return _i18n;
-            }
-        }
+        public II18nApi I18n => _i18n ??= new I18nApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IIdentityApi Identity
-        {
-            get
-            {
-                if (_identity is null)
-                {
-                    _identity = new IdentityApi(JsRuntime, AccessPath);
-                }
-                return _identity;
-            }
-        }
+        public IIdentityApi Identity => _identity ??= new IdentityApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IIdleApi Idle
-        {
-            get
-            {
-                if (_idle is null)
-                {
-                    _idle = new IdleApi(JsRuntime, AccessPath);
-                }
-                return _idle;
-            }
-        }
+        public IIdleApi Idle => _idle ??= new IdleApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IManagementApi Management
-        {
-            get
-            {
-                if (_management is null)
-                {
-                    _management = new ManagementApi(JsRuntime, AccessPath);
-                }
-                return _management;
-            }
-        }
+        public IManagementApi Management => _management ??= new ManagementApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IMenusApi Menus
-        {
-            get
-            {
-                if (_menus is null)
-                {
-                    _menus = new MenusApi(JsRuntime, AccessPath);
-                }
-                return _menus;
-            }
-        }
+        public IMenusApi Menus => _menus ??= new MenusApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public INotificationsApi Notifications
-        {
-            get
-            {
-                if (_notifications is null)
-                {
-                    _notifications = new NotificationsApi(JsRuntime, AccessPath);
-                }
-                return _notifications;
-            }
-        }
+        public INotificationsApi Notifications => _notifications ??= new NotificationsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IOmniboxApi Omnibox
-        {
-            get
-            {
-                if (_omnibox is null)
-                {
-                    _omnibox = new OmniboxApi(JsRuntime, AccessPath);
-                }
-                return _omnibox;
-            }
-        }
+        public IOmniboxApi Omnibox => _omnibox ??= new OmniboxApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IPageActionApi PageAction
-        {
-            get
-            {
-                if (_pageAction is null)
-                {
-                    _pageAction = new PageActionApi(JsRuntime, AccessPath);
-                }
-                return _pageAction;
-            }
-        }
+        public IPageActionApi PageAction => _pageAction ??= new PageActionApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IPermissionsApi Permissions
-        {
-            get
-            {
-                if (_permissions is null)
-                {
-                    _permissions = new PermissionsApi(JsRuntime, AccessPath);
-                }
-                return _permissions;
-            }
-        }
+        public IPermissionsApi Permissions => _permissions ??= new PermissionsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IPrivacyApi Privacy
-        {
-            get
-            {
-                if (_privacy is null)
-                {
-                    _privacy = new PrivacyApi(JsRuntime, AccessPath);
-                }
-                return _privacy;
-            }
-        }
+        public IPrivacyApi Privacy => _privacy ??= new PrivacyApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IProxyApi Proxy
-        {
-            get
-            {
-                if (_proxy is null)
-                {
-                    _proxy = new ProxyApi(JsRuntime, AccessPath);
-                }
-                return _proxy;
-            }
-        }
+        public IProxyApi Proxy => _proxy ??= new ProxyApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IRuntimeApi Runtime
-        {
-            get
-            {
-                if (_runtime is null)
-                {
-                    _runtime = new RuntimeApi(JsRuntime, AccessPath);
-                }
-                return _runtime;
-            }
-        }
+        public IRuntimeApi Runtime => _runtime ??= new RuntimeApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IScriptingApi Scripting
-        {
-            get
-            {
-                if (_scripting is null)
-                {
-                    _scripting = new ScriptingApi(JsRuntime, AccessPath);
-                }
-                return _scripting;
-            }
-        }
+        public IScriptingApi Scripting => _scripting ??= new ScriptingApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ISearchApi Search
-        {
-            get
-            {
-                if (_search is null)
-                {
-                    _search = new SearchApi(JsRuntime, AccessPath);
-                }
-                return _search;
-            }
-        }
+        public ISearchApi Search => _search ??= new SearchApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ISessionsApi Sessions
-        {
-            get
-            {
-                if (_sessions is null)
-                {
-                    _sessions = new SessionsApi(JsRuntime, AccessPath);
-                }
-                return _sessions;
-            }
-        }
+        public ISessionsApi Sessions => _sessions ??= new SessionsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IStorageApi Storage
-        {
-            get
-            {
-                if (_storage is null)
-                {
-                    _storage = new StorageApi(JsRuntime, AccessPath);
-                }
-                return _storage;
-            }
-        }
+        public IStorageApi Storage => _storage ??= new StorageApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ITabsApi Tabs
-        {
-            get
-            {
-                if (_tabs is null)
-                {
-                    _tabs = new TabsApi(JsRuntime, AccessPath);
-                }
-                return _tabs;
-            }
-        }
+        public ITabsApi Tabs => _tabs ??= new TabsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public ITopSitesApi TopSites
-        {
-            get
-            {
-                if (_topSites is null)
-                {
-                    _topSites = new TopSitesApi(JsRuntime, AccessPath);
-                }
-                return _topSites;
-            }
-        }
+        public ITopSitesApi TopSites => _topSites ??= new TopSitesApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IWebNavigationApi WebNavigation
-        {
-            get
-            {
-                if (_webNavigation is null)
-                {
-                    _webNavigation = new WebNavigationApi(JsRuntime, AccessPath);
-                }
-                return _webNavigation;
-            }
-        }
+        public IWebNavigationApi WebNavigation => _webNavigation ??= new WebNavigationApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IWebRequestApi WebRequest
-        {
-            get
-            {
-                if (_webRequest is null)
-                {
-                    _webRequest = new WebRequestApi(JsRuntime, AccessPath);
-                }
-                return _webRequest;
-            }
-        }
+        public IWebRequestApi WebRequest => _webRequest ??= new WebRequestApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IWindowsApi Windows
-        {
-            get
-            {
-                if (_windows is null)
-                {
-                    _windows = new WindowsApi(JsRuntime, AccessPath);
-                }
-                return _windows;
-            }
-        }
+        public IWindowsApi Windows => _windows ??= new WindowsApi(JsRuntime, AccessPath);
     }
 }

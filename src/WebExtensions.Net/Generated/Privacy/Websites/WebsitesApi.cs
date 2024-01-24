@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.Privacy.Websites
@@ -15,39 +14,21 @@ namespace WebExtensions.Net.Privacy.Websites
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetCookieConfig()
-        {
-            return GetPropertyAsync<Setting>("cookieConfig");
-        }
+        public Setting CookieConfig => GetProperty<Setting>("cookieConfig");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetFirstPartyIsolate()
-        {
-            return GetPropertyAsync<Setting>("firstPartyIsolate");
-        }
+        public Setting FirstPartyIsolate => GetProperty<Setting>("firstPartyIsolate");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetHyperlinkAuditingEnabled()
-        {
-            return GetPropertyAsync<Setting>("hyperlinkAuditingEnabled");
-        }
+        public Setting HyperlinkAuditingEnabled => GetProperty<Setting>("hyperlinkAuditingEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetReferrersEnabled()
-        {
-            return GetPropertyAsync<Setting>("referrersEnabled");
-        }
+        public Setting ReferrersEnabled => GetProperty<Setting>("referrersEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetResistFingerprinting()
-        {
-            return GetPropertyAsync<Setting>("resistFingerprinting");
-        }
+        public Setting ResistFingerprinting => GetProperty<Setting>("resistFingerprinting");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetTrackingProtectionMode()
-        {
-            return GetPropertyAsync<Setting>("trackingProtectionMode");
-        }
+        public Setting TrackingProtectionMode => GetProperty<Setting>("trackingProtectionMode");
     }
 }

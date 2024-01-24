@@ -9,6 +9,7 @@
   {
     "namespace": "browserAction",
     "description": "Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.",
+    "deprecated": "Deprecated in Manifest V3, use action API.",
     "permissions": [
       "manifest:browser_action"
     ],

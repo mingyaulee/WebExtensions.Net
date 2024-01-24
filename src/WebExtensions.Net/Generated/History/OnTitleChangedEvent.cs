@@ -12,7 +12,7 @@ namespace WebExtensions.Net.History
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the title of a URL is changed in the browser history.</param>
-        public virtual ValueTask AddListener(Action<AddListenerCallbackChanged> callback)
+        public virtual ValueTask AddListener(Action<Changed> callback)
         {
             return InvokeVoidAsync("addListener", callback);
         }
@@ -20,14 +20,14 @@ namespace WebExtensions.Net.History
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
-        public virtual ValueTask<bool> HasListener(Action<HasListenerCallbackChanged> callback)
+        public virtual ValueTask<bool> HasListener(Action<Changed> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
-        public virtual ValueTask RemoveListener(Action<RemoveListenerCallbackChanged> callback)
+        public virtual ValueTask RemoveListener(Action<Changed> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
         }

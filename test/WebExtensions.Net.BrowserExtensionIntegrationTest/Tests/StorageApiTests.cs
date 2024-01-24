@@ -29,7 +29,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task SetSyncStorageValue()
         {
             // Assert
-            var syncStorage = await webExtensionsApi.Storage.GetSync();
+            var syncStorage = webExtensionsApi.Storage.Sync;
             var storageItem = new Dictionary<string, string>()
             {
                 { storageTestKey1, storageTestValue1 },
@@ -47,7 +47,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionsApi.Storage.GetSync();
+            var syncStorage = webExtensionsApi.Storage.Sync;
 
             // Act
             var jsonStorageObject = await syncStorage.Get(null);
@@ -65,7 +65,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task RemoveSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionsApi.Storage.GetSync();
+            var syncStorage = webExtensionsApi.Storage.Sync;
 
             // Act
             await syncStorage.Remove(storageTestKey2);
@@ -82,7 +82,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ClearSyncStorageValue()
         {
             // Arrange
-            var syncStorage = await webExtensionsApi.Storage.GetSync();
+            var syncStorage = webExtensionsApi.Storage.Sync;
 
             // Act
             await syncStorage.Clear();
@@ -97,7 +97,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task SetLocalStorageValue()
         {
             // Assert
-            var localStorage = await webExtensionsApi.Storage.GetLocal();
+            var localStorage = webExtensionsApi.Storage.Local;
             var storageItem = new Dictionary<string, string>()
             {
                 { storageTestKey1, storageTestValue1 },
@@ -115,7 +115,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task GetLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionsApi.Storage.GetLocal();
+            var localStorage = webExtensionsApi.Storage.Local;
 
             // Act
             var jsonStorageObject = await localStorage.Get(null);
@@ -133,7 +133,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task RemoveLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionsApi.Storage.GetLocal();
+            var localStorage = webExtensionsApi.Storage.Local;
 
             // Act
             await localStorage.Remove(storageTestKey2);
@@ -150,7 +150,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         public async Task ClearLocalStorageValue()
         {
             // Arrange
-            var localStorage = await webExtensionsApi.Storage.GetLocal();
+            var localStorage = webExtensionsApi.Storage.Local;
 
             // Act
             await localStorage.Clear();

@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using WebExtensions.Net.BrowserSettings.ColorManagement;
 using WebExtensions.Net.Types;
 
@@ -11,77 +10,59 @@ namespace WebExtensions.Net.BrowserSettings
         /// <summary>Use the <c>browserSettings.colorManagement</c> API to query and set items related to color management.<br />Requires manifest permission browserSettings.</summary>
         IColorManagementApi ColorManagement { get; }
 
-        /// <summary>Gets the 'allowPopupsForUserEvents' property.</summary>
-        /// <returns>Allows or disallows pop-up windows from opening in response to user events.</returns>
-        ValueTask<Setting> GetAllowPopupsForUserEvents();
+        /// <summary>Allows or disallows pop-up windows from opening in response to user events.</summary>
+        Setting AllowPopupsForUserEvents { get; }
 
-        /// <summary>Gets the 'cacheEnabled' property.</summary>
-        /// <returns>Enables or disables the browser cache.</returns>
-        ValueTask<Setting> GetCacheEnabled();
+        /// <summary>Enables or disables the browser cache.</summary>
+        Setting CacheEnabled { get; }
 
-        /// <summary>Gets the 'closeTabsByDoubleClick' property.</summary>
-        /// <returns>This boolean setting controls whether the selected tab can be closed with a double click.</returns>
-        ValueTask<Setting> GetCloseTabsByDoubleClick();
+        /// <summary>This boolean setting controls whether the selected tab can be closed with a double click.</summary>
+        Setting CloseTabsByDoubleClick { get; }
 
-        /// <summary>Gets the 'contextMenuShowEvent' property.</summary>
-        /// <returns>Controls after which mouse event context menus popup. This setting's value is of type ContextMenuMouseEvent, which has possible values of <c>mouseup</c> and <c>mousedown</c>.</returns>
-        ValueTask<Setting> GetContextMenuShowEvent();
+        /// <summary>Controls after which mouse event context menus popup. This setting's value is of type ContextMenuMouseEvent, which has possible values of <c>mouseup</c> and <c>mousedown</c>.</summary>
+        Setting ContextMenuShowEvent { get; }
 
-        /// <summary>Gets the 'ftpProtocolEnabled' property.</summary>
-        /// <returns>Returns whether the FTP protocol is enabled. Read-only.</returns>
+        /// <summary>Returns whether the FTP protocol is enabled. Read-only.</summary>
         [Obsolete("FTP support was removed from Firefox in bug 1574475")]
-        ValueTask<Setting> GetFtpProtocolEnabled();
+        Setting FtpProtocolEnabled { get; }
 
-        /// <summary>Gets the 'homepageOverride' property.</summary>
-        /// <returns>Returns the value of the overridden home page. Read-only.</returns>
-        ValueTask<Setting> GetHomepageOverride();
+        /// <summary>Returns the value of the overridden home page. Read-only.</summary>
+        Setting HomepageOverride { get; }
 
-        /// <summary>Gets the 'imageAnimationBehavior' property.</summary>
-        /// <returns>Controls the behaviour of image animation in the browser. This setting's value is of type ImageAnimationBehavior, defaulting to <c>normal</c>.</returns>
-        ValueTask<Setting> GetImageAnimationBehavior();
+        /// <summary>Controls the behaviour of image animation in the browser. This setting's value is of type ImageAnimationBehavior, defaulting to <c>normal</c>.</summary>
+        Setting ImageAnimationBehavior { get; }
 
-        /// <summary>Gets the 'newTabPageOverride' property.</summary>
-        /// <returns>Returns the value of the overridden new tab page. Read-only.</returns>
-        ValueTask<Setting> GetNewTabPageOverride();
+        /// <summary>Returns the value of the overridden new tab page. Read-only.</summary>
+        Setting NewTabPageOverride { get; }
 
-        /// <summary>Gets the 'newTabPosition' property.</summary>
-        /// <returns>Controls where new tabs are opened. `afterCurrent` will open all new tabs next to the current tab, `relatedAfterCurrent` will open only related tabs next to the current tab, and `atEnd` will open all tabs at the end of the tab strip. The default is `relatedAfterCurrent`.</returns>
-        ValueTask<Setting> GetNewTabPosition();
+        /// <summary>Controls where new tabs are opened. `afterCurrent` will open all new tabs next to the current tab, `relatedAfterCurrent` will open only related tabs next to the current tab, and `atEnd` will open all tabs at the end of the tab strip. The default is `relatedAfterCurrent`.</summary>
+        Setting NewTabPosition { get; }
 
-        /// <summary>Gets the 'openBookmarksInNewTabs' property.</summary>
-        /// <returns>This boolean setting controls whether bookmarks are opened in the current tab or in a new tab.</returns>
-        ValueTask<Setting> GetOpenBookmarksInNewTabs();
+        /// <summary>This boolean setting controls whether bookmarks are opened in the current tab or in a new tab.</summary>
+        Setting OpenBookmarksInNewTabs { get; }
 
-        /// <summary>Gets the 'openSearchResultsInNewTabs' property.</summary>
-        /// <returns>This boolean setting controls whether search results are opened in the current tab or in a new tab.</returns>
-        ValueTask<Setting> GetOpenSearchResultsInNewTabs();
+        /// <summary>This boolean setting controls whether search results are opened in the current tab or in a new tab.</summary>
+        Setting OpenSearchResultsInNewTabs { get; }
 
-        /// <summary>Gets the 'openUrlbarResultsInNewTabs' property.</summary>
-        /// <returns>This boolean setting controls whether urlbar results are opened in the current tab or in a new tab.</returns>
-        ValueTask<Setting> GetOpenUrlbarResultsInNewTabs();
+        /// <summary>This boolean setting controls whether urlbar results are opened in the current tab or in a new tab.</summary>
+        Setting OpenUrlbarResultsInNewTabs { get; }
 
-        /// <summary>Gets the 'overrideContentColorScheme' property.</summary>
-        /// <returns>This setting controls whether a light or dark color scheme overrides the page's preferred color scheme.</returns>
-        ValueTask<Setting> GetOverrideContentColorScheme();
+        /// <summary>This setting controls whether a light or dark color scheme overrides the page's preferred color scheme.</summary>
+        Setting OverrideContentColorScheme { get; }
 
-        /// <summary>Gets the 'overrideDocumentColors' property.</summary>
-        /// <returns>This setting controls whether the user-chosen colors override the page's colors.</returns>
-        ValueTask<Setting> GetOverrideDocumentColors();
+        /// <summary>This setting controls whether the user-chosen colors override the page's colors.</summary>
+        Setting OverrideDocumentColors { get; }
 
-        /// <summary>Gets the 'useDocumentFonts' property.</summary>
-        /// <returns>This setting controls whether the document's fonts are used.</returns>
-        ValueTask<Setting> GetUseDocumentFonts();
+        /// <summary>This setting controls whether the document's fonts are used.</summary>
+        Setting UseDocumentFonts { get; }
 
-        /// <summary>Gets the 'webNotificationsDisabled' property.</summary>
-        /// <returns>Disables webAPI notifications.</returns>
-        ValueTask<Setting> GetWebNotificationsDisabled();
+        /// <summary>Disables webAPI notifications.</summary>
+        Setting WebNotificationsDisabled { get; }
 
-        /// <summary>Gets the 'zoomFullPage' property.</summary>
-        /// <returns>This boolean setting controls whether zoom is applied to the full page or to text only.</returns>
-        ValueTask<Setting> GetZoomFullPage();
+        /// <summary>This boolean setting controls whether zoom is applied to the full page or to text only.</summary>
+        Setting ZoomFullPage { get; }
 
-        /// <summary>Gets the 'zoomSiteSpecific' property.</summary>
-        /// <returns>This boolean setting controls whether zoom is applied on a per-site basis or to the current tab only. If privacy.resistFingerprinting is true, this setting has no effect and zoom is applied to the current tab only.</returns>
-        ValueTask<Setting> GetZoomSiteSpecific();
+        /// <summary>This boolean setting controls whether zoom is applied on a per-site basis or to the current tab only. If privacy.resistFingerprinting is true, this setting has no effect and zoom is applied to the current tab only.</summary>
+        Setting ZoomSiteSpecific { get; }
     }
 }

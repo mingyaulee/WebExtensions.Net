@@ -1,3 +1,4 @@
+using System;
 using WebExtensions.Net.ActionNs;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
@@ -50,6 +51,7 @@ namespace WebExtensions.Net
         IBookmarksApi Bookmarks { get; }
 
         /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:action, manifest:browser_action.</summary>
+        [Obsolete("Deprecated in Manifest V3, use action API.")]
         IBrowserActionApi BrowserAction { get; }
 
         /// <summary>Use the <c>browser.browserSettings</c> API to control global settings of the browser.<br />Requires manifest permission browserSettings.</summary>

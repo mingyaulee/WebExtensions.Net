@@ -1,4 +1,5 @@
 using JsBind.Net;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.DeclarativeNetRequest
@@ -16,12 +17,12 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         /// <summary>The request headers to modify for the request. Only valid when type is 'modifyHeaders'.</summary>
         [JsonPropertyName("requestHeaders")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public RequestHeaders RequestHeaders { get; set; }
+        public IEnumerable<RequestHeader> RequestHeaders { get; set; }
 
         /// <summary>The response headers to modify for the request. Only valid when type is 'modifyHeaders'.</summary>
         [JsonPropertyName("responseHeaders")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public ResponseHeaders ResponseHeaders { get; set; }
+        public IEnumerable<ResponseHeader> ResponseHeaders { get; set; }
 
         /// <summary></summary>
         [JsonPropertyName("type")]

@@ -13,6 +13,11 @@ namespace WebExtensions.Net.Tabs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Active { get; set; }
 
+        /// <summary>Whether the tab can be discarded automatically by the browser when resources are low.</summary>
+        [JsonPropertyName("autoDiscardable")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? AutoDiscardable { get; set; }
+
         /// <summary>Adds or removes the tab from the current selection.</summary>
         [JsonPropertyName("highlighted")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

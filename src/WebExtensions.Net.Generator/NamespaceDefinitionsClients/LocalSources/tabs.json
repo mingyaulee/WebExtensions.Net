@@ -140,6 +140,11 @@
             "optional": true,
             "type": "boolean"
           },
+          "autoDiscardable": {
+            "description": "Whether the tab can be discarded automatically by the browser when resources are low.",
+            "optional": true,
+            "type": "boolean"
+          },
           "mutedInfo": {
             "description": "Current tab muted state and the reason for the last state change.",
             "optional": true,
@@ -433,6 +438,7 @@
         "enum": [
           "attention",
           "audible",
+          "autoDiscardable",
           "discarded",
           "favIconUrl",
           "hidden",
@@ -763,6 +769,11 @@
                 "optional": true,
                 "type": "boolean"
               },
+              "autoDiscardable": {
+                "description": "Whether the tab can be discarded automatically by the browser when resources are low.",
+                "optional": true,
+                "type": "boolean"
+              },
               "muted": {
                 "description": "Whether the tabs are muted.",
                 "optional": true,
@@ -976,6 +987,11 @@
               },
               "active": {
                 "description": "Whether the tab should be active. Does not affect whether the window is focused (see $(ref:windows.update)).",
+                "optional": true,
+                "type": "boolean"
+              },
+              "autoDiscardable": {
+                "description": "Whether the tab can be discarded automatically by the browser when resources are low.",
                 "optional": true,
                 "type": "boolean"
               },
@@ -1713,6 +1729,11 @@
               },
               "audible": {
                 "description": "The tab\u0027s new audible state.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "autoDiscardable": {
+                "description": "The tab\u0027s new autoDiscardable state.",
                 "optional": true,
                 "type": "boolean"
               },

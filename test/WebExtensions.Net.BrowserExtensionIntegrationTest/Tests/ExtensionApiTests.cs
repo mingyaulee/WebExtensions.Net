@@ -16,10 +16,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetInIncognitoContext()
+        public void GetInIncognitoContext()
         {
             // Act
-            var inIncognitoContext = await webExtensionsApi.Extension.GetInIncognitoContext();
+            var inIncognitoContext = webExtensionsApi.Extension.InIncognitoContext;
 
             // Assert
             inIncognitoContext.Should().BeFalse();

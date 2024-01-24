@@ -317,6 +317,11 @@
             "optional": true,
             "type": "string"
           },
+          "secretKeyLength": {
+            "description": "The length (in bits) of the secret key.",
+            "optional": true,
+            "type": "number"
+          },
           "signatureSchemeName": {
             "description": "The signature scheme used in this request if state is \u0022secure\u0022.",
             "optional": true,
@@ -382,6 +387,26 @@
             "items": {
               "$ref": "TransportWeaknessReasons"
             }
+          },
+          "usedEch": {
+            "description": "True if the TLS connection used Encrypted Client Hello.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "usedDelegatedCredentials": {
+            "description": "True if the TLS connection used Delegated Credentials.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "usedOcsp": {
+            "description": "True if the TLS connection made OCSP requests.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "usedPrivateDns": {
+            "description": "True if the TLS connection used a privacy-preserving DNS transport like DNS-over-HTTPS.",
+            "optional": true,
+            "type": "boolean"
           }
         }
       },

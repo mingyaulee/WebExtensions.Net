@@ -51,7 +51,7 @@ namespace WebExtensions.Net.Scripting
         }
 
         /// <inheritdoc />
-        public virtual ValueTask UpdateContentScripts(IEnumerable<ScriptsArrayItem> scripts)
+        public virtual ValueTask UpdateContentScripts(IEnumerable<Script> scripts)
         {
             return InvokeVoidAsync("updateContentScripts", scripts);
         }

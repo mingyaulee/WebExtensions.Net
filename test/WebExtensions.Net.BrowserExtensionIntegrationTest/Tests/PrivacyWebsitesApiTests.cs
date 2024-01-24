@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -15,20 +14,20 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetHyperlinkAuditingEnabled()
+        public void GetHyperlinkAuditingEnabled()
         {
             // Act
-            var setting = await webExtensionsApi.Privacy.Websites.GetHyperlinkAuditingEnabled();
+            var setting = webExtensionsApi.Privacy.Websites.HyperlinkAuditingEnabled;
 
             // Assert
             setting.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task GetReferrersEnabled()
+        public void GetReferrersEnabled()
         {
             // Act
-            var setting = await webExtensionsApi.Privacy.Websites.GetReferrersEnabled();
+            var setting = webExtensionsApi.Privacy.Websites.ReferrersEnabled;
 
             // Assert
             setting.Should().NotBeNull();

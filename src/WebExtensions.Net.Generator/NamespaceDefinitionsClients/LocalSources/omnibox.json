@@ -59,6 +59,11 @@
             "description": "The text that is displayed in the URL dropdown. Can contain XML-style markup for styling. The supported tags are \u0027url\u0027 (for a literal URL), \u0027match\u0027 (for highlighting text that matched what the user\u0027s query), and \u0027dim\u0027 (for dim helper text). The styles can be nested, eg. \u003Cdim\u003E\u003Cmatch\u003Edimmed match\u003C/match\u003E\u003C/dim\u003E. You must escape the five predefined entities to display them as text: stackoverflow.com/a/1091953/89484 ",
             "type": "string"
           },
+          "deletable": {
+            "description": "Whether the suggest result can be deleted by the user.",
+            "optional": true,
+            "type": "boolean"
+          },
           "descriptionStyles": {
             "description": "An array of style ranges for the description, as provided by the extension.",
             "optional": true,
@@ -218,6 +223,17 @@
         "description": "User has ended the keyword input session without accepting the input.",
         "type": "function",
         "parameters": []
+      },
+      {
+        "name": "onDeleteSuggestion",
+        "description": "User has deleted a suggested result.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "text",
+            "type": "string"
+          }
+        ]
       }
     ]
   }

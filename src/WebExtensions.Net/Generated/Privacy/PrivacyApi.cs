@@ -20,42 +20,12 @@ namespace WebExtensions.Net.Privacy
         }
 
         /// <inheritdoc />
-        public INetworkApi Network
-        {
-            get
-            {
-                if (_network is null)
-                {
-                    _network = new NetworkApi(JsRuntime, AccessPath);
-                }
-                return _network;
-            }
-        }
+        public INetworkApi Network => _network ??= new NetworkApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IServicesApi Services
-        {
-            get
-            {
-                if (_services is null)
-                {
-                    _services = new ServicesApi(JsRuntime, AccessPath);
-                }
-                return _services;
-            }
-        }
+        public IServicesApi Services => _services ??= new ServicesApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
-        public IWebsitesApi Websites
-        {
-            get
-            {
-                if (_websites is null)
-                {
-                    _websites = new WebsitesApi(JsRuntime, AccessPath);
-                }
-                return _websites;
-            }
-        }
+        public IWebsitesApi Websites => _websites ??= new WebsitesApi(JsRuntime, AccessPath);
     }
 }

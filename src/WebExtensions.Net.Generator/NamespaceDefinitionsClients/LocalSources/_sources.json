@@ -91,6 +91,9 @@
       [
         "declarativeNetRequest"
       ]
+    ],
+    "manifest": [
+      "declarative_net_request"
     ]
   },
   {

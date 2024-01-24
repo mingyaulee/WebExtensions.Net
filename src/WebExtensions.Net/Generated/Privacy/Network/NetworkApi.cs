@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Types;
 
 namespace WebExtensions.Net.Privacy.Network
@@ -15,39 +14,21 @@ namespace WebExtensions.Net.Privacy.Network
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetGlobalPrivacyControl()
-        {
-            return GetPropertyAsync<Setting>("globalPrivacyControl");
-        }
+        public Setting GlobalPrivacyControl => GetProperty<Setting>("globalPrivacyControl");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetHttpsOnlyMode()
-        {
-            return GetPropertyAsync<Setting>("httpsOnlyMode");
-        }
+        public Setting HttpsOnlyMode => GetProperty<Setting>("httpsOnlyMode");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetNetworkPredictionEnabled()
-        {
-            return GetPropertyAsync<Setting>("networkPredictionEnabled");
-        }
+        public Setting NetworkPredictionEnabled => GetProperty<Setting>("networkPredictionEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetPeerConnectionEnabled()
-        {
-            return GetPropertyAsync<Setting>("peerConnectionEnabled");
-        }
+        public Setting PeerConnectionEnabled => GetProperty<Setting>("peerConnectionEnabled");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetTlsVersionRestriction()
-        {
-            return GetPropertyAsync<Setting>("tlsVersionRestriction");
-        }
+        public Setting TlsVersionRestriction => GetProperty<Setting>("tlsVersionRestriction");
 
         /// <inheritdoc />
-        public virtual ValueTask<Setting> GetWebRTCIPHandlingPolicy()
-        {
-            return GetPropertyAsync<Setting>("webRTCIPHandlingPolicy");
-        }
+        public Setting WebRTCIPHandlingPolicy => GetProperty<Setting>("webRTCIPHandlingPolicy");
     }
 }

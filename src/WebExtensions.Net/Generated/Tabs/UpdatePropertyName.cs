@@ -14,6 +14,10 @@ namespace WebExtensions.Net.Tabs
         [EnumValue("audible")]
         Audible,
 
+        /// <summary>autoDiscardable</summary>
+        [EnumValue("autoDiscardable")]
+        AutoDiscardable,
+
         /// <summary>discarded</summary>
         [EnumValue("discarded")]
         Discarded,

@@ -16,10 +16,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetId()
+        public void GetId()
         {
             // Act
-            var extensionId = await webExtensionsApi.Runtime.GetId();
+            var extensionId = webExtensionsApi.Runtime.Id;
 
             // Assert
             extensionId.Should().NotBeNullOrEmpty();

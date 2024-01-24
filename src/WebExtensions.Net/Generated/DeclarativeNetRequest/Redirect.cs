@@ -13,15 +13,15 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ExtensionPath { get; set; }
 
-        /// <summary>TODO with regexFilter + Substitution pattern for rules which specify a 'regexFilter'.</summary>
+        /// <summary>Substitution pattern for rules which specify a 'regexFilter'. The first match of regexFilter within the url will be replaced with this pattern. Within regexSubstitution, backslash-escaped digits (\1 to \9) can be used to insert the corresponding capture groups. \0 refers to the entire matching text.</summary>
         [JsonPropertyName("regexSubstitution")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string RegexSubstitution { get; set; }
 
-        /// <summary>TODO: URLTransform - Url transformations to perform.</summary>
+        /// <summary>Url transformations to perform.</summary>
         [JsonPropertyName("transform")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object Transform { get; set; }
+        public UrlTransform Transform { get; set; }
 
         /// <summary>The redirect url. Redirects to JavaScript urls are not allowed.</summary>
         [JsonPropertyName("url")]

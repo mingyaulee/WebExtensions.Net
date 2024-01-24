@@ -44,7 +44,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> InitiatorDomains { get; set; }
 
-        /// <summary>Whether 'urlFilter' or 'regexFilter' is case-sensitive. Defaults to true.</summary>
+        /// <summary>Whether 'urlFilter' or 'regexFilter' is case-sensitive.</summary>
         [JsonPropertyName("isUrlFilterCaseSensitive")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? IsUrlFilterCaseSensitive { get; set; }
