@@ -30,6 +30,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 classEntityName = classTranslationOptions.Aliases[classEntityName];
             }
 
+            foreach (var replace in classTranslationOptions.ReplaceNames)
+            {
+                classEntityName = classEntityName.Replace(replace.Key, replace.Value);
+            }
+
             var namespaceName = classEntity.NamespaceEntity.FullFormattedName;
             if (namespaceName is not null && classTranslationOptions.NamespaceAliases.ContainsKey(namespaceName))
             {
