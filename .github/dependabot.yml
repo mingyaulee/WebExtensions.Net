@@ -9,11 +9,21 @@ updates:
   # Check for updates to NuGet packages every week
   - package-ecosystem: "nuget"
     directory: "/test/WebExtensions.Net.BrowserExtensionIntegrationTest/"
+    allow:
+    - dependency-type: "direct"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      aspnetcore:
+        patterns: [ Microsoft.AspNetCore.* ]
   - package-ecosystem: "nuget"
     directory: "/test/WebExtensions.Net.IntegrationTestsRunner/"
+    allow:
+    - dependency-type: "direct"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      mstest:
+        patterns: [ MSTest.* ]
