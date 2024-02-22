@@ -1,0 +1,30 @@
+name: PR Build
+
+on:
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  buildAndTestPR:
+    runs-on: windows-latest
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Setup Chrome and Chrome Driver
+      uses: nanasess/setup-chromedriver@master
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Debug
+    - name: Run tests
+      run: dotnet test --no-restore --no-build --configuration Debug
