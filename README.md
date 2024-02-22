@@ -57,15 +57,15 @@ To configure the behaviour of the mock API, you may use any combination of the f
 MockResolvers.Configure(configure =>
 {
     // configure a method without any argument
-    configure.Api.Method<string>(api => api.Runtime.GetId).Returns(() => "MyExtensionId");
+    configure.Api.Property(api => api.Runtime.Id).Returns(() => "MyExtensionId");
     // or
-    configure.Api.Method<string>(api => api.Runtime.GetId).ReturnsForAnyArgs("MyExtensionId");
+    configure.Api.Property(api => api.Runtime.Id).ReturnsForAnyArgs("MyExtensionId");
 
     // configure a method with one argument
     configure.Api.Method<string, string>(api => api.Runtime.GetURL).Returns(path => builder.HostEnvironment.BaseAddress + path);
 
     // configure a method that returns the same object regardless of the arguments
-    configure.Api.Method<string, CreateNotificationOptions, string>(api => api.Notifications.Create).ReturnsForAnyArgs("NotificationId");
+    configure.Api.Method<string, NotificationOptions, string>(api => api.Notifications.Create).ReturnsForAnyArgs("NotificationId");
 
     // configure an action to be invoked when an API is called
     configure.Api.Method<int?>(api => api.Tabs.GoForward).Invokes(tabId => { /* Do something with tabId */ });
@@ -114,15 +114,15 @@ For example:
 MockResolvers.Configure(configure =>
 {
     // when api.Runtime.GetId is called it will return "MyExtensionId2"
-    configure.Api.Method<string>(api => api.Runtime.GetId).Returns(() => "MyExtensionId1");
-    configure.Api.Method<string>(api => api.Runtime.GetId).Returns(() => "MyExtensionId2");
+    configure.Api.Property(api => api.Runtime.Id).Returns(() => "MyExtensionId1");
+    configure.Api.Property(api => api.Runtime.Id).Returns(() => "MyExtensionId2");
 });
 ```
 ```csharp
 MockResolvers.Configure(configure =>
 {
     // when api.Runtime.GetId is called it will return "MyExtensionId1", even though the generic API handler is registered last, the more specific method registration is prioritized.
-    configure.Api.Method<string>(api => api.Runtime.GetId).Returns(() => "MyExtensionId1");
+    configure.Api.Property(api => api.Runtime.Id).Returns(() => "MyExtensionId1");
 
     bool apiHandler(string targetPath, object[] arguments, out object result)
     {
