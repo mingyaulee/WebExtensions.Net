@@ -92,7 +92,12 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
             if (eventDefinition.ExtraParameters is not null)
             {
-                functionParameters.AddRange(eventDefinition.ExtraParameters);
+                functionParameters.AddRange(eventDefinition.ExtraParameters.Select(extraParameter =>
+                {
+                    // Set IsOptional to false so that we don't get an ambiguous method overload
+                    extraParameter.Optional = null;
+                    return extraParameter;
+                }));
 
                 var extraParameterEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
                 extraParameterEventFunction.FunctionParameters = functionParameters.ToArray();

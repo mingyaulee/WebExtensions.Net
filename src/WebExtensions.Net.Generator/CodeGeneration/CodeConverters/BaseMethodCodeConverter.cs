@@ -15,7 +15,14 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         protected (string MethodArguments, string MethodReturnType) GetMethodSignature()
         {
-            var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter => $"{parameter.ParameterType.CSharpName} {parameter.Name}"));
+            var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter =>
+            {
+                if (parameter.IsOptional)
+                {
+                    return $"{parameter.ParameterType.CSharpName} {parameter.Name} = null";
+                }
+                return $"{parameter.ParameterType.CSharpName} {parameter.Name}";
+            }));
             var methodReturnType = nameof(ValueTask);
             if (clrMethodInfo.Return.HasReturnType)
             {
