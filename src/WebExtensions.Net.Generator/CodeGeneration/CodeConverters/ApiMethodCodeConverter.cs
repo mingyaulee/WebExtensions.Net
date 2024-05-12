@@ -3,36 +3,23 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiMethodCodeConverter : ICodeConverter
+    public class ApiMethodCodeConverter : BaseMethodCodeConverter, ICodeConverter
     {
-        private readonly ClrMethodInfo clrMethodInfo;
-
-        public ApiMethodCodeConverter(ClrMethodInfo clrMethodInfo)
+        public ApiMethodCodeConverter(ClrMethodInfo clrMethodInfo) : base(clrMethodInfo)
         {
-            this.clrMethodInfo = clrMethodInfo;
         }
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
             codeWriter.WriteUsingStatement("System.Threading.Tasks");
 
-            var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter => $"{parameter.ParameterType.CSharpName} {parameter.Name}"));
-            var clientMethodInvokeArguments = string.Join("", clrMethodInfo.Parameters.Select(parameter => $", {parameter.Name}"));
-            var clientMethodInvoke = "InvokeVoidAsync";
-            var methodReturnType = "ValueTask";
-            if (clrMethodInfo.Return.HasReturnType)
-            {
-                var returnTypeName = clrMethodInfo.Return.ReturnType?.CSharpName;
-                methodReturnType = $"ValueTask<{returnTypeName}>";
-                clientMethodInvoke = $"InvokeAsync<{returnTypeName}>";
-            }
-
+            var metadata = GetMethodMetadata();
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentInheritDocCodeConverter())
                 .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
-                .WriteLine($"public virtual {methodReturnType} {clrMethodInfo.PublicName}({methodArguments})")
+                .WriteLine($"public virtual {metadata.MethodReturnType} {clrMethodInfo.PublicName}({metadata.MethodArguments})")
                 .WriteStartBlock()
-                .WriteLine($"return {clientMethodInvoke}(\"{clrMethodInfo.Name}\"{clientMethodInvokeArguments});")
+                .WriteLine($"return {metadata.ClientMethodInvoke}(\"{clrMethodInfo.Name}\"{metadata.ClientMethodInvokeArguments});")
                 .WriteEndBlock();
         }
     }
