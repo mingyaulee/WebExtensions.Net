@@ -103,7 +103,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 clrTypeInfo.BaseTypeName = clrTypeInfo.BaseTypeName[(namespaceSeparatorIndex + 1)..];
             }
 
-            clrTypeInfo.Methods = classEntity.Functions.Select(functionDefinition => functionDefinitionTranslator.TranslateFunctionDefinition(functionDefinition, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
+            clrTypeInfo.Methods = classEntity.Functions.SelectMany(functionDefinition => functionDefinitionTranslator.TranslateFunctionDefinition(functionDefinition, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
             clrTypeInfo.Properties = classEntity.Properties.Select(propertyDefinitionPair => propertyDefinitionTranslator.TranslatePropertyDefinition(propertyDefinitionPair.Key, propertyDefinitionPair.Value, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
 
             if (classEntity.Type == ClassType.ArrayClass)

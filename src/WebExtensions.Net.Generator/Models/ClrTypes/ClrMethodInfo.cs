@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace WebExtensions.Net.Generator.Models.ClrTypes
 {
     [DebuggerDisplay("{PublicName}")]
-    public class ClrMethodInfo
+    public class ClrMethodInfo : ICloneable
     {
 #pragma warning disable CS8618 // Properties are initialized when created
         public string Name { get; set; }
@@ -17,5 +18,10 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
         public string? ObsoleteMessage { get; set; }
         public IDictionary<string, object> Metadata { get; set; }
 #pragma warning restore CS8618
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

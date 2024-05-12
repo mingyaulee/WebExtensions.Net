@@ -46,35 +46,11 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
 
         public object Clone()
         {
-            return new ClrTypeInfo()
-            {
-                Id = Id,
-                Namespace = Namespace,
-                Name = Name,
-                FullName = FullName,
-                CSharpName = CSharpName,
-                IsNullable = IsNullable,
-                IsEnum = IsEnum,
-                EnumValues = EnumValues,
-                IsInterface = IsInterface,
-                IsNullType = IsNullType,
-                IsGenericType = IsGenericType,
-                GenericTypeArguments = GenericTypeArguments,
-                IsObsolete = IsObsolete,
-                ObsoleteMessage = ObsoleteMessage,
-                IsGenerated = IsGenerated,
-                GeneratedNamespace = GeneratedNamespace,
-                InitialGeneratedNamespace = InitialGeneratedNamespace,
-                RequiredNamespaces = new HashSet<string>(RequiredNamespaces),
-                ReferenceNamespaces = new HashSet<string>(ReferenceNamespaces),
-                Interfaces = new HashSet<string>(Interfaces),
-                BaseTypeName = BaseTypeName,
-                Description = Description,
-                Metadata = Metadata,
-                Methods = Methods,
-                Properties = Properties,
-                TypeChoices = TypeChoices
-            };
+            var clone = (ClrTypeInfo)MemberwiseClone();
+            clone.RequiredNamespaces = new HashSet<string>(RequiredNamespaces);
+            clone.ReferenceNamespaces = new HashSet<string>(ReferenceNamespaces);
+            clone.Interfaces = new HashSet<string>(Interfaces);
+            return clone;
         }
 
         internal Func<string>? CSharpNameGetter { get; set; }

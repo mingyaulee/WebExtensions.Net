@@ -18,7 +18,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             this.clrTypeStore = clrTypeStore;
         }
 
-        public ClrMethodInfo TranslateFunctionDefinition(FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity, ClrTypeInfo clrTypeInfo)
+        public IEnumerable<ClrMethodInfo> TranslateFunctionDefinition(FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity, ClrTypeInfo clrTypeInfo)
         {
             if (functionDefinition.Name is null)
             {
@@ -58,7 +58,21 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Metadata = new Dictionary<string, object>()
             };
 
-            return methodInfo;
+            var firstNonOptionalParameterIndex = Array.FindIndex(methodParameters, parameter => !parameter.IsOptional);
+            if (firstNonOptionalParameterIndex > 0)
+            {
+                for (var i = 0; i < firstNonOptionalParameterIndex; i++)
+                {
+                    // The parameter from the main methodInfo is no longer optional because we are creating another overload without the optional parameter
+                    methodParameters[i].IsOptional = false;
+                    var methodOverloadParameters = methodParameters.Skip(i + 1).ToArray();
+                    var methodOverloadInfo = (ClrMethodInfo)methodInfo.Clone();
+                    methodOverloadInfo.Parameters = methodOverloadParameters;
+                    yield return methodOverloadInfo;
+                }
+            }
+
+            yield return methodInfo;
         }
 
         private static FunctionReturnDefinition? GetReturnDefinition(FunctionDefinition functionDefinition, List<ParameterDefinition> parameterDefinitions)
@@ -78,7 +92,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             {
                 return null;
             }
-            
+
             if (callbackParameter.FunctionParameters is null || !callbackParameter.FunctionParameters.Any())
             {
                 parameterDefinitions.Remove(callbackParameter);
@@ -129,6 +143,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Name = parameterDefinition.Name,
                 Description = parameterDefinition.Description,
                 ParameterType = parameterType,
+                IsOptional = parameterDefinition.IsOptional,
                 IsObsolete = parameterDefinition.IsDeprecated,
                 ObsoleteMessage = parameterDefinition.Deprecated
             };
