@@ -30,13 +30,13 @@ namespace WebExtensions.Net.ActionNs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Disable(int? tabId)
+        public virtual ValueTask Disable(int? tabId = null)
         {
             return InvokeVoidAsync("disable", tabId);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Enable(int? tabId)
+        public virtual ValueTask Enable(int? tabId = null)
         {
             return InvokeVoidAsync("enable", tabId);
         }
@@ -84,7 +84,7 @@ namespace WebExtensions.Net.ActionNs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask OpenPopup(Options options)
+        public virtual ValueTask OpenPopup(Options options = null)
         {
             return InvokeVoidAsync("openPopup", options);
         }

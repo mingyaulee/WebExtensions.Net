@@ -44,7 +44,7 @@ namespace WebExtensions.Net.Runtime
         /// <param name="extensionId">The ID of the extension or app to connect to. If omitted, a connection will be attempted with your own extension. Required if sending messages from a web page for $(topic:manifest/externally_connectable)[web messaging].</param>
         /// <param name="connectInfo"></param>
         /// <returns>Port through which messages can be sent and received. The port's $(ref:runtime.Port onDisconnect) event is fired if the extension/app does not exist. </returns>
-        ValueTask<Port> Connect(string extensionId, ConnectInfo connectInfo);
+        ValueTask<Port> Connect(string extensionId = null, ConnectInfo connectInfo = null);
 
         /// <summary>Connects to a native application in the host machine.</summary>
         /// <param name="application">The name of the registered application to connect to.</param>
@@ -84,11 +84,17 @@ namespace WebExtensions.Net.Runtime
         ValueTask Reload();
 
         /// <summary>Sends a single message to event listeners within your extension/app or a different extension/app. Similar to $(ref:runtime.connect) but only sends a single message, with an optional response. If sending to your extension, the $(ref:runtime.onMessage) event will be fired in each page, or $(ref:runtime.onMessageExternal), if a different extension. Note that extensions cannot send messages to content scripts using this method. To send messages to content scripts, use $(ref:tabs.sendMessage).</summary>
+        /// <param name="message"></param>
+        /// <param name="options"></param>
+        /// <returns>The JSON response object sent by the handler of the message. If an error occurs while connecting to the extension, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message.</returns>
+        ValueTask<JsonElement> SendMessage(object message, object options = null);
+
+        /// <summary>Sends a single message to event listeners within your extension/app or a different extension/app. Similar to $(ref:runtime.connect) but only sends a single message, with an optional response. If sending to your extension, the $(ref:runtime.onMessage) event will be fired in each page, or $(ref:runtime.onMessageExternal), if a different extension. Note that extensions cannot send messages to content scripts using this method. To send messages to content scripts, use $(ref:tabs.sendMessage).</summary>
         /// <param name="extensionId">The ID of the extension/app to send the message to. If omitted, the message will be sent to your own extension/app. Required if sending messages from a web page for $(topic:manifest/externally_connectable)[web messaging].</param>
         /// <param name="message"></param>
         /// <param name="options"></param>
         /// <returns>The JSON response object sent by the handler of the message. If an error occurs while connecting to the extension, the callback will be called with no arguments and $(ref:runtime.lastError) will be set to the error message.</returns>
-        ValueTask<JsonElement> SendMessage(string extensionId, object message, object options);
+        ValueTask<JsonElement> SendMessage(string extensionId, object message, object options = null);
 
         /// <summary>Send a single message to a native application.</summary>
         /// <param name="application">The name of the native messaging host.</param>
@@ -98,6 +104,6 @@ namespace WebExtensions.Net.Runtime
 
         /// <summary>Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 1023 characters.</summary>
         /// <param name="url">URL to be opened after the extension is uninstalled. This URL must have an http: or https: scheme. Set an empty string to not open a new tab upon uninstallation.</param>
-        ValueTask SetUninstallURL(string url);
+        ValueTask SetUninstallURL(string url = null);
     }
 }

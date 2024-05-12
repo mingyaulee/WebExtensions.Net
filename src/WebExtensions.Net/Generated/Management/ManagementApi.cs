@@ -107,7 +107,7 @@ namespace WebExtensions.Net.Management
         }
 
         /// <inheritdoc />
-        public virtual ValueTask UninstallSelf(UninstallSelfOptions options)
+        public virtual ValueTask UninstallSelf(UninstallSelfOptions options = null)
         {
             return InvokeVoidAsync("uninstallSelf", options);
         }

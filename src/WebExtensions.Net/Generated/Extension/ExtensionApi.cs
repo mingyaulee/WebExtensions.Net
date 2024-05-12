@@ -37,7 +37,7 @@ namespace WebExtensions.Net.Extension
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties)
+        public virtual ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties = null)
         {
             return InvokeAsync<IEnumerable<object>>("getViews", fetchProperties);
         }

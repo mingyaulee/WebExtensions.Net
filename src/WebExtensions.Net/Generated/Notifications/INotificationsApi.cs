@@ -24,6 +24,11 @@ namespace WebExtensions.Net.Notifications
         ValueTask<bool> Clear(string notificationId);
 
         /// <summary>Creates and displays a notification.</summary>
+        /// <param name="options">Contents of the notification.</param>
+        /// <returns>The notification id (either supplied or generated) that represents the created notification.</returns>
+        ValueTask<string> Create(NotificationOptions options);
+
+        /// <summary>Creates and displays a notification.</summary>
         /// <param name="notificationId">Identifier of the notification. If it is empty, this method generates an id. If it matches an existing notification, this method first clears that notification before proceeding with the create operation.</param>
         /// <param name="options">Contents of the notification.</param>
         /// <returns>The notification id (either supplied or generated) that represents the created notification.</returns>

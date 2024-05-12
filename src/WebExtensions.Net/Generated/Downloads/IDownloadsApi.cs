@@ -33,7 +33,7 @@ namespace WebExtensions.Net.Downloads
         /// <param name="downloadId">The identifier for the download.</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ValueTask<string> GetFileIcon(int downloadId, GetFileIconOptions options);
+        ValueTask<string> GetFileIcon(int downloadId, GetFileIconOptions options = null);
 
         /// <summary>Open the downloaded file.</summary>
         /// <param name="downloadId"></param>

@@ -19,7 +19,7 @@ namespace WebExtensions.Net.I18n
         /// <param name="messageName">The name of the message, as specified in the <c>$(topic:i18n-messages)[messages.json]</c> file.</param>
         /// <param name="substitutions">Substitution strings, if the message requires any.</param>
         /// <returns>Message localized for current locale.</returns>
-        ValueTask<string> GetMessage(string messageName, object substitutions);
+        ValueTask<string> GetMessage(string messageName, object substitutions = null);
 
         /// <summary>Gets the browser UI language of the browser. This is different from $(ref:i18n.getAcceptLanguages) which returns the preferred user languages.</summary>
         /// <returns>The browser UI language code such as en-US or fr-FR.</returns>

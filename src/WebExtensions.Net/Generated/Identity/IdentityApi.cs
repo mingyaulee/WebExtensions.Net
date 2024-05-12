@@ -14,7 +14,7 @@ namespace WebExtensions.Net.Identity
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetRedirectURL(string path)
+        public virtual ValueTask<string> GetRedirectURL(string path = null)
         {
             return InvokeAsync<string>("getRedirectURL", path);
         }

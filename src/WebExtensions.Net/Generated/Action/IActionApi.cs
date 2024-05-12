@@ -10,11 +10,11 @@ namespace WebExtensions.Net.ActionNs
 
         /// <summary>Disables the browser action for a tab.</summary>
         /// <param name="tabId">The id of the tab for which you want to modify the browser action.</param>
-        ValueTask Disable(int? tabId);
+        ValueTask Disable(int? tabId = null);
 
         /// <summary>Enables the browser action for a tab. By default, browser actions are enabled.</summary>
         /// <param name="tabId">The id of the tab for which you want to modify the browser action.</param>
-        ValueTask Enable(int? tabId);
+        ValueTask Enable(int? tabId = null);
 
         /// <summary>Gets the background color of the browser action badge.</summary>
         /// <param name="details"></param>
@@ -50,7 +50,7 @@ namespace WebExtensions.Net.ActionNs
 
         /// <summary>Opens the extension popup window in the specified window.</summary>
         /// <param name="options">An object with information about the popup to open.</param>
-        ValueTask OpenPopup(Options options);
+        ValueTask OpenPopup(Options options = null);
 
         /// <summary>Sets the background color for the badge.</summary>
         /// <param name="details"></param>

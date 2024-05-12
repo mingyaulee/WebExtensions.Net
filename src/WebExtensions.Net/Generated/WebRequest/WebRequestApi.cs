@@ -160,7 +160,7 @@ namespace WebExtensions.Net.WebRequest
         }
 
         /// <inheritdoc />
-        public virtual ValueTask GetSecurityInfo(string requestId, Options options)
+        public virtual ValueTask GetSecurityInfo(string requestId, Options options = null)
         {
             return InvokeVoidAsync("getSecurityInfo", requestId, options);
         }

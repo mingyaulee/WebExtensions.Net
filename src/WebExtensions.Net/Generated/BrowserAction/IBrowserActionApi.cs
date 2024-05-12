@@ -10,11 +10,11 @@ namespace WebExtensions.Net.BrowserAction
 
         /// <summary>Disables the browser action for a tab.</summary>
         /// <param name="tabId">The id of the tab for which you want to modify the browser action.</param>
-        ValueTask Disable(int? tabId);
+        ValueTask Disable(int? tabId = null);
 
         /// <summary>Enables the browser action for a tab. By default, browser actions are enabled.</summary>
         /// <param name="tabId">The id of the tab for which you want to modify the browser action.</param>
-        ValueTask Enable(int? tabId);
+        ValueTask Enable(int? tabId = null);
 
         /// <summary>Gets the background color of the browser action badge.</summary>
         /// <param name="details"></param>

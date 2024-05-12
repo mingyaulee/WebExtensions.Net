@@ -21,7 +21,7 @@ namespace WebExtensions.Net.Scripting
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<RegisteredContentScript>> GetRegisteredContentScripts(ContentScriptFilter filter)
+        public virtual ValueTask<IEnumerable<RegisteredContentScript>> GetRegisteredContentScripts(ContentScriptFilter filter = null)
         {
             return InvokeAsync<IEnumerable<RegisteredContentScript>>("getRegisteredContentScripts", filter);
         }
@@ -45,7 +45,7 @@ namespace WebExtensions.Net.Scripting
         }
 
         /// <inheritdoc />
-        public virtual ValueTask UnregisterContentScripts(ContentScriptFilter filter)
+        public virtual ValueTask UnregisterContentScripts(ContentScriptFilter filter = null)
         {
             return InvokeVoidAsync("unregisterContentScripts", filter);
         }

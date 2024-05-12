@@ -18,7 +18,7 @@ namespace WebExtensions.Net.Storage
         /// <summary>Gets one or more items from storage.</summary>
         /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
         /// <returns>Object with items in their key-value mappings.</returns>
-        public virtual ValueTask<JsonElement> Get(StorageAreaSyncGetKeys keys)
+        public virtual ValueTask<JsonElement> Get(StorageAreaSyncGetKeys keys = null)
         {
             return InvokeAsync<JsonElement>("get", keys);
         }
@@ -26,7 +26,7 @@ namespace WebExtensions.Net.Storage
         /// <summary>Gets the amount of space (in bytes) being used by one or more items.</summary>
         /// <param name="keys">A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</param>
         /// <returns>Amount of space being used in storage, in bytes.</returns>
-        public virtual ValueTask<int> GetBytesInUse(StorageAreaSyncGetBytesInUseKeys keys)
+        public virtual ValueTask<int> GetBytesInUse(StorageAreaSyncGetBytesInUseKeys keys = null)
         {
             return InvokeAsync<int>("getBytesInUse", keys);
         }

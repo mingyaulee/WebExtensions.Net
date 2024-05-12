@@ -12,7 +12,7 @@ namespace WebExtensions.Net.Devtools.Panels
         /// <summary>Sets an expression that is evaluated within the inspected page. The result is displayed in the sidebar pane.</summary>
         /// <param name="expression">An expression to be evaluated in context of the inspected page. JavaScript objects and DOM nodes are displayed in an expandable tree similar to the console/watch.</param>
         /// <param name="rootTitle">An optional title for the root of the expression tree.</param>
-        public virtual ValueTask SetExpression(string expression, string rootTitle)
+        public virtual ValueTask SetExpression(string expression, string rootTitle = null)
         {
             return InvokeVoidAsync("setExpression", expression, rootTitle);
         }
@@ -20,7 +20,7 @@ namespace WebExtensions.Net.Devtools.Panels
         /// <summary>Sets a JSON-compliant object to be displayed in the sidebar pane.</summary>
         /// <param name="jsonObject">An object to be displayed in context of the inspected page. Evaluated in the context of the caller (API client).</param>
         /// <param name="rootTitle">An optional title for the root of the expression tree.</param>
-        public virtual ValueTask SetObject(string jsonObject, string rootTitle)
+        public virtual ValueTask SetObject(string jsonObject, string rootTitle = null)
         {
             return InvokeVoidAsync("setObject", jsonObject, rootTitle);
         }

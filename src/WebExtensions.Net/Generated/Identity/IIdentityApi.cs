@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Identity
         /// <summary>Generates a redirect URL to be used in |launchWebAuthFlow|.</summary>
         /// <param name="path">The path appended to the end of the generated URL. </param>
         /// <returns></returns>
-        ValueTask<string> GetRedirectURL(string path);
+        ValueTask<string> GetRedirectURL(string path = null);
 
         /// <summary>Starts an auth flow at the specified URL.</summary>
         /// <param name="details"></param>

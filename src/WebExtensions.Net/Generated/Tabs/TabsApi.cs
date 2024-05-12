@@ -173,19 +173,19 @@ namespace WebExtensions.Net.Tabs
         public int TAB_ID_NONE => -1;
 
         /// <inheritdoc />
-        public virtual ValueTask CaptureTab(int? tabId, ImageDetails options)
+        public virtual ValueTask CaptureTab(int? tabId = null, ImageDetails options = null)
         {
             return InvokeVoidAsync("captureTab", tabId, options);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> CaptureVisibleTab(int? windowId, ImageDetails options)
+        public virtual ValueTask<string> CaptureVisibleTab(int? windowId = null, ImageDetails options = null)
         {
             return InvokeAsync<string>("captureVisibleTab", windowId, options);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> Connect(int tabId, ConnectInfo connectInfo)
+        public virtual ValueTask<Port> Connect(int tabId, ConnectInfo connectInfo = null)
         {
             return InvokeAsync<Port>("connect", tabId, connectInfo);
         }
@@ -197,7 +197,7 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> DetectLanguage(int? tabId)
+        public virtual ValueTask<string> DetectLanguage(int? tabId = null)
         {
             return InvokeAsync<string>("detectLanguage", tabId);
         }
@@ -215,9 +215,15 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Tab> Duplicate(int tabId, DuplicateProperties duplicateProperties)
+        public virtual ValueTask<Tab> Duplicate(int tabId, DuplicateProperties duplicateProperties = null)
         {
             return InvokeAsync<Tab>("duplicate", tabId, duplicateProperties);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<IEnumerable<object>> ExecuteScript(InjectDetails details)
+        {
+            return InvokeAsync<IEnumerable<object>>("executeScript", details);
         }
 
         /// <inheritdoc />
@@ -239,25 +245,25 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<double> GetZoom(int? tabId)
+        public virtual ValueTask<double> GetZoom(int? tabId = null)
         {
             return InvokeAsync<double>("getZoom", tabId);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<ZoomSettings> GetZoomSettings(int? tabId)
+        public virtual ValueTask<ZoomSettings> GetZoomSettings(int? tabId = null)
         {
             return InvokeAsync<ZoomSettings>("getZoomSettings", tabId);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask GoBack(int? tabId)
+        public virtual ValueTask GoBack(int? tabId = null)
         {
             return InvokeVoidAsync("goBack", tabId);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask GoForward(int? tabId)
+        public virtual ValueTask GoForward(int? tabId = null)
         {
             return InvokeVoidAsync("goForward", tabId);
         }
@@ -281,6 +287,12 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
+        public virtual ValueTask InsertCSS(InjectDetails details)
+        {
+            return InvokeVoidAsync("insertCSS", details);
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask InsertCSS(int? tabId, InjectDetails details)
         {
             return InvokeVoidAsync("insertCSS", tabId, details);
@@ -299,7 +311,7 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId, MoveInSuccessionOptions options)
+        public virtual ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId = null, MoveInSuccessionOptions options = null)
         {
             return InvokeVoidAsync("moveInSuccession", tabIds, tabId, options);
         }
@@ -323,7 +335,7 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Reload(int? tabId, ReloadProperties reloadProperties)
+        public virtual ValueTask Reload(int? tabId = null, ReloadProperties reloadProperties = null)
         {
             return InvokeVoidAsync("reload", tabId, reloadProperties);
         }
@@ -341,6 +353,12 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
+        public virtual ValueTask RemoveCSS(InjectDetails details)
+        {
+            return InvokeVoidAsync("removeCSS", details);
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask RemoveCSS(int? tabId, InjectDetails details)
         {
             return InvokeVoidAsync("removeCSS", tabId, details);
@@ -353,15 +371,27 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> SendMessage(int tabId, object message, SendMessageOptions options)
+        public virtual ValueTask<JsonElement> SendMessage(int tabId, object message, SendMessageOptions options = null)
         {
             return InvokeAsync<JsonElement>("sendMessage", tabId, message, options);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask SetZoom(double zoomFactor)
+        {
+            return InvokeVoidAsync("setZoom", zoomFactor);
         }
 
         /// <inheritdoc />
         public virtual ValueTask SetZoom(int? tabId, double zoomFactor)
         {
             return InvokeVoidAsync("setZoom", tabId, zoomFactor);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask SetZoomSettings(ZoomSettings zoomSettings)
+        {
+            return InvokeVoidAsync("setZoomSettings", zoomSettings);
         }
 
         /// <inheritdoc />
@@ -383,9 +413,15 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask ToggleReaderMode(int? tabId)
+        public virtual ValueTask ToggleReaderMode(int? tabId = null)
         {
             return InvokeVoidAsync("toggleReaderMode", tabId);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<Tab> Update(UpdateProperties updateProperties)
+        {
+            return InvokeAsync<Tab>("update", updateProperties);
         }
 
         /// <inheritdoc />
@@ -395,7 +431,7 @@ namespace WebExtensions.Net.Tabs
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Warmup(int? tabId)
+        public virtual ValueTask Warmup(int? tabId = null)
         {
             return InvokeVoidAsync("warmup", tabId);
         }

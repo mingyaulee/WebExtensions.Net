@@ -52,7 +52,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         /// <param name="request">The details of the request to test.</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        ValueTask<TestMatchOutcomeCallbackResult> TestMatchOutcome(Request request, TestMatchOutcomeOptions options);
+        ValueTask<TestMatchOutcomeCallbackResult> TestMatchOutcome(Request request, TestMatchOutcomeOptions options = null);
 
         /// <summary>Modifies the current set of dynamic rules for the extension. The rules with IDs listed in options.removeRuleIds are first removed, and then the rules given in options.addRules are added. These rules are persisted across browser sessions and extension updates.</summary>
         /// <param name="options"></param>

@@ -24,28 +24,28 @@ namespace WebExtensions.Net.Windows
         /// <summary>Creates (opens) a new browser with any optional sizing, position or default URL provided.</summary>
         /// <param name="createData"></param>
         /// <returns>Contains details about the created window.</returns>
-        ValueTask<Window> Create(CreateData createData);
+        ValueTask<Window> Create(CreateData createData = null);
 
         /// <summary>Gets details about a window.</summary>
         /// <param name="windowId"></param>
         /// <param name="getInfo"></param>
         /// <returns></returns>
-        ValueTask<Window> Get(int windowId, GetInfo getInfo);
+        ValueTask<Window> Get(int windowId, GetInfo getInfo = null);
 
         /// <summary>Gets all windows.</summary>
         /// <param name="getInfo">Specifies properties used to filter the $(ref:windows.Window) returned and to determine whether they should contain a list of the $(ref:tabs.Tab) objects.</param>
         /// <returns></returns>
-        ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo);
+        ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo = null);
 
         /// <summary>Gets the $(topic:current-window)[current window].</summary>
         /// <param name="getInfo"></param>
         /// <returns></returns>
-        ValueTask<Window> GetCurrent(GetInfo getInfo);
+        ValueTask<Window> GetCurrent(GetInfo getInfo = null);
 
         /// <summary>Gets the window that was most recently focused - typically the window 'on top'.</summary>
         /// <param name="getInfo"></param>
         /// <returns></returns>
-        ValueTask<Window> GetLastFocused(GetInfo getInfo);
+        ValueTask<Window> GetLastFocused(GetInfo getInfo = null);
 
         /// <summary>Removes (closes) a window, and all the tabs inside it.</summary>
         /// <param name="windowId"></param>

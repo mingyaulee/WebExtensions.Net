@@ -66,7 +66,7 @@ namespace WebExtensions.Net.Menus
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback)
+        public virtual ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback = null)
         {
             return InvokeAsync<CreateReturnType>("create", createProperties, callback);
         }

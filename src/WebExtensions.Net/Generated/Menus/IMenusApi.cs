@@ -24,7 +24,7 @@ namespace WebExtensions.Net.Menus
         /// <param name="createProperties"></param>
         /// <param name="callback">Called when the item has been created in the browser. If there were any problems creating the item, details will be available in $(ref:runtime.lastError).</param>
         /// <returns>The ID of the newly created item.</returns>
-        ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback);
+        ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback = null);
 
         /// <summary>Retrieve the element that was associated with a recent contextmenu event.</summary>
         /// <param name="targetElementId">The identifier of the clicked element, available as info.targetElementId in the menus.onShown, onClicked or onclick event.</param>

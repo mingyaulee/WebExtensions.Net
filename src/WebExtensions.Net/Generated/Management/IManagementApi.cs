@@ -44,6 +44,6 @@ namespace WebExtensions.Net.Management
 
         /// <summary>Uninstalls the calling extension. Note: This function can be used without requesting the 'management' permission in the manifest.</summary>
         /// <param name="options"></param>
-        ValueTask UninstallSelf(UninstallSelfOptions options);
+        ValueTask UninstallSelf(UninstallSelfOptions options = null);
     }
 }

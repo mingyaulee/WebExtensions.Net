@@ -44,7 +44,7 @@ namespace WebExtensions.Net.WebRequest
         /// <summary>Retrieves the security information for the request.  Returns a promise that will resolve to a SecurityInfo object.</summary>
         /// <param name="requestId"></param>
         /// <param name="options"></param>
-        ValueTask GetSecurityInfo(string requestId, Options options);
+        ValueTask GetSecurityInfo(string requestId, Options options = null);
 
         /// <summary>Needs to be called when the behavior of the webRequest handlers has changed to prevent incorrect handling due to caching. This function call is expensive. Don't call it often.</summary>
         ValueTask HandlerBehaviorChanged();

@@ -28,7 +28,7 @@ namespace WebExtensions.Net.Extension
         /// <summary>Returns an array of the JavaScript 'window' objects for each of the pages running inside the current extension.</summary>
         /// <param name="fetchProperties"></param>
         /// <returns>Array of global objects</returns>
-        ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties);
+        ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties = null);
 
         /// <summary>Retrieves the state of the extension's access to the 'file://' scheme (as determined by the user-controlled 'Allow access to File URLs' checkbox.</summary>
         /// <returns>True if the extension can access the 'file://' scheme, false otherwise.</returns>

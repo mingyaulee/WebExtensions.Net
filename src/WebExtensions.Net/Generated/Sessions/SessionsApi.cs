@@ -47,7 +47,7 @@ namespace WebExtensions.Net.Sessions
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Session>> GetRecentlyClosed(Filter filter)
+        public virtual ValueTask<IEnumerable<Session>> GetRecentlyClosed(Filter filter = null)
         {
             return InvokeAsync<IEnumerable<Session>>("getRecentlyClosed", filter);
         }
@@ -77,7 +77,7 @@ namespace WebExtensions.Net.Sessions
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Session> Restore(string sessionId)
+        public virtual ValueTask<Session> Restore(string sessionId = null)
         {
             return InvokeAsync<Session>("restore", sessionId);
         }

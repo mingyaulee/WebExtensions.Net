@@ -158,7 +158,7 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> Connect(string extensionId, ConnectInfo connectInfo)
+        public virtual ValueTask<Port> Connect(string extensionId = null, ConnectInfo connectInfo = null)
         {
             return InvokeAsync<Port>("connect", extensionId, connectInfo);
         }
@@ -218,7 +218,13 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> SendMessage(string extensionId, object message, object options)
+        public virtual ValueTask<JsonElement> SendMessage(object message, object options = null)
+        {
+            return InvokeAsync<JsonElement>("sendMessage", message, options);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<JsonElement> SendMessage(string extensionId, object message, object options = null)
         {
             return InvokeAsync<JsonElement>("sendMessage", extensionId, message, options);
         }
@@ -230,7 +236,7 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask SetUninstallURL(string url)
+        public virtual ValueTask SetUninstallURL(string url = null)
         {
             return InvokeVoidAsync("setUninstallURL", url);
         }

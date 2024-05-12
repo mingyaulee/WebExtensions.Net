@@ -30,13 +30,13 @@ namespace WebExtensions.Net.BrowserAction
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Disable(int? tabId)
+        public virtual ValueTask Disable(int? tabId = null)
         {
             return InvokeVoidAsync("disable", tabId);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Enable(int? tabId)
+        public virtual ValueTask Enable(int? tabId = null)
         {
             return InvokeVoidAsync("enable", tabId);
         }

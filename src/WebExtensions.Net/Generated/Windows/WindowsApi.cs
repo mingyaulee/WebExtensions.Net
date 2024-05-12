@@ -67,31 +67,31 @@ namespace WebExtensions.Net.Windows
         public int WINDOW_ID_NONE => -1;
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> Create(CreateData createData)
+        public virtual ValueTask<Window> Create(CreateData createData = null)
         {
             return InvokeAsync<Window>("create", createData);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> Get(int windowId, GetInfo getInfo)
+        public virtual ValueTask<Window> Get(int windowId, GetInfo getInfo = null)
         {
             return InvokeAsync<Window>("get", windowId, getInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo)
+        public virtual ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo = null)
         {
             return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> GetCurrent(GetInfo getInfo)
+        public virtual ValueTask<Window> GetCurrent(GetInfo getInfo = null)
         {
             return InvokeAsync<Window>("getCurrent", getInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Window> GetLastFocused(GetInfo getInfo)
+        public virtual ValueTask<Window> GetLastFocused(GetInfo getInfo = null)
         {
             return InvokeAsync<Window>("getLastFocused", getInfo);
         }

@@ -25,7 +25,7 @@ namespace WebExtensions.Net.Sessions
         /// <summary>Gets the list of recently closed tabs and/or windows.</summary>
         /// <param name="filter"></param>
         /// <returns>The list of closed entries in reverse order that they were closed (the most recently closed tab or window will be at index <c>0</c>). The entries may contain either tabs or windows.</returns>
-        ValueTask<IEnumerable<Session>> GetRecentlyClosed(Filter filter);
+        ValueTask<IEnumerable<Session>> GetRecentlyClosed(Filter filter = null);
 
         /// <summary>Retrieve a value that was set for a given key on a given tab.</summary>
         /// <param name="tabId">The id of the tab whose value is being retrieved from.</param>
@@ -50,7 +50,7 @@ namespace WebExtensions.Net.Sessions
         /// <summary>Reopens a $(ref:windows.Window) or $(ref:tabs.Tab), with an optional callback to run when the entry has been restored.</summary>
         /// <param name="sessionId">The $(ref:windows.Window.sessionId), or $(ref:tabs.Tab.sessionId) to restore. If this parameter is not specified, the most recently closed session is restored.</param>
         /// <returns>A $(ref:sessions.Session) containing the restored $(ref:windows.Window) or $(ref:tabs.Tab) object.</returns>
-        ValueTask<Session> Restore(string sessionId);
+        ValueTask<Session> Restore(string sessionId = null);
 
         /// <summary>Set a key/value pair on a given tab.</summary>
         /// <param name="tabId">The id of the tab that the key/value pair is being set on.</param>

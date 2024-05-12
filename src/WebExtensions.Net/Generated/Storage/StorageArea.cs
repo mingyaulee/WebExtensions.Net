@@ -18,7 +18,7 @@ namespace WebExtensions.Net.Storage
         /// <summary>Gets one or more items from storage.</summary>
         /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
         /// <returns>Object with items in their key-value mappings.</returns>
-        public virtual ValueTask<JsonElement> Get(StorageAreaGetKeys keys)
+        public virtual ValueTask<JsonElement> Get(StorageAreaGetKeys keys = null)
         {
             return InvokeAsync<JsonElement>("get", keys);
         }

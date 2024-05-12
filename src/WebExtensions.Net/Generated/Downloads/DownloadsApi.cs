@@ -79,7 +79,7 @@ namespace WebExtensions.Net.Downloads
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetFileIcon(int downloadId, GetFileIconOptions options)
+        public virtual ValueTask<string> GetFileIcon(int downloadId, GetFileIconOptions options = null)
         {
             return InvokeAsync<string>("getFileIcon", downloadId, options);
         }

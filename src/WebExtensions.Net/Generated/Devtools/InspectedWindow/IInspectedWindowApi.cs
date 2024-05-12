@@ -12,10 +12,10 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         /// <param name="expression">An expression to evaluate.</param>
         /// <param name="options">The options parameter can contain one or more options.</param>
         /// <returns></returns>
-        ValueTask<EvalResult> Eval(string expression, object options);
+        ValueTask<EvalResult> Eval(string expression, object options = null);
 
         /// <summary>Reloads the inspected page.</summary>
         /// <param name="reloadOptions"></param>
-        ValueTask Reload(ReloadOptions reloadOptions);
+        ValueTask Reload(ReloadOptions reloadOptions = null);
     }
 }

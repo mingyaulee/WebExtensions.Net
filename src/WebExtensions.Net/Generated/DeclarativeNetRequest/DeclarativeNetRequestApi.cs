@@ -66,7 +66,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<TestMatchOutcomeCallbackResult> TestMatchOutcome(Request request, TestMatchOutcomeOptions options)
+        public virtual ValueTask<TestMatchOutcomeCallbackResult> TestMatchOutcome(Request request, TestMatchOutcomeOptions options = null)
         {
             return InvokeAsync<TestMatchOutcomeCallbackResult>("testMatchOutcome", request, options);
         }

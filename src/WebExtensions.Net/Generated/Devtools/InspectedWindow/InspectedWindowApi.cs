@@ -17,13 +17,13 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         public int TabId => GetProperty<int>("tabId");
 
         /// <inheritdoc />
-        public virtual ValueTask<EvalResult> Eval(string expression, object options)
+        public virtual ValueTask<EvalResult> Eval(string expression, object options = null)
         {
             return InvokeAsync<EvalResult>("eval", expression, options);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Reload(ReloadOptions reloadOptions)
+        public virtual ValueTask Reload(ReloadOptions reloadOptions = null)
         {
             return InvokeVoidAsync("reload", reloadOptions);
         }

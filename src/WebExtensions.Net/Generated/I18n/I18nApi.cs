@@ -27,7 +27,7 @@ namespace WebExtensions.Net.I18n
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetMessage(string messageName, object substitutions)
+        public virtual ValueTask<string> GetMessage(string messageName, object substitutions = null)
         {
             return InvokeAsync<string>("getMessage", messageName, substitutions);
         }

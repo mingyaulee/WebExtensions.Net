@@ -31,7 +31,7 @@ namespace WebExtensions.Net.Alarms
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<bool> Clear(string name)
+        public virtual ValueTask<bool> Clear(string name = null)
         {
             return InvokeAsync<bool>("clear", name);
         }
@@ -43,13 +43,19 @@ namespace WebExtensions.Net.Alarms
         }
 
         /// <inheritdoc />
+        public virtual ValueTask Create(AlarmInfo alarmInfo)
+        {
+            return InvokeVoidAsync("create", alarmInfo);
+        }
+
+        /// <inheritdoc />
         public virtual ValueTask Create(string name, AlarmInfo alarmInfo)
         {
             return InvokeVoidAsync("create", name, alarmInfo);
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Alarm> Get(string name)
+        public virtual ValueTask<Alarm> Get(string name = null)
         {
             return InvokeAsync<Alarm>("get", name);
         }

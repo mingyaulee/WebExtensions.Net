@@ -15,7 +15,7 @@ namespace WebExtensions.Net.TopSites
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<MostVisitedUrl>> Get(Options options)
+        public virtual ValueTask<IEnumerable<MostVisitedUrl>> Get(Options options = null)
         {
             return InvokeAsync<IEnumerable<MostVisitedUrl>>("get", options);
         }
