@@ -9,6 +9,7 @@ namespace WebExtensions.Net.WebNavigation
     public partial class GetAllFramesDetails : BaseObject
     {
         /// <summary>The ID of the tab.</summary>
+        [JsAccessPath("tabId")]
         [JsonPropertyName("tabId")]
         public int TabId { get; set; }
     }

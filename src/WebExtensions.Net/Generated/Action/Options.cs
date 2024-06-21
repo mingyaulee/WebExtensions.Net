@@ -9,6 +9,7 @@ namespace WebExtensions.Net.ActionNs
     public partial class Options : BaseObject
     {
         /// <summary>Defaults to the $(topic:current-window)[current window].</summary>
+        [JsAccessPath("windowId")]
         [JsonPropertyName("windowId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? WindowId { get; set; }

@@ -10,6 +10,7 @@ namespace WebExtensions.Net.Scripting
     public partial class ContentScriptFilter : BaseObject
     {
         /// <summary>The IDs of specific scripts to retrieve with <c>getRegisteredContentScripts()</c> or to unregister with <c>unregisterContentScripts()</c>.</summary>
+        [JsAccessPath("ids")]
         [JsonPropertyName("ids")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> Ids { get; set; }

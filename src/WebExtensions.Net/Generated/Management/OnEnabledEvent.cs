@@ -12,6 +12,7 @@ namespace WebExtensions.Net.Management
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when an addon has been enabled.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<ExtensionInfo> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -20,6 +21,7 @@ namespace WebExtensions.Net.Management
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<ExtensionInfo> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -27,6 +29,7 @@ namespace WebExtensions.Net.Management
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<ExtensionInfo> callback)
         {
             return InvokeVoidAsync("removeListener", callback);

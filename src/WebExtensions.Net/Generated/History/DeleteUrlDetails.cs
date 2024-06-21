@@ -9,6 +9,7 @@ namespace WebExtensions.Net.History
     public partial class DeleteUrlDetails : BaseObject
     {
         /// <summary>The URL to remove.</summary>
+        [JsAccessPath("url")]
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Url { get; set; }

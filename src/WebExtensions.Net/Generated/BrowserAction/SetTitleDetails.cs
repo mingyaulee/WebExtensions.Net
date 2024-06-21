@@ -9,6 +9,7 @@ namespace WebExtensions.Net.BrowserAction
     public partial class SetTitleDetails : BaseObject
     {
         /// <summary>The string the browser action should display when moused over.</summary>
+        [JsAccessPath("title")]
         [JsonPropertyName("title")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Title Title { get; set; }

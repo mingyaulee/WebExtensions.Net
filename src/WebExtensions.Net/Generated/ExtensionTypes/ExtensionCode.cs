@@ -9,6 +9,7 @@ namespace WebExtensions.Net.ExtensionTypes
     public partial class ExtensionCode : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("code")]
         [JsonPropertyName("code")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Code { get; set; }

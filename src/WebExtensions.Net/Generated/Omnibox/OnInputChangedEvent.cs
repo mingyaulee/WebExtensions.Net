@@ -13,6 +13,7 @@ namespace WebExtensions.Net.Omnibox
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">User has changed what is typed into the omnibox.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<string, Action<IEnumerable<SuggestResult>>> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -21,6 +22,7 @@ namespace WebExtensions.Net.Omnibox
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<string, Action<IEnumerable<SuggestResult>>> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -28,6 +30,7 @@ namespace WebExtensions.Net.Omnibox
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<string, Action<IEnumerable<SuggestResult>>> callback)
         {
             return InvokeVoidAsync("removeListener", callback);

@@ -10,11 +10,13 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     public partial class QueryTransform : BaseObject
     {
         /// <summary>The list of query key-value pairs to be added or replaced.</summary>
+        [JsAccessPath("addOrReplaceParams")]
         [JsonPropertyName("addOrReplaceParams")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<AddOrReplaceParam> AddOrReplaceParams { get; set; }
 
         /// <summary>The list of query keys to be removed.</summary>
+        [JsAccessPath("removeParams")]
         [JsonPropertyName("removeParams")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> RemoveParams { get; set; }

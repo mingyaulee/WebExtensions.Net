@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Runtime
     public partial class OnUpdateAvailableEventCallbackDetails : BaseObject
     {
         /// <summary>The version number of the available update.</summary>
+        [JsAccessPath("version")]
         [JsonPropertyName("version")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Version { get; set; }

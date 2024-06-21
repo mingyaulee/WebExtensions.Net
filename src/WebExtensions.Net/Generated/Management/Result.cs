@@ -10,6 +10,7 @@ namespace WebExtensions.Net.Management
     public partial class Result : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("id")]
         [JsonPropertyName("id")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ExtensionID Id { get; set; }

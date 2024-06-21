@@ -9,11 +9,13 @@ namespace WebExtensions.Net.WebRequest
     public partial class Challenger : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("host")]
         [JsonPropertyName("host")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Host { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("port")]
         [JsonPropertyName("port")]
         public int Port { get; set; }
     }

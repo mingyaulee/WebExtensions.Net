@@ -10,10 +10,12 @@ namespace WebExtensions.Net.I18n
     public partial class Result : BaseObject
     {
         /// <summary>CLD detected language reliability</summary>
+        [JsAccessPath("isReliable")]
         [JsonPropertyName("isReliable")]
         public bool IsReliable { get; set; }
 
         /// <summary>array of detectedLanguage</summary>
+        [JsAccessPath("languages")]
         [JsonPropertyName("languages")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<LanguageType> Languages { get; set; }

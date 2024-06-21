@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Tabs
     public partial class ReloadProperties : BaseObject
     {
         /// <summary>Whether using any local cache. Default is false.</summary>
+        [JsAccessPath("bypassCache")]
         [JsonPropertyName("bypassCache")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? BypassCache { get; set; }

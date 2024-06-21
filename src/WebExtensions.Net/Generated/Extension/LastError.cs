@@ -11,6 +11,7 @@ namespace WebExtensions.Net.Extension
     public partial class LastError : BaseObject
     {
         /// <summary>Description of the error that has taken place.</summary>
+        [JsAccessPath("message")]
         [JsonPropertyName("message")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Message { get; set; }

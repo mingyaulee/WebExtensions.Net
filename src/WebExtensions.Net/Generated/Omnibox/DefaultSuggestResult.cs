@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Omnibox
     public partial class DefaultSuggestResult : BaseObject
     {
         /// <summary>The text that is displayed in the URL dropdown.</summary>
+        [JsAccessPath("description")]
         [JsonPropertyName("description")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Description { get; set; }

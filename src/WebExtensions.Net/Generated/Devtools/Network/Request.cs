@@ -11,6 +11,7 @@ namespace WebExtensions.Net.Devtools.Network
     {
         /// <summary>Returns content of the response body.</summary>
         /// <param name="callback">A function that receives the response body when the request completes.</param>
+        [JsAccessPath("getContent")]
         public virtual ValueTask GetContent(Action<string, string> callback)
         {
             return InvokeVoidAsync("getContent", callback);

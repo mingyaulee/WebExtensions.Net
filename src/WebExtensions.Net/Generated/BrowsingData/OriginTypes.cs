@@ -9,16 +9,19 @@ namespace WebExtensions.Net.BrowsingData
     public partial class OriginTypes : BaseObject
     {
         /// <summary>Extensions and packaged applications a user has installed (be _really_ careful!).</summary>
+        [JsAccessPath("extension")]
         [JsonPropertyName("extension")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Extension { get; set; }
 
         /// <summary>Websites that have been installed as hosted applications (be careful!).</summary>
+        [JsAccessPath("protectedWeb")]
         [JsonPropertyName("protectedWeb")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? ProtectedWeb { get; set; }
 
         /// <summary>Normal websites.</summary>
+        [JsAccessPath("unprotectedWeb")]
         [JsonPropertyName("unprotectedWeb")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? UnprotectedWeb { get; set; }

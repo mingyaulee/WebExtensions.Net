@@ -9,6 +9,7 @@ namespace WebExtensions.Net.ActionNs
     public partial class SetBadgeTextColorDetails : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("color")]
         [JsonPropertyName("color")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ColorValue Color { get; set; }

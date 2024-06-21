@@ -13,6 +13,7 @@ namespace WebExtensions.Net.WebRequest
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a server-initiated redirect is about to occur.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<OnBeforeRedirectEventCallbackDetails> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -22,6 +23,7 @@ namespace WebExtensions.Net.WebRequest
         /// <param name="callback">Fired when a server-initiated redirect is about to occur.</param>
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<OnBeforeRedirectEventCallbackDetails> callback, RequestFilter filter, IEnumerable<OnBeforeRedirectOptions> extraInfoSpec)
         {
             return InvokeVoidAsync("addListener", callback, filter, extraInfoSpec);
@@ -30,6 +32,7 @@ namespace WebExtensions.Net.WebRequest
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<OnBeforeRedirectEventCallbackDetails> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -40,6 +43,7 @@ namespace WebExtensions.Net.WebRequest
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<OnBeforeRedirectEventCallbackDetails> callback, RequestFilter filter, IEnumerable<OnBeforeRedirectOptions> extraInfoSpec)
         {
             return InvokeAsync<bool>("hasListener", callback, filter, extraInfoSpec);
@@ -47,6 +51,7 @@ namespace WebExtensions.Net.WebRequest
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<OnBeforeRedirectEventCallbackDetails> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
@@ -56,6 +61,7 @@ namespace WebExtensions.Net.WebRequest
         /// <param name="callback">Listener that shall be unregistered.</param>
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<OnBeforeRedirectEventCallbackDetails> callback, RequestFilter filter, IEnumerable<OnBeforeRedirectOptions> extraInfoSpec)
         {
             return InvokeVoidAsync("removeListener", callback, filter, extraInfoSpec);

@@ -9,16 +9,19 @@ namespace WebExtensions.Net.Commands
     public partial class ChangeInfo : BaseObject
     {
         /// <summary>The name of the shortcut.</summary>
+        [JsAccessPath("name")]
         [JsonPropertyName("name")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Name { get; set; }
 
         /// <summary>The new shortcut active for this command, or blank if not active.</summary>
+        [JsAccessPath("newShortcut")]
         [JsonPropertyName("newShortcut")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string NewShortcut { get; set; }
 
         /// <summary>The old shortcut which is no longer active for this command, or blank if the shortcut was previously inactive.</summary>
+        [JsAccessPath("oldShortcut")]
         [JsonPropertyName("oldShortcut")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string OldShortcut { get; set; }

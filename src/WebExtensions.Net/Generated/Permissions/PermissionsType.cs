@@ -11,11 +11,13 @@ namespace WebExtensions.Net.Permissions
     public partial class PermissionsType : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("origins")]
         [JsonPropertyName("origins")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<MatchPattern> Origins { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("permissions")]
         [JsonPropertyName("permissions")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<OptionalPermission> Permissions { get; set; }

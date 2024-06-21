@@ -9,6 +9,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     public partial class TestMatchOutcomeOptions : BaseObject
     {
         /// <summary>Whether to account for rules from other installed extensions during rule evaluation.</summary>
+        [JsAccessPath("includeOtherExtensions")]
         [JsonPropertyName("includeOtherExtensions")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? IncludeOtherExtensions { get; set; }

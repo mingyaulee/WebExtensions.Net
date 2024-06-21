@@ -9,11 +9,13 @@ namespace WebExtensions.Net.Bookmarks
     public partial class ChangeInfo : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("title")]
         [JsonPropertyName("title")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Title { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("url")]
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Url { get; set; }

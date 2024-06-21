@@ -12,6 +12,7 @@ namespace WebExtensions.Net.Storage
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when one or more items change.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<object, string> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -20,6 +21,7 @@ namespace WebExtensions.Net.Storage
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<object, string> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -27,6 +29,7 @@ namespace WebExtensions.Net.Storage
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<object, string> callback)
         {
             return InvokeVoidAsync("removeListener", callback);

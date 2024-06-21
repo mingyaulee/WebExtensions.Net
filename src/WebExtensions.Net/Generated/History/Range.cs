@@ -10,11 +10,13 @@ namespace WebExtensions.Net.History
     public partial class Range : BaseObject
     {
         /// <summary>Items added to history before this date.</summary>
+        [JsAccessPath("endTime")]
         [JsonPropertyName("endTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Date EndTime { get; set; }
 
         /// <summary>Items added to history after this date.</summary>
+        [JsAccessPath("startTime")]
         [JsonPropertyName("startTime")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Date StartTime { get; set; }

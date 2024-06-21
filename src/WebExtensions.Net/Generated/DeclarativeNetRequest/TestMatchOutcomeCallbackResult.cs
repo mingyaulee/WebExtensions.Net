@@ -10,6 +10,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     public partial class TestMatchOutcomeCallbackResult : BaseObject
     {
         /// <summary>The rules (if any) that match the hypothetical request.</summary>
+        [JsAccessPath("matchedRules")]
         [JsonPropertyName("matchedRules")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<MatchedRule> MatchedRules { get; set; }

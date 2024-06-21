@@ -13,6 +13,7 @@ namespace WebExtensions.Net.Menus
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a menu is shown. The extension can add, modify or remove menu items and call menus.refresh() to update the menu.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<Info, Tab> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -21,6 +22,7 @@ namespace WebExtensions.Net.Menus
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<Info, Tab> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -28,6 +30,7 @@ namespace WebExtensions.Net.Menus
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<Info, Tab> callback)
         {
             return InvokeVoidAsync("removeListener", callback);

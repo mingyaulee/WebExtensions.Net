@@ -9,11 +9,13 @@ namespace WebExtensions.Net.Bookmarks
     public partial class Destination : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("index")]
         [JsonPropertyName("index")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Index { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("parentId")]
         [JsonPropertyName("parentId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ParentId { get; set; }

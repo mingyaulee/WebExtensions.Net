@@ -9,10 +9,12 @@ namespace WebExtensions.Net.Tabs
     public partial class DetachInfo : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("oldPosition")]
         [JsonPropertyName("oldPosition")]
         public int OldPosition { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("oldWindowId")]
         [JsonPropertyName("oldWindowId")]
         public int OldWindowId { get; set; }
     }

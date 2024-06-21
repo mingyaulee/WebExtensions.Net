@@ -9,11 +9,13 @@ namespace WebExtensions.Net.WebRequest
     public partial class AuthCredentials : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("password")]
         [JsonPropertyName("password")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Password { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("username")]
         [JsonPropertyName("username")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Username { get; set; }

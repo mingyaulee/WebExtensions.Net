@@ -12,6 +12,7 @@ namespace WebExtensions.Net.Notifications
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when the notification closed, either by the system or by user action.</param>
+        [JsAccessPath("addListener")]
         public virtual ValueTask AddListener(Action<string, bool> callback)
         {
             return InvokeVoidAsync("addListener", callback);
@@ -20,6 +21,7 @@ namespace WebExtensions.Net.Notifications
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
+        [JsAccessPath("hasListener")]
         public virtual ValueTask<bool> HasListener(Action<string, bool> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
@@ -27,6 +29,7 @@ namespace WebExtensions.Net.Notifications
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
+        [JsAccessPath("removeListener")]
         public virtual ValueTask RemoveListener(Action<string, bool> callback)
         {
             return InvokeVoidAsync("removeListener", callback);

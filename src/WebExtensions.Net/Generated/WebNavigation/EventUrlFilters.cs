@@ -11,6 +11,7 @@ namespace WebExtensions.Net.WebNavigation
     public partial class EventUrlFilters : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("url")]
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<UrlFilter> Url { get; set; }

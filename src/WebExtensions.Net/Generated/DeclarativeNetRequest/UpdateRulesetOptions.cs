@@ -10,11 +10,13 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     public partial class UpdateRulesetOptions : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("disableRulesetIds")]
         [JsonPropertyName("disableRulesetIds")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> DisableRulesetIds { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("enableRulesetIds")]
         [JsonPropertyName("enableRulesetIds")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> EnableRulesetIds { get; set; }

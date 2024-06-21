@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Runtime
     public partial class LastError : BaseObject
     {
         /// <summary>Details about the error which occurred.</summary>
+        [JsAccessPath("message")]
         [JsonPropertyName("message")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Message { get; set; }

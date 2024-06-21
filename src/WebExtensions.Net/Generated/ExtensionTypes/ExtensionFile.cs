@@ -10,6 +10,7 @@ namespace WebExtensions.Net.ExtensionTypes
     public partial class ExtensionFile : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("file")]
         [JsonPropertyName("file")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ExtensionUrl File { get; set; }

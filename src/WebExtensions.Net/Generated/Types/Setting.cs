@@ -10,6 +10,7 @@ namespace WebExtensions.Net.Types
     {
         /// <summary>Clears the setting, restoring any default value.</summary>
         /// <param name="details">Which setting to clear.</param>
+        [JsAccessPath("clear")]
         public virtual ValueTask Clear(ClearDetails details)
         {
             return InvokeVoidAsync("clear", details);
@@ -18,6 +19,7 @@ namespace WebExtensions.Net.Types
         /// <summary>Gets the value of a setting.</summary>
         /// <param name="details">Which setting to consider.</param>
         /// <returns>Details of the currently effective value.</returns>
+        [JsAccessPath("get")]
         public virtual ValueTask<CallbackDetails> Get(GetDetails details)
         {
             return InvokeAsync<CallbackDetails>("get", details);
@@ -25,6 +27,7 @@ namespace WebExtensions.Net.Types
 
         /// <summary>Sets the value of a setting.</summary>
         /// <param name="details">Which setting to change.</param>
+        [JsAccessPath("set")]
         public virtual ValueTask Set(SetDetails details)
         {
             return InvokeVoidAsync("set", details);

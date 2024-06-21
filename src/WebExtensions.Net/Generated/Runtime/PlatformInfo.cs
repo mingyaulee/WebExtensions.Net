@@ -9,10 +9,12 @@ namespace WebExtensions.Net.Runtime
     public partial class PlatformInfo : BaseObject
     {
         /// <summary>The machine's processor architecture.</summary>
+        [JsAccessPath("arch")]
         [JsonPropertyName("arch")]
         public PlatformArch Arch { get; set; }
 
         /// <summary>The operating system the browser is running on.</summary>
+        [JsAccessPath("os")]
         [JsonPropertyName("os")]
         public PlatformOs Os { get; set; }
     }

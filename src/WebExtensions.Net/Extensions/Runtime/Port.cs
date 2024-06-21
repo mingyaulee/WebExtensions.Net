@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using JsBind.Net;
 
 namespace WebExtensions.Net.Runtime
 {
@@ -6,6 +7,7 @@ namespace WebExtensions.Net.Runtime
     {
         /// <summary>Post a message to the port.</summary>
         /// <param name="message">JSON-serializable message.</param>
+        [JsAccessPath("postMessage")]
         public virtual ValueTask PostMessage(object message)
         {
             return InvokeVoidAsync("postMessage", message);

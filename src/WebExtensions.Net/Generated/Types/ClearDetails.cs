@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Types
     public partial class ClearDetails : BaseObject
     {
         /// <summary>Where to clear the setting (default: regular).</summary>
+        [JsAccessPath("scope")]
         [JsonPropertyName("scope")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public SettingScope? Scope { get; set; }

@@ -9,10 +9,12 @@ namespace WebExtensions.Net.Tabs
     public partial class AttachInfo : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("newPosition")]
         [JsonPropertyName("newPosition")]
         public int NewPosition { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("newWindowId")]
         [JsonPropertyName("newWindowId")]
         public int NewWindowId { get; set; }
     }

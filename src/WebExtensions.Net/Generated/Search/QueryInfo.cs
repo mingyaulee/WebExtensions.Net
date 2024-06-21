@@ -9,16 +9,19 @@ namespace WebExtensions.Net.Search
     public partial class QueryInfo : BaseObject
     {
         /// <summary>Location where search results should be displayed. CURRENT_TAB is the default.</summary>
+        [JsAccessPath("disposition")]
         [JsonPropertyName("disposition")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Disposition? Disposition { get; set; }
 
         /// <summary>Location where search results should be displayed. tabId cannot be used with disposition.</summary>
+        [JsAccessPath("tabId")]
         [JsonPropertyName("tabId")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? TabId { get; set; }
 
         /// <summary>String to query with the default search provider.</summary>
+        [JsAccessPath("text")]
         [JsonPropertyName("text")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Text { get; set; }

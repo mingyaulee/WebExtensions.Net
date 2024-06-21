@@ -10,11 +10,13 @@ namespace WebExtensions.Net.Identity
     public partial class LaunchWebAuthFlowDetails : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("interactive")]
         [JsonPropertyName("interactive")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Interactive { get; set; }
 
         /// <summary></summary>
+        [JsAccessPath("url")]
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public HttpUrl Url { get; set; }
