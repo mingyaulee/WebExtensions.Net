@@ -18,6 +18,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
                 .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                .WriteWithConverter(new AttributeJsAccessPathCodeConverter(clrPropertyInfo.Name))
                 .WriteWithConverter(new AttributeCodeConverter($"JsonPropertyName(\"{clrPropertyInfo.Name}\")"))
                 .WriteWithConverter(clrPropertyInfo.PropertyType.IsNullable ? new AttributeCodeConverter($"JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)") : null)
                 .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; set; }}");

@@ -23,6 +23,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             {
                 codeWriter.PublicProperties
                     .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+                    .WriteWithConverter(new AttributeJsAccessPathCodeConverter(clrPropertyInfo.Name))
                     .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
                     .WriteLine($"{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
             }

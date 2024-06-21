@@ -8,6 +8,8 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
         public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
+            codeFile.Attributes.Add(new AttributeJsAccessPathCodeConverter("browser"));
+
             // Api Root has properties and no functions or events
             foreach (var property in clrTypeInfo.Properties)
             {

@@ -10,6 +10,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
         public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
+            codeFile.Attributes.Add(new AttributeJsAccessPathCodeConverter((string)clrTypeInfo.Metadata[Constants.TypeMetadata.ApiNamespace]));
 
             foreach (var property in GetProperties(clrTypeInfo))
             {

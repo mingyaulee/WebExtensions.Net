@@ -18,6 +18,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrMethodInfo.Description))
                 .WriteWithConverters(clrMethodInfo.Parameters.Select(parameterInfo => new CommentParamCodeSectionConverter(parameterInfo.Name, parameterInfo.Description)))
                 .WriteWithConverter(clrMethodInfo.Return.HasReturnType ? new CommentReturnsCodeConverter(clrMethodInfo.Return.Description) : null)
+                .WriteWithConverter(new AttributeJsAccessPathCodeConverter(clrMethodInfo.Name))
                 .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
                 .WriteLine($"{methodSignature.MethodReturnType} {clrMethodInfo.PublicName}({methodSignature.MethodArguments});");
         }

@@ -15,6 +15,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         {
             codeWriter.PublicProperties
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+                .WriteWithConverter(new AttributeJsAccessPathCodeConverter((string)clrPropertyInfo.PropertyType.Metadata[Constants.TypeMetadata.ApiNamespace]))
                 .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
                 .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
         }
