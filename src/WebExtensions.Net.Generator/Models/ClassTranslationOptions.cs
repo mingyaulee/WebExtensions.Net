@@ -8,6 +8,7 @@ namespace WebExtensions.Net.Generator.Models
         public IDictionary<string, string> NamespaceAliases { get; set; }
         public IDictionary<string, string> Aliases { get; set; }
         public IDictionary<string, string> ReplaceNames { get; set; }
+        public IDictionary<string, string> ReplacePropertyTypes { get; init; }
 #pragma warning restore CS8618
     }
 }

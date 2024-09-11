@@ -32,7 +32,7 @@ namespace WebExtensions.Net.Runtime
         [JsAccessPath("onMessage")]
         [JsonPropertyName("onMessage")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Event OnMessage { get; set; }
+        public OnMessageEvent OnMessage { get; set; }
 
         /// <summary>This property will 'b'only'/b' be present on ports passed to onConnect/onConnectExternal listeners.</summary>
         [JsAccessPath("sender")]

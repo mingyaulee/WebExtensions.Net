@@ -11,10 +11,12 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
     public class PropertyDefinitionTranslator
     {
         private readonly ClrTypeStore clrTypeStore;
+        private readonly ClassTranslationOptions classTranslationOptions;
 
-        public PropertyDefinitionTranslator(ClrTypeStore clrTypeStore)
+        public PropertyDefinitionTranslator(ClrTypeStore clrTypeStore, ClassTranslationOptions classTranslationOptions)
         {
             this.clrTypeStore = clrTypeStore;
+            this.classTranslationOptions = classTranslationOptions;
         }
 
         public ClrPropertyInfo TranslatePropertyDefinition(string propertyName, PropertyDefinition propertyDefinition, NamespaceEntity namespaceEntity, ClrTypeInfo clrTypeInfo)
@@ -31,6 +33,15 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             if (propertyDefinition.IsOptional && !propertyType.IsNullable)
             {
                 propertyType = propertyType.MakeNullable();
+            }
+
+            if (classTranslationOptions.ReplacePropertyTypes is not null &&
+                classTranslationOptions.ReplacePropertyTypes.TryGetValue($"{clrTypeInfo.CSharpName}.{propertyName}", out var replacePropertyType))
+            {
+                propertyType = clrTypeStore.GetClrType(new TypeReference()
+                {
+                    Ref = replacePropertyType
+                }, new NamespaceEntity(null, string.Empty, string.Empty));
             }
 
             clrTypeInfo.AddRequiredNamespaces(propertyType.ReferenceNamespaces);
