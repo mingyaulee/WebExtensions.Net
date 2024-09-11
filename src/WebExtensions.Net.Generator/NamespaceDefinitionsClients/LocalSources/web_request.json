@@ -9,6 +9,7 @@
             "type": "string",
             "enum": [
               "webRequest",
+              "webRequestAuthProvider",
               "webRequestBlocking",
               "webRequestFilterResponse",
               "webRequestFilterResponse.serviceWorkerScript"
@@ -1099,7 +1100,7 @@
             }
           },
           {
-            "name": "callback",
+            "name": "asyncCallback",
             "optional": true,
             "type": "function",
             "parameters": [

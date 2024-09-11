@@ -171,7 +171,7 @@
         ]
       },
       {
-        "id": "StorageAreaSync",
+        "id": "StorageAreaWithUsage",
         "type": "object",
         "functions": [
           {
@@ -321,7 +321,7 @@
     "properties": {
       "sync": {
         "description": "Items in the \u003Ccode\u003Esync\u003C/code\u003E storage area are synced by the browser.",
-        "$ref": "StorageAreaSync",
+        "$ref": "StorageAreaWithUsage",
         "properties": {
           "QUOTA_BYTES": {
             "description": "The maximum total amount (in bytes) of data that can be stored in sync storage, as measured by the JSON stringification of every value plus every key\u0027s length. Updates that would cause this limit to be exceeded fail immediately and set $(ref:runtime.lastError).",
@@ -372,7 +372,12 @@
       },
       "session": {
         "description": "Items in the \u003Ccode\u003Esession\u003C/code\u003E storage area are kept in memory, and only until the either browser or extension is closed or reloaded.",
-        "$ref": "StorageArea"
+        "$ref": "StorageAreaWithUsage",
+        "properties": {
+          "QUOTA_BYTES": {
+            "description": "The maximum amount of data (in bytes, currently at 10MB) that can be stored in session storage, as measured by the StructuredCloneHolder of every value plus every key\u0027s length."
+          }
+        }
       }
     },
     "events": [

@@ -1,4 +1,5 @@
 using JsBind.Net;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -36,6 +37,10 @@ namespace WebExtensions.Net.Runtime
         /// <summary>Fired when a message is sent from another extension/app. Cannot be used in a content script.</summary>
         [JsAccessPath("onMessageExternal")]
         OnMessageExternalEvent OnMessageExternal { get; }
+
+        /// <summary>Fired when a runtime performance issue is detected with the extension. Observe this event to be proactively notified of runtime performance problems with the extension.</summary>
+        [JsAccessPath("onPerformanceWarning")]
+        OnPerformanceWarningEvent OnPerformanceWarning { get; }
 
         /// <summary>Fired when a profile that has this extension installed first starts up. This event is not fired for incognito profiles.</summary>
         [JsAccessPath("onStartup")]
@@ -75,6 +80,12 @@ namespace WebExtensions.Net.Runtime
         /// <returns></returns>
         [JsAccessPath("getBrowserInfo")]
         ValueTask<BrowserInfo> GetBrowserInfo();
+
+        /// <summary>Fetches information about active contexts associated with this extension</summary>
+        /// <param name="filter">A filter to find matching context.</param>
+        /// <returns>The matching contexts, if any.</returns>
+        [JsAccessPath("getContexts")]
+        ValueTask<IEnumerable<ExtensionContext>> GetContexts(ContextFilter filter);
 
         /// <summary>Get the frameId of any window global or frame element.</summary>
         /// <param name="target">A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.</param>

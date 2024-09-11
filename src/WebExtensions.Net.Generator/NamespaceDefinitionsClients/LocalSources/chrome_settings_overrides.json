@@ -104,6 +104,7 @@
                   "search_form": {
                     "optional": true,
                     "type": "string",
+                    "deprecated": "Unsupported on Firefox at this time.",
                     "format": "url",
                     "pattern": "^(https://|http://(localhost|127\\.0\\.0\\.1|\\[::1\\])(:\\d*)?(/|$)).*$"
                   },

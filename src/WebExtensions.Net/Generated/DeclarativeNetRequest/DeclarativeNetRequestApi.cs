@@ -21,13 +21,22 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         public double GUARANTEED_MINIMUM_STATIC_RULES => GetProperty<double>(nameof(GUARANTEED_MINIMUM_STATIC_RULES));
 
         /// <inheritdoc />
+        public double MAX_NUMBER_OF_DISABLED_STATIC_RULES => GetProperty<double>(nameof(MAX_NUMBER_OF_DISABLED_STATIC_RULES));
+
+        /// <inheritdoc />
         public double MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES => GetProperty<double>(nameof(MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES));
+
+        /// <inheritdoc />
+        public double MAX_NUMBER_OF_DYNAMIC_RULES => GetProperty<double>(nameof(MAX_NUMBER_OF_DYNAMIC_RULES));
 
         /// <inheritdoc />
         public double MAX_NUMBER_OF_ENABLED_STATIC_RULESETS => GetProperty<double>(nameof(MAX_NUMBER_OF_ENABLED_STATIC_RULESETS));
 
         /// <inheritdoc />
         public double MAX_NUMBER_OF_REGEX_RULES => GetProperty<double>(nameof(MAX_NUMBER_OF_REGEX_RULES));
+
+        /// <inheritdoc />
+        public double MAX_NUMBER_OF_SESSION_RULES => GetProperty<double>(nameof(MAX_NUMBER_OF_SESSION_RULES));
 
         /// <inheritdoc />
         public double MAX_NUMBER_OF_STATIC_RULESETS => GetProperty<double>(nameof(MAX_NUMBER_OF_STATIC_RULESETS));
@@ -42,9 +51,15 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Rule>> GetDynamicRules()
+        public virtual ValueTask<IEnumerable<int>> GetDisabledRuleIds(GetDisabledRuleIdsOptions options)
         {
-            return InvokeAsync<IEnumerable<Rule>>("getDynamicRules");
+            return InvokeAsync<IEnumerable<int>>("getDisabledRuleIds", options);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<IEnumerable<Rule>> GetDynamicRules(GetRulesFilter filter = null)
+        {
+            return InvokeAsync<IEnumerable<Rule>>("getDynamicRules", filter);
         }
 
         /// <inheritdoc />
@@ -54,9 +69,9 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<Rule>> GetSessionRules()
+        public virtual ValueTask<IEnumerable<Rule>> GetSessionRules(GetRulesFilter filter = null)
         {
-            return InvokeAsync<IEnumerable<Rule>>("getSessionRules");
+            return InvokeAsync<IEnumerable<Rule>>("getSessionRules", filter);
         }
 
         /// <inheritdoc />
@@ -87,6 +102,12 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         public virtual ValueTask UpdateSessionRules(UpdateSessionRulesOptions options)
         {
             return InvokeVoidAsync("updateSessionRules", options);
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask UpdateStaticRules(UpdateStaticRulesOptions options)
+        {
+            return InvokeVoidAsync("updateStaticRules", options);
         }
     }
 }

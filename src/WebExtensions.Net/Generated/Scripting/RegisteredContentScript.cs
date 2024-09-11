@@ -47,6 +47,12 @@ namespace WebExtensions.Net.Scripting
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IEnumerable<string> Matches { get; set; }
 
+        /// <summary>If matchOriginAsFallback is true, then the code is also injected in about:, data:, blob: when their origin matches the pattern in 'matches', even if the actual document origin is opaque (due to the use of CSP sandbox or iframe sandbox). Match patterns in 'matches' must specify a wildcard path glob. By default it is <c>false</c>.</summary>
+        [JsAccessPath("matchOriginAsFallback")]
+        [JsonPropertyName("matchOriginAsFallback")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? MatchOriginAsFallback { get; set; }
+
         /// <summary>Specifies if this content script will persist into future sessions. Defaults to true.</summary>
         [JsAccessPath("persistAcrossSessions")]
         [JsonPropertyName("persistAcrossSessions")]
@@ -58,5 +64,11 @@ namespace WebExtensions.Net.Scripting
         [JsonPropertyName("runAt")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public RunAt? RunAt { get; set; }
+
+        /// <summary>The JavaScript world for a script to execute within. Defaults to "ISOLATED".</summary>
+        [JsAccessPath("world")]
+        [JsonPropertyName("world")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ExecutionWorld? World { get; set; }
     }
 }

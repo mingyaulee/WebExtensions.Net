@@ -71,6 +71,15 @@
         ]
       },
       {
+        "id": "ExecutionWorld",
+        "description": "The JavaScript world for a script to execute within. \u003Ccode\u003EISOLATED\u003C/code\u003E is the default execution environment of content scripts, \u003Ccode\u003EMAIN\u003C/code\u003E is the web page\u0027s execution environment.",
+        "type": "string",
+        "enum": [
+          "ISOLATED",
+          "MAIN"
+        ]
+      },
+      {
         "id": "CSSOrigin",
         "description": "The origin of the CSS to inject, this affects the cascading order (priority) of the stylesheet.",
         "type": "string",

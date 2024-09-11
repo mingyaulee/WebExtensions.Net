@@ -2,19 +2,18 @@ using JsBind.Net;
 using System;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
-using WebExtensions.Net.Tabs;
 
-namespace WebExtensions.Net.Commands
+namespace WebExtensions.Net.Runtime
 {
     // Type Class
-    /// <summary>Fired when a registered command is activated using a keyboard shortcut.</summary>
+    /// <summary>Fired when a runtime performance issue is detected with the extension. Observe this event to be proactively notified of runtime performance problems with the extension.</summary>
     [BindAllProperties]
-    public partial class OnCommandEvent : Event
+    public partial class OnPerformanceWarningEvent : Event
     {
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
-        /// <param name="callback">Fired when a registered command is activated using a keyboard shortcut.</param>
+        /// <param name="callback">Fired when a runtime performance issue is detected with the extension. Observe this event to be proactively notified of runtime performance problems with the extension.</param>
         [JsAccessPath("addListener")]
-        public virtual ValueTask AddListener(Action<string, Tab> callback)
+        public virtual ValueTask AddListener(Action<OnPerformanceWarningEventCallbackDetails> callback)
         {
             return InvokeVoidAsync("addListener", callback);
         }
@@ -23,7 +22,7 @@ namespace WebExtensions.Net.Commands
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
         [JsAccessPath("hasListener")]
-        public virtual ValueTask<bool> HasListener(Action<string, Tab> callback)
+        public virtual ValueTask<bool> HasListener(Action<OnPerformanceWarningEventCallbackDetails> callback)
         {
             return InvokeAsync<bool>("hasListener", callback);
         }
@@ -31,7 +30,7 @@ namespace WebExtensions.Net.Commands
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         [JsAccessPath("removeListener")]
-        public virtual ValueTask RemoveListener(Action<string, Tab> callback)
+        public virtual ValueTask RemoveListener(Action<OnPerformanceWarningEventCallbackDetails> callback)
         {
             return InvokeVoidAsync("removeListener", callback);
         }

@@ -59,7 +59,12 @@
             "type": "boolean"
           },
           "matchAboutBlank": {
-            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Code cannot be inserted in top-level about:-frames. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
+            "description": "If matchAboutBlank is true, then the code is also injected in about:blank and about:srcdoc frames if your extension has access to its parent document. Ignored if matchOriginAsFallback is specified. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "matchOriginAsFallback": {
+            "description": "If matchOriginAsFallback is true, then the code is also injected in about:, data:, blob: when their origin matches the pattern in \u0027matches\u0027, even if the actual document origin is opaque (due to the use of CSP sandbox or iframe sandbox). Match patterns in \u0027matches\u0027 must specify a wildcard path glob. By default it is \u003Ccode\u003Efalse\u003C/code\u003E.",
             "optional": true,
             "type": "boolean"
           },
@@ -67,6 +72,11 @@
             "description": "The soonest that the JavaScript or CSS will be injected into the tab. Defaults to \u0022document_idle\u0022.",
             "optional": true,
             "$ref": "extensionTypes.RunAt"
+          },
+          "world": {
+            "description": "The JavaScript world for a script to execute within. Defaults to \u0022ISOLATED\u0022.",
+            "optional": true,
+            "$ref": "extensionTypes.ExecutionWorld"
           },
           "cookieStoreId": {
             "description": "limit the set of matched tabs to those that belong to the given cookie store id",

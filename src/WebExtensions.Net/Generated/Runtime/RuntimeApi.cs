@@ -1,4 +1,5 @@
 using JsBind.Net;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebExtensions.Net.Events;
@@ -13,6 +14,7 @@ namespace WebExtensions.Net.Runtime
         private OnInstalledEvent _onInstalled;
         private OnMessageEvent _onMessage;
         private OnMessageExternalEvent _onMessageExternal;
+        private OnPerformanceWarningEvent _onPerformanceWarning;
         private Event _onStartup;
         private Event _onSuspend;
         private Event _onSuspendCanceled;
@@ -102,6 +104,20 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
+        public OnPerformanceWarningEvent OnPerformanceWarning
+        {
+            get
+            {
+                if (_onPerformanceWarning is null)
+                {
+                    _onPerformanceWarning = new OnPerformanceWarningEvent();
+                    _onPerformanceWarning.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onPerformanceWarning"));
+                }
+                return _onPerformanceWarning;
+            }
+        }
+
+        /// <inheritdoc />
         public Event OnStartup
         {
             get
@@ -179,6 +195,12 @@ namespace WebExtensions.Net.Runtime
         public virtual ValueTask<BrowserInfo> GetBrowserInfo()
         {
             return InvokeAsync<BrowserInfo>("getBrowserInfo");
+        }
+
+        /// <inheritdoc />
+        public virtual ValueTask<IEnumerable<ExtensionContext>> GetContexts(ContextFilter filter)
+        {
+            return InvokeAsync<IEnumerable<ExtensionContext>>("getContexts", filter);
         }
 
         /// <inheritdoc />

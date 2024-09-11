@@ -392,6 +392,7 @@
         "description": "Record an event in Telemetry. Throws when trying to record an unknown event.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060recordEvent\u0060 has been deprecated since Firefox 132 (see bug 1894533)",
         "parameters": [
           {
             "name": "category",
@@ -445,6 +446,7 @@
         "description": "Register new events to record them from addons. See nsITelemetry.idl for more details.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060registerEvents\u0060 has been deprecated since Firefox 132 (see bug 1894533)",
         "parameters": [
           {
             "name": "category",

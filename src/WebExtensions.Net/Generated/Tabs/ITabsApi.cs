@@ -62,7 +62,7 @@ namespace WebExtensions.Net.Tabs
         [JsAccessPath("captureTab")]
         ValueTask CaptureTab(int? tabId = null, ImageDetails options = null);
 
-        /// <summary>Captures an area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[&amp;lt;all_urls&amp;gt;] permission to use this method.</summary>
+        /// <summary>Captures an area of the currently active tab in the specified window. You must have &amp;lt;all_urls&amp;gt; or activeTab permission to use this method.</summary>
         /// <param name="windowId">The target window. Defaults to the $(topic:current-window)[current window].</param>
         /// <param name="options"></param>
         /// <returns>A data URL which encodes an image of the visible area of the captured tab. May be assigned to the 'src' property of an HTML Image element for display.</returns>

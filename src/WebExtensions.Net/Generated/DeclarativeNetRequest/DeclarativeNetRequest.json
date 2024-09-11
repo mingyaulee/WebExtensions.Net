@@ -388,6 +388,20 @@
             }
           }
         }
+      },
+      {
+        "id": "GetRulesFilter",
+        "type": "object",
+        "properties": {
+          "ruleIds": {
+            "description": "If specified, only rules with matching IDs are included.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
       }
     ],
     "properties": {
@@ -404,12 +418,24 @@
         "description": "The maximum number of static Rulesets an extension can specify as part of the rule_resources manifest key.",
         "type": "number"
       },
+      "MAX_NUMBER_OF_DISABLED_STATIC_RULES": {
+        "description": "The maximum number of static rules that can be disabled on each static ruleset.",
+        "type": "number"
+      },
       "MAX_NUMBER_OF_ENABLED_STATIC_RULESETS": {
         "description": "The maximum number of static Rulesets an extension can enable at any one time.",
         "type": "number"
       },
       "MAX_NUMBER_OF_DYNAMIC_AND_SESSION_RULES": {
-        "description": "The maximum number of dynamic and session rules an extension can add. NOTE: in the Firefox we are enforcing this limit to the session and dynamic rules count separately, instead of enforcing it to the rules count for both combined as the Chrome implementation does.",
+        "description": "Deprecated property returning the maximum number of dynamic and session rules an extension can add, replaced by MAX_NUMBER_OF_DYNAMIC_RULES/MAX_NUMBER_OF_SESSION_RULES.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_DYNAMIC_RULES": {
+        "description": "The maximum number of dynamic session rules an extension can add.",
+        "type": "number"
+      },
+      "MAX_NUMBER_OF_SESSION_RULES": {
+        "description": "The maximum number of dynamic session rules an extension can add.",
         "type": "number"
       },
       "MAX_NUMBER_OF_REGEX_RULES": {
@@ -518,7 +544,7 @@
       },
       {
         "name": "updateEnabledRulesets",
-        "description": "Returns the ids for the current set of enabled static rulesets.",
+        "description": "Modifies the static rulesets enabled/disabled state.",
         "async": "callback",
         "type": "function",
         "parameters": [
@@ -550,6 +576,42 @@
         ]
       },
       {
+        "name": "updateStaticRules",
+        "description": "Modified individual static rules enabled/disabled state. Changes to rules belonging to a disabled ruleset will take effect when the ruleset becomes enabled.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "rulesetId": {
+                "type": "string"
+              },
+              "disableRuleIds": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "enableRuleIds": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": []
+          }
+        ]
+      },
+      {
         "name": "getAvailableStaticRuleCount",
         "description": "Returns the remaining number of static rules an extension can enable",
         "async": "callback",
@@ -568,11 +630,47 @@
         ]
       },
       {
+        "name": "getDisabledRuleIds",
+        "description": "Returns the list of individual disabled static rules from a given static ruleset id.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "rulesetId": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "disabledRuleIds",
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "getDynamicRules",
         "description": "Returns the current set of dynamic rules for the extension.",
         "async": "callback",
         "type": "function",
         "parameters": [
+          {
+            "name": "filter",
+            "description": "An object to filter the set of dynamic rules for the extension.",
+            "optional": true,
+            "$ref": "GetRulesFilter"
+          },
           {
             "name": "callback",
             "type": "function",
@@ -594,6 +692,12 @@
         "async": "callback",
         "type": "function",
         "parameters": [
+          {
+            "name": "filter",
+            "description": "An object to filter the set of session scoped rules for the extension.",
+            "optional": true,
+            "$ref": "GetRulesFilter"
+          },
           {
             "name": "callback",
             "type": "function",

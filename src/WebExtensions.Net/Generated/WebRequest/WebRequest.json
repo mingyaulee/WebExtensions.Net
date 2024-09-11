@@ -1080,7 +1080,7 @@
             }
           },
           {
-            "name": "callback",
+            "name": "asyncCallback",
             "optional": true,
             "type": "function",
             "parameters": [

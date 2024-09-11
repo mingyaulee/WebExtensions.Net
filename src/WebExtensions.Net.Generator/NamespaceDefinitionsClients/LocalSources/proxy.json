@@ -88,7 +88,7 @@
             "type": "boolean"
           },
           "proxyDNS": {
-            "description": "Proxy DNS when using SOCKS v5.",
+            "description": "Proxy DNS when using SOCKS. DNS queries get leaked to the network when set to false. True by default for SOCKS v5. False by default for SOCKS v4.",
             "optional": true,
             "type": "boolean"
           },

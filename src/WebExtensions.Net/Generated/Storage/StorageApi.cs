@@ -35,9 +35,9 @@ namespace WebExtensions.Net.Storage
         }
 
         /// <inheritdoc />
-        public StorageArea Session => GetProperty<StorageArea>("session");
+        public StorageAreaWithUsage Session => GetProperty<StorageAreaWithUsage>("session");
 
         /// <inheritdoc />
-        public StorageAreaSync Sync => GetProperty<StorageAreaSync>("sync");
+        public StorageAreaWithUsage Sync => GetProperty<StorageAreaWithUsage>("sync");
     }
 }

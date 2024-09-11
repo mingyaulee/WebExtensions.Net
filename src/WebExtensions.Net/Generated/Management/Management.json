@@ -38,12 +38,13 @@
       },
       {
         "id": "ExtensionInstallType",
-        "description": "How the extension was installed. One of\u003Cbr\u003E\u003Cvar\u003Edevelopment\u003C/var\u003E: The extension was loaded unpacked in developer mode,\u003Cbr\u003E\u003Cvar\u003Enormal\u003C/var\u003E: The extension was installed normally via an .xpi file,\u003Cbr\u003E\u003Cvar\u003Esideload\u003C/var\u003E: The extension was installed by other software on the machine,\u003Cbr\u003E\u003Cvar\u003Eother\u003C/var\u003E: The extension was installed by other means.",
+        "description": "How the extension was installed. One of\u003Cbr\u003E\u003Cvar\u003Edevelopment\u003C/var\u003E: The extension was loaded unpacked in developer mode,\u003Cbr\u003E\u003Cvar\u003Enormal\u003C/var\u003E: The extension was installed normally via an .xpi file,\u003Cbr\u003E\u003Cvar\u003Esideload\u003C/var\u003E: The extension was installed by other software on the machine,\u003Cbr\u003E\u003Cvar\u003Eadmin\u003C/var\u003E: The extension was installed by policy,\u003Cbr\u003E\u003Cvar\u003Eother\u003C/var\u003E: The extension was installed by other means.",
         "type": "string",
         "enum": [
           "development",
           "normal",
           "sideload",
+          "admin",
           "other"
         ]
       },

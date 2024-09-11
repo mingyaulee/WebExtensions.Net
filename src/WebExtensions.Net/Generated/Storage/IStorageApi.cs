@@ -20,10 +20,10 @@ namespace WebExtensions.Net.Storage
 
         /// <summary>Items in the <c>session</c> storage area are kept in memory, and only until the either browser or extension is closed or reloaded.</summary>
         [JsAccessPath("session")]
-        StorageArea Session { get; }
+        StorageAreaWithUsage Session { get; }
 
         /// <summary>Items in the <c>sync</c> storage area are synced by the browser.</summary>
         [JsAccessPath("sync")]
-        StorageAreaSync Sync { get; }
+        StorageAreaWithUsage Sync { get; }
     }
 }

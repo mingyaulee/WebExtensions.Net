@@ -116,7 +116,7 @@
             "description": "The ID of the tab that opened this tab, if any. This property is only present if the opener tab still exists.",
             "optional": true,
             "type": "integer",
-            "minimum": 0
+            "minimum": -1
           },
           "highlighted": {
             "description": "Whether the tab is highlighted. Works as an alias of active",
@@ -651,7 +651,7 @@
                 "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as the newly created tab.",
                 "optional": true,
                 "type": "integer",
-                "minimum": 0
+                "minimum": -1
               },
               "cookieStoreId": {
                 "description": "The CookieStoreId for the tab that opened this tab.",
@@ -865,7 +865,7 @@
                 "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",
                 "optional": true,
                 "type": "integer",
-                "minimum": 0
+                "minimum": -1
               },
               "screen": {
                 "description": "True for any screen sharing, or a string to specify type of screen sharing.",
@@ -1014,7 +1014,7 @@
                 "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",
                 "optional": true,
                 "type": "integer",
-                "minimum": 0
+                "minimum": -1
               },
               "loadReplace": {
                 "description": "Whether the load should replace the current history entry for the tab.",
@@ -1275,7 +1275,7 @@
       },
       {
         "name": "captureVisibleTab",
-        "description": "Captures an area of the currently active tab in the specified window. You must have $(topic:declare_permissions)[\u0026lt;all_urls\u0026gt;] permission to use this method.",
+        "description": "Captures an area of the currently active tab in the specified window. You must have \u0026lt;all_urls\u0026gt; or activeTab permission to use this method.",
         "async": "callback",
         "type": "function",
         "parameters": [
