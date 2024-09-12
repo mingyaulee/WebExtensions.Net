@@ -45,10 +45,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Order = 1)]
-        public async Task GetUILanguage()
+        public void GetUILanguage()
         {
             // Act
-            var uiLanguage = await webExtensionsApi.I18n.GetUILanguage();
+            var uiLanguage = webExtensionsApi.I18n.GetUILanguage();
 
             // Assert
             uiLanguage.Should().NotBeNullOrEmpty();
@@ -56,7 +56,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Order = 2)]
-        public async Task GetMessage()
+        public void GetMessage()
         {
             if (!shouldTestLocalization)
             {
@@ -64,14 +64,14 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             }
 
             // Act
-            var message = await webExtensionsApi.I18n.GetMessage(testMessageName, null);
+            var message = webExtensionsApi.I18n.GetMessage(testMessageName, null);
 
             // Assert
             message.Should().Be(testMessageText);
         }
 
         [Fact(Order = 2)]
-        public async Task GetMessageWithPlaceholders()
+        public void GetMessageWithPlaceholders()
         {
             if (!shouldTestLocalization)
             {
@@ -86,7 +86,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             };
 
             // Act
-            var message = await webExtensionsApi.I18n.GetMessage(testWithPlaceholdersMessageName, placeholders);
+            var message = webExtensionsApi.I18n.GetMessage(testWithPlaceholdersMessageName, placeholders);
 
             // Assert
             message.Should().Be(string.Format(testWithPlaceholdersMessageText, placeholders));

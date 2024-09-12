@@ -26,13 +26,13 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task SetDetectionInterval()
+        public void SetDetectionInterval()
         {
             // Act
-            Func<Task> action = async () => await webExtensionsApi.Idle.SetDetectionInterval(60);
+            Action action = () => webExtensionsApi.Idle.SetDetectionInterval(60);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            action.Should().NotThrow();
         }
     }
 }

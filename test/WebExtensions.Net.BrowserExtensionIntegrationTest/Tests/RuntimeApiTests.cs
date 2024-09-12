@@ -26,20 +26,20 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetManifest()
+        public void GetManifest()
         {
             // Act
-            var manifest = await webExtensionsApi.Runtime.GetManifest();
+            var manifest = webExtensionsApi.Runtime.GetManifest();
 
             // Assert
             manifest.ValueKind.Should().Be(JsonValueKind.Object);
         }
 
         [Fact]
-        public async Task GetURL()
+        public void GetURL()
         {
             // Act
-            var url = await webExtensionsApi.Runtime.GetURL("index.html");
+            var url = webExtensionsApi.Runtime.GetURL("index.html");
 
             // Assert
             url.Should().StartWith("chrome-extension://")

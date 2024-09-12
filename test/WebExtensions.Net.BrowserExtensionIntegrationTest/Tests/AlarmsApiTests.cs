@@ -20,16 +20,16 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Order = 1)]
-        public async Task Create()
+        public void Create()
         {
             // Act
-            Func<Task> action = async () => await webExtensionsApi.Alarms.Create(testAlarmName, new()
+            Action action = () => webExtensionsApi.Alarms.Create(testAlarmName, new()
             {
                 When = testAlarmTime
             });
 
             // Assert
-            await action.Should().NotThrowAsync();
+            action.Should().NotThrow();
         }
 
         [Fact(Order = 2)]

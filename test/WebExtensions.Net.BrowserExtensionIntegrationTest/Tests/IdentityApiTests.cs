@@ -17,10 +17,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact]
-        public async Task GetRedirectURL()
+        public void GetRedirectURL()
         {
             // Act
-            var result = await webExtensionsApi.Identity.GetRedirectURL(testIdentityRedirectUrl);
+            var result = webExtensionsApi.Identity.GetRedirectURL(testIdentityRedirectUrl);
 
             // Assert
             result.Should().NotBeNull();

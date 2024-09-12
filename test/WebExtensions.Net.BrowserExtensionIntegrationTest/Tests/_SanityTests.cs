@@ -18,10 +18,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Description = "Execute API with primitive return type", Order = 1)]
-        public async Task ExecuteAPIWithPrimitiveReturnType()
+        public void ExecuteAPIWithPrimitiveReturnType()
         {
             // Act
-            var createdNotificationId = await webExtensionsApi.Runtime.GetURL("");
+            var createdNotificationId = webExtensionsApi.Runtime.GetURL("");
 
             // Assert
             createdNotificationId.Should().NotBeNullOrEmpty();
@@ -116,20 +116,20 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Description = "Event listener can be added to event", Order = 1)]
-        public async Task EventListenerCanBeAddedToEvent()
+        public void EventListenerCanBeAddedToEvent()
         {
             // Act
-            Func<Task> action = async () => await webExtensionsApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
+            Action action = () => webExtensionsApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            action.Should().NotThrow();
         }
 
         [Fact(Description = "Event listener can be checked if event has the listener", Order = 2)]
-        public async Task EventListenerCanBeCheckedIfTheEventHasTheListener()
+        public void EventListenerCanBeCheckedIfTheEventHasTheListener()
         {
             // Act
-            var isRegistered = await webExtensionsApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
+            var isRegistered = webExtensionsApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
 
             // Assert
             isRegistered.Should().BeTrue();
@@ -148,13 +148,13 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         [Fact(Description = "Event listener can be removed from event", Order = 3)]
-        public async Task EventListenerCanBeRemovedFromEvent()
+        public void EventListenerCanBeRemovedFromEvent()
         {
             // Act
-            Func<Task> action = async () => await webExtensionsApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
+            Action action = () => webExtensionsApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            action.Should().NotThrow();
         }
 
         private void HandleOnStorageChange(object storageItem, string storageArea)
