@@ -1,6 +1,5 @@
 using JsBind.Net;
 using System;
-using System.Threading.Tasks;
 using WebExtensions.Net.Events;
 
 namespace WebExtensions.Net.Downloads
@@ -13,26 +12,20 @@ namespace WebExtensions.Net.Downloads
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fires with the <c>downloadId</c> when a download is erased from history.</param>
         [JsAccessPath("addListener")]
-        public virtual ValueTask AddListener(Action<int> callback)
-        {
-            return InvokeVoidAsync("addListener", callback);
-        }
+        public virtual void AddListener(Action<int> callback)
+            => InvokeVoid("addListener", callback);
 
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
         [JsAccessPath("hasListener")]
-        public virtual ValueTask<bool> HasListener(Action<int> callback)
-        {
-            return InvokeAsync<bool>("hasListener", callback);
-        }
+        public virtual bool HasListener(Action<int> callback)
+            => Invoke<bool>("hasListener", callback);
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         [JsAccessPath("removeListener")]
-        public virtual ValueTask RemoveListener(Action<int> callback)
-        {
-            return InvokeVoidAsync("removeListener", callback);
-        }
+        public virtual void RemoveListener(Action<int> callback)
+            => InvokeVoid("removeListener", callback);
     }
 }

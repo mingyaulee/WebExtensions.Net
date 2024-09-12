@@ -21,12 +21,12 @@ namespace WebExtensions.Net.Sessions
         /// <param name="windowId">The windowId of the window to which the recently closed tab to be forgotten belongs.</param>
         /// <param name="sessionId">The sessionId (closedId) of the recently closed tab to be forgotten.</param>
         [JsAccessPath("forgetClosedTab")]
-        ValueTask ForgetClosedTab(int windowId, string sessionId);
+        void ForgetClosedTab(int windowId, string sessionId);
 
         /// <summary>Forget a recently closed window.</summary>
         /// <param name="sessionId">The sessionId (closedId) of the recently closed window to be forgotten.</param>
         [JsAccessPath("forgetClosedWindow")]
-        ValueTask ForgetClosedWindow(string sessionId);
+        void ForgetClosedWindow(string sessionId);
 
         /// <summary>Gets the list of recently closed tabs and/or windows.</summary>
         /// <param name="filter"></param>
@@ -38,25 +38,25 @@ namespace WebExtensions.Net.Sessions
         /// <param name="tabId">The id of the tab whose value is being retrieved from.</param>
         /// <param name="key">The key which corresponds to the value.</param>
         [JsAccessPath("getTabValue")]
-        ValueTask GetTabValue(int tabId, string key);
+        void GetTabValue(int tabId, string key);
 
         /// <summary>Retrieve a value that was set for a given key on a given window.</summary>
         /// <param name="windowId">The id of the window whose value is being retrieved from.</param>
         /// <param name="key">The key which corresponds to the value.</param>
         [JsAccessPath("getWindowValue")]
-        ValueTask GetWindowValue(int windowId, string key);
+        void GetWindowValue(int windowId, string key);
 
         /// <summary>Remove a key/value pair that was set on a given tab.</summary>
         /// <param name="tabId">The id of the tab whose key/value pair is being removed.</param>
         /// <param name="key">The key which corresponds to the value.</param>
         [JsAccessPath("removeTabValue")]
-        ValueTask RemoveTabValue(int tabId, string key);
+        void RemoveTabValue(int tabId, string key);
 
         /// <summary>Remove a key/value pair that was set on a given window.</summary>
         /// <param name="windowId">The id of the window whose key/value pair is being removed.</param>
         /// <param name="key">The key which corresponds to the value.</param>
         [JsAccessPath("removeWindowValue")]
-        ValueTask RemoveWindowValue(int windowId, string key);
+        void RemoveWindowValue(int windowId, string key);
 
         /// <summary>Reopens a $(ref:windows.Window) or $(ref:tabs.Tab), with an optional callback to run when the entry has been restored.</summary>
         /// <param name="sessionId">The $(ref:windows.Window.sessionId), or $(ref:tabs.Tab.sessionId) to restore. If this parameter is not specified, the most recently closed session is restored.</param>
@@ -69,13 +69,13 @@ namespace WebExtensions.Net.Sessions
         /// <param name="key">The key which corresponds to the value being set.</param>
         /// <param name="value">The value being set.</param>
         [JsAccessPath("setTabValue")]
-        ValueTask SetTabValue(int tabId, string key, object value);
+        void SetTabValue(int tabId, string key, object value);
 
         /// <summary>Set a key/value pair on a given window.</summary>
         /// <param name="windowId">The id of the window that the key/value pair is being set on.</param>
         /// <param name="key">The key which corresponds to the value being set.</param>
         /// <param name="value">The value being set.</param>
         [JsAccessPath("setWindowValue")]
-        ValueTask SetWindowValue(int windowId, string key, object value);
+        void SetWindowValue(int windowId, string key, object value);
     }
 }

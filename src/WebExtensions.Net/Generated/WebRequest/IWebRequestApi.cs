@@ -52,13 +52,13 @@ namespace WebExtensions.Net.WebRequest
         /// <param name="requestId"></param>
         /// <returns></returns>
         [JsAccessPath("filterResponseData")]
-        ValueTask<JsonElement> FilterResponseData(string requestId);
+        JsonElement FilterResponseData(string requestId);
 
         /// <summary>Retrieves the security information for the request.  Returns a promise that will resolve to a SecurityInfo object.</summary>
         /// <param name="requestId"></param>
         /// <param name="options"></param>
         [JsAccessPath("getSecurityInfo")]
-        ValueTask GetSecurityInfo(string requestId, Options options = null);
+        void GetSecurityInfo(string requestId, Options options = null);
 
         /// <summary>Needs to be called when the behavior of the webRequest handlers has changed to prevent incorrect handling due to caching. This function call is expensive. Don't call it often.</summary>
         [JsAccessPath("handlerBehaviorChanged")]

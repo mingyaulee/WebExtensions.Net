@@ -66,57 +66,39 @@ namespace WebExtensions.Net.Menus
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback = null)
-        {
-            return InvokeAsync<CreateReturnType>("create", createProperties, callback);
-        }
+        public virtual CreateReturnType Create(CreateProperties createProperties, Action callback = null)
+            => Invoke<CreateReturnType>("create", createProperties, callback);
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetTargetElement(int targetElementId)
-        {
-            return InvokeAsync<JsonElement>("getTargetElement", targetElementId);
-        }
+        public virtual JsonElement GetTargetElement(int targetElementId)
+            => Invoke<JsonElement>("getTargetElement", targetElementId);
 
         /// <inheritdoc />
-        public virtual ValueTask OverrideContext(ContextOptions contextOptions)
-        {
-            return InvokeVoidAsync("overrideContext", contextOptions);
-        }
+        public virtual void OverrideContext(ContextOptions contextOptions)
+            => InvokeVoid("overrideContext", contextOptions);
 
         /// <inheritdoc />
-        public virtual ValueTask Refresh()
-        {
-            return InvokeVoidAsync("refresh");
-        }
+        public virtual void Refresh()
+            => InvokeVoid("refresh");
 
         /// <inheritdoc />
         public virtual ValueTask Remove(int menuItemId)
-        {
-            return InvokeVoidAsync("remove", menuItemId);
-        }
+            => InvokeVoidAsync("remove", menuItemId);
 
         /// <inheritdoc />
         public virtual ValueTask Remove(string menuItemId)
-        {
-            return InvokeVoidAsync("remove", menuItemId);
-        }
+            => InvokeVoidAsync("remove", menuItemId);
 
         /// <inheritdoc />
         public virtual ValueTask RemoveAll()
-        {
-            return InvokeVoidAsync("removeAll");
-        }
+            => InvokeVoidAsync("removeAll");
 
         /// <inheritdoc />
         public virtual ValueTask Update(int id, UpdateProperties updateProperties)
-        {
-            return InvokeVoidAsync("update", id, updateProperties);
-        }
+            => InvokeVoidAsync("update", id, updateProperties);
 
         /// <inheritdoc />
         public virtual ValueTask Update(string id, UpdateProperties updateProperties)
-        {
-            return InvokeVoidAsync("update", id, updateProperties);
-        }
+            => InvokeVoidAsync("update", id, updateProperties);
     }
 }

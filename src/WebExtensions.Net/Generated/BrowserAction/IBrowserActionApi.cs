@@ -36,7 +36,7 @@ namespace WebExtensions.Net.BrowserAction
         /// <summary>Gets the text color of the browser action badge.</summary>
         /// <param name="details"></param>
         [JsAccessPath("getBadgeTextColor")]
-        ValueTask GetBadgeTextColor(Details details);
+        void GetBadgeTextColor(Details details);
 
         /// <summary>Gets the html document set as the popup for this browser action.</summary>
         /// <param name="details"></param>
@@ -53,11 +53,11 @@ namespace WebExtensions.Net.BrowserAction
         /// <summary>Checks whether the browser action is enabled.</summary>
         /// <param name="details"></param>
         [JsAccessPath("isEnabled")]
-        ValueTask IsEnabled(Details details);
+        void IsEnabled(Details details);
 
         /// <summary>Opens the extension popup window in the active window.</summary>
         [JsAccessPath("openPopup")]
-        ValueTask OpenPopup();
+        void OpenPopup();
 
         /// <summary>Sets the background color for the badge.</summary>
         /// <param name="details"></param>
@@ -72,7 +72,7 @@ namespace WebExtensions.Net.BrowserAction
         /// <summary>Sets the text color for the badge.</summary>
         /// <param name="details"></param>
         [JsAccessPath("setBadgeTextColor")]
-        ValueTask SetBadgeTextColor(SetBadgeTextColorDetails details);
+        void SetBadgeTextColor(SetBadgeTextColorDetails details);
 
         /// <summary>Sets the icon for the browser action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the 'b'path'/b' or the 'b'imageData'/b' property must be specified.</summary>
         /// <param name="details"></param>

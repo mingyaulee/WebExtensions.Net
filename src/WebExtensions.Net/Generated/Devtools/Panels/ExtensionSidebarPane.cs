@@ -14,25 +14,19 @@ namespace WebExtensions.Net.Devtools.Panels
         /// <param name="rootTitle">An optional title for the root of the expression tree.</param>
         [JsAccessPath("setExpression")]
         public virtual ValueTask SetExpression(string expression, string rootTitle = null)
-        {
-            return InvokeVoidAsync("setExpression", expression, rootTitle);
-        }
+            => InvokeVoidAsync("setExpression", expression, rootTitle);
 
         /// <summary>Sets a JSON-compliant object to be displayed in the sidebar pane.</summary>
         /// <param name="jsonObject">An object to be displayed in context of the inspected page. Evaluated in the context of the caller (API client).</param>
         /// <param name="rootTitle">An optional title for the root of the expression tree.</param>
         [JsAccessPath("setObject")]
         public virtual ValueTask SetObject(string jsonObject, string rootTitle = null)
-        {
-            return InvokeVoidAsync("setObject", jsonObject, rootTitle);
-        }
+            => InvokeVoidAsync("setObject", jsonObject, rootTitle);
 
         /// <summary>Sets an HTML page to be displayed in the sidebar pane.</summary>
         /// <param name="path">Relative path of an extension page to display within the sidebar.</param>
         [JsAccessPath("setPage")]
-        public virtual ValueTask SetPage(ExtensionUrl path)
-        {
-            return InvokeVoidAsync("setPage", path);
-        }
+        public virtual void SetPage(ExtensionUrl path)
+            => InvokeVoid("setPage", path);
     }
 }

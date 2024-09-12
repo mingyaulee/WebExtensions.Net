@@ -24,11 +24,11 @@ namespace WebExtensions.Net.Commands
         /// <summary>Reset a command's details to what is specified in the manifest.</summary>
         /// <param name="name">The name of the command.</param>
         [JsAccessPath("reset")]
-        ValueTask Reset(string name);
+        void Reset(string name);
 
         /// <summary>Update the details of an already defined command.</summary>
         /// <param name="detail">The new description for the command.</param>
         [JsAccessPath("update")]
-        ValueTask Update(Detail detail);
+        void Update(Detail detail);
     }
 }

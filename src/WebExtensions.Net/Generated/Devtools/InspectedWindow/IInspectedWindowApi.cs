@@ -21,6 +21,6 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
         /// <summary>Reloads the inspected page.</summary>
         /// <param name="reloadOptions"></param>
         [JsAccessPath("reload")]
-        ValueTask Reload(ReloadOptions reloadOptions = null);
+        void Reload(ReloadOptions reloadOptions = null);
     }
 }

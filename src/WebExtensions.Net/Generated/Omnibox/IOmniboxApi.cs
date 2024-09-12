@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Events;
 
 namespace WebExtensions.Net.Omnibox
@@ -31,6 +30,6 @@ namespace WebExtensions.Net.Omnibox
         /// <summary>Sets the description and styling for the default suggestion. The default suggestion is the text that is displayed in the first suggestion row underneath the URL bar.</summary>
         /// <param name="suggestion">A partial SuggestResult object, without the 'content' parameter.</param>
         [JsAccessPath("setDefaultSuggestion")]
-        ValueTask SetDefaultSuggestion(DefaultSuggestResult suggestion);
+        void SetDefaultSuggestion(DefaultSuggestResult suggestion);
     }
 }

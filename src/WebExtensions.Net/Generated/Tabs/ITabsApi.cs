@@ -60,7 +60,7 @@ namespace WebExtensions.Net.Tabs
         /// <param name="tabId">The tab to capture. Defaults to the active tab of the current window.</param>
         /// <param name="options"></param>
         [JsAccessPath("captureTab")]
-        ValueTask CaptureTab(int? tabId = null, ImageDetails options = null);
+        void CaptureTab(int? tabId = null, ImageDetails options = null);
 
         /// <summary>Captures an area of the currently active tab in the specified window. You must have &amp;lt;all_urls&amp;gt; or activeTab permission to use this method.</summary>
         /// <param name="windowId">The target window. Defaults to the $(topic:current-window)[current window].</param>
@@ -74,7 +74,7 @@ namespace WebExtensions.Net.Tabs
         /// <param name="connectInfo"></param>
         /// <returns>A port that can be used to communicate with the content scripts running in the specified tab. The port's $(ref:runtime.Port) event is fired if the tab closes or does not exist. </returns>
         [JsAccessPath("connect")]
-        ValueTask<Port> Connect(int tabId, ConnectInfo connectInfo = null);
+        Port Connect(int tabId, ConnectInfo connectInfo = null);
 
         /// <summary>Creates a new tab.</summary>
         /// <param name="createProperties"></param>
@@ -91,12 +91,12 @@ namespace WebExtensions.Net.Tabs
         /// <summary>discards one or more tabs.</summary>
         /// <param name="tabIds">The tab or list of tabs to discard.</param>
         [JsAccessPath("discard")]
-        ValueTask Discard(int tabIds);
+        void Discard(int tabIds);
 
         /// <summary>discards one or more tabs.</summary>
         /// <param name="tabIds">The tab or list of tabs to discard.</param>
         [JsAccessPath("discard")]
-        ValueTask Discard(IEnumerable<int> tabIds);
+        void Discard(IEnumerable<int> tabIds);
 
         /// <summary>Duplicates a tab.</summary>
         /// <param name="tabId">The ID of the tab which is to be duplicated.</param>
@@ -154,12 +154,12 @@ namespace WebExtensions.Net.Tabs
         /// <summary>Hides one or more tabs. The <c>"tabHide"</c> permission is required to hide tabs.  Not all tabs are hidable.  Returns an array of hidden tabs.</summary>
         /// <param name="tabIds">The TAB ID or list of TAB IDs to hide.</param>
         [JsAccessPath("hide")]
-        ValueTask Hide(int tabIds);
+        void Hide(int tabIds);
 
         /// <summary>Hides one or more tabs. The <c>"tabHide"</c> permission is required to hide tabs.  Not all tabs are hidable.  Returns an array of hidden tabs.</summary>
         /// <param name="tabIds">The TAB ID or list of TAB IDs to hide.</param>
         [JsAccessPath("hide")]
-        ValueTask Hide(IEnumerable<int> tabIds);
+        void Hide(IEnumerable<int> tabIds);
 
         /// <summary>Highlights the given tabs.</summary>
         /// <param name="highlightInfo"></param>
@@ -197,11 +197,11 @@ namespace WebExtensions.Net.Tabs
         /// <param name="tabId">The ID of a tab to set as the successor of the last tab in the array, or $(ref:tabs.TAB_ID_NONE) to leave the last tab without a successor. If options.append is true, then this tab is made the predecessor of the first tab in the array instead.</param>
         /// <param name="options"></param>
         [JsAccessPath("moveInSuccession")]
-        ValueTask MoveInSuccession(IEnumerable<int> tabIds, int? tabId = null, MoveInSuccessionOptions options = null);
+        void MoveInSuccession(IEnumerable<int> tabIds, int? tabId = null, MoveInSuccessionOptions options = null);
 
         /// <summary>Prints page in active tab.</summary>
         [JsAccessPath("print")]
-        ValueTask Print();
+        void Print();
 
         /// <summary>Shows print preview for page in active tab.</summary>
         [JsAccessPath("printPreview")]
@@ -279,17 +279,17 @@ namespace WebExtensions.Net.Tabs
         /// <summary>Shows one or more tabs.</summary>
         /// <param name="tabIds">The TAB ID or list of TAB IDs to show.</param>
         [JsAccessPath("show")]
-        ValueTask Show(int tabIds);
+        void Show(int tabIds);
 
         /// <summary>Shows one or more tabs.</summary>
         /// <param name="tabIds">The TAB ID or list of TAB IDs to show.</param>
         [JsAccessPath("show")]
-        ValueTask Show(IEnumerable<int> tabIds);
+        void Show(IEnumerable<int> tabIds);
 
         /// <summary>Toggles reader mode for the document in the tab.</summary>
         /// <param name="tabId">Defaults to the active tab of the $(topic:current-window)[current window].</param>
         [JsAccessPath("toggleReaderMode")]
-        ValueTask ToggleReaderMode(int? tabId = null);
+        void ToggleReaderMode(int? tabId = null);
 
         /// <summary>Modifies the properties of a tab. Properties that are not specified in <c>updateProperties</c> are not modified.</summary>
         /// <param name="updateProperties"></param>
@@ -307,6 +307,6 @@ namespace WebExtensions.Net.Tabs
         /// <summary>Warm up a tab</summary>
         /// <param name="tabId">The ID of the tab to warm up.</param>
         [JsAccessPath("warmup")]
-        ValueTask Warmup(int? tabId = null);
+        void Warmup(int? tabId = null);
     }
 }

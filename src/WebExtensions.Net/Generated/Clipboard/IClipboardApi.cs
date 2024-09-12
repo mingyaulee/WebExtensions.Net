@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 
 namespace WebExtensions.Net.Clipboard
 {
@@ -11,6 +10,6 @@ namespace WebExtensions.Net.Clipboard
         /// <param name="imageData">The image data to be copied.</param>
         /// <param name="imageType">The type of imageData.</param>
         [JsAccessPath("setImageData")]
-        ValueTask SetImageData(object imageData, string imageType);
+        void SetImageData(object imageData, string imageType);
     }
 }

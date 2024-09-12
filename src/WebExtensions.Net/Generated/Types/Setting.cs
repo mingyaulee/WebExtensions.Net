@@ -12,25 +12,19 @@ namespace WebExtensions.Net.Types
         /// <param name="details">Which setting to clear.</param>
         [JsAccessPath("clear")]
         public virtual ValueTask Clear(ClearDetails details)
-        {
-            return InvokeVoidAsync("clear", details);
-        }
+            => InvokeVoidAsync("clear", details);
 
         /// <summary>Gets the value of a setting.</summary>
         /// <param name="details">Which setting to consider.</param>
         /// <returns>Details of the currently effective value.</returns>
         [JsAccessPath("get")]
         public virtual ValueTask<CallbackDetails> Get(GetDetails details)
-        {
-            return InvokeAsync<CallbackDetails>("get", details);
-        }
+            => InvokeAsync<CallbackDetails>("get", details);
 
         /// <summary>Sets the value of a setting.</summary>
         /// <param name="details">Which setting to change.</param>
         [JsAccessPath("set")]
         public virtual ValueTask Set(SetDetails details)
-        {
-            return InvokeVoidAsync("set", details);
-        }
+            => InvokeVoidAsync("set", details);
     }
 }

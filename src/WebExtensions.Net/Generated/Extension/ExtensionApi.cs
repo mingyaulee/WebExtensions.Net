@@ -24,34 +24,24 @@ namespace WebExtensions.Net.Extension
         public LastError LastError => GetProperty<LastError>("lastError");
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetBackgroundPage()
-        {
-            return InvokeAsync<JsonElement>("getBackgroundPage");
-        }
+        public virtual JsonElement GetBackgroundPage()
+            => Invoke<JsonElement>("getBackgroundPage");
 
         /// <inheritdoc />
         [Obsolete("Please use $(ref:runtime.getURL).")]
-        public virtual ValueTask<string> GetURL(string path)
-        {
-            return InvokeAsync<string>("getURL", path);
-        }
+        public virtual string GetURL(string path)
+            => Invoke<string>("getURL", path);
 
         /// <inheritdoc />
-        public virtual ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties = null)
-        {
-            return InvokeAsync<IEnumerable<object>>("getViews", fetchProperties);
-        }
+        public virtual IEnumerable<object> GetViews(FetchProperties fetchProperties = null)
+            => Invoke<IEnumerable<object>>("getViews", fetchProperties);
 
         /// <inheritdoc />
         public virtual ValueTask<bool> IsAllowedFileSchemeAccess()
-        {
-            return InvokeAsync<bool>("isAllowedFileSchemeAccess");
-        }
+            => InvokeAsync<bool>("isAllowedFileSchemeAccess");
 
         /// <inheritdoc />
         public virtual ValueTask<bool> IsAllowedIncognitoAccess()
-        {
-            return InvokeAsync<bool>("isAllowedIncognitoAccess");
-        }
+            => InvokeAsync<bool>("isAllowedIncognitoAccess");
     }
 }

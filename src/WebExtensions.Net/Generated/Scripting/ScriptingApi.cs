@@ -16,44 +16,30 @@ namespace WebExtensions.Net.Scripting
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<InjectionResult>> ExecuteScript(ScriptInjection injection)
-        {
-            return InvokeAsync<IEnumerable<InjectionResult>>("executeScript", injection);
-        }
+            => InvokeAsync<IEnumerable<InjectionResult>>("executeScript", injection);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<RegisteredContentScript>> GetRegisteredContentScripts(ContentScriptFilter filter = null)
-        {
-            return InvokeAsync<IEnumerable<RegisteredContentScript>>("getRegisteredContentScripts", filter);
-        }
+            => InvokeAsync<IEnumerable<RegisteredContentScript>>("getRegisteredContentScripts", filter);
 
         /// <inheritdoc />
         public virtual ValueTask InsertCSS(CSSInjection injection)
-        {
-            return InvokeVoidAsync("insertCSS", injection);
-        }
+            => InvokeVoidAsync("insertCSS", injection);
 
         /// <inheritdoc />
         public virtual ValueTask RegisterContentScripts(IEnumerable<RegisteredContentScript> scripts)
-        {
-            return InvokeVoidAsync("registerContentScripts", scripts);
-        }
+            => InvokeVoidAsync("registerContentScripts", scripts);
 
         /// <inheritdoc />
         public virtual ValueTask RemoveCSS(CSSInjection injection)
-        {
-            return InvokeVoidAsync("removeCSS", injection);
-        }
+            => InvokeVoidAsync("removeCSS", injection);
 
         /// <inheritdoc />
         public virtual ValueTask UnregisterContentScripts(ContentScriptFilter filter = null)
-        {
-            return InvokeVoidAsync("unregisterContentScripts", filter);
-        }
+            => InvokeVoidAsync("unregisterContentScripts", filter);
 
         /// <inheritdoc />
         public virtual ValueTask UpdateContentScripts(IEnumerable<Script> scripts)
-        {
-            return InvokeVoidAsync("updateContentScripts", scripts);
-        }
+            => InvokeVoidAsync("updateContentScripts", scripts);
     }
 }

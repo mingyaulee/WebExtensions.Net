@@ -9,7 +9,7 @@ namespace WebExtensions.Net.Search
     {
         /// <summary>Gets a list of search engines.</summary>
         [JsAccessPath("get")]
-        ValueTask Get();
+        void Get();
 
         /// <summary>Use the chrome.search API to search via the default provider.</summary>
         /// <param name="queryInfo"></param>
@@ -19,6 +19,6 @@ namespace WebExtensions.Net.Search
         /// <summary>Perform a search.</summary>
         /// <param name="searchProperties"></param>
         [JsAccessPath("search")]
-        ValueTask Search(SearchProperties searchProperties);
+        void Search(SearchProperties searchProperties);
     }
 }

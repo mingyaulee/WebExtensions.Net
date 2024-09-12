@@ -14,21 +14,15 @@ namespace WebExtensions.Net.Search
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Get()
-        {
-            return InvokeVoidAsync("get");
-        }
+        public virtual void Get()
+            => InvokeVoid("get");
 
         /// <inheritdoc />
         public virtual ValueTask Query(QueryInfo queryInfo)
-        {
-            return InvokeVoidAsync("query", queryInfo);
-        }
+            => InvokeVoidAsync("query", queryInfo);
 
         /// <inheritdoc />
-        public virtual ValueTask Search(SearchProperties searchProperties)
-        {
-            return InvokeVoidAsync("search", searchProperties);
-        }
+        public virtual void Search(SearchProperties searchProperties)
+            => InvokeVoid("search", searchProperties);
     }
 }

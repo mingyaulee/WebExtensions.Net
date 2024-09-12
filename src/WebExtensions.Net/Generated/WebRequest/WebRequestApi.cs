@@ -154,21 +154,15 @@ namespace WebExtensions.Net.WebRequest
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> FilterResponseData(string requestId)
-        {
-            return InvokeAsync<JsonElement>("filterResponseData", requestId);
-        }
+        public virtual JsonElement FilterResponseData(string requestId)
+            => Invoke<JsonElement>("filterResponseData", requestId);
 
         /// <inheritdoc />
-        public virtual ValueTask GetSecurityInfo(string requestId, Options options = null)
-        {
-            return InvokeVoidAsync("getSecurityInfo", requestId, options);
-        }
+        public virtual void GetSecurityInfo(string requestId, Options options = null)
+            => InvokeVoid("getSecurityInfo", requestId, options);
 
         /// <inheritdoc />
         public virtual ValueTask HandlerBehaviorChanged()
-        {
-            return InvokeVoidAsync("handlerBehaviorChanged");
-        }
+            => InvokeVoidAsync("handlerBehaviorChanged");
     }
 }

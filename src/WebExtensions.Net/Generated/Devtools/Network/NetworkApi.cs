@@ -47,8 +47,6 @@ namespace WebExtensions.Net.Devtools.Network
 
         /// <inheritdoc />
         public virtual ValueTask<JsonElement> GetHAR()
-        {
-            return InvokeAsync<JsonElement>("getHAR");
-        }
+            => InvokeAsync<JsonElement>("getHAR");
     }
 }

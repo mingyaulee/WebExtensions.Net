@@ -31,14 +31,10 @@ namespace WebExtensions.Net.Idle
 
         /// <inheritdoc />
         public virtual ValueTask<IdleState> QueryState(int detectionIntervalInSeconds)
-        {
-            return InvokeAsync<IdleState>("queryState", detectionIntervalInSeconds);
-        }
+            => InvokeAsync<IdleState>("queryState", detectionIntervalInSeconds);
 
         /// <inheritdoc />
-        public virtual ValueTask SetDetectionInterval(int intervalInSeconds)
-        {
-            return InvokeVoidAsync("setDetectionInterval", intervalInSeconds);
-        }
+        public virtual void SetDetectionInterval(int intervalInSeconds)
+            => InvokeVoid("setDetectionInterval", intervalInSeconds);
     }
 }

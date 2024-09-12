@@ -152,14 +152,10 @@ namespace WebExtensions.Net.WebNavigation
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Detail>> GetAllFrames(GetAllFramesDetails details)
-        {
-            return InvokeAsync<IEnumerable<Detail>>("getAllFrames", details);
-        }
+            => InvokeAsync<IEnumerable<Detail>>("getAllFrames", details);
 
         /// <inheritdoc />
         public virtual ValueTask<GetFrameCallbackDetails> GetFrame(GetFrameDetails details)
-        {
-            return InvokeAsync<GetFrameCallbackDetails>("getFrame", details);
-        }
+            => InvokeAsync<GetFrameCallbackDetails>("getFrame", details);
     }
 }

@@ -13,8 +13,6 @@ namespace WebExtensions.Net.Devtools.Panels
         /// <returns>An ExtensionSidebarPane object for created sidebar pane.</returns>
         [JsAccessPath("createSidebarPane")]
         public virtual ValueTask<ExtensionSidebarPane> CreateSidebarPane(string title)
-        {
-            return InvokeAsync<ExtensionSidebarPane>("createSidebarPane", title);
-        }
+            => InvokeAsync<ExtensionSidebarPane>("createSidebarPane", title);
     }
 }

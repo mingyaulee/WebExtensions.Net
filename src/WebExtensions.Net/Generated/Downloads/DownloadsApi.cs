@@ -62,68 +62,46 @@ namespace WebExtensions.Net.Downloads
 
         /// <inheritdoc />
         public virtual ValueTask Cancel(int downloadId)
-        {
-            return InvokeVoidAsync("cancel", downloadId);
-        }
+            => InvokeVoidAsync("cancel", downloadId);
 
         /// <inheritdoc />
         public virtual ValueTask<int> Download(DownloadOptions options)
-        {
-            return InvokeAsync<int>("download", options);
-        }
+            => InvokeAsync<int>("download", options);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<int>> Erase(DownloadQuery query)
-        {
-            return InvokeAsync<IEnumerable<int>>("erase", query);
-        }
+            => InvokeAsync<IEnumerable<int>>("erase", query);
 
         /// <inheritdoc />
         public virtual ValueTask<string> GetFileIcon(int downloadId, GetFileIconOptions options = null)
-        {
-            return InvokeAsync<string>("getFileIcon", downloadId, options);
-        }
+            => InvokeAsync<string>("getFileIcon", downloadId, options);
 
         /// <inheritdoc />
         public virtual ValueTask Open(int downloadId)
-        {
-            return InvokeVoidAsync("open", downloadId);
-        }
+            => InvokeVoidAsync("open", downloadId);
 
         /// <inheritdoc />
         public virtual ValueTask Pause(int downloadId)
-        {
-            return InvokeVoidAsync("pause", downloadId);
-        }
+            => InvokeVoidAsync("pause", downloadId);
 
         /// <inheritdoc />
         public virtual ValueTask RemoveFile(int downloadId)
-        {
-            return InvokeVoidAsync("removeFile", downloadId);
-        }
+            => InvokeVoidAsync("removeFile", downloadId);
 
         /// <inheritdoc />
         public virtual ValueTask Resume(int downloadId)
-        {
-            return InvokeVoidAsync("resume", downloadId);
-        }
+            => InvokeVoidAsync("resume", downloadId);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<DownloadItem>> Search(DownloadQuery query)
-        {
-            return InvokeAsync<IEnumerable<DownloadItem>>("search", query);
-        }
+            => InvokeAsync<IEnumerable<DownloadItem>>("search", query);
 
         /// <inheritdoc />
         public virtual ValueTask<bool> Show(int downloadId)
-        {
-            return InvokeAsync<bool>("show", downloadId);
-        }
+            => InvokeAsync<bool>("show", downloadId);
 
         /// <inheritdoc />
-        public virtual ValueTask ShowDefaultFolder()
-        {
-            return InvokeVoidAsync("showDefaultFolder");
-        }
+        public virtual void ShowDefaultFolder()
+            => InvokeVoid("showDefaultFolder");
     }
 }

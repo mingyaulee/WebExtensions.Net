@@ -62,38 +62,26 @@ namespace WebExtensions.Net.History
 
         /// <inheritdoc />
         public virtual ValueTask AddUrl(AddUrlDetails details)
-        {
-            return InvokeVoidAsync("addUrl", details);
-        }
+            => InvokeVoidAsync("addUrl", details);
 
         /// <inheritdoc />
         public virtual ValueTask DeleteAll()
-        {
-            return InvokeVoidAsync("deleteAll");
-        }
+            => InvokeVoidAsync("deleteAll");
 
         /// <inheritdoc />
         public virtual ValueTask DeleteRange(Range range)
-        {
-            return InvokeVoidAsync("deleteRange", range);
-        }
+            => InvokeVoidAsync("deleteRange", range);
 
         /// <inheritdoc />
         public virtual ValueTask DeleteUrl(DeleteUrlDetails details)
-        {
-            return InvokeVoidAsync("deleteUrl", details);
-        }
+            => InvokeVoidAsync("deleteUrl", details);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<VisitItem>> GetVisits(GetVisitsDetails details)
-        {
-            return InvokeAsync<IEnumerable<VisitItem>>("getVisits", details);
-        }
+            => InvokeAsync<IEnumerable<VisitItem>>("getVisits", details);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<HistoryItem>> Search(Query query)
-        {
-            return InvokeAsync<IEnumerable<HistoryItem>>("search", query);
-        }
+            => InvokeAsync<IEnumerable<HistoryItem>>("search", query);
     }
 }

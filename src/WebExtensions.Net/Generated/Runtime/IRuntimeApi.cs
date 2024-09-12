@@ -63,13 +63,13 @@ namespace WebExtensions.Net.Runtime
         /// <param name="connectInfo"></param>
         /// <returns>Port through which messages can be sent and received. The port's $(ref:runtime.Port onDisconnect) event is fired if the extension/app does not exist. </returns>
         [JsAccessPath("connect")]
-        ValueTask<Port> Connect(string extensionId = null, ConnectInfo connectInfo = null);
+        Port Connect(string extensionId = null, ConnectInfo connectInfo = null);
 
         /// <summary>Connects to a native application in the host machine.</summary>
         /// <param name="application">The name of the registered application to connect to.</param>
         /// <returns>Port through which messages can be sent and received with the application</returns>
         [JsAccessPath("connectNative")]
-        ValueTask<Port> ConnectNative(string application);
+        Port ConnectNative(string application);
 
         /// <summary>Retrieves the JavaScript 'window' object for the background page running inside the current extension/app. If the background page is an event page, the system will ensure it is loaded before calling the callback. If there is no background page, an error is set.</summary>
         /// <returns>The JavaScript 'window' object for the background page.</returns>
@@ -91,12 +91,12 @@ namespace WebExtensions.Net.Runtime
         /// <param name="target">A WindowProxy or a Browsing Context container element (IFrame, Frame, Embed, Object) for the target frame.</param>
         /// <returns>The frameId of the target frame, or -1 if it doesn't exist.</returns>
         [JsAccessPath("getFrameId")]
-        ValueTask<double> GetFrameId(object target);
+        double GetFrameId(object target);
 
         /// <summary>Returns details about the app or extension from the manifest. The object returned is a serialization of the full $(topic:manifest)[manifest file].</summary>
         /// <returns>The manifest details.</returns>
         [JsAccessPath("getManifest")]
-        ValueTask<JsonElement> GetManifest();
+        JsonElement GetManifest();
 
         /// <summary>Returns information about the current platform.</summary>
         /// <returns></returns>
@@ -107,7 +107,7 @@ namespace WebExtensions.Net.Runtime
         /// <param name="path">A path to a resource within an app/extension expressed relative to its install directory.</param>
         /// <returns>The fully-qualified URL to the resource.</returns>
         [JsAccessPath("getURL")]
-        ValueTask<string> GetURL(string path);
+        string GetURL(string path);
 
         /// <summary>Open your Extension's options page, if possible.<br />The precise behavior may depend on your manifest's <c>$(topic:optionsV2)[options_ui]</c> or <c>$(topic:options)[options_page]</c> key, or what the browser happens to support at the time.<br />If your Extension does not declare an options page, or the browser failed to create one for some other reason, the callback will set $(ref:lastError).<br /></summary>
         [JsAccessPath("openOptionsPage")]
@@ -115,7 +115,7 @@ namespace WebExtensions.Net.Runtime
 
         /// <summary>Reloads the app or extension.</summary>
         [JsAccessPath("reload")]
-        ValueTask Reload();
+        void Reload();
 
         /// <summary>Sends a single message to event listeners within your extension/app or a different extension/app. Similar to $(ref:runtime.connect) but only sends a single message, with an optional response. If sending to your extension, the $(ref:runtime.onMessage) event will be fired in each page, or $(ref:runtime.onMessageExternal), if a different extension. Note that extensions cannot send messages to content scripts using this method. To send messages to content scripts, use $(ref:tabs.sendMessage).</summary>
         /// <param name="message"></param>

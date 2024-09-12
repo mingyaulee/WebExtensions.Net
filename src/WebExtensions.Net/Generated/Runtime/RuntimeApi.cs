@@ -174,93 +174,63 @@ namespace WebExtensions.Net.Runtime
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> Connect(string extensionId = null, ConnectInfo connectInfo = null)
-        {
-            return InvokeAsync<Port>("connect", extensionId, connectInfo);
-        }
+        public virtual Port Connect(string extensionId = null, ConnectInfo connectInfo = null)
+            => Invoke<Port>("connect", extensionId, connectInfo);
 
         /// <inheritdoc />
-        public virtual ValueTask<Port> ConnectNative(string application)
-        {
-            return InvokeAsync<Port>("connectNative", application);
-        }
+        public virtual Port ConnectNative(string application)
+            => Invoke<Port>("connectNative", application);
 
         /// <inheritdoc />
         public virtual ValueTask<JsonElement> GetBackgroundPage()
-        {
-            return InvokeAsync<JsonElement>("getBackgroundPage");
-        }
+            => InvokeAsync<JsonElement>("getBackgroundPage");
 
         /// <inheritdoc />
         public virtual ValueTask<BrowserInfo> GetBrowserInfo()
-        {
-            return InvokeAsync<BrowserInfo>("getBrowserInfo");
-        }
+            => InvokeAsync<BrowserInfo>("getBrowserInfo");
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<ExtensionContext>> GetContexts(ContextFilter filter)
-        {
-            return InvokeAsync<IEnumerable<ExtensionContext>>("getContexts", filter);
-        }
+            => InvokeAsync<IEnumerable<ExtensionContext>>("getContexts", filter);
 
         /// <inheritdoc />
-        public virtual ValueTask<double> GetFrameId(object target)
-        {
-            return InvokeAsync<double>("getFrameId", target);
-        }
+        public virtual double GetFrameId(object target)
+            => Invoke<double>("getFrameId", target);
 
         /// <inheritdoc />
-        public virtual ValueTask<JsonElement> GetManifest()
-        {
-            return InvokeAsync<JsonElement>("getManifest");
-        }
+        public virtual JsonElement GetManifest()
+            => Invoke<JsonElement>("getManifest");
 
         /// <inheritdoc />
         public virtual ValueTask<PlatformInfo> GetPlatformInfo()
-        {
-            return InvokeAsync<PlatformInfo>("getPlatformInfo");
-        }
+            => InvokeAsync<PlatformInfo>("getPlatformInfo");
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetURL(string path)
-        {
-            return InvokeAsync<string>("getURL", path);
-        }
+        public virtual string GetURL(string path)
+            => Invoke<string>("getURL", path);
 
         /// <inheritdoc />
         public virtual ValueTask OpenOptionsPage()
-        {
-            return InvokeVoidAsync("openOptionsPage");
-        }
+            => InvokeVoidAsync("openOptionsPage");
 
         /// <inheritdoc />
-        public virtual ValueTask Reload()
-        {
-            return InvokeVoidAsync("reload");
-        }
+        public virtual void Reload()
+            => InvokeVoid("reload");
 
         /// <inheritdoc />
         public virtual ValueTask<JsonElement> SendMessage(object message, object options = null)
-        {
-            return InvokeAsync<JsonElement>("sendMessage", message, options);
-        }
+            => InvokeAsync<JsonElement>("sendMessage", message, options);
 
         /// <inheritdoc />
         public virtual ValueTask<JsonElement> SendMessage(string extensionId, object message, object options = null)
-        {
-            return InvokeAsync<JsonElement>("sendMessage", extensionId, message, options);
-        }
+            => InvokeAsync<JsonElement>("sendMessage", extensionId, message, options);
 
         /// <inheritdoc />
         public virtual ValueTask<JsonElement> SendNativeMessage(string application, object message)
-        {
-            return InvokeAsync<JsonElement>("sendNativeMessage", application, message);
-        }
+            => InvokeAsync<JsonElement>("sendNativeMessage", application, message);
 
         /// <inheritdoc />
         public virtual ValueTask SetUninstallURL(string url = null)
-        {
-            return InvokeVoidAsync("setUninstallURL", url);
-        }
+            => InvokeVoidAsync("setUninstallURL", url);
     }
 }

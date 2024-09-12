@@ -31,22 +31,22 @@ namespace WebExtensions.Net.Menus
         /// <param name="callback">Called when the item has been created in the browser. If there were any problems creating the item, details will be available in $(ref:runtime.lastError).</param>
         /// <returns>The ID of the newly created item.</returns>
         [JsAccessPath("create")]
-        ValueTask<CreateReturnType> Create(CreateProperties createProperties, Action callback = null);
+        CreateReturnType Create(CreateProperties createProperties, Action callback = null);
 
         /// <summary>Retrieve the element that was associated with a recent contextmenu event.</summary>
         /// <param name="targetElementId">The identifier of the clicked element, available as info.targetElementId in the menus.onShown, onClicked or onclick event.</param>
         /// <returns></returns>
         [JsAccessPath("getTargetElement")]
-        ValueTask<JsonElement> GetTargetElement(int targetElementId);
+        JsonElement GetTargetElement(int targetElementId);
 
         /// <summary>Show the matching menu items from this extension instead of the default menu. This should be called during a 'contextmenu' DOM event handler, and only applies to the menu that opens after this event.</summary>
         /// <param name="contextOptions"></param>
         [JsAccessPath("overrideContext")]
-        ValueTask OverrideContext(ContextOptions contextOptions);
+        void OverrideContext(ContextOptions contextOptions);
 
         /// <summary>Updates the extension items in the shown menu, including changes that have been made since the menu was shown. Has no effect if the menu is hidden. Rebuilding a shown menu is an expensive operation, only invoke this method when necessary.</summary>
         [JsAccessPath("refresh")]
-        ValueTask Refresh();
+        void Refresh();
 
         /// <summary>Removes a context menu item.</summary>
         /// <param name="menuItemId">The ID of the context menu item to remove.</param>

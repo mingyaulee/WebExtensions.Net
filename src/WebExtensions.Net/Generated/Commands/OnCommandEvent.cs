@@ -1,6 +1,5 @@
 using JsBind.Net;
 using System;
-using System.Threading.Tasks;
 using WebExtensions.Net.Events;
 using WebExtensions.Net.Tabs;
 
@@ -14,26 +13,20 @@ namespace WebExtensions.Net.Commands
         /// <summary>Registers an event listener <em>callback</em> to an event.</summary>
         /// <param name="callback">Fired when a registered command is activated using a keyboard shortcut.</param>
         [JsAccessPath("addListener")]
-        public virtual ValueTask AddListener(Action<string, Tab> callback)
-        {
-            return InvokeVoidAsync("addListener", callback);
-        }
+        public virtual void AddListener(Action<string, Tab> callback)
+            => InvokeVoid("addListener", callback);
 
         /// <summary></summary>
         /// <param name="callback">Listener whose registration status shall be tested.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
         [JsAccessPath("hasListener")]
-        public virtual ValueTask<bool> HasListener(Action<string, Tab> callback)
-        {
-            return InvokeAsync<bool>("hasListener", callback);
-        }
+        public virtual bool HasListener(Action<string, Tab> callback)
+            => Invoke<bool>("hasListener", callback);
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
         /// <param name="callback">Listener that shall be unregistered.</param>
         [JsAccessPath("removeListener")]
-        public virtual ValueTask RemoveListener(Action<string, Tab> callback)
-        {
-            return InvokeVoidAsync("removeListener", callback);
-        }
+        public virtual void RemoveListener(Action<string, Tab> callback)
+            => InvokeVoid("removeListener", callback);
     }
 }

@@ -46,26 +46,18 @@ namespace WebExtensions.Net.Permissions
 
         /// <inheritdoc />
         public virtual ValueTask<bool> Contains(AnyPermissions permissions)
-        {
-            return InvokeAsync<bool>("contains", permissions);
-        }
+            => InvokeAsync<bool>("contains", permissions);
 
         /// <inheritdoc />
         public virtual ValueTask<AnyPermissions> GetAll()
-        {
-            return InvokeAsync<AnyPermissions>("getAll");
-        }
+            => InvokeAsync<AnyPermissions>("getAll");
 
         /// <inheritdoc />
         public virtual ValueTask Remove(PermissionsType permissions)
-        {
-            return InvokeVoidAsync("remove", permissions);
-        }
+            => InvokeVoidAsync("remove", permissions);
 
         /// <inheritdoc />
         public virtual ValueTask<bool> Request(PermissionsType permissions)
-        {
-            return InvokeAsync<bool>("request", permissions);
-        }
+            => InvokeAsync<bool>("request", permissions);
     }
 }

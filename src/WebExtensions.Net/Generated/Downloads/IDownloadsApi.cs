@@ -78,6 +78,6 @@ namespace WebExtensions.Net.Downloads
 
         /// <summary></summary>
         [JsAccessPath("showDefaultFolder")]
-        ValueTask ShowDefaultFolder();
+        void ShowDefaultFolder();
     }
 }

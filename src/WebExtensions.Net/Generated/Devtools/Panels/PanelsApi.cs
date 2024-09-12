@@ -41,14 +41,10 @@ namespace WebExtensions.Net.Devtools.Panels
 
         /// <inheritdoc />
         public virtual ValueTask<ExtensionPanel> Create(string title, string iconPath, ExtensionUrl pagePath)
-        {
-            return InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
-        }
+            => InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
 
         /// <inheritdoc />
         public virtual ValueTask<ExtensionPanel> Create(string title, ExtensionUrl iconPath, ExtensionUrl pagePath)
-        {
-            return InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
-        }
+            => InvokeAsync<ExtensionPanel>("create", title, iconPath, pagePath);
     }
 }

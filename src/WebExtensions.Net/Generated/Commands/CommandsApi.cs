@@ -47,20 +47,14 @@ namespace WebExtensions.Net.Commands
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Command>> GetAll()
-        {
-            return InvokeAsync<IEnumerable<Command>>("getAll");
-        }
+            => InvokeAsync<IEnumerable<Command>>("getAll");
 
         /// <inheritdoc />
-        public virtual ValueTask Reset(string name)
-        {
-            return InvokeVoidAsync("reset", name);
-        }
+        public virtual void Reset(string name)
+            => InvokeVoid("reset", name);
 
         /// <inheritdoc />
-        public virtual ValueTask Update(Detail detail)
-        {
-            return InvokeVoidAsync("update", detail);
-        }
+        public virtual void Update(Detail detail)
+            => InvokeVoid("update", detail);
     }
 }

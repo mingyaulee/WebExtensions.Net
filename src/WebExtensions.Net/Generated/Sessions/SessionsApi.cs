@@ -35,63 +35,43 @@ namespace WebExtensions.Net.Sessions
         }
 
         /// <inheritdoc />
-        public virtual ValueTask ForgetClosedTab(int windowId, string sessionId)
-        {
-            return InvokeVoidAsync("forgetClosedTab", windowId, sessionId);
-        }
+        public virtual void ForgetClosedTab(int windowId, string sessionId)
+            => InvokeVoid("forgetClosedTab", windowId, sessionId);
 
         /// <inheritdoc />
-        public virtual ValueTask ForgetClosedWindow(string sessionId)
-        {
-            return InvokeVoidAsync("forgetClosedWindow", sessionId);
-        }
+        public virtual void ForgetClosedWindow(string sessionId)
+            => InvokeVoid("forgetClosedWindow", sessionId);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Session>> GetRecentlyClosed(Filter filter = null)
-        {
-            return InvokeAsync<IEnumerable<Session>>("getRecentlyClosed", filter);
-        }
+            => InvokeAsync<IEnumerable<Session>>("getRecentlyClosed", filter);
 
         /// <inheritdoc />
-        public virtual ValueTask GetTabValue(int tabId, string key)
-        {
-            return InvokeVoidAsync("getTabValue", tabId, key);
-        }
+        public virtual void GetTabValue(int tabId, string key)
+            => InvokeVoid("getTabValue", tabId, key);
 
         /// <inheritdoc />
-        public virtual ValueTask GetWindowValue(int windowId, string key)
-        {
-            return InvokeVoidAsync("getWindowValue", windowId, key);
-        }
+        public virtual void GetWindowValue(int windowId, string key)
+            => InvokeVoid("getWindowValue", windowId, key);
 
         /// <inheritdoc />
-        public virtual ValueTask RemoveTabValue(int tabId, string key)
-        {
-            return InvokeVoidAsync("removeTabValue", tabId, key);
-        }
+        public virtual void RemoveTabValue(int tabId, string key)
+            => InvokeVoid("removeTabValue", tabId, key);
 
         /// <inheritdoc />
-        public virtual ValueTask RemoveWindowValue(int windowId, string key)
-        {
-            return InvokeVoidAsync("removeWindowValue", windowId, key);
-        }
+        public virtual void RemoveWindowValue(int windowId, string key)
+            => InvokeVoid("removeWindowValue", windowId, key);
 
         /// <inheritdoc />
         public virtual ValueTask<Session> Restore(string sessionId = null)
-        {
-            return InvokeAsync<Session>("restore", sessionId);
-        }
+            => InvokeAsync<Session>("restore", sessionId);
 
         /// <inheritdoc />
-        public virtual ValueTask SetTabValue(int tabId, string key, object value)
-        {
-            return InvokeVoidAsync("setTabValue", tabId, key, value);
-        }
+        public virtual void SetTabValue(int tabId, string key, object value)
+            => InvokeVoid("setTabValue", tabId, key, value);
 
         /// <inheritdoc />
-        public virtual ValueTask SetWindowValue(int windowId, string key, object value)
-        {
-            return InvokeVoidAsync("setWindowValue", windowId, key, value);
-        }
+        public virtual void SetWindowValue(int windowId, string key, object value)
+            => InvokeVoid("setWindowValue", windowId, key, value);
     }
 }

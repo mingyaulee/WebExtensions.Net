@@ -32,38 +32,26 @@ namespace WebExtensions.Net.Alarms
 
         /// <inheritdoc />
         public virtual ValueTask<bool> Clear(string name = null)
-        {
-            return InvokeAsync<bool>("clear", name);
-        }
+            => InvokeAsync<bool>("clear", name);
 
         /// <inheritdoc />
         public virtual ValueTask<bool> ClearAll()
-        {
-            return InvokeAsync<bool>("clearAll");
-        }
+            => InvokeAsync<bool>("clearAll");
 
         /// <inheritdoc />
-        public virtual ValueTask Create(AlarmInfo alarmInfo)
-        {
-            return InvokeVoidAsync("create", alarmInfo);
-        }
+        public virtual void Create(AlarmInfo alarmInfo)
+            => InvokeVoid("create", alarmInfo);
 
         /// <inheritdoc />
-        public virtual ValueTask Create(string name, AlarmInfo alarmInfo)
-        {
-            return InvokeVoidAsync("create", name, alarmInfo);
-        }
+        public virtual void Create(string name, AlarmInfo alarmInfo)
+            => InvokeVoid("create", name, alarmInfo);
 
         /// <inheritdoc />
         public virtual ValueTask<Alarm> Get(string name = null)
-        {
-            return InvokeAsync<Alarm>("get", name);
-        }
+            => InvokeAsync<Alarm>("get", name);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Alarm>> GetAll()
-        {
-            return InvokeAsync<IEnumerable<Alarm>>("getAll");
-        }
+            => InvokeAsync<IEnumerable<Alarm>>("getAll");
     }
 }

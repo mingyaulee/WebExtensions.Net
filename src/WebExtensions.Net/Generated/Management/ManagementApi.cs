@@ -78,38 +78,26 @@ namespace WebExtensions.Net.Management
 
         /// <inheritdoc />
         public virtual ValueTask<ExtensionInfo> Get(ExtensionID id)
-        {
-            return InvokeAsync<ExtensionInfo>("get", id);
-        }
+            => InvokeAsync<ExtensionInfo>("get", id);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<ExtensionInfo>> GetAll()
-        {
-            return InvokeAsync<IEnumerable<ExtensionInfo>>("getAll");
-        }
+            => InvokeAsync<IEnumerable<ExtensionInfo>>("getAll");
 
         /// <inheritdoc />
         public virtual ValueTask<ExtensionInfo> GetSelf()
-        {
-            return InvokeAsync<ExtensionInfo>("getSelf");
-        }
+            => InvokeAsync<ExtensionInfo>("getSelf");
 
         /// <inheritdoc />
         public virtual ValueTask<Result> Install(InstallOptions options)
-        {
-            return InvokeAsync<Result>("install", options);
-        }
+            => InvokeAsync<Result>("install", options);
 
         /// <inheritdoc />
         public virtual ValueTask SetEnabled(string id, bool enabled)
-        {
-            return InvokeVoidAsync("setEnabled", id, enabled);
-        }
+            => InvokeVoidAsync("setEnabled", id, enabled);
 
         /// <inheritdoc />
         public virtual ValueTask UninstallSelf(UninstallSelfOptions options = null)
-        {
-            return InvokeVoidAsync("uninstallSelf", options);
-        }
+            => InvokeVoidAsync("uninstallSelf", options);
     }
 }

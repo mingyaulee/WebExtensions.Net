@@ -11,7 +11,7 @@ namespace WebExtensions.Net.Identity
         /// <param name="path">The path appended to the end of the generated URL. </param>
         /// <returns></returns>
         [JsAccessPath("getRedirectURL")]
-        ValueTask<string> GetRedirectURL(string path = null);
+        string GetRedirectURL(string path = null);
 
         /// <summary>Starts an auth flow at the specified URL.</summary>
         /// <param name="details"></param>

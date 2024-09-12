@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 
 namespace WebExtensions.Net.ContentScripts
 {
@@ -10,6 +9,6 @@ namespace WebExtensions.Net.ContentScripts
         /// <summary>Register a content script programmatically</summary>
         /// <param name="contentScriptOptions"></param>
         [JsAccessPath("register")]
-        ValueTask Register(RegisteredContentScriptOptions contentScriptOptions);
+        void Register(RegisteredContentScriptOptions contentScriptOptions);
     }
 }

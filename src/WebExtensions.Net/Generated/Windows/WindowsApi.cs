@@ -68,44 +68,30 @@ namespace WebExtensions.Net.Windows
 
         /// <inheritdoc />
         public virtual ValueTask<Window> Create(CreateData createData = null)
-        {
-            return InvokeAsync<Window>("create", createData);
-        }
+            => InvokeAsync<Window>("create", createData);
 
         /// <inheritdoc />
         public virtual ValueTask<Window> Get(int windowId, GetInfo getInfo = null)
-        {
-            return InvokeAsync<Window>("get", windowId, getInfo);
-        }
+            => InvokeAsync<Window>("get", windowId, getInfo);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Window>> GetAll(GetAllGetInfo getInfo = null)
-        {
-            return InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
-        }
+            => InvokeAsync<IEnumerable<Window>>("getAll", getInfo);
 
         /// <inheritdoc />
         public virtual ValueTask<Window> GetCurrent(GetInfo getInfo = null)
-        {
-            return InvokeAsync<Window>("getCurrent", getInfo);
-        }
+            => InvokeAsync<Window>("getCurrent", getInfo);
 
         /// <inheritdoc />
         public virtual ValueTask<Window> GetLastFocused(GetInfo getInfo = null)
-        {
-            return InvokeAsync<Window>("getLastFocused", getInfo);
-        }
+            => InvokeAsync<Window>("getLastFocused", getInfo);
 
         /// <inheritdoc />
         public virtual ValueTask Remove(int windowId)
-        {
-            return InvokeVoidAsync("remove", windowId);
-        }
+            => InvokeVoidAsync("remove", windowId);
 
         /// <inheritdoc />
         public virtual ValueTask<Window> Update(int windowId, UpdateInfo updateInfo)
-        {
-            return InvokeAsync<Window>("update", windowId, updateInfo);
-        }
+            => InvokeAsync<Window>("update", windowId, updateInfo);
     }
 }

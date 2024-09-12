@@ -20,6 +20,6 @@ namespace WebExtensions.Net.Idle
         /// <summary>Sets the interval, in seconds, used to determine when the system is in an idle state for onStateChanged events. The default interval is 60 seconds.</summary>
         /// <param name="intervalInSeconds">Threshold, in seconds, used to determine when the system is in an idle state.</param>
         [JsAccessPath("setDetectionInterval")]
-        ValueTask SetDetectionInterval(int intervalInSeconds);
+        void SetDetectionInterval(int intervalInSeconds);
     }
 }

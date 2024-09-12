@@ -31,56 +31,38 @@ namespace WebExtensions.Net.PageAction
 
         /// <inheritdoc />
         public virtual ValueTask<string> GetPopup(GetPopupDetails details)
-        {
-            return InvokeAsync<string>("getPopup", details);
-        }
+            => InvokeAsync<string>("getPopup", details);
 
         /// <inheritdoc />
         public virtual ValueTask<string> GetTitle(GetTitleDetails details)
-        {
-            return InvokeAsync<string>("getTitle", details);
-        }
+            => InvokeAsync<string>("getTitle", details);
 
         /// <inheritdoc />
         public virtual ValueTask Hide(int tabId)
-        {
-            return InvokeVoidAsync("hide", tabId);
-        }
+            => InvokeVoidAsync("hide", tabId);
 
         /// <inheritdoc />
-        public virtual ValueTask IsShown(IsShownDetails details)
-        {
-            return InvokeVoidAsync("isShown", details);
-        }
+        public virtual void IsShown(IsShownDetails details)
+            => InvokeVoid("isShown", details);
 
         /// <inheritdoc />
-        public virtual ValueTask OpenPopup()
-        {
-            return InvokeVoidAsync("openPopup");
-        }
+        public virtual void OpenPopup()
+            => InvokeVoid("openPopup");
 
         /// <inheritdoc />
         public virtual ValueTask SetIcon(SetIconDetails details)
-        {
-            return InvokeVoidAsync("setIcon", details);
-        }
+            => InvokeVoidAsync("setIcon", details);
 
         /// <inheritdoc />
-        public virtual ValueTask SetPopup(SetPopupDetails details)
-        {
-            return InvokeVoidAsync("setPopup", details);
-        }
+        public virtual void SetPopup(SetPopupDetails details)
+            => InvokeVoid("setPopup", details);
 
         /// <inheritdoc />
-        public virtual ValueTask SetTitle(SetTitleDetails details)
-        {
-            return InvokeVoidAsync("setTitle", details);
-        }
+        public virtual void SetTitle(SetTitleDetails details)
+            => InvokeVoid("setTitle", details);
 
         /// <inheritdoc />
         public virtual ValueTask Show(int tabId)
-        {
-            return InvokeVoidAsync("show", tabId);
-        }
+            => InvokeVoidAsync("show", tabId);
     }
 }

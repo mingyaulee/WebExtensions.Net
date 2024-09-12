@@ -18,14 +18,10 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
 
         /// <inheritdoc />
         public virtual ValueTask<EvalResult> Eval(string expression, object options = null)
-        {
-            return InvokeAsync<EvalResult>("eval", expression, options);
-        }
+            => InvokeAsync<EvalResult>("eval", expression, options);
 
         /// <inheritdoc />
-        public virtual ValueTask Reload(ReloadOptions reloadOptions = null)
-        {
-            return InvokeVoidAsync("reload", reloadOptions);
-        }
+        public virtual void Reload(ReloadOptions reloadOptions = null)
+            => InvokeVoid("reload", reloadOptions);
     }
 }

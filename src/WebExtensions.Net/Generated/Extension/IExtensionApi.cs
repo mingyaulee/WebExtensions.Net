@@ -22,20 +22,20 @@ namespace WebExtensions.Net.Extension
         /// <summary>Returns the JavaScript 'window' object for the background page running inside the current extension. Returns null if the extension has no background page.</summary>
         /// <returns></returns>
         [JsAccessPath("getBackgroundPage")]
-        ValueTask<JsonElement> GetBackgroundPage();
+        JsonElement GetBackgroundPage();
 
         /// <summary>Converts a relative path within an extension install directory to a fully-qualified URL.</summary>
         /// <param name="path">A path to a resource within an extension expressed relative to its install directory.</param>
         /// <returns>The fully-qualified URL to the resource.</returns>
         [JsAccessPath("getURL")]
         [Obsolete("Please use $(ref:runtime.getURL).")]
-        ValueTask<string> GetURL(string path);
+        string GetURL(string path);
 
         /// <summary>Returns an array of the JavaScript 'window' objects for each of the pages running inside the current extension.</summary>
         /// <param name="fetchProperties"></param>
         /// <returns>Array of global objects</returns>
         [JsAccessPath("getViews")]
-        ValueTask<IEnumerable<object>> GetViews(FetchProperties fetchProperties = null);
+        IEnumerable<object> GetViews(FetchProperties fetchProperties = null);
 
         /// <summary>Retrieves the state of the extension's access to the 'file://' scheme (as determined by the user-controlled 'Allow access to File URLs' checkbox.</summary>
         /// <returns>True if the extension can access the 'file://' scheme, false otherwise.</returns>

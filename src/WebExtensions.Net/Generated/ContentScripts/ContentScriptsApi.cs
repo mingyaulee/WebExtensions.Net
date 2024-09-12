@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 
 namespace WebExtensions.Net.ContentScripts
 {
@@ -14,9 +13,7 @@ namespace WebExtensions.Net.ContentScripts
         }
 
         /// <inheritdoc />
-        public virtual ValueTask Register(RegisteredContentScriptOptions contentScriptOptions)
-        {
-            return InvokeVoidAsync("register", contentScriptOptions);
-        }
+        public virtual void Register(RegisteredContentScriptOptions contentScriptOptions)
+            => InvokeVoid("register", contentScriptOptions);
     }
 }

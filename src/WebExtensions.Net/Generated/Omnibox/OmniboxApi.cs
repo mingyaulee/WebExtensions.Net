@@ -1,5 +1,4 @@
 using JsBind.Net;
-using System.Threading.Tasks;
 using WebExtensions.Net.Events;
 
 namespace WebExtensions.Net.Omnibox
@@ -91,9 +90,7 @@ namespace WebExtensions.Net.Omnibox
         }
 
         /// <inheritdoc />
-        public virtual ValueTask SetDefaultSuggestion(DefaultSuggestResult suggestion)
-        {
-            return InvokeVoidAsync("setDefaultSuggestion", suggestion);
-        }
+        public virtual void SetDefaultSuggestion(DefaultSuggestResult suggestion)
+            => InvokeVoid("setDefaultSuggestion", suggestion);
     }
 }

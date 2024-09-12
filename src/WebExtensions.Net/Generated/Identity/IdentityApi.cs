@@ -14,15 +14,11 @@ namespace WebExtensions.Net.Identity
         }
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetRedirectURL(string path = null)
-        {
-            return InvokeAsync<string>("getRedirectURL", path);
-        }
+        public virtual string GetRedirectURL(string path = null)
+            => Invoke<string>("getRedirectURL", path);
 
         /// <inheritdoc />
         public virtual ValueTask<string> LaunchWebAuthFlow(LaunchWebAuthFlowDetails details)
-        {
-            return InvokeAsync<string>("launchWebAuthFlow", details);
-        }
+            => InvokeAsync<string>("launchWebAuthFlow", details);
     }
 }

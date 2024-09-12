@@ -32,32 +32,22 @@ namespace WebExtensions.Net.Cookies
 
         /// <inheritdoc />
         public virtual ValueTask<Cookie> Get(GetDetails details)
-        {
-            return InvokeAsync<Cookie>("get", details);
-        }
+            => InvokeAsync<Cookie>("get", details);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Cookie>> GetAll(GetAllDetails details)
-        {
-            return InvokeAsync<IEnumerable<Cookie>>("getAll", details);
-        }
+            => InvokeAsync<IEnumerable<Cookie>>("getAll", details);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<CookieStore>> GetAllCookieStores()
-        {
-            return InvokeAsync<IEnumerable<CookieStore>>("getAllCookieStores");
-        }
+            => InvokeAsync<IEnumerable<CookieStore>>("getAllCookieStores");
 
         /// <inheritdoc />
         public virtual ValueTask<CallbackDetails> Remove(RemoveDetails details)
-        {
-            return InvokeAsync<CallbackDetails>("remove", details);
-        }
+            => InvokeAsync<CallbackDetails>("remove", details);
 
         /// <inheritdoc />
         public virtual ValueTask<Cookie> Set(SetDetails details)
-        {
-            return InvokeAsync<Cookie>("set", details);
-        }
+            => InvokeAsync<Cookie>("set", details);
     }
 }

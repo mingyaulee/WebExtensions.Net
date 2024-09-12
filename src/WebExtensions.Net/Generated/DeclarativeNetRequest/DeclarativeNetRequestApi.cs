@@ -46,68 +46,46 @@ namespace WebExtensions.Net.DeclarativeNetRequest
 
         /// <inheritdoc />
         public virtual ValueTask<int> GetAvailableStaticRuleCount()
-        {
-            return InvokeAsync<int>("getAvailableStaticRuleCount");
-        }
+            => InvokeAsync<int>("getAvailableStaticRuleCount");
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<int>> GetDisabledRuleIds(GetDisabledRuleIdsOptions options)
-        {
-            return InvokeAsync<IEnumerable<int>>("getDisabledRuleIds", options);
-        }
+            => InvokeAsync<IEnumerable<int>>("getDisabledRuleIds", options);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Rule>> GetDynamicRules(GetRulesFilter filter = null)
-        {
-            return InvokeAsync<IEnumerable<Rule>>("getDynamicRules", filter);
-        }
+            => InvokeAsync<IEnumerable<Rule>>("getDynamicRules", filter);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<string>> GetEnabledRulesets()
-        {
-            return InvokeAsync<IEnumerable<string>>("getEnabledRulesets");
-        }
+            => InvokeAsync<IEnumerable<string>>("getEnabledRulesets");
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<Rule>> GetSessionRules(GetRulesFilter filter = null)
-        {
-            return InvokeAsync<IEnumerable<Rule>>("getSessionRules", filter);
-        }
+            => InvokeAsync<IEnumerable<Rule>>("getSessionRules", filter);
 
         /// <inheritdoc />
         public virtual ValueTask<IsRegexSupportedCallbackResult> IsRegexSupported(RegexOptions regexOptions)
-        {
-            return InvokeAsync<IsRegexSupportedCallbackResult>("isRegexSupported", regexOptions);
-        }
+            => InvokeAsync<IsRegexSupportedCallbackResult>("isRegexSupported", regexOptions);
 
         /// <inheritdoc />
         public virtual ValueTask<TestMatchOutcomeCallbackResult> TestMatchOutcome(Request request, TestMatchOutcomeOptions options = null)
-        {
-            return InvokeAsync<TestMatchOutcomeCallbackResult>("testMatchOutcome", request, options);
-        }
+            => InvokeAsync<TestMatchOutcomeCallbackResult>("testMatchOutcome", request, options);
 
         /// <inheritdoc />
         public virtual ValueTask UpdateDynamicRules(UpdateDynamicRulesOptions options)
-        {
-            return InvokeVoidAsync("updateDynamicRules", options);
-        }
+            => InvokeVoidAsync("updateDynamicRules", options);
 
         /// <inheritdoc />
         public virtual ValueTask UpdateEnabledRulesets(UpdateRulesetOptions updateRulesetOptions)
-        {
-            return InvokeVoidAsync("updateEnabledRulesets", updateRulesetOptions);
-        }
+            => InvokeVoidAsync("updateEnabledRulesets", updateRulesetOptions);
 
         /// <inheritdoc />
         public virtual ValueTask UpdateSessionRules(UpdateSessionRulesOptions options)
-        {
-            return InvokeVoidAsync("updateSessionRules", options);
-        }
+            => InvokeVoidAsync("updateSessionRules", options);
 
         /// <inheritdoc />
         public virtual ValueTask UpdateStaticRules(UpdateStaticRulesOptions options)
-        {
-            return InvokeVoidAsync("updateStaticRules", options);
-        }
+            => InvokeVoidAsync("updateStaticRules", options);
     }
 }

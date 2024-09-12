@@ -16,26 +16,18 @@ namespace WebExtensions.Net.I18n
 
         /// <inheritdoc />
         public virtual ValueTask<Result> DetectLanguage(string text)
-        {
-            return InvokeAsync<Result>("detectLanguage", text);
-        }
+            => InvokeAsync<Result>("detectLanguage", text);
 
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<LanguageCode>> GetAcceptLanguages()
-        {
-            return InvokeAsync<IEnumerable<LanguageCode>>("getAcceptLanguages");
-        }
+            => InvokeAsync<IEnumerable<LanguageCode>>("getAcceptLanguages");
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetMessage(string messageName, object substitutions = null)
-        {
-            return InvokeAsync<string>("getMessage", messageName, substitutions);
-        }
+        public virtual string GetMessage(string messageName, object substitutions = null)
+            => Invoke<string>("getMessage", messageName, substitutions);
 
         /// <inheritdoc />
-        public virtual ValueTask<string> GetUILanguage()
-        {
-            return InvokeAsync<string>("getUILanguage");
-        }
+        public virtual string GetUILanguage()
+            => Invoke<string>("getUILanguage");
     }
 }
