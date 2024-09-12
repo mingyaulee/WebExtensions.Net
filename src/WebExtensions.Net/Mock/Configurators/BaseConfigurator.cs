@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Threading.Tasks;
 using WebExtensions.Net.Mock.Handlers;
 
@@ -34,6 +33,63 @@ namespace WebExtensions.Net.Mock.Configurators
         /// <returns>Property configurator.</returns>
         public MockPropertyConfigurator<T> Property<T>(Expression<Func<TObject, T>> expression)
             => new(mockHandlers, CreateHandler(expression));
+
+        #region Synchronous method without return value
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator Method(Expression<Func<TObject, Action>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T">The action argument type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator<T> Method<T>(Expression<Func<TObject, Func<T, Action>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The action argument 1 type.</typeparam>
+        /// <typeparam name="T2">The action argument 2 type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator<T1, T2> Method<T1, T2>(Expression<Func<TObject, Action<T1, T2>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The action argument 1 type.</typeparam>
+        /// <typeparam name="T2">The action argument 2 type.</typeparam>
+        /// <typeparam name="T3">The action argument 3 type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator<T1, T2, T3> Method<T1, T2, T3>(Expression<Func<TObject, Action<T1, T2, T3>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The action argument 1 type.</typeparam>
+        /// <typeparam name="T2">The action argument 2 type.</typeparam>
+        /// <typeparam name="T3">The action argument 3 type.</typeparam>
+        /// <typeparam name="T4">The action argument 4 type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator<T1, T2, T3, T4> Method<T1, T2, T3, T4>(Expression<Func<TObject, Action<T1, T2, T3, T4>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The action argument 1 type.</typeparam>
+        /// <typeparam name="T2">The action argument 2 type.</typeparam>
+        /// <typeparam name="T3">The action argument 3 type.</typeparam>
+        /// <typeparam name="T4">The action argument 4 type.</typeparam>
+        /// <typeparam name="T5">The action argument 5 type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Action configurator.</returns>
+        public MockActionConfigurator<T1, T2, T3, T4, T5> Method<T1, T2, T3, T4, T5>(Expression<Func<TObject, Action<T1, T2, T3, T4, T5>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        #endregion Synchronous method without return value
+
+        #region Asynchronous method without return value
 
         /// <summary>Configures the mock handler for the method.</summary>
         /// <param name="expression">The expression returning the method to mock.</param>
@@ -85,6 +141,71 @@ namespace WebExtensions.Net.Mock.Configurators
         /// <returns>Action configurator.</returns>
         public MockActionConfigurator<T1, T2, T3, T4, T5> Method<T1, T2, T3, T4, T5>(Expression<Func<TObject, Func<T1, T2, T3, T4, T5, ValueTask>>> expression)
             => new(mockHandlers, CreateHandler(expression));
+
+        #endregion Asynchronous method without return value
+
+        #region Synchronous method with return value
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<TResult> Method<TResult>(Expression<Func<TObject, Func<TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T">The function argument type.</typeparam>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<T, TResult> Method<T, TResult>(Expression<Func<TObject, Func<T, TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The function argument 1 type.</typeparam>
+        /// <typeparam name="T2">The function argument 2 type.</typeparam>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<T1, T2, TResult> Method<T1, T2, TResult>(Expression<Func<TObject, Func<T1, T2, TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The function argument 1 type.</typeparam>
+        /// <typeparam name="T2">The function argument 2 type.</typeparam>
+        /// <typeparam name="T3">The function argument 3 type.</typeparam>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<T1, T2, T3, TResult> Method<T1, T2, T3, TResult>(Expression<Func<TObject, Func<T1, T2, T3, TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The function argument 1 type.</typeparam>
+        /// <typeparam name="T2">The function argument 2 type.</typeparam>
+        /// <typeparam name="T3">The function argument 3 type.</typeparam>
+        /// <typeparam name="T4">The function argument 4 type.</typeparam>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<T1, T2, T3, T4, TResult> Method<T1, T2, T3, T4, TResult>(Expression<Func<TObject, Func<T1, T2, T3, T4, TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        /// <summary>Configures the mock handler for the method.</summary>
+        /// <typeparam name="T1">The function argument 1 type.</typeparam>
+        /// <typeparam name="T2">The function argument 2 type.</typeparam>
+        /// <typeparam name="T3">The function argument 3 type.</typeparam>
+        /// <typeparam name="T4">The function argument 4 type.</typeparam>
+        /// <typeparam name="T5">The function argument 5 type.</typeparam>
+        /// <typeparam name="TResult">The function return type.</typeparam>
+        /// <param name="expression">The expression returning the method to mock.</param>
+        /// <returns>Function configurator.</returns>
+        public MockFunctionConfigurator<T1, T2, T3, T4, T5, TResult> Method<T1, T2, T3, T4, T5, TResult>(Expression<Func<TObject, Func<T1, T2, T3, T4, T5, TResult>>> expression)
+            => new(mockHandlers, CreateHandler(expression));
+
+        #endregion Synchronous method with return value
+
+        #region Asynchronous method with return value
 
         /// <summary>Configures the mock handler for the method.</summary>
         /// <typeparam name="TResult">The function return type.</typeparam>
@@ -142,6 +263,8 @@ namespace WebExtensions.Net.Mock.Configurators
         /// <returns>Function configurator.</returns>
         public MockFunctionConfigurator<T1, T2, T3, T4, T5, TResult> Method<T1, T2, T3, T4, T5, TResult>(Expression<Func<TObject, Func<T1, T2, T3, T4, T5, ValueTask<TResult>>>> expression)
             => new(mockHandlers, CreateHandler(expression));
+
+        #endregion Asynchronous method with return value
 
         /// <summary>
         /// Creates the mock handler based on the lamdba expression.

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using WebExtensions.Net.Mock.Handlers;
-using WebExtensions.Net.Mock.Resolvers;
 
 namespace WebExtensions.Net.Mock.Configurators
 {

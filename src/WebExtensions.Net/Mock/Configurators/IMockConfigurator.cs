@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WebExtensions.Net.Mock.Configurators
+﻿namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>
     /// Mock configurator interface.
