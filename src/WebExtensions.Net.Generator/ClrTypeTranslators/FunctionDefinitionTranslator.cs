@@ -26,7 +26,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             }
 
             var parameterDefinitions = functionDefinition.FunctionParameters?.ToList() ?? new List<ParameterDefinition>();
-            var returnDefinition = GetReturnDefinition(functionDefinition, parameterDefinitions);
+            var returnDefinition = GetReturnDefinition(functionDefinition, parameterDefinitions, out var isCallbackParameter);
 
             var methodParameters = parameterDefinitions.Select(parameterDefinition =>
             {
@@ -50,9 +50,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Return = new ClrMethodReturnInfo()
                 {
                     Description = returnDefinition?.Description,
-                    HasReturnType = methodReturnType is not null,
                     ReturnType = methodReturnType
                 },
+                IsAsync = isCallbackParameter,
                 IsObsolete = functionDefinition.IsDeprecated,
                 ObsoleteMessage = functionDefinition.Deprecated,
                 Metadata = new Dictionary<string, object>()
@@ -75,8 +75,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             yield return methodInfo;
         }
 
-        private static FunctionReturnDefinition? GetReturnDefinition(FunctionDefinition functionDefinition, List<ParameterDefinition> parameterDefinitions)
+        private static FunctionReturnDefinition? GetReturnDefinition(FunctionDefinition functionDefinition, List<ParameterDefinition> parameterDefinitions, out bool isCallbackParameter)
         {
+            isCallbackParameter = false;
             if (functionDefinition.FunctionReturns is not null)
             {
                 return functionDefinition.FunctionReturns;
@@ -93,6 +94,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 return null;
             }
 
+            isCallbackParameter = true;
             if (callbackParameter.FunctionParameters is null || !callbackParameter.FunctionParameters.Any())
             {
                 parameterDefinitions.Remove(callbackParameter);

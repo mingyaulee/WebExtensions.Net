@@ -11,7 +11,10 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.WriteUsingStatement("System.Threading.Tasks");
+            if (clrMethodInfo.IsAsync)
+            {
+                codeWriter.WriteUsingStatement("System.Threading.Tasks");
+            }
 
             var methodSignature = GetMethodSignature();
             codeWriter.PublicMethods

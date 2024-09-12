@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using WebExtensions.Net.Generator.Extensions;
 using WebExtensions.Net.Generator.Models.ClrTypes;
 using WebExtensions.Net.Generator.Models.Schema;

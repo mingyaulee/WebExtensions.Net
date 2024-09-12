@@ -11,7 +11,10 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
-            codeWriter.WriteUsingStatement("System.Threading.Tasks");
+            if (clrMethodInfo.IsAsync)
+            {
+                codeWriter.WriteUsingStatement("System.Threading.Tasks");
+            }
 
             var metadata = GetMethodMetadata();
             codeWriter.PublicMethods
@@ -21,9 +24,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                 .WriteWithConverter(new AttributeJsAccessPathCodeConverter(clrMethodInfo.Name))
                 .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
                 .WriteLine($"public virtual {metadata.MethodReturnType} {clrMethodInfo.PublicName}({metadata.MethodArguments})")
-                .WriteStartBlock()
-                .WriteLine($"return {metadata.ClientMethodInvoke}(\"{clrMethodInfo.Name}\"{metadata.ClientMethodInvokeArguments});")
-                .WriteEndBlock();
+                .WriteLine($"    => {metadata.ClientMethodInvoke}(\"{clrMethodInfo.Name}\"{metadata.ClientMethodInvokeArguments});");
         }
     }
 }

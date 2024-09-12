@@ -14,6 +14,7 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
         public ClrTypeInfo DeclaringType { get; set; }
         public IEnumerable<ClrParameterInfo> Parameters { get; set; }
         public ClrMethodReturnInfo Return { get; set; }
+        public bool IsAsync { get; set; }
         public bool IsObsolete { get; set; }
         public string? ObsoleteMessage { get; set; }
         public IDictionary<string, object> Metadata { get; set; }
