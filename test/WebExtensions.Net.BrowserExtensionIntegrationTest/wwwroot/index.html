@@ -4,11 +4,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>WebExtensions.Net.BrowserExtension.IntegrationTest</title>
+    <title>WebExtensions.Net Integration Test</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="WebExtensions.Net.BrowserExtensionIntegrationTest.styles.css" rel="stylesheet" />
+    <link href="css/tests.css" rel="stylesheet" />
+    <link href="TestRunner/Jasmine/jasmine.min.css" rel="stylesheet" />
+    <script src="TestRunner/Jasmine/jasmine.min.js"></script>
+    <script src="TestRunner/Jasmine/jasmine-html.min.js"></script>
+    <script src="TestRunner/Jasmine/boot.min.js"></script>
+    <script src="TestRunner/BlazorTestRunner.js"></script>
+    <script src="js/browser-polyfill.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +24,8 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
-    <script src="StartBlazor.js"></script>
+    <script src="_content/JsBind.Net/JsBindNet.js"></script>
+    <script src="js/tests.js"></script>
 </body>
 
 </html>

@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37728F80-FC9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tool", "tool", "{4C80786C-7306-4DCC-A96F-9305D50DF7D5}"
 	ProjectSection(SolutionItems) = preProject
+		tool\DependenciesUpdater.ps1 = tool\DependenciesUpdater.ps1
 		tool\LanguageCodeUpdater.ps1 = tool\LanguageCodeUpdater.ps1
 	EndProjectSection
 EndProject

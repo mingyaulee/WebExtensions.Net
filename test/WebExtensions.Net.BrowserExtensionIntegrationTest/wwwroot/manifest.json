@@ -18,8 +18,7 @@
     {
       "resources": [
         "framework/*",
-        "content/*",
-        "app.js"
+        "content/*"
       ],
       "matches": [ "<all_urls>" ]
     }
