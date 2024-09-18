@@ -6,8 +6,6 @@ namespace WebExtensions.Net.Notifications
     {
         /// <inheritdoc />
         public ValueTask<bool> Update(string notificationId, NotificationOptions options)
-        {
-            return InvokeAsync<bool>("update", notificationId, options);
-        }
+            => InvokeAsync<bool>("update", notificationId, options);
     }
 }
