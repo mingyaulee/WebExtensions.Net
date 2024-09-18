@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Generator.Models
         public string RootApiClassName { get; init; }
         public string RootApiClassDescription { get; init; }
         public string ApiClassBaseClassName { get; init; }
-        public string ApiClassNamePostfix { get; init; }
+        public string ApiClassNameSuffix { get; init; }
         public string ObjectTypeClassBaseClassName { get; init; }
         public string StringFormatClassBaseClassName { get; init; }
         public string ArrayClassBaseClassName { get; init; }
