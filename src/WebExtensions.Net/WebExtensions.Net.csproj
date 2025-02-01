@@ -3,7 +3,7 @@
   <!-- Build properties. -->
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <GenerateDependencyFile>false</GenerateDependencyFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsShippingPackage>true</IsShippingPackage>
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsBind.Net" Version="1.0.3" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net" Version="2.0.0" PrivateAssets="contentfiles" />
   </ItemGroup>
 
 </Project>
