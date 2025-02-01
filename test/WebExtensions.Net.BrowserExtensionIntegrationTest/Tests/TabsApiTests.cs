@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -28,8 +24,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var tab = await webExtensionsApi.Tabs.GetCurrent();
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Id.Should().NotBeNull();
+            tab.ShouldNotBeNull();
+            tab.Id.ShouldNotBeNull();
         }
 
         [Fact]
@@ -76,7 +72,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             };
 
             // Assert
-            accessProperties.Should().NotThrow();
+            accessProperties.ShouldNotThrow();
         }
 
         [Fact(Order = 1)]
@@ -89,9 +85,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Id.Should().HaveValue();
-            tab.Id.Should().NotBe(webExtensionsApi.Tabs.TAB_ID_NONE);
+            tab.ShouldNotBeNull();
+            tab.Id.ShouldHaveValue();
+            tab.Id.ShouldNotBe(webExtensionsApi.Tabs.TAB_ID_NONE);
 
             testTabId = tab.Id;
         }
@@ -110,10 +106,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             }
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Id.Should().Be(testTabId.Value);
-            tab.Url.Should().Be(testTabUrl);
-            tab.Status.Should().Be("complete");
+            tab.ShouldNotBeNull();
+            tab.Id.ShouldBe(testTabId.Value);
+            tab.Url.ShouldBe(testTabUrl);
+            tab.Status.ShouldBe("complete");
         }
 
         [Fact(Order = 2)]
@@ -126,9 +122,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            tabs.Should().NotBeNullOrEmpty();
-            tabs.Should().HaveCount(1);
-            tabs.Single().Id.Should().Be(testTabId);
+            tabs.ShouldNotBeNullOrEmpty();
+            tabs.ShouldHaveCount(1);
+            tabs.Single().Id.ShouldBe(testTabId);
         }
 
         [Fact(Order = 3)]
@@ -144,8 +140,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            tab.Should().NotBeNull();
-            tab.Status.Should().Be("loading");
+            tab.ShouldNotBeNull();
+            tab.Status.ShouldBe("loading");
         }
 
         [Fact(Order = 4)]
@@ -155,7 +151,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Tabs.Remove(testTabId.Value);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }

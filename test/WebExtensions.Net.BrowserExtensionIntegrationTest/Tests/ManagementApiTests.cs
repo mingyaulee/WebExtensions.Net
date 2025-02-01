@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -24,7 +22,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var extension = await webExtensionsApi.Management.Get(extensionId);
 
             // Assert
-            extension.Should().NotBeNull();
+            extension.ShouldNotBeNull();
         }
 
         [Fact]
@@ -34,7 +32,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var extension = await webExtensionsApi.Management.GetSelf();
 
             // Assert
-            extension.Should().NotBeNull();
+            extension.ShouldNotBeNull();
         }
 
         [Fact]
@@ -44,7 +42,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var extensions = await webExtensionsApi.Management.GetAll();
 
             // Assert
-            extensions.Should().NotBeNullOrEmpty();
+            extensions.ShouldNotBeNullOrEmpty();
         }
     }
 }

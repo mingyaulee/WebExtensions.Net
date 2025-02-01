@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 using WebExtensions.Net.Notifications;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -31,7 +28,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            createdNotificationId.Should().Be(testNotificationId);
+            createdNotificationId.ShouldBe(testNotificationId);
         }
 
         [Fact(Order = 2)]
@@ -45,7 +42,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            notificationUpdated.Should().BeTrue();
+            notificationUpdated.ShouldBeTrue();
         }
 
         [Fact(Order = 2)]
@@ -55,7 +52,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var notifications = await webExtensionsApi.Notifications.GetAll();
 
             // Assert
-            notifications.EnumerateObject().Should().Contain(property => property.Name == testNotificationId);
+            notifications.EnumerateObject().ShouldContain(property => property.Name == testNotificationId);
         }
 
         [Fact(Order = 3)]
@@ -65,7 +62,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var notificationCleared = await webExtensionsApi.Notifications.Clear(testNotificationId);
 
             // Assert
-            notificationCleared.Should().BeTrue();
+            notificationCleared.ShouldBeTrue();
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -37,9 +33,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            cookie.Should().NotBeNull();
-            cookie.Domain.Should().Be(testCookieDomain);
-            cookie.Value.Should().Be(testCookieValue);
+            cookie.ShouldNotBeNull();
+            cookie.Domain.ShouldBe(testCookieDomain);
+            cookie.Value.ShouldBe(testCookieValue);
         }
 
         [Fact(Order = 2)]
@@ -53,8 +49,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            cookie.Should().NotBeNull();
-            cookie.Value.Should().Be(testCookieValue);
+            cookie.ShouldNotBeNull();
+            cookie.Value.ShouldBe(testCookieValue);
         }
 
         [Fact(Order = 2)]
@@ -67,8 +63,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            cookies.Should().NotBeNullOrEmpty();
-            cookies.Single(cookie => cookie.Name == testCookieName).Value.Should().Be(testCookieValue);
+            cookies.ShouldNotBeNullOrEmpty();
+            cookies.Single(cookie => cookie.Name == testCookieName).Value.ShouldBe(testCookieValue);
         }
 
         [Fact(Order = 3)]
@@ -82,8 +78,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            detail.Should().NotBeNull();
-            detail.Name.Should().Be(testCookieName);
+            detail.ShouldNotBeNull();
+            detail.Name.ShouldBe(testCookieName);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -22,7 +20,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var extensionId = webExtensionsApi.Runtime.Id;
 
             // Assert
-            extensionId.Should().NotBeNullOrEmpty();
+            extensionId.ShouldNotBeNullOrEmpty();
         }
 
         [Fact]
@@ -32,7 +30,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var manifest = webExtensionsApi.Runtime.GetManifest();
 
             // Assert
-            manifest.ValueKind.Should().Be(JsonValueKind.Object);
+            manifest.ValueKind.ShouldBe(JsonValueKind.Object);
         }
 
         [Fact]
@@ -42,8 +40,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var url = webExtensionsApi.Runtime.GetURL("index.html");
 
             // Assert
-            url.Should().StartWith("chrome-extension://")
-                .And.EndWith("/index.html");
+            url.ShouldStartWith("chrome-extension://");
+            url.ShouldEndWith("/index.html");
         }
 
         [Fact]
@@ -53,7 +51,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
 
             // Assert
-            platformInfo.Should().NotBeNull();
+            platformInfo.ShouldNotBeNull();
         }
     }
 }

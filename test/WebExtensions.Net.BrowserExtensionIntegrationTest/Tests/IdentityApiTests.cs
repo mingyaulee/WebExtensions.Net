@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -23,7 +21,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var result = webExtensionsApi.Identity.GetRedirectURL(testIdentityRedirectUrl);
 
             // Assert
-            result.Should().NotBeNull();
+            result.ShouldNotBeNull();
         }
     }
 }

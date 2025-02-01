@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Shouldly;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -26,9 +24,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var commands = await webExtensionsApi.Commands.GetAll();
 
             // Assert
-            commands.Should().HaveCount(1);
-            commands.Single().Name.Should().Be(testCommandName);
-            commands.Single().Description.Should().Be(testCommandDescription);
+            commands.ShouldHaveCount(1);
+            commands.Single().Name.ShouldBe(testCommandName);
+            commands.Single().Description.ShouldBe(testCommandDescription);
         }
     }
 }

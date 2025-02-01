@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {

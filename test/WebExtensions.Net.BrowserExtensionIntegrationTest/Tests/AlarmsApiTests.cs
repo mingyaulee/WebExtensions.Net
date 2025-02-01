@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -29,7 +26,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            action.Should().NotThrow();
+            action.ShouldNotThrow();
         }
 
         [Fact(Order = 2)]
@@ -39,7 +36,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var alarm = await webExtensionsApi.Alarms.Get(testAlarmName);
 
             // Assert
-            ((DateTime)alarm.ScheduledTime).Should().Be(testAlarmTime);
+            ((DateTime)alarm.ScheduledTime).ShouldBe(testAlarmTime);
         }
 
         [Fact(Order = 2)]
@@ -49,7 +46,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var alarms = await webExtensionsApi.Alarms.GetAll();
 
             // Assert
-            alarms.Should().Contain(alarm => alarm.Name == testAlarmName);
+            alarms.ShouldContain(alarm => alarm.Name == testAlarmName);
         }
 
         [Fact(Order = 3)]
@@ -59,7 +56,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var alarmCleared = await webExtensionsApi.Alarms.Clear(testAlarmName);
 
             // Assert
-            alarmCleared.Should().BeTrue();
+            alarmCleared.ShouldBeTrue();
         }
 
         [Fact(Order = 4)]
@@ -69,7 +66,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Alarms.ClearAll();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }

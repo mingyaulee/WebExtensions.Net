@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -31,7 +28,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var result = await webExtensionsApi.I18n.DetectLanguage("Test text");
 
             // Assert
-            result.Should().NotBeNull();
+            result.ShouldNotBeNull();
         }
         
         [Fact]
@@ -41,7 +38,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var languages = await webExtensionsApi.I18n.GetAcceptLanguages();
 
             // Assert
-            languages.Should().NotBeNullOrEmpty();
+            languages.ShouldNotBeNullOrEmpty();
         }
 
         [Fact(Order = 1)]
@@ -51,7 +48,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var uiLanguage = webExtensionsApi.I18n.GetUILanguage();
 
             // Assert
-            uiLanguage.Should().NotBeNullOrEmpty();
+            uiLanguage.ShouldNotBeNullOrEmpty();
             shouldTestLocalization = uiLanguage.StartsWith("en");
         }
 
@@ -67,7 +64,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var message = webExtensionsApi.I18n.GetMessage(testMessageName, null);
 
             // Assert
-            message.Should().Be(testMessageText);
+            message.ShouldBe(testMessageText);
         }
 
         [Fact(Order = 2)]
@@ -89,7 +86,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var message = webExtensionsApi.I18n.GetMessage(testWithPlaceholdersMessageName, placeholders);
 
             // Assert
-            message.Should().Be(string.Format(testWithPlaceholdersMessageText, placeholders));
+            message.ShouldBe(string.Format(testWithPlaceholdersMessageText, placeholders));
         }
     }
 }

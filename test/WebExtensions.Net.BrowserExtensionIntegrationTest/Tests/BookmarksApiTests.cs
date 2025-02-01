@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -33,10 +29,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            node.Should().NotBeNull();
-            node.Title.Should().Be(testBookmarkTitle);
-            node.Url.Should().Be(testBookmarkUrl);
-            node.Id.Should().NotBeNullOrEmpty();
+            node.ShouldNotBeNull();
+            node.Title.ShouldBe(testBookmarkTitle);
+            node.Url.ShouldBe(testBookmarkUrl);
+            node.Id.ShouldNotBeNullOrEmpty();
             testBookmarkId = node.Id;
         }
 
@@ -47,8 +43,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var nodes = await webExtensionsApi.Bookmarks.Get(testBookmarkId);
 
             // Assert
-            nodes.Should().HaveCount(1);
-            nodes.Single().Id.Should().Be(testBookmarkId);
+            nodes.ShouldHaveCount(1);
+            nodes.Single().Id.ShouldBe(testBookmarkId);
         }
 
         [Fact(Order = 2)]
@@ -58,8 +54,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var nodes = await webExtensionsApi.Bookmarks.GetRecent(1);
 
             // Assert
-            nodes.Should().HaveCount(1);
-            nodes.Single().Id.Should().Be(testBookmarkId);
+            nodes.ShouldHaveCount(1);
+            nodes.Single().Id.ShouldBe(testBookmarkId);
         }
 
         [Fact(Order = 2)]
@@ -69,7 +65,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var nodes = await webExtensionsApi.Bookmarks.GetTree();
 
             // Assert
-            nodes.Should().NotBeNullOrEmpty();
+            nodes.ShouldNotBeNullOrEmpty();
         }
 
         [Fact(Order = 2)]
@@ -82,8 +78,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            node.Should().NotBeNull();
-            node.Title.Should().Be(testBookmarkTitle + "Updated");
+            node.ShouldNotBeNull();
+            node.Title.ShouldBe(testBookmarkTitle + "Updated");
         }
 
         [Fact(Order = 3)]
@@ -96,9 +92,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            node.Should().NotBeNull();
-            node.Title.Should().Be(testBookmarkTitle);
-            node.Id.Should().NotBeNullOrEmpty();
+            node.ShouldNotBeNull();
+            node.Title.ShouldBe(testBookmarkTitle);
+            node.Id.ShouldNotBeNullOrEmpty();
             testBookmarkFolderId = node.Id;
         }
 
@@ -112,8 +108,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            node.Should().NotBeNull();
-            node.ParentId.Should().Be(testBookmarkFolderId);
+            node.ShouldNotBeNull();
+            node.ParentId.ShouldBe(testBookmarkFolderId);
         }
 
         [Fact(Order = 5)]
@@ -123,8 +119,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var nodes = await webExtensionsApi.Bookmarks.GetChildren(testBookmarkFolderId);
 
             // Assert
-            nodes.Should().HaveCount(1);
-            nodes.Single().Id.Should().Be(testBookmarkId);
+            nodes.ShouldHaveCount(1);
+            nodes.Single().Id.ShouldBe(testBookmarkId);
         }
 
         [Fact(Order = 5)]
@@ -134,10 +130,10 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var nodes = await webExtensionsApi.Bookmarks.GetSubTree(testBookmarkFolderId);
 
             // Assert
-            nodes.Should().HaveCount(1);
-            nodes.Single().Id.Should().Be(testBookmarkFolderId);
-            nodes.Single().Children.Should().HaveCount(1);
-            nodes.Single().Children.Single().Id.Should().Be(testBookmarkId);
+            nodes.ShouldHaveCount(1);
+            nodes.Single().Id.ShouldBe(testBookmarkFolderId);
+            nodes.Single().Children.ShouldHaveCount(1);
+            nodes.Single().Children.Single().Id.ShouldBe(testBookmarkId);
         }
 
         [Fact(Order = 6)]
@@ -147,7 +143,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Bookmarks.Remove(testBookmarkId);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Order = 7)]
@@ -157,7 +153,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Bookmarks.RemoveTree(testBookmarkFolderId);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }

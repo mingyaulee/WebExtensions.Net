@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
+﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class FactAttribute : Attribute

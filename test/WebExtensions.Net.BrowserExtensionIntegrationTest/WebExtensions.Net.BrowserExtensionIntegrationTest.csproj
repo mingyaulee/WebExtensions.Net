@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <BlazorEnableCompression>false</BlazorEnableCompression>
+    <ImplicitUsings>true</ImplicitUsings>
     <!-- Disable conversion of DLLs to webcil-in-wasm format, fingerprinting, compression. This is for coverlet to inject the hits counter into the assembly which only works for DLLs with PDBs. -->
     <WasmEnableWebcil>false</WasmEnableWebcil>
     <CompressionEnabled>false</CompressionEnabled>
@@ -10,10 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="Shouldly" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor.BrowserExtension.Build" Version="2.0.2" />
-    <PackageReference Include="FluentAssertions" Version="6.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.1" PrivateAssets="all" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

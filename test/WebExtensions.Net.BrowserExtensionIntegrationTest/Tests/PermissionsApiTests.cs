@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 using WebExtensions.Net.Manifest;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -22,8 +20,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var permissions = await webExtensionsApi.Permissions.GetAll();
 
             // Assert
-            permissions.Should().NotBeNull();
-            permissions.Permissions.Should().NotBeNullOrEmpty();
+            permissions.ShouldNotBeNull();
+            permissions.Permissions.ShouldNotBeNullOrEmpty();
         }
 
         [Fact]
@@ -41,7 +39,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            containsPermission.Should().BeTrue();
+            containsPermission.ShouldBeTrue();
         }
     }
 }

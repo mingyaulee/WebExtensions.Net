@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -22,7 +19,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var inIncognitoContext = webExtensionsApi.Extension.InIncognitoContext;
 
             // Assert
-            inIncognitoContext.Should().BeFalse();
+            inIncognitoContext.ShouldBeFalse();
         }
 
         [Fact]
@@ -32,7 +29,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedFileSchemeAccess();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact]
@@ -42,7 +39,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedIncognitoAccess();
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }

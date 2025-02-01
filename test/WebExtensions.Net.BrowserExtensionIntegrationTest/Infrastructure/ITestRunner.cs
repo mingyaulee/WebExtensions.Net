@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
+﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
 {
     public interface ITestRunner
     {

@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -20,7 +19,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var setting = webExtensionsApi.Privacy.Websites.HyperlinkAuditingEnabled;
 
             // Assert
-            setting.Should().NotBeNull();
+            setting.ShouldNotBeNull();
         }
 
         [Fact]
@@ -30,7 +29,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var setting = webExtensionsApi.Privacy.Websites.ReferrersEnabled;
 
             // Assert
-            setting.Should().NotBeNull();
+            setting.ShouldNotBeNull();
         }
     }
 }

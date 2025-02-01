@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -31,7 +28,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            downloadId.Should().BeGreaterThan(0);
+            downloadId.ShouldBeGreaterThan(0);
             testDownloadId = downloadId;
         }
 
@@ -42,7 +39,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Downloads.Pause(testDownloadId);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Order = 2)]
@@ -52,7 +49,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Downloads.Resume(testDownloadId);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Order = 2)]
@@ -65,7 +62,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            downloads.Should().HaveCount(1);
+            downloads.ShouldHaveCount(1);
         }
 
         [Fact(Order = 3)]
@@ -75,7 +72,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Downloads.Cancel(testDownloadId);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Order = 4)]
@@ -88,7 +85,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            downloadIds.Should().HaveCount(1);
+            downloadIds.ShouldHaveCount(1);
         }
     }
 }

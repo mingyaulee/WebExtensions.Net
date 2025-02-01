@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Threading.Tasks;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -28,8 +25,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            window.Should().NotBeNull();
-            window.Id.Should().HaveValue();
+            window.ShouldNotBeNull();
+            window.Id.ShouldHaveValue();
             testWindowId = window.Id;
         }
 
@@ -40,8 +37,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var window = await webExtensionsApi.Windows.Get(testWindowId.Value, null);
 
             // Assert
-            window.Should().NotBeNull();
-            window.Id.Should().Be(testWindowId.Value);
+            window.ShouldNotBeNull();
+            window.Id.ShouldBe(testWindowId.Value);
         }
 
         [Fact(Order = 3)]
@@ -59,9 +56,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            window.Should().NotBeNull();
-            window.Top.Should().BeInRange(windowTop - 5, windowTop + 5);
-            window.Left.Should().BeInRange(windowLeft - 5, windowLeft + 5);
+            window.ShouldNotBeNull();
+            window.Top.GetValueOrDefault().ShouldBeInRange(windowTop - 5, windowTop + 5);
+            window.Left.GetValueOrDefault().ShouldBeInRange(windowLeft - 5, windowLeft + 5);
         }
 
         [Fact(Order = 4)]
@@ -71,7 +68,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await webExtensionsApi.Windows.Remove(testWindowId.Value);
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }

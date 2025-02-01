@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Models
+﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Models
 {
     public class TestClassInfo
     {

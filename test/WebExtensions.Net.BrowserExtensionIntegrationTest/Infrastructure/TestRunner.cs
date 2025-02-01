@@ -1,12 +1,5 @@
-﻿using FluentAssertions.Execution;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.JSInterop;
 using System.Reflection;
-using System.Threading.Tasks;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
@@ -63,7 +56,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
             catch(Exception ex)
             {
                 result.FailMessage = ex.Message;
-                result.StackTrace = GetStackTrace(ex);
+                result.StackTrace = ex.StackTrace;
                 logger.LogError($"Test failed: {testMethodInfo.Description}", ex);
             }
             return result;
@@ -78,16 +71,6 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
             var testClassInstance = ActivatorUtilities.CreateInstance(serviceProvider, testClassType);
             testClassInstances.Add(testClassType, testClassInstance);
             return testClassInstance;
-        }
-
-        private static string GetStackTrace(Exception ex)
-        {
-            if (ex is AssertionFailedException)
-            {
-                // clear the stack trace from FluentAssertions namespace
-                return string.Join(Environment.NewLine, ex.StackTrace.Split(Environment.NewLine).Where(line => !line.Contains($"{nameof(FluentAssertions)}.")));
-            }
-            return ex.StackTrace;
         }
 
         public async Task GetTestCoverageInfo()

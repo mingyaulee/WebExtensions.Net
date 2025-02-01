@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
@@ -24,7 +21,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var createdNotificationId = webExtensionsApi.Runtime.GetURL("");
 
             // Assert
-            createdNotificationId.Should().NotBeNullOrEmpty();
+            createdNotificationId.ShouldNotBeNullOrEmpty();
         }
 
         [Fact(Description = "Execute API with strongly typed object return type", Order = 2)]
@@ -34,7 +31,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
 
             // Assert
-            platformInfo.Should().NotBeNull();
+            platformInfo.ShouldNotBeNull();
         }
 
         [Fact(Description = "Execute API with enumerable return type", Order = 2)]
@@ -44,8 +41,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var tabs = await webExtensionsApi.Tabs.Query(new() { Active = true });
 
             // Assert
-            tabs.Should().NotBeNullOrEmpty();
-            tabs.First().Id.Should().BeGreaterThan(0);
+            tabs.ShouldNotBeNull();
+            tabs.ShouldNotBeEmpty();
+            tabs.First().Id.GetValueOrDefault().ShouldBeGreaterThan(0);
         }
 
         [Fact(Description = "Execute API with multitype class argument type", Order = 3)]
@@ -58,8 +56,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var tabs = await webExtensionsApi.Tabs.Query(new() { Url = activeTab.Url });
 
             // Assert
-            tabs.Should().NotBeNullOrEmpty();
-            tabs.First().Id.Should().BeGreaterThan(0);
+            tabs.ShouldNotBeNull();
+            tabs.ShouldNotBeEmpty();
+            tabs.First().Id.GetValueOrDefault().ShouldBeGreaterThan(0);
         }
 
         [Fact(Description = "Execute API with multitype class return type", Order = 3)]
@@ -72,7 +71,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var tab = await webExtensionsApi.Tabs.Move(activeTab.Id.Value, new() { Index = 1 });
 
             // Assert
-            tab.Should().NotBeNull();
+            tab.ShouldNotBeNull();
         }
 
         [Fact(Description = "Get primitive API property")]
@@ -82,7 +81,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var extensionId = webExtensionsApi.Runtime.Id;
 
             // Assert
-            extensionId.Should().NotBeNullOrEmpty();
+            extensionId.ShouldNotBeNullOrEmpty();
         }
 
         [Fact(Description = "Execute reference object function")]
@@ -95,7 +94,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Func<Task> action = async () => await localStorageReference.Set(new { test = true });
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Description = "Execute reference object function with return")]
@@ -110,9 +109,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var storageValue = await localStorageReference.Get(null);
 
             // Assert
-            storageValue.Should().NotBeNull();
-            storageValue.TryGetProperty("test", out var actualTestValue).Should().BeTrue();
-            actualTestValue.GetString().Should().Be(testValue);
+            storageValue.TryGetProperty("test", out var actualTestValue).ShouldBeTrue();
+            actualTestValue.GetString().ShouldBe(testValue);
         }
 
         [Fact(Description = "Event listener can be added to event", Order = 1)]
@@ -122,7 +120,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Action action = () => webExtensionsApi.Storage.OnChanged.AddListener(HandleOnStorageChange);
 
             // Assert
-            action.Should().NotThrow();
+            action.ShouldNotThrow();
         }
 
         [Fact(Description = "Event listener can be checked if event has the listener", Order = 2)]
@@ -132,7 +130,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var isRegistered = webExtensionsApi.Storage.OnChanged.HasListener(HandleOnStorageChange);
 
             // Assert
-            isRegistered.Should().BeTrue();
+            isRegistered.ShouldBeTrue();
         }
 
         [Fact(Description = "Event listener is invoked when the event is fired", Order = 2)]
@@ -144,7 +142,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             await localStorage.Clear();
 
             // Assert
-            testStorageArea.Should().Be("local");
+            testStorageArea.ShouldBe("local");
         }
 
         [Fact(Description = "Event listener can be removed from event", Order = 3)]
@@ -154,7 +152,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             Action action = () => webExtensionsApi.Storage.OnChanged.RemoveListener(HandleOnStorageChange);
 
             // Assert
-            action.Should().NotThrow();
+            action.ShouldNotThrow();
         }
 
         private void HandleOnStorageChange(object storageItem, string storageArea)

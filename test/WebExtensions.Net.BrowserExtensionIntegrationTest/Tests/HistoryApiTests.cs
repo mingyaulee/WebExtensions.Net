@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentAssertions;
-using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -32,7 +28,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
 
         [Fact(Order = 2)]
@@ -45,8 +41,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            visits.Should().NotBeNullOrEmpty();
-            ((DateTime)visits.Single().VisitTime).Should().BeCloseTo(testHistoryTime, precision: TimeSpan.FromSeconds(1));
+            visits.ShouldNotBeNullOrEmpty();
+            ((DateTime)visits.Single().VisitTime).ShouldBeCloseTo(testHistoryTime, precision: TimeSpan.FromSeconds(1));
         }
 
         [Fact(Order = 2)]
@@ -61,8 +57,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            visits.Should().NotBeNullOrEmpty();
-            visits.Should().Contain(visit => visit.Url == testHistoryUrl);
+            visits.ShouldNotBeNullOrEmpty();
+            visits.ShouldContain(visit => visit.Url == testHistoryUrl);
         }
 
         [Fact(Order = 3)]
@@ -75,7 +71,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             });
 
             // Assert
-            await action.Should().NotThrowAsync();
+            await action.ShouldNotThrowAsync();
         }
     }
 }
