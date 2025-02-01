@@ -26,7 +26,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 {
                     throw new InvalidOperationException("Unable to get a type name for type entity registration.");
                 }
-                typeId = nameHierarchy[0] + typeId;
+                typeId = $"{nameHierarchy[0]}{typeId}";
                 nameHierarchy.RemoveAt(0);
 
             } while (typeEntityRegistrar.HasTypeEntity(typeId, namespaceEntity));
@@ -51,7 +51,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                     continue;
                 }
 
-                var sourceProperty = sourceProperties.FirstOrDefault(property => property.Name == destinationProperty.Name);
+                var sourceProperty = Array.Find(sourceProperties, property => property.Name == destinationProperty.Name);
                 if (sourceProperty is not null)
                 {
                     if (!sourceProperty.CanRead)

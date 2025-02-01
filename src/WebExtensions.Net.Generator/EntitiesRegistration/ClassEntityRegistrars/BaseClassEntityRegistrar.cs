@@ -146,7 +146,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             return parameters.GetCombinations();
         }
 
-        private static IEnumerable<FunctionDefinition> GetFunctionDefinitionsFromParameterCombinations(FunctionDefinition functionDefinition, IEnumerable<IEnumerable<ParameterDefinition>> parametersCombinations)
+        private static List<FunctionDefinition> GetFunctionDefinitionsFromParameterCombinations(FunctionDefinition functionDefinition, IEnumerable<IEnumerable<ParameterDefinition>> parametersCombinations)
         {
             var functionDefinitions = new List<FunctionDefinition>();
             foreach (var parameterCombination in parametersCombinations)

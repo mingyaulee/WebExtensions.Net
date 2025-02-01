@@ -33,7 +33,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             };
         }
 
-        private IDictionary<string, PropertyDefinition>? GetNamespaceApiPropertyDefinitions(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
+        private Dictionary<string, PropertyDefinition>? GetNamespaceApiPropertyDefinitions(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
         {
             var properties = new Dictionary<string, PropertyDefinition>();
 
@@ -68,7 +68,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 }
             }
 
-            return properties.Any() ? properties : null;
+            return properties.Count != 0 ? properties : null;
         }
 
         private static PropertyDefinition GetConstantPropertyDefinition(PropertyDefinition propertyDefinition)

@@ -53,7 +53,7 @@ namespace WebExtensions.Net.Generator
             registrarFactory.ClassEntityRegistrar.Reset();
         }
 
-        private IEnumerable<NamespaceEntity> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
+        private HashSet<NamespaceEntity> RegisterNamespaceTypesAsTypeEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
             var apiNamespaceEntities = new HashSet<NamespaceEntity>();
 
@@ -87,7 +87,7 @@ namespace WebExtensions.Net.Generator
             return !(namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null);
         }
 
-        private IEnumerable<ClassEntity> RegisterNamespaceEntitiesAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
+        private ClassEntity[] RegisterNamespaceEntitiesAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
         {
             var nestedNamespaceEntities = namespaceEntities
                 .Where(namespaceEntity => namespaceEntity.Parent is not null)
@@ -103,7 +103,7 @@ namespace WebExtensions.Net.Generator
                 .ToArray();
         }
 
-        private IEnumerable<ClassEntity> RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(ClassEntity classEntity, IEnumerable<NamespaceEntity> namespaceEntities)
+        private ClassEntity[] RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(ClassEntity classEntity, IEnumerable<NamespaceEntity> namespaceEntities)
         {
             var nestedNamespaceEntities = namespaceEntities
                 .Where(namespaceEntity => namespaceEntity.Parent == classEntity.NamespaceEntity)

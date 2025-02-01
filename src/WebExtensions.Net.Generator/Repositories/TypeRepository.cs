@@ -9,17 +9,12 @@ namespace WebExtensions.Net.Generator.Repositories
 {
     public class TypeRepository : BaseRepository<TypeEntity>
     {
-        private readonly IDictionary<string, IList<TypeDefinition>> typeExtensions;
-
-        public TypeRepository()
-        {
-            typeExtensions = new Dictionary<string, IList<TypeDefinition>>();
-        }
+        private readonly Dictionary<string, List<TypeDefinition>> typeExtensions = [];
 
         public void RegisterType(string typeId, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
         {
             var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);
-            if (Entities.Any(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId)))
+            if (Entities.Exists(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId)))
             {
                 throw new InvalidOperationException($"Type entity with id '{namespaceQualifiedId}' already exists.");
             }

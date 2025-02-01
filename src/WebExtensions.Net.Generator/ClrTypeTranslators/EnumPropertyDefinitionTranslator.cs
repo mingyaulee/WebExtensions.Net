@@ -20,7 +20,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
         private static string TranslateValueName(string valueName)
         {
-            var tokenizedNameSegments = valueName.Split(new[] { '-', '_' });
+            var tokenizedNameSegments = valueName.Split('-', '_');
             return string.Join("", tokenizedNameSegments.Select(tokenizedNameSegment =>
             {
                 if (tokenizedNameSegment.Length == 0)

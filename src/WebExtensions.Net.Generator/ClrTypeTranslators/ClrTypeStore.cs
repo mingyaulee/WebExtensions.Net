@@ -11,12 +11,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
     public class ClrTypeStore
     {
-        private readonly IDictionary<string, ClrTypeInfo> clrTypeStore;
-
-        public ClrTypeStore()
-        {
-            clrTypeStore = new Dictionary<string, ClrTypeInfo>();
-        }
+        private readonly Dictionary<string, ClrTypeInfo> clrTypeStore = new();
 
         public void Reset()
         {
@@ -36,10 +31,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
         public ClrTypeInfo GetClrType(TypeReference? typeReference, NamespaceEntity namespaceEntity)
         {
-            if (typeReference is null)
-            {
-                throw new ArgumentNullException(nameof(typeReference));
-            }
+            ArgumentNullException.ThrowIfNull(typeReference);
 
             if (typeReference.Type == ObjectType.Array)
             {
@@ -64,12 +56,12 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             var typeId = GetTypeId(typeReference, namespaceEntity);
 
-            if (!clrTypeStore.ContainsKey(typeId))
+            if (!clrTypeStore.TryGetValue(typeId, out var clrType))
             {
                 throw new InvalidOperationException($"Type id '{typeId}' is not defined in the CLR types store.");
             }
 
-            return clrTypeStore[typeId];
+            return clrType;
         }
 
         private ClrTypeInfo GetClrType(Type type)
@@ -218,10 +210,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
         private string GetTypeId(TypeReference? typeReference, NamespaceEntity namespaceEntity)
         {
-            if (typeReference is null)
-            {
-                throw new ArgumentNullException(nameof(typeReference));
-            }
+            ArgumentNullException.ThrowIfNull(typeReference);
 
             if (typeReference.Ref is not null)
             {

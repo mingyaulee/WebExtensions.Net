@@ -43,9 +43,9 @@ namespace WebExtensions.Net.Generator
                         DeleteFile(file);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    logger.LogError("Failed to clean directory.");
+                    logger.LogError(ex, "Failed to clean directory.");
                     throw;
                 }
             }

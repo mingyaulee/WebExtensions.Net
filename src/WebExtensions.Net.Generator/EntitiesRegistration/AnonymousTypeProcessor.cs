@@ -14,8 +14,8 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
     {
         private readonly RegistrarFactory registrarFactory;
         private readonly RegistrationOptions registrationOptions;
-        private readonly IDictionary<TypeReference, AnonymousTypeEntityRegistrationInfo> typesToRegister;
-        private readonly ISet<string> typeReferencesProcessed;
+        private readonly Dictionary<TypeReference, AnonymousTypeEntityRegistrationInfo> typesToRegister;
+        private readonly HashSet<string> typeReferencesProcessed;
 
         public AnonymousTypeProcessor(RegistrarFactory registrarFactory, RegistrationOptions registrationOptions)
         {
@@ -27,7 +27,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
 
         public void ProcessTypeDefinition(string className, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
         {
-            Process(new[] { className }, typeDefinition, namespaceEntity);
+            Process([className], typeDefinition, namespaceEntity);
         }
 
         public void Reset()
@@ -79,7 +79,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                                 .Where(duplicateNameGroup => duplicateNameGroup.Count() > 1)
                                 .SelectMany(duplicateNameGroup => duplicateNameGroup)
                                 .ToArray();
-                if (!duplicateNameTypes.Any())
+                if (duplicateNameTypes.Length == 0)
                 {
                     break;
                 }
@@ -281,34 +281,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 var addListenerFunctionDefinitions = new List<FunctionDefinition>();
                 foreach (var functionDefinition in functionDefinitions)
                 {
-                    if (functionDefinition.Name == "addListener")
-                    {
-                        addListenerFunctionDefinitions.Add(functionDefinition);
-                        ProcessFunction(nameHierarchy, functionDefinition, namespaceEntity, false);
-                    }
-                    else
-                    {
-                        var functionParametersCount = functionDefinition.FunctionParameters!.Count();
-                        var addListenerFunctionDefinition = addListenerFunctionDefinitions.Single(addListenerFunctionDefinition => addListenerFunctionDefinition.FunctionParameters?.Count() == functionParametersCount);
-                        foreach (var (functionParameter, addListenerFunctionParameter) in functionDefinition.FunctionParameters!.Zip(addListenerFunctionDefinition.FunctionParameters!))
-                        {
-                            if (typesToRegister.TryGetValue(addListenerFunctionParameter, out var registrationInfo))
-                            {
-                                registrationInfo.OtherReferences.Add(functionParameter);
-                            }
-
-                            if (functionParameter.FunctionParameters is not null)
-                            {
-                                foreach (var (nestedFunctionParameter, addListenerNestedFunctionParameter) in functionParameter.FunctionParameters!.Zip(addListenerFunctionParameter.FunctionParameters!))
-                                {
-                                    if (typesToRegister.TryGetValue(addListenerNestedFunctionParameter, out var nestedRegistrationInfo))
-                                    {
-                                        nestedRegistrationInfo.OtherReferences.Add(nestedFunctionParameter);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    ProcessEventFunction(nameHierarchy, functionDefinition, namespaceEntity, addListenerFunctionDefinitions);
                 }
             }
             else
@@ -337,6 +310,38 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             {
                 ProcessFunctionParameters(nameHierarchy, functionDefinition.FunctionParameters, namespaceEntity);
                 Process(ConcatName(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), functionDefinition.FunctionReturns, namespaceEntity);
+            }
+        }
+
+        private void ProcessEventFunction(IEnumerable<string> nameHierarchy, FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity, List<FunctionDefinition> addListenerFunctionDefinitions)
+        {
+            if (functionDefinition.Name == "addListener")
+            {
+                addListenerFunctionDefinitions.Add(functionDefinition);
+                ProcessFunction(nameHierarchy, functionDefinition, namespaceEntity, false);
+            }
+            else
+            {
+                var functionParametersCount = functionDefinition.FunctionParameters!.Count();
+                var addListenerFunctionDefinition = addListenerFunctionDefinitions.Single(addListenerFunctionDefinition => addListenerFunctionDefinition.FunctionParameters?.Count() == functionParametersCount);
+                foreach (var (functionParameter, addListenerFunctionParameter) in functionDefinition.FunctionParameters!.Zip(addListenerFunctionDefinition.FunctionParameters!))
+                {
+                    if (typesToRegister.TryGetValue(addListenerFunctionParameter, out var registrationInfo))
+                    {
+                        registrationInfo.OtherReferences.Add(functionParameter);
+                    }
+
+                    if (functionParameter.FunctionParameters is not null)
+                    {
+                        foreach (var (nestedFunctionParameter, addListenerNestedFunctionParameter) in functionParameter.FunctionParameters!.Zip(addListenerFunctionParameter.FunctionParameters!))
+                        {
+                            if (typesToRegister.TryGetValue(addListenerNestedFunctionParameter, out var nestedRegistrationInfo))
+                            {
+                                nestedRegistrationInfo.OtherReferences.Add(nestedFunctionParameter);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -396,19 +401,19 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
         }
 
-        private static IEnumerable<string> SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)
+        private static string[] SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)
         {
             var lastIndex = nameHierarchy.Count() - 1;
             return nameHierarchy.Select((name, index) => index == lastIndex ? name + suffix : name).ToArray();
         }
 
-        private static IEnumerable<string> ConcatName(IEnumerable<string> nameHierarchy, string name)
+        private static string[] ConcatName(IEnumerable<string> nameHierarchy, string name)
         {
-            return nameHierarchy.Concat(new[] { name }).ToArray();
+            return nameHierarchy.Concat([name]).ToArray();
         }
 
-        private static string[] IgnoreWords = ["Css", "Js"];
-        private static string[] SimplePlurals = ["Cookies", "Devices", "Files", "Hostnames", "Languages", "Resources", "Rules", "Schemes", "Scopes", "Stores", "Types"];
+        private static readonly string[] IgnoreWords = ["Css", "Js"];
+        private static readonly string[] SimplePlurals = ["Cookies", "Devices", "Files", "Hostnames", "Languages", "Resources", "Rules", "Schemes", "Scopes", "Stores", "Types"];
         private static bool TryGetSingularName(string name, [NotNullWhen(true)] out string? singularName)
         {
             if (Array.IndexOf(IgnoreWords, name) > -1)

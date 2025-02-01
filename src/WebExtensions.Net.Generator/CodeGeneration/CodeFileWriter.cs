@@ -33,7 +33,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
                 .Select(usingNamespace => usingNamespace.Replace(Constants.RelativeNamespaceToken, codeWriterOptions.RootNamespace))
                 .OrderBy(usingNamespace => usingNamespace)
                 .ToArray();
-            if (usingNamespaces.Any())
+            if (usingNamespaces.Length != 0)
             {
                 AppendLineIfNeeded();
                 foreach (var usingNamespace in usingNamespaces)

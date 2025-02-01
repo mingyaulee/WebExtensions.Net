@@ -25,9 +25,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
         public IEnumerable<ClrTypeInfo> ShallowTranslate(ClassEntity classEntity)
         {
             var classEntityName = classEntity.FormattedName;
-            if (classTranslationOptions.Aliases.ContainsKey(classEntityName))
+            if (classTranslationOptions.Aliases.TryGetValue(classEntityName, out var classAlias))
             {
-                classEntityName = classTranslationOptions.Aliases[classEntityName];
+                classEntityName = classAlias;
             }
 
             foreach (var replace in classTranslationOptions.ReplaceNames)
@@ -36,9 +36,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             }
 
             var namespaceName = classEntity.NamespaceEntity.FullFormattedName;
-            if (namespaceName is not null && classTranslationOptions.NamespaceAliases.ContainsKey(namespaceName))
+            if (namespaceName is not null && classTranslationOptions.NamespaceAliases.TryGetValue(namespaceName, out var namespaceAlias))
             {
-                namespaceName = classTranslationOptions.NamespaceAliases[namespaceName];
+                namespaceName = namespaceAlias;
             }
             var @namespace = FullyQualifyNamespace(namespaceName);
 
@@ -137,7 +137,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             }
         }
 
-        private string FullyQualifyNamespace(string? @namespace)
+        private static string FullyQualifyNamespace(string? @namespace)
         {
             return string.IsNullOrEmpty(@namespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{@namespace}";
         }

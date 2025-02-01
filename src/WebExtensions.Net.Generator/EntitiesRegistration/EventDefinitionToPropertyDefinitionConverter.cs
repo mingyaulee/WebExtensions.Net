@@ -49,7 +49,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 (eventDefinition.ExtraParameters is not null && eventDefinition.ExtraParameters.Any());
         }
 
-        private IEnumerable<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+        private List<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
         {
             var functionDefinitions = new List<FunctionDefinition>();
             var baseEventTypeEntity = typeEntityRegistrar.GetTypeEntity(registrationOptions.BaseEventTypeName, namespaceEntity);
@@ -61,7 +61,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return functionDefinitions;
         }
 
-        private static IEnumerable<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
+        private static List<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
         {
             var eventFunctionDefinitions = new List<FunctionDefinition>();
             var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName);

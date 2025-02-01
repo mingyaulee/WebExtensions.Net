@@ -21,58 +21,73 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             }
             else if (clrPropertyInfo.Metadata.TryGetValue(Constants.PropertyMetadata.EventProperty, out var isEventProperty) && (bool)isEventProperty)
             {
-                var privatePropertyName = clrPropertyInfo.PrivateName;
-
-                codeWriter.WriteUsingStatement("JsBind.Net");
-
-                codeWriter.Properties
-                    .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
-
-                codeWriter.PublicProperties
-                    .WriteWithConverter(new CommentInheritDocCodeConverter())
-                    .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
-                    // start property body
-                    .WriteStartBlock()
-                        .WriteLine($"get")
-                        // start property get
-                        .WriteStartBlock()
-                            .WriteLine($"if (_{privatePropertyName} is null)")
-                            .WriteStartBlock()
-                                .WriteLine($"_{privatePropertyName} = new {clrPropertyInfo.PropertyType.CSharpName}();")
-                                .WriteLine($"_{privatePropertyName}.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, \"{privatePropertyName}\"));")
-                            .WriteEndBlock()
-                            .WriteLine($"return _{privatePropertyName};")
-                        // end property get
-                        .WriteEndBlock()
-                    // end property body
-                    .WriteEndBlock();
+                WriteEventProperty(codeWriter);
             }
             else if (clrPropertyInfo.IsConstant)
             {
-                if (clrPropertyInfo.PropertyType.FullName == typeof(string).FullName)
-                {
-                    codeWriter.PublicProperties
-                        .WriteWithConverter(new CommentInheritDocCodeConverter())
-                        .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                        .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => \"{clrPropertyInfo.ConstantValue}\";");
-                }
-                else
-                {
-                    codeWriter.PublicProperties
-                        .WriteWithConverter(new CommentInheritDocCodeConverter())
-                        .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                        .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
-                }
+                WriteConstantProperty(codeWriter);
             }
             else
             {
-                var propertyValueSource = clrPropertyInfo.PublicName == clrPropertyInfo.Name ? $"nameof({clrPropertyInfo.Name})" : $"\"{clrPropertyInfo.Name}\"";
+                WritePublicProperty(codeWriter);
+            }
+        }
+
+        private void WriteEventProperty(CodeWriter codeWriter)
+        {
+            var privatePropertyName = clrPropertyInfo.PrivateName;
+
+            codeWriter.WriteUsingStatement("JsBind.Net");
+
+            codeWriter.Properties
+                .WriteLine($"private {clrPropertyInfo.PropertyType.CSharpName} _{privatePropertyName};");
+
+            codeWriter.PublicProperties
+                .WriteWithConverter(new CommentInheritDocCodeConverter())
+                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName}")
+                // start property body
+                .WriteStartBlock()
+                    .WriteLine($"get")
+                    // start property get
+                    .WriteStartBlock()
+                        .WriteLine($"if (_{privatePropertyName} is null)")
+                        .WriteStartBlock()
+                            .WriteLine($"_{privatePropertyName} = new {clrPropertyInfo.PropertyType.CSharpName}();")
+                            .WriteLine($"_{privatePropertyName}.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, \"{privatePropertyName}\"));")
+                        .WriteEndBlock()
+                        .WriteLine($"return _{privatePropertyName};")
+                    // end property get
+                    .WriteEndBlock()
+                // end property body
+                .WriteEndBlock();
+        }
+
+        private void WriteConstantProperty(CodeWriter codeWriter)
+        {
+            if (clrPropertyInfo.PropertyType.FullName == typeof(string).FullName)
+            {
                 codeWriter.PublicProperties
                     .WriteWithConverter(new CommentInheritDocCodeConverter())
                     .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => GetProperty<{clrPropertyInfo.PropertyType.CSharpName}>({propertyValueSource});");
+                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => \"{clrPropertyInfo.ConstantValue}\";");
             }
+            else
+            {
+                codeWriter.PublicProperties
+                    .WriteWithConverter(new CommentInheritDocCodeConverter())
+                    .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                    .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => {clrPropertyInfo.ConstantValue};");
+            }
+        }
+
+        private void WritePublicProperty(CodeWriter codeWriter)
+        {
+            var propertyValueSource = clrPropertyInfo.PublicName == clrPropertyInfo.Name ? $"nameof({clrPropertyInfo.Name})" : $"\"{clrPropertyInfo.Name}\"";
+            codeWriter.PublicProperties
+                .WriteWithConverter(new CommentInheritDocCodeConverter())
+                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+                .WriteLine($"public {clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} => GetProperty<{clrPropertyInfo.PropertyType.CSharpName}>({propertyValueSource});");
         }
     }
 }
