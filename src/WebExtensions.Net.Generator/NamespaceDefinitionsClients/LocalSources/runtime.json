@@ -201,6 +201,11 @@
             "optional": true,
             "type": "string",
             "unsupported": true
+          },
+          "userScriptWorldId": {
+            "description": "The worldId of the USER_SCRIPT world that sent the message. Only present on onUserScriptMessage and onUserScriptConnect (in port.sender) events.",
+            "optional": true,
+            "type": "string"
           }
         }
       },
@@ -782,6 +787,17 @@
         ]
       },
       {
+        "name": "onUserScriptConnect",
+        "description": "Fired when a connection is made from a USER_SCRIPT world registered through the userScripts API.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "port",
+            "$ref": "Port"
+          }
+        ]
+      },
+      {
         "name": "onConnectExternal",
         "description": "Fired when a connection is made from another extension.",
         "type": "function",
@@ -821,6 +837,32 @@
       {
         "name": "onMessageExternal",
         "description": "Fired when a message is sent from another extension/app. Cannot be used in a content script.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "description": "The message sent by the calling script.",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "sender",
+            "$ref": "MessageSender"
+          },
+          {
+            "name": "sendResponse",
+            "description": "Function to call (at most once) when you have a response. The argument should be any JSON-ifiable object. If you have more than one \u003Ccode\u003EonMessage\u003C/code\u003E listener in the same document, then only one may send a response. This function becomes invalid when the event listener returns, unless you return true from the event listener to indicate you wish to send a response asynchronously (this will keep the message channel open to the other end until \u003Ccode\u003EsendResponse\u003C/code\u003E is called).",
+            "type": "function"
+          }
+        ],
+        "returns": {
+          "description": "Return true from the event listener if you wish to call \u003Ccode\u003EsendResponse\u003C/code\u003E after the event listener returns.",
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "onUserScriptMessage",
+        "description": "Fired when a message is sent from a USER_SCRIPT world registered through the userScripts API.",
         "type": "function",
         "parameters": [
           {

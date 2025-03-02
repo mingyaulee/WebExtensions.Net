@@ -2,7 +2,8 @@
   {
     "namespace": "userScripts",
     "permissions": [
-      "manifest:user_scripts"
+      "manifest:user_scripts",
+      "userScripts"
     ],
     "events": [
       {

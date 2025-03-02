@@ -23,6 +23,7 @@
             "$ref": "BrowserSpecificSettings"
           },
           "name": {
+            "description": "Name must be at least 2, and should be at most 75 characters",
             "optional": false,
             "type": "string"
           },
@@ -106,25 +107,23 @@
               {
                 "type": "object",
                 "properties": {
-                  "page": {
+                  "service_worker": {
+                    "optional": true,
                     "$ref": "ExtensionURL"
                   },
-                  "persistent": {
+                  "page": {
                     "optional": true,
-                    "type": "boolean"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "properties": {
+                    "$ref": "ExtensionURL"
+                  },
                   "scripts": {
+                    "optional": true,
                     "type": "array",
                     "items": {
                       "$ref": "ExtensionURL"
                     }
                   },
                   "type": {
+                    "description": "Only supported for page/scripts; not for service_worker yet, see bug 1775574",
                     "optional": true,
                     "type": "string",
                     "enum": [
@@ -135,14 +134,17 @@
                   "persistent": {
                     "optional": true,
                     "type": "boolean"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "service_worker": {
-                    "$ref": "ExtensionURL"
+                  },
+                  "preferred_environment": {
+                    "optional": true,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "service_worker",
+                        "document"
+                      ]
+                    }
                   }
                 }
               }
@@ -347,6 +349,15 @@
         }
       },
       {
+        "id": "OptionalOnlyPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": []
+          }
+        ]
+      },
+      {
         "id": "OptionalPermissionNoPrompt",
         "choices": [
           {
@@ -379,6 +390,9 @@
         "choices": [
           {
             "$ref": "OptionalPermission"
+          },
+          {
+            "$ref": "OptionalOnlyPermission"
           },
           {
             "$ref": "MatchPattern"

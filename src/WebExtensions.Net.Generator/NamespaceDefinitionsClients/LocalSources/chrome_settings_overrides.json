@@ -131,51 +131,6 @@
                     "description": "Sets the default engine to a built-in engine only.",
                     "optional": true,
                     "type": "boolean"
-                  },
-                  "params": {
-                    "description": "A list of optional search url parameters. This allows the additon of search url parameters based on how the search is performed in Firefox.",
-                    "optional": true,
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "description": "A url parameter name",
-                          "type": "string"
-                        },
-                        "condition": {
-                          "description": "The type of param can be either \u0022purpose\u0022 or \u0022pref\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "purpose",
-                            "pref"
-                          ]
-                        },
-                        "pref": {
-                          "description": "The preference to retrieve the value from.",
-                          "optional": true,
-                          "type": "string"
-                        },
-                        "purpose": {
-                          "description": "The context that initiates a search, required if condition is \u0022purpose\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "contextmenu",
-                            "searchbar",
-                            "homepage",
-                            "keyword",
-                            "newtab"
-                          ]
-                        },
-                        "value": {
-                          "description": "A url parameter value.",
-                          "optional": true,
-                          "type": "string"
-                        }
-                      }
-                    }
                   }
                 }
               }

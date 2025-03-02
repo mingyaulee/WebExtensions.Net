@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -117,19 +118,24 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
             return namespaceSourceDefinitions;
         }
 
+        static readonly Random random = new();
         private async Task<T?> GetFromHttpWithRetry<T>(string? url)
         {
-            var attempt = 5;
-            while (attempt > 0)
+            var attempt = 0;
+            while (attempt < 100)
             {
                 try
                 {
                     return await httpClient.GetFromJsonAsync<T>(url, JsonSerializerConstant.Options);
                 }
-                catch (HttpRequestException)
+                catch (HttpRequestException exception)
                 {
-                    attempt--;
-                    if (attempt == 0)
+                    attempt++;
+                    if (exception.StatusCode == HttpStatusCode.TooManyRequests)
+                    {
+                        await Task.Delay(random.Next(1, attempt) * 1000);
+                    }
+                    else if (attempt >= 5)
                     {
                         throw;
                     }

@@ -3,6 +3,17 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalOnlyPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "userScripts"
+            ]
+          }
+        ]
+      },
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "user_scripts": {
@@ -22,7 +33,8 @@
   {
     "namespace": "userScripts",
     "permissions": [
-      "manifest:user_scripts"
+      "manifest:user_scripts",
+      "userScripts"
     ],
     "types": [
       {
@@ -111,27 +123,303 @@
         "id": "RegisteredUserScript",
         "description": "An object that represents a user script registered programmatically",
         "type": "object",
-        "functions": [
+        "properties": {
+          "id": {
+            "description": "The ID of the user script specified in the API call. This property must not start with a \u0027_\u0027 as it\u0027s reserved as a prefix for generated script IDs.",
+            "optional": false,
+            "type": "string"
+          },
+          "allFrames": {
+            "description": "If allFrames is \u003Ccode\u003Etrue\u003C/code\u003E, implies that the JavaScript should be injected into all frames of current page. By default, it\u0027s \u003Ccode\u003Efalse\u003C/code\u003E and is only injected into the top frame.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "js": {
+            "description": "The list of ScriptSource objects defining sources of scripts to be injected into matching pages.",
+            "optional": false,
+            "type": "array",
+            "items": {
+              "$ref": "ScriptSource"
+            }
+          },
+          "matches": {
+            "description": "At least one of matches or includeGlobs should be non-empty. The script runs in documents whose URL match either pattern.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "manifest.MatchPattern"
+            }
+          },
+          "excludeMatches": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "manifest.MatchPattern"
+            }
+          },
+          "includeGlobs": {
+            "description": "At least one of matches or includeGlobs should be non-empty. The script runs in documents whose URL match either pattern.",
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "excludeGlobs": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "runAt": {
+            "description": "The soonest that the JavaScript will be injected into the tab. Defaults to \u0022document_idle\u0022.",
+            "optional": true,
+            "$ref": "extensionTypes.RunAt"
+          },
+          "world": {
+            "description": "The JavaScript script for a script to execute within. Defaults to \u0022USER_SCRIPT\u0022.",
+            "optional": true,
+            "$ref": "ExecutionWorld"
+          },
+          "worldId": {
+            "description": "If specified, specifies a specific user script world ID to execute in. Only valid if \u0060world\u0060 is omitted or is \u0060USER_SCRIPT\u0060. If \u0060worldId\u0060 is omitted, the script will execute in the default user script world (\u0022\u0022). Values with leading underscores (\u0060_\u0060) are reserved. The maximum length is 256.",
+            "optional": true,
+            "type": "string"
+          }
+        }
+      },
+      {
+        "id": "ExecutionWorld",
+        "description": "The JavaScript world for a script to execute within. \u003Ccode\u003EUSER_SCRIPT\u003C/code\u003E is the default execution environment of user scripts, \u003Ccode\u003EMAIN\u003C/code\u003E is the web page\u0027s execution environment.",
+        "type": "string",
+        "enum": [
+          "MAIN",
+          "USER_SCRIPT"
+        ]
+      },
+      {
+        "id": "UserScriptFilter",
+        "description": "Optional filter to use with getScripts() and unregister().",
+        "type": "object",
+        "properties": {
+          "ids": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "ScriptSource",
+        "description": "Object with file xor code property. Equivalent to the ExtensionFileOrCode, except the file remains a relative URL.",
+        "choices": [
           {
-            "name": "unregister",
-            "description": "Unregister a user script registered programmatically",
-            "async": true,
-            "type": "function",
-            "parameters": []
+            "type": "object",
+            "properties": {
+              "file": {
+                "description": "The path of the JavaScript file to inject relative to the extension\u0027s root directory.",
+                "type": "string",
+                "format": "unresolvedRelativeUrl"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            }
           }
         ]
+      },
+      {
+        "id": "WorldProperties",
+        "description": "The configuration of a USER_SCRIPT world.",
+        "type": "object",
+        "properties": {
+          "worldId": {
+            "description": "The identifier of the world. Values with leading underscores (\u0060_\u0060) are reserved. The maximum length is 256. Defaults to the default USER_SCRIPT world (\u0022\u0022).",
+            "optional": true,
+            "type": "string"
+          },
+          "csp": {
+            "description": "The world\u0027s Content Security Policy. Defaults to the CSP of regular content scripts, which prohibits dynamic code execution such as eval.",
+            "optional": true,
+            "type": "string"
+          },
+          "messaging": {
+            "description": "Whether the runtime.sendMessage and runtime.connect methods are exposed. Defaults to not exposing these messaging APIs.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
       }
     ],
     "functions": [
       {
         "name": "register",
-        "description": "Register a user script programmatically given its $(ref:userScripts.UserScriptOptions), and resolves to a $(ref:userScripts.RegisteredUserScript) instance",
-        "async": true,
+        "description": "Register a user script programmatically given its $(ref:userScripts.UserScriptOptions), and resolves to an object with the unregister() function",
+        "async": "callback",
         "type": "function",
         "parameters": [
           {
             "name": "userScriptOptions",
             "$ref": "UserScriptOptions"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "legacyRegisteredUserScript",
+                "description": "An object that represents a user script registered programmatically",
+                "type": "object",
+                "properties": {
+                  "unregister": {
+                    "description": "Unregister a user script registered programmatically",
+                    "type": "function",
+                    "parameters": []
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "register",
+        "description": "Registers one or more user scripts for this extension.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "scripts",
+            "description": "List of user scripts to be registered.",
+            "type": "array",
+            "items": {
+              "$ref": "RegisteredUserScript"
+            }
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Updates one or more user scripts for this extension.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "scripts",
+            "description": "List of user scripts to be updated.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "js": {
+                  "optional": true,
+                  "type": "array",
+                  "items": {
+                    "$ref": "ScriptSource"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "unregister",
+        "description": "Unregisters all dynamically-registered user scripts for this extension.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "filter",
+            "description": "If specified, this method unregisters only the user scripts that match it.",
+            "optional": true,
+            "$ref": "UserScriptFilter"
+          }
+        ]
+      },
+      {
+        "name": "getScripts",
+        "description": "Returns all dynamically-registered user scripts for this extension.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "filter",
+            "description": "If specified, this method returns only the user scripts that match it.",
+            "optional": true,
+            "$ref": "UserScriptFilter"
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "scripts",
+                "description": "List of registered user scripts.",
+                "type": "array",
+                "items": {
+                  "$ref": "RegisteredUserScript"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "configureWorld",
+        "description": "Configures the environment for scripts running in a USER_SCRIPT world.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "properties",
+            "description": "The desired configuration for a USER_SCRIPT world.",
+            "$ref": "WorldProperties"
+          }
+        ]
+      },
+      {
+        "name": "resetWorldConfiguration",
+        "description": "Resets the configuration for a given world. That world will fall back to the default world\u0027s configuration.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "worldId",
+            "description": "The ID of the USER_SCRIPT world to reset. If omitted or empty, resets the default world\u0027s configuration.",
+            "optional": true,
+            "default": "",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "getWorldConfigurations",
+        "description": "Returns all registered USER_SCRIPT world configurations.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "configurations",
+                "description": "All configurations registered with configureWorld().",
+                "type": "array",
+                "items": {
+                  "$ref": "WorldProperties"
+                }
+              }
+            ]
           }
         ]
       }

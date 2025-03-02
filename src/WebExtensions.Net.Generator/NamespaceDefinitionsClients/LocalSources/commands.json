@@ -112,6 +112,13 @@
             ]
           }
         ]
+      },
+      {
+        "name": "openShortcutSettings",
+        "description": "Open extension shortcuts configuration page.",
+        "async": true,
+        "type": "function",
+        "parameters": []
       }
     ],
     "events": [

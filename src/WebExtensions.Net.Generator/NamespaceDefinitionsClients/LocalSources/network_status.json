@@ -58,7 +58,7 @@
     "functions": [
       {
         "name": "getLinkInfo",
-        "description": "Returns the $(ref:NetworkLinkInfo} of the current network connection.",
+        "description": "Returns the $(ref:NetworkLinkInfo) of the current network connection.",
         "async": true,
         "type": "function",
         "parameters": []

@@ -3,60 +3,6 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "telemetry": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "ping_type": {
-                "type": "string"
-              },
-              "schemaNamespace": {
-                "type": "string"
-              },
-              "public_key": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "key": {
-                    "type": "object",
-                    "properties": {
-                      "crv": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "kty": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "x": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "y": {
-                        "optional": false,
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              },
-              "study_name": {
-                "optional": true,
-                "type": "string"
-              },
-              "pioneer_id": {
-                "optional": true,
-                "type": "boolean"
-              }
-            }
-          }
-        }
-      },
-      {
         "$extend": "PermissionPrivileged",
         "choices": [
           {
@@ -198,36 +144,6 @@
         ]
       },
       {
-        "name": "submitEncryptedPing",
-        "description": "Submits a custom ping to the Telemetry back-end, with an encrypted payload. Requires a telemetry entry in the manifest to be used.",
-        "async": true,
-        "type": "function",
-        "parameters": [
-          {
-            "name": "message",
-            "description": "The data payload for the ping, which will be encrypted.",
-            "type": "object"
-          },
-          {
-            "name": "options",
-            "description": "Options object.",
-            "type": "object",
-            "properties": {
-              "schemaName": {
-                "description": "Schema name used for payload.",
-                "optional": false,
-                "type": "string"
-              },
-              "schemaVersion": {
-                "description": "Schema version used for payload.",
-                "optional": false,
-                "type": "integer"
-              }
-            }
-          }
-        ]
-      },
-      {
         "name": "canUpload",
         "description": "Checks if Telemetry upload is enabled.",
         "async": true,
@@ -239,6 +155,7 @@
         "description": "Adds the value to the given scalar.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060scalarAdd\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -258,6 +175,7 @@
         "description": "Sets the named scalar to the given value. Throws if the value type doesn\u0027t match the scalar type.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060scalarSet\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -289,6 +207,7 @@
         "description": "Sets the scalar to the maximum of the current and the passed value",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060scalarSetMaximum\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -308,6 +227,7 @@
         "description": "Adds the value to the given keyed scalar.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060keyedScalarAdd\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -332,6 +252,7 @@
         "description": "Sets the keyed scalar to the given value. Throws if the value type doesn\u0027t match the scalar type.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060keyedScalarSet\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -368,6 +289,7 @@
         "description": "Sets the keyed scalar to the maximum of the current and the passed value",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060keyedScalarSetMaximum\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "name",
@@ -392,7 +314,7 @@
         "description": "Record an event in Telemetry. Throws when trying to record an unknown event.",
         "async": true,
         "type": "function",
-        "deprecated": "\u0060recordEvent\u0060 has been deprecated since Firefox 132 (see bug 1894533)",
+        "deprecated": "\u0060recordEvent\u0060 is a no-op since Firefox 132 (see bug 1894533)",
         "parameters": [
           {
             "name": "category",
@@ -428,6 +350,7 @@
         "description": "Register new scalars to record them from addons. See nsITelemetry.idl for more details.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060registerScalars\u0060 is a no-op since Firefox 134 (see bug 1930196)",
         "parameters": [
           {
             "name": "category",
@@ -446,7 +369,7 @@
         "description": "Register new events to record them from addons. See nsITelemetry.idl for more details.",
         "async": true,
         "type": "function",
-        "deprecated": "\u0060registerEvents\u0060 has been deprecated since Firefox 132 (see bug 1894533)",
+        "deprecated": "\u0060registerEvents\u0060 is a no-op since Firefox 132 (see bug 1894533)",
         "parameters": [
           {
             "name": "category",
@@ -462,9 +385,10 @@
       },
       {
         "name": "setEventRecordingEnabled",
-        "description": "Enable recording of events in a category. Events default to recording disabled. This allows to toggle recording for all events in the specified category.",
+        "description": "Enable recording of events in a category. Events default to recording enabled. This allows to toggle recording for all events in the specified category.",
         "async": true,
         "type": "function",
+        "deprecated": "\u0060setEventRecordingEnabled\u0060 is a no-op since Firefox 133 (see bug 1920562)",
         "parameters": [
           {
             "name": "category",
