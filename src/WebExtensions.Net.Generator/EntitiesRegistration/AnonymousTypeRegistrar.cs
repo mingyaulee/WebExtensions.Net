@@ -26,16 +26,21 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 {
                     throw new InvalidOperationException("Unable to get a type name for type entity registration.");
                 }
+
                 typeId = $"{nameHierarchy[0]}{typeId}";
                 nameHierarchy.RemoveAt(0);
-
-            } while (typeEntityRegistrar.HasTypeEntity(typeId, namespaceEntity));
+            } while (typeEntityRegistrar.HasTypeEntity(typeId, namespaceEntity) || IsSystemType(typeId));
             var typeDefinition = CloneAsTypeDefinition(typeEntityRegistrationInfo.TypeReference);
             typeDefinition.Id = typeId;
 
             typeEntityRegistrar.RegisterNamespaceType(typeDefinition, namespaceEntity);
 
             return typeId;
+        }
+
+        private static bool IsSystemType(string type)
+        {
+            return type == "Type" || type == "Action";
         }
 
         private static TypeDefinition CloneAsTypeDefinition(TypeReference typeReference)

@@ -150,7 +150,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             Process(SetNameSuffix(nameHierarchy, registrationOptions.FunctionReturnTypeNameSuffix), typeReference.FunctionReturns, namespaceEntity);
             ProcessFunctions(nameHierarchy, typeReference.ObjectFunctions, namespaceEntity, typeReference.Type);
             ProcessProperties(nameHierarchy, typeReference.ObjectProperties, namespaceEntity);
-            ProcessTypeChoices(nameHierarchy, typeReference.TypeChoices, namespaceEntity);
+            if (ShouldProcessTypeChoices(typeReference))
+            {
+                ProcessTypeChoices(nameHierarchy, typeReference.TypeChoices, namespaceEntity);
+            }
         }
 
         private static bool IsObjectType(TypeReference typeReference)
@@ -159,6 +162,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 typeReference.Type == ObjectType.ApiObject ||
                 typeReference.Type == ObjectType.EventTypeObject ||
                 typeReference.Type == ObjectType.CombinedCallbackParameterObject ||
+                typeReference.Type == ObjectType.String ||
                 typeReference.TypeChoices != null;
         }
 
@@ -169,11 +173,28 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 return false;
             }
 
+            if (typeReference.Type == ObjectType.String)
+            {
+                return typeReference.EnumValues?.Any() ??
+                    false;
+            }
+
             return
                 typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
                 typeReference.ObjectFunctions?.Any(functionDefinition => !functionDefinition.IsUnsupported) ??
                 typeReference.TypeChoices?.Any(typeChoice => !typeChoice.IsUnsupported) ??
                 false;
+        }
+
+        private static bool ShouldProcessTypeChoices(TypeReference typeReference)
+        {
+            if (typeReference.TypeChoices is null ||
+                typeReference.TypeChoices.All(typeChoice => typeChoice.Type == ObjectType.String && typeChoice.EnumValues is not null))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static void TryHandleSingleTypeChoice(TypeReference typeReference)

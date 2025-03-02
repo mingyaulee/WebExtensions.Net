@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace WebExtensions.Net.Generator.Extensions
@@ -25,12 +26,32 @@ namespace WebExtensions.Net.Generator.Extensions
 
         static readonly HashSet<string> cSharpReservedKeywords =
         [
-            "object"
+            "object",
+            "params",
         ];
 
-        public static string ToCSharpName(this string name)
+        public static string ToCSharpName(this string name, bool toCapitalCase = false, bool avoidReservedKeywords = true)
         {
-            return cSharpReservedKeywords.Contains(name) ? '@' + name : name;
+            var tokenizedNameSegments = name.Split(['-', '_', '<', '>', ' '], System.StringSplitOptions.RemoveEmptyEntries);
+            name = string.Join("", tokenizedNameSegments.Select((tokenizedNameSegment, index) =>
+            {
+                var startsWithAsciiLetter = char.IsAsciiLetter(tokenizedNameSegment[0]);
+                if (toCapitalCase && startsWithAsciiLetter)
+                {
+                    return tokenizedNameSegment.ToCapitalCase();
+                }
+
+                if (index == 0)
+                {
+                    return tokenizedNameSegment;
+                }
+
+                return startsWithAsciiLetter ? tokenizedNameSegment.ToCapitalCase() : '_' + tokenizedNameSegment;
+            }));
+
+            return avoidReservedKeywords && cSharpReservedKeywords.Contains(name) ?
+                '@' + name :
+                name;
         }
 
         public static string ToXmlContent(this string? content)

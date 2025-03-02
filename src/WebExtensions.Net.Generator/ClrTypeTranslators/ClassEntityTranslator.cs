@@ -24,15 +24,15 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
         public IEnumerable<ClrTypeInfo> ShallowTranslate(ClassEntity classEntity)
         {
-            var classEntityName = classEntity.FormattedName;
-            if (classTranslationOptions.Aliases.TryGetValue(classEntityName, out var classAlias))
+            var classCSharpName = classEntity.FormattedName.ToCSharpName(toCapitalCase: true);
+            if (classTranslationOptions.Aliases.TryGetValue(classEntity.FormattedName, out var classAlias))
             {
-                classEntityName = classAlias;
+                classCSharpName = classAlias;
             }
 
             foreach (var replace in classTranslationOptions.ReplaceNames)
             {
-                classEntityName = classEntityName.Replace(replace.Key, replace.Value);
+                classCSharpName = classCSharpName.Replace(replace.Key, replace.Value);
             }
 
             var namespaceName = classEntity.NamespaceEntity.FullFormattedName;
@@ -48,7 +48,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 Namespace = @namespace,
                 Name = classEntity.Name,
                 FullName = $"{@namespace}.{classEntity.FormattedName}",
-                CSharpName = classEntityName,
+                CSharpName = classCSharpName,
                 IsNullable = classEntity.Type != ClassType.EnumClass,
                 IsEnum = classEntity.Type == ClassType.EnumClass,
                 EnumValues = classEntity.Type == ClassType.EnumClass ? classEntity.Properties.Select(EnumPropertyDefinitionTranslator.TranslatePropertyDefinition).ToArray() : null,
@@ -81,7 +81,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 interfaceClrTypeInfo.Id = $"{@namespace}.{interfaceTypeName}";
                 interfaceClrTypeInfo.Name = interfaceTypeName;
                 interfaceClrTypeInfo.FullName = $"{@namespace}.{interfaceTypeName}";
-                interfaceClrTypeInfo.CSharpName = $"I{classEntityName}";
+                interfaceClrTypeInfo.CSharpName = $"I{classCSharpName}";
                 interfaceClrTypeInfo.IsInterface = true;
                 interfaceClrTypeInfo.Interfaces = new HashSet<string>();
                 interfaceClrTypeInfo.BaseTypeName = null;
