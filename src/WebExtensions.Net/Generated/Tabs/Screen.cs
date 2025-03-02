@@ -7,14 +7,14 @@ namespace WebExtensions.Net.Tabs
     [JsonConverter(typeof(MultiTypeJsonConverter<Screen>))]
     public partial class Screen : BaseMultiTypeObject
     {
-        private readonly string valueString;
+        private readonly ScreenType1 valueScreenType1;
         private readonly bool valueBool;
 
         /// <summary>Creates a new instance of <see cref="Screen" />.</summary>
         /// <param name="value">The value.</param>
-        public Screen(string value) : base(value, typeof(string))
+        public Screen(ScreenType1 value) : base(value, typeof(ScreenType1))
         {
-            valueString = value;
+            valueScreenType1 = value;
         }
 
         /// <summary>Creates a new instance of <see cref="Screen" />.</summary>
@@ -24,13 +24,13 @@ namespace WebExtensions.Net.Tabs
             valueBool = value;
         }
 
-        /// <summary>Converts from <see cref="Screen" /> to <see cref="string" />.</summary>
+        /// <summary>Converts from <see cref="Screen" /> to <see cref="ScreenType1" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator string(Screen value) => value.valueString;
+        public static implicit operator ScreenType1(Screen value) => value.valueScreenType1;
 
-        /// <summary>Converts from <see cref="string" /> to <see cref="Screen" />.</summary>
+        /// <summary>Converts from <see cref="ScreenType1" /> to <see cref="Screen" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator Screen(string value) => new(value);
+        public static implicit operator Screen(ScreenType1 value) => new(value);
 
         /// <summary>Converts from <see cref="Screen" /> to <see cref="bool" />.</summary>
         /// <param name="value">The value to convert from.</param>

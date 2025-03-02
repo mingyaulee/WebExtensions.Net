@@ -22,7 +22,7 @@ namespace WebExtensions.Net.Proxy
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
         [JsAccessPath("addListener")]
-        public virtual void AddListener(Action<Details> callback, RequestFilter filter, IEnumerable<string> extraInfoSpec)
+        public virtual void AddListener(Action<Details> callback, RequestFilter filter, IEnumerable<ExtraInfoSpecArrayItem> extraInfoSpec)
             => InvokeVoid("addListener", callback, filter, extraInfoSpec);
 
         /// <summary></summary>
@@ -38,7 +38,7 @@ namespace WebExtensions.Net.Proxy
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
         /// <returns>True if <em>callback</em> is registered to the event.</returns>
         [JsAccessPath("hasListener")]
-        public virtual bool HasListener(Action<Details> callback, RequestFilter filter, IEnumerable<string> extraInfoSpec)
+        public virtual bool HasListener(Action<Details> callback, RequestFilter filter, IEnumerable<ExtraInfoSpecArrayItem> extraInfoSpec)
             => Invoke<bool>("hasListener", callback, filter, extraInfoSpec);
 
         /// <summary>Deregisters an event listener <em>callback</em> from an event.</summary>
@@ -52,7 +52,7 @@ namespace WebExtensions.Net.Proxy
         /// <param name="filter">A set of filters that restricts the events that will be sent to this listener.</param>
         /// <param name="extraInfoSpec">Array of extra information that should be passed to the listener function.</param>
         [JsAccessPath("removeListener")]
-        public virtual void RemoveListener(Action<Details> callback, RequestFilter filter, IEnumerable<string> extraInfoSpec)
+        public virtual void RemoveListener(Action<Details> callback, RequestFilter filter, IEnumerable<ExtraInfoSpecArrayItem> extraInfoSpec)
             => InvokeVoid("removeListener", callback, filter, extraInfoSpec);
     }
 }

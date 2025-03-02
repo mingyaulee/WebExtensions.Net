@@ -13,7 +13,7 @@ namespace WebExtensions.Net.Clipboard
         }
 
         /// <inheritdoc />
-        public virtual void SetImageData(object imageData, string imageType)
+        public virtual void SetImageData(object imageData, ImageType imageType)
             => InvokeVoid("setImageData", imageData, imageType);
     }
 }

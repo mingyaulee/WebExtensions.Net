@@ -1,0 +1,8 @@
+[
+  {
+    "namespace": "trial",
+    "permissions": [
+      "trialML"
+    ]
+  }
+]

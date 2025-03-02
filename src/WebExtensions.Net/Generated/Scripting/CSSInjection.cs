@@ -25,7 +25,7 @@ namespace WebExtensions.Net.Scripting
         [JsAccessPath("origin")]
         [JsonPropertyName("origin")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Origin { get; set; }
+        public Origin? Origin { get; set; }
 
         /// <summary>Details specifying the target into which to inject the CSS.</summary>
         [JsAccessPath("target")]

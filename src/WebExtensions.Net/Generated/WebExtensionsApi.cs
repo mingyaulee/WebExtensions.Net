@@ -1,37 +1,52 @@
 using JsBind.Net;
 using WebExtensions.Net.ActionNs;
+using WebExtensions.Net.ActivityLog;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
 using WebExtensions.Net.BrowserSettings;
 using WebExtensions.Net.BrowsingData;
+using WebExtensions.Net.CaptivePortal;
 using WebExtensions.Net.Clipboard;
 using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
+using WebExtensions.Net.ContextualIdentities;
 using WebExtensions.Net.Cookies;
 using WebExtensions.Net.DeclarativeNetRequest;
 using WebExtensions.Net.Devtools;
+using WebExtensions.Net.Dns;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
+using WebExtensions.Net.Find;
+using WebExtensions.Net.GeckoProfiler;
 using WebExtensions.Net.History;
 using WebExtensions.Net.I18n;
 using WebExtensions.Net.Identity;
 using WebExtensions.Net.Idle;
 using WebExtensions.Net.Management;
 using WebExtensions.Net.Menus;
+using WebExtensions.Net.NetworkStatus;
+using WebExtensions.Net.NormandyAddonStudy;
 using WebExtensions.Net.Notifications;
 using WebExtensions.Net.Omnibox;
 using WebExtensions.Net.PageAction;
 using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Pkcs11;
 using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
 using WebExtensions.Net.Scripting;
 using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
+using WebExtensions.Net.SidebarAction;
 using WebExtensions.Net.Storage;
 using WebExtensions.Net.Tabs;
+using WebExtensions.Net.Telemetry;
+using WebExtensions.Net.Test;
+using WebExtensions.Net.Theme;
 using WebExtensions.Net.TopSites;
+using WebExtensions.Net.Trial;
+using WebExtensions.Net.UserScripts;
 using WebExtensions.Net.WebNavigation;
 using WebExtensions.Net.WebRequest;
 using WebExtensions.Net.Windows;
@@ -42,38 +57,53 @@ namespace WebExtensions.Net
     public partial class WebExtensionsApi : BaseApi, IWebExtensionsApi
     {
         private IActionApi _action;
+        private IActivityLogApi _activityLog;
         private IAlarmsApi _alarms;
         private IBookmarksApi _bookmarks;
         private IBrowserActionApi _browserAction;
         private IBrowserSettingsApi _browserSettings;
         private IBrowsingDataApi _browsingData;
+        private ICaptivePortalApi _captivePortal;
         private IClipboardApi _clipboard;
         private ICommandsApi _commands;
         private IContentScriptsApi _contentScripts;
+        private IContextualIdentitiesApi _contextualIdentities;
         private ICookiesApi _cookies;
         private IDeclarativeNetRequestApi _declarativeNetRequest;
         private IDevtoolsApi _devtools;
+        private IDnsApi _dns;
         private IDownloadsApi _downloads;
         private IExtensionApi _extension;
+        private IFindApi _find;
+        private IGeckoProfilerApi _geckoProfiler;
         private IHistoryApi _history;
         private II18nApi _i18n;
         private IIdentityApi _identity;
         private IIdleApi _idle;
         private IManagementApi _management;
         private IMenusApi _menus;
+        private INetworkStatusApi _networkStatus;
+        private INormandyAddonStudyApi _normandyAddonStudy;
         private INotificationsApi _notifications;
         private IOmniboxApi _omnibox;
         private IPageActionApi _pageAction;
         private IPermissionsApi _permissions;
+        private IPkcs11Api _pkcs11;
         private IPrivacyApi _privacy;
         private IProxyApi _proxy;
         private IRuntimeApi _runtime;
         private IScriptingApi _scripting;
         private ISearchApi _search;
         private ISessionsApi _sessions;
+        private ISidebarActionApi _sidebarAction;
         private IStorageApi _storage;
         private ITabsApi _tabs;
+        private ITelemetryApi _telemetry;
+        private ITestApi _test;
+        private IThemeApi _theme;
         private ITopSitesApi _topSites;
+        private ITrialApi _trial;
+        private IUserScriptsApi _userScripts;
         private IWebNavigationApi _webNavigation;
         private IWebRequestApi _webRequest;
         private IWindowsApi _windows;
@@ -86,6 +116,9 @@ namespace WebExtensions.Net
 
         /// <inheritdoc />
         public IActionApi Action => _action ??= new ActionApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IActivityLogApi ActivityLog => _activityLog ??= new ActivityLogApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public IAlarmsApi Alarms => _alarms ??= new AlarmsApi(JsRuntime, AccessPath);
@@ -103,6 +136,9 @@ namespace WebExtensions.Net
         public IBrowsingDataApi BrowsingData => _browsingData ??= new BrowsingDataApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
+        public ICaptivePortalApi CaptivePortal => _captivePortal ??= new CaptivePortalApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
         public IClipboardApi Clipboard => _clipboard ??= new ClipboardApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
@@ -110,6 +146,9 @@ namespace WebExtensions.Net
 
         /// <inheritdoc />
         public IContentScriptsApi ContentScripts => _contentScripts ??= new ContentScriptsApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IContextualIdentitiesApi ContextualIdentities => _contextualIdentities ??= new ContextualIdentitiesApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public ICookiesApi Cookies => _cookies ??= new CookiesApi(JsRuntime, AccessPath);
@@ -121,10 +160,19 @@ namespace WebExtensions.Net
         public IDevtoolsApi Devtools => _devtools ??= new DevtoolsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
+        public IDnsApi Dns => _dns ??= new DnsApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
         public IDownloadsApi Downloads => _downloads ??= new DownloadsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public IExtensionApi Extension => _extension ??= new ExtensionApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IFindApi Find => _find ??= new FindApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IGeckoProfilerApi GeckoProfiler => _geckoProfiler ??= new GeckoProfilerApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public IHistoryApi History => _history ??= new HistoryApi(JsRuntime, AccessPath);
@@ -145,6 +193,12 @@ namespace WebExtensions.Net
         public IMenusApi Menus => _menus ??= new MenusApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
+        public INetworkStatusApi NetworkStatus => _networkStatus ??= new NetworkStatusApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public INormandyAddonStudyApi NormandyAddonStudy => _normandyAddonStudy ??= new NormandyAddonStudyApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
         public INotificationsApi Notifications => _notifications ??= new NotificationsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
@@ -155,6 +209,9 @@ namespace WebExtensions.Net
 
         /// <inheritdoc />
         public IPermissionsApi Permissions => _permissions ??= new PermissionsApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IPkcs11Api Pkcs11 => _pkcs11 ??= new Pkcs11Api(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public IPrivacyApi Privacy => _privacy ??= new PrivacyApi(JsRuntime, AccessPath);
@@ -175,13 +232,31 @@ namespace WebExtensions.Net
         public ISessionsApi Sessions => _sessions ??= new SessionsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
+        public ISidebarActionApi SidebarAction => _sidebarAction ??= new SidebarActionApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
         public IStorageApi Storage => _storage ??= new StorageApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public ITabsApi Tabs => _tabs ??= new TabsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
+        public ITelemetryApi Telemetry => _telemetry ??= new TelemetryApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public ITestApi Test => _test ??= new TestApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IThemeApi Theme => _theme ??= new ThemeApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
         public ITopSitesApi TopSites => _topSites ??= new TopSitesApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public ITrialApi Trial => _trial ??= new TrialApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public IUserScriptsApi UserScripts => _userScripts ??= new UserScriptsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public IWebNavigationApi WebNavigation => _webNavigation ??= new WebNavigationApi(JsRuntime, AccessPath);

@@ -24,7 +24,7 @@ namespace WebExtensions.Net.TopSites
         [JsAccessPath("type")]
         [JsonPropertyName("type")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Type { get; set; }
+        public MostVisitedUrlType? Type { get; set; }
 
         /// <summary>The most visited URL.</summary>
         [JsAccessPath("url")]

@@ -54,7 +54,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [JsAccessPath("scheme")]
         [JsonPropertyName("scheme")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Scheme { get; set; }
+        public Scheme? Scheme { get; set; }
 
         /// <summary>The new username for the request.</summary>
         [JsAccessPath("username")]

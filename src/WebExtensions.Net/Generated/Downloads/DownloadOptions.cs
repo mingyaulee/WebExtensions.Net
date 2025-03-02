@@ -55,7 +55,7 @@ namespace WebExtensions.Net.Downloads
         [JsAccessPath("method")]
         [JsonPropertyName("method")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Method { get; set; }
+        public Method? Method { get; set; }
 
         /// <summary>Use a file-chooser to allow the user to select a filename. If the option is not specified, the file chooser will be shown only if the Firefox "Always ask you where to save files" option is enabled (i.e. the pref <c>browser.download.useDownloadDir</c> is set to <c>false</c>).</summary>
         [JsAccessPath("saveAs")]

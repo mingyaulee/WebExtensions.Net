@@ -17,8 +17,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         /// <summary>The operation to be performed on a header.</summary>
         [JsAccessPath("operation")]
         [JsonPropertyName("operation")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Operation { get; set; }
+        public RequestHeaderOperation Operation { get; set; }
 
         /// <summary>The new value for the header. Must be specified for the 'append' and 'set' operations.</summary>
         [JsAccessPath("value")]

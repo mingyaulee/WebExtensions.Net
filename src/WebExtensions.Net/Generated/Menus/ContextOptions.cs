@@ -18,7 +18,7 @@ namespace WebExtensions.Net.Menus
         [JsAccessPath("context")]
         [JsonPropertyName("context")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Context { get; set; }
+        public Context? Context { get; set; }
 
         /// <summary>Whether to also include default menu items in the menu.</summary>
         [JsAccessPath("showDefaults")]

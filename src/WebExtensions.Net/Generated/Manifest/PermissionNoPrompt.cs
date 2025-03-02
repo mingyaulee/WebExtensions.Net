@@ -9,7 +9,7 @@ namespace WebExtensions.Net.Manifest
     {
         private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
         private readonly PermissionPrivileged valuePermissionPrivileged;
-        private readonly string valueString;
+        private readonly PermissionNoPromptType3 valuePermissionNoPromptType3;
 
         /// <summary>Creates a new instance of <see cref="PermissionNoPrompt" />.</summary>
         /// <param name="value">The value.</param>
@@ -27,9 +27,9 @@ namespace WebExtensions.Net.Manifest
 
         /// <summary>Creates a new instance of <see cref="PermissionNoPrompt" />.</summary>
         /// <param name="value">The value.</param>
-        public PermissionNoPrompt(string value) : base(value, typeof(string))
+        public PermissionNoPrompt(PermissionNoPromptType3 value) : base(value, typeof(PermissionNoPromptType3))
         {
-            valueString = value;
+            valuePermissionNoPromptType3 = value;
         }
 
         /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="OptionalPermissionNoPrompt" />.</summary>
@@ -48,12 +48,12 @@ namespace WebExtensions.Net.Manifest
         /// <param name="value">The value to convert from.</param>
         public static implicit operator PermissionNoPrompt(PermissionPrivileged value) => new(value);
 
-        /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="string" />.</summary>
+        /// <summary>Converts from <see cref="PermissionNoPrompt" /> to <see cref="PermissionNoPromptType3" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator string(PermissionNoPrompt value) => value.valueString;
+        public static implicit operator PermissionNoPromptType3(PermissionNoPrompt value) => value.valuePermissionNoPromptType3;
 
-        /// <summary>Converts from <see cref="string" /> to <see cref="PermissionNoPrompt" />.</summary>
+        /// <summary>Converts from <see cref="PermissionNoPromptType3" /> to <see cref="PermissionNoPrompt" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator PermissionNoPrompt(string value) => new(value);
+        public static implicit operator PermissionNoPrompt(PermissionNoPromptType3 value) => new(value);
     }
 }

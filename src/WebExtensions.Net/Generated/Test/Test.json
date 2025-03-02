@@ -1,0 +1,296 @@
+[
+  {
+    "namespace": "test",
+    "description": "none",
+    "types": [
+      {
+        "id": "ExpectedError",
+        "choices": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "object"
+          },
+          {
+            "type": "function"
+          }
+        ]
+      },
+      {
+        "id": "Promise",
+        "choices": [
+          {
+            "type": "object",
+            "properties": {
+              "then": {
+                "type": "function"
+              }
+            }
+          },
+          {
+            "type": "object"
+          }
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "name": "withHandlingUserInput",
+        "description": "Calls the callback function wrapped with user input set.  This is only used for internal unit testing.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "callback",
+            "type": "function"
+          }
+        ]
+      },
+      {
+        "name": "notifyFail",
+        "description": "Notifies the browser process that test code running in the extension failed.  This is only used for internal unit testing.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "notifyPass",
+        "description": "Notifies the browser process that test code running in the extension passed.  This is only used for internal unit testing.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "log",
+        "description": "Logs a message during internal unit testing.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "sendMessage",
+        "description": "Sends a string message to the browser process, generating a Notification that C\u002B\u002B test code can wait for.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "arg1",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "arg2",
+            "optional": true,
+            "type": "any"
+          }
+        ]
+      },
+      {
+        "name": "fail",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "optional": true,
+            "type": "any"
+          }
+        ]
+      },
+      {
+        "name": "succeed",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "optional": true,
+            "type": "any"
+          }
+        ]
+      },
+      {
+        "name": "assertTrue",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "test",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertFalse",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "test",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertBool",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "test",
+            "choices": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          {
+            "name": "expected",
+            "type": "boolean"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertDeepEq",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "expected",
+            "type": "any"
+          },
+          {
+            "name": "actual",
+            "type": "any"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertEq",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "expected",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "actual",
+            "optional": true,
+            "type": "any"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertNoLastError",
+        "type": "function",
+        "unsupported": true,
+        "parameters": []
+      },
+      {
+        "name": "assertLastError",
+        "type": "function",
+        "unsupported": true,
+        "parameters": [
+          {
+            "name": "expectedError",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertRejects",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "promise",
+            "$ref": "Promise"
+          },
+          {
+            "name": "expectedError",
+            "$ref": "ExpectedError"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "assertThrows",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "func",
+            "type": "function"
+          },
+          {
+            "name": "expectedError",
+            "$ref": "ExpectedError"
+          },
+          {
+            "name": "message",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onMessage",
+        "description": "Used to test sending messages to extensions.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "argument",
+            "type": "any"
+          }
+        ]
+      }
+    ]
+  }
+]

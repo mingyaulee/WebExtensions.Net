@@ -1,38 +1,53 @@
 using JsBind.Net;
 using System;
 using WebExtensions.Net.ActionNs;
+using WebExtensions.Net.ActivityLog;
 using WebExtensions.Net.Alarms;
 using WebExtensions.Net.Bookmarks;
 using WebExtensions.Net.BrowserAction;
 using WebExtensions.Net.BrowserSettings;
 using WebExtensions.Net.BrowsingData;
+using WebExtensions.Net.CaptivePortal;
 using WebExtensions.Net.Clipboard;
 using WebExtensions.Net.Commands;
 using WebExtensions.Net.ContentScripts;
+using WebExtensions.Net.ContextualIdentities;
 using WebExtensions.Net.Cookies;
 using WebExtensions.Net.DeclarativeNetRequest;
 using WebExtensions.Net.Devtools;
+using WebExtensions.Net.Dns;
 using WebExtensions.Net.Downloads;
 using WebExtensions.Net.Extension;
+using WebExtensions.Net.Find;
+using WebExtensions.Net.GeckoProfiler;
 using WebExtensions.Net.History;
 using WebExtensions.Net.I18n;
 using WebExtensions.Net.Identity;
 using WebExtensions.Net.Idle;
 using WebExtensions.Net.Management;
 using WebExtensions.Net.Menus;
+using WebExtensions.Net.NetworkStatus;
+using WebExtensions.Net.NormandyAddonStudy;
 using WebExtensions.Net.Notifications;
 using WebExtensions.Net.Omnibox;
 using WebExtensions.Net.PageAction;
 using WebExtensions.Net.Permissions;
+using WebExtensions.Net.Pkcs11;
 using WebExtensions.Net.Privacy;
 using WebExtensions.Net.Proxy;
 using WebExtensions.Net.Runtime;
 using WebExtensions.Net.Scripting;
 using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
+using WebExtensions.Net.SidebarAction;
 using WebExtensions.Net.Storage;
 using WebExtensions.Net.Tabs;
+using WebExtensions.Net.Telemetry;
+using WebExtensions.Net.Test;
+using WebExtensions.Net.Theme;
 using WebExtensions.Net.TopSites;
+using WebExtensions.Net.Trial;
+using WebExtensions.Net.UserScripts;
 using WebExtensions.Net.WebNavigation;
 using WebExtensions.Net.WebRequest;
 using WebExtensions.Net.Windows;
@@ -46,6 +61,10 @@ namespace WebExtensions.Net
         /// <summary>Use browser actions to put icons in the main browser toolbar, to the right of the address bar. In addition to its icon, a browser action can also have a tooltip, a badge, and a popup.<br />Requires manifest permission manifest:action, manifest:browser_action.</summary>
         [JsAccessPath("action")]
         IActionApi Action { get; }
+
+        /// <summary>Monitor extension activity<br />Requires manifest permission activityLog.</summary>
+        [JsAccessPath("activityLog")]
+        IActivityLogApi ActivityLog { get; }
 
         /// <summary><br />Requires manifest permission alarms.</summary>
         [JsAccessPath("alarms")]
@@ -68,6 +87,10 @@ namespace WebExtensions.Net
         [JsAccessPath("browsingData")]
         IBrowsingDataApi BrowsingData { get; }
 
+        /// <summary>This API provides the ability detect the captive portal state of the users connection.<br />Requires manifest permission captivePortal.</summary>
+        [JsAccessPath("captivePortal")]
+        ICaptivePortalApi CaptivePortal { get; }
+
         /// <summary>Offers the ability to write to the clipboard. Reading is not supported because the clipboard can already be read through the standard web platform APIs.<br />Requires manifest permission clipboardWrite.</summary>
         [JsAccessPath("clipboard")]
         IClipboardApi Clipboard { get; }
@@ -79,6 +102,10 @@ namespace WebExtensions.Net
         /// <summary></summary>
         [JsAccessPath("contentScripts")]
         IContentScriptsApi ContentScripts { get; }
+
+        /// <summary>Use the <c>browser.contextualIdentities</c> API to query and modify contextual identity, also called as containers.<br />Requires manifest permission contextualIdentities.</summary>
+        [JsAccessPath("contextualIdentities")]
+        IContextualIdentitiesApi ContextualIdentities { get; }
 
         /// <summary>Use the <c>browser.cookies</c> API to query and modify cookies, and to be notified when they change.<br />Requires manifest permission cookies.</summary>
         [JsAccessPath("cookies")]
@@ -92,6 +119,10 @@ namespace WebExtensions.Net
         [JsAccessPath("devtools")]
         IDevtoolsApi Devtools { get; }
 
+        /// <summary>Asynchronous DNS API<br />Requires manifest permission dns.</summary>
+        [JsAccessPath("dns")]
+        IDnsApi Dns { get; }
+
         /// <summary><br />Requires manifest permission downloads.</summary>
         [JsAccessPath("downloads")]
         IDownloadsApi Downloads { get; }
@@ -99,6 +130,14 @@ namespace WebExtensions.Net
         /// <summary>The <c>browser.extension</c> API has utilities that can be used by any extension page. It includes support for exchanging messages between an extension and its content scripts or between extensions, as described in detail in $(topic:messaging)[Message Passing].</summary>
         [JsAccessPath("extension")]
         IExtensionApi Extension { get; }
+
+        /// <summary>Use the <c>browser.find</c> API to interact with the browser's <c>Find</c> interface.<br />Requires manifest permission find.</summary>
+        [JsAccessPath("find")]
+        IFindApi Find { get; }
+
+        /// <summary>Exposes the browser's profiler.<br />Requires manifest permission geckoProfiler.</summary>
+        [JsAccessPath("geckoProfiler")]
+        IGeckoProfilerApi GeckoProfiler { get; }
 
         /// <summary>Use the <c>browser.history</c> API to interact with the browser's record of visited pages. You can add, remove, and query for URLs in the browser's history. To override the history page with your own version, see $(topic:override)[Override Pages].<br />Requires manifest permission history.</summary>
         [JsAccessPath("history")]
@@ -124,6 +163,14 @@ namespace WebExtensions.Net
         [JsAccessPath("menus")]
         IMenusApi Menus { get; }
 
+        /// <summary>This API provides the ability to determine the status of and detect changes in the network connection. This API can only be used in privileged extensions.<br />Requires manifest permission networkStatus.</summary>
+        [JsAccessPath("networkStatus")]
+        INetworkStatusApi NetworkStatus { get; }
+
+        /// <summary>Normandy Study API<br />Requires manifest permission normandyAddonStudy.</summary>
+        [JsAccessPath("normandyAddonStudy")]
+        INormandyAddonStudyApi NormandyAddonStudy { get; }
+
         /// <summary><br />Requires manifest permission notifications.</summary>
         [JsAccessPath("notifications")]
         INotificationsApi Notifications { get; }
@@ -139,6 +186,10 @@ namespace WebExtensions.Net
         /// <summary></summary>
         [JsAccessPath("permissions")]
         IPermissionsApi Permissions { get; }
+
+        /// <summary>PKCS#11 module management API<br />Requires manifest permission pkcs11.</summary>
+        [JsAccessPath("pkcs11")]
+        IPkcs11Api Pkcs11 { get; }
 
         /// <summary><br />Requires manifest permission privacy.</summary>
         [JsAccessPath("privacy")]
@@ -164,6 +215,10 @@ namespace WebExtensions.Net
         [JsAccessPath("sessions")]
         ISessionsApi Sessions { get; }
 
+        /// <summary>Use sidebar actions to add a sidebar to Firefox.<br />Requires manifest permission manifest:sidebar_action.</summary>
+        [JsAccessPath("sidebarAction")]
+        ISidebarActionApi SidebarAction { get; }
+
         /// <summary>Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.<br />Requires manifest permission storage.</summary>
         [JsAccessPath("storage")]
         IStorageApi Storage { get; }
@@ -172,9 +227,29 @@ namespace WebExtensions.Net
         [JsAccessPath("tabs")]
         ITabsApi Tabs { get; }
 
+        /// <summary>Use the <c>browser.telemetry</c> API to send telemetry data to the Mozilla Telemetry service. Restricted to Mozilla privileged webextensions.<br />Requires manifest permission telemetry.</summary>
+        [JsAccessPath("telemetry")]
+        ITelemetryApi Telemetry { get; }
+
+        /// <summary>none</summary>
+        [JsAccessPath("test")]
+        ITestApi Test { get; }
+
+        /// <summary>The theme API allows customizing of visual elements of the browser.</summary>
+        [JsAccessPath("theme")]
+        IThemeApi Theme { get; }
+
         /// <summary>Use the chrome.topSites API to access the top sites that are displayed on the new tab page. <br />Requires manifest permission topSites.</summary>
         [JsAccessPath("topSites")]
         ITopSitesApi TopSites { get; }
+
+        /// <summary><br />Requires manifest permission trialML.</summary>
+        [JsAccessPath("trial")]
+        ITrialApi Trial { get; }
+
+        /// <summary><br />Requires manifest permission manifest:user_scripts, userScripts.</summary>
+        [JsAccessPath("userScripts")]
+        IUserScriptsApi UserScripts { get; }
 
         /// <summary>Use the <c>browser.webNavigation</c> API to receive notifications about the status of navigation requests in-flight.<br />Requires manifest permission webNavigation.</summary>
         [JsAccessPath("webNavigation")]

@@ -1,0 +1,116 @@
+[
+  {
+    "namespace": "normandyAddonStudy",
+    "description": "Normandy Study API",
+    "permissions": [
+      "normandyAddonStudy"
+    ],
+    "types": [
+      {
+        "id": "Study",
+        "type": "object",
+        "properties": {
+          "recipeId": {
+            "description": "The ID of the recipe for the study.",
+            "type": "integer"
+          },
+          "slug": {
+            "description": "A slug to identify the study.",
+            "type": "string"
+          },
+          "userFacingName": {
+            "description": "The name presented on about:studies.",
+            "type": "string"
+          },
+          "userFacingDescription": {
+            "description": "The description presented on about:studies.",
+            "type": "string"
+          },
+          "branch": {
+            "description": "The study branch in which the user is enrolled.",
+            "type": "string"
+          },
+          "active": {
+            "description": "The state of the study.",
+            "type": "boolean"
+          },
+          "addonId": {
+            "description": "The ID of the extension installed by the study.",
+            "type": "string"
+          },
+          "addonUrl": {
+            "description": "The URL of the XPI that was downloaded and installed by the study.",
+            "type": "string"
+          },
+          "addonVersion": {
+            "description": "The version of the extension installed by the study.",
+            "type": "string"
+          },
+          "studyStartDate": {
+            "description": "The start date for the study.",
+            "$ref": "extensionTypes.Date"
+          },
+          "studyEndDate": {
+            "description": "The end date for the study.",
+            "$ref": "extensionTypes.Date"
+          },
+          "extensionApiId": {
+            "description": "The record ID for the extension in Normandy server\u0027s database.",
+            "type": "integer"
+          },
+          "extensionHash": {
+            "description": "A hash of the extension XPI file.",
+            "type": "string"
+          },
+          "extensionHashAlgorithm": {
+            "description": "The algorithm used to hash the extension XPI file.",
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "getStudy",
+        "description": "Returns a study object for the current study.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "endStudy",
+        "description": "Marks the study as ended and then uninstalls the addon.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "reason",
+            "description": "The reason why the study is ending.",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "name": "getClientMetadata",
+        "description": "Returns an object with metadata about the client which may be required for constructing survey URLs.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onUnenroll",
+        "description": "Fired when a user unenrolls from a study but before the addon is uninstalled.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "reason",
+            "description": "The reason why the study is ending.",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+]

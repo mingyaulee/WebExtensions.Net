@@ -1,0 +1,71 @@
+[
+  {
+    "namespace": "captivePortal",
+    "description": "This API provides the ability detect the captive portal state of the users connection.",
+    "permissions": [
+      "captivePortal"
+    ],
+    "properties": {
+      "canonicalURL": {
+        "description": "Return the canonical captive-portal detection URL. Read-only.",
+        "$ref": "types.Setting"
+      }
+    },
+    "functions": [
+      {
+        "name": "getState",
+        "description": "Returns the current portal state, one of \u0060unknown\u0060, \u0060not_captive\u0060, \u0060unlocked_portal\u0060, \u0060locked_portal\u0060.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "getLastChecked",
+        "description": "Returns the time difference between NOW and the last time a request was completed in milliseconds.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onStateChanged",
+        "description": "Fired when the captive portal state changes.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "state": {
+                "description": "The current captive portal state.",
+                "type": "string",
+                "enum": [
+                  "unknown",
+                  "not_captive",
+                  "unlocked_portal",
+                  "locked_portal"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onConnectivityAvailable",
+        "description": "This notification will be emitted when the captive portal service has determined that we can connect to the internet. The service will pass either \u0060captive\u0060 if there is an unlocked captive portal present, or \u0060clear\u0060 if no captive portal was detected.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "status",
+            "type": "string",
+            "enum": [
+              "captive",
+              "clear"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "namespace": "theme",
+    "description": "The theme API allows customizing of visual elements of the browser.",
+    "types": [
+      {
+        "id": "ThemeUpdateInfo",
+        "description": "Info provided in the onUpdated listener.",
+        "type": "object",
+        "properties": {
+          "theme": {
+            "description": "The new theme after update",
+            "type": "object"
+          },
+          "windowId": {
+            "description": "The id of the window the theme has been applied to",
+            "optional": true,
+            "type": "integer"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "getCurrent",
+        "description": "Returns the current theme for the specified window or the last focused window.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The window for which we want the theme.",
+            "optional": true,
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Make complete updates to the theme. Resolves when the update has completed.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window to update. No id updates all windows.",
+            "optional": true,
+            "type": "integer"
+          },
+          {
+            "name": "details",
+            "description": "The properties of the theme to update.",
+            "$ref": "manifest.ThemeType"
+          }
+        ]
+      },
+      {
+        "name": "reset",
+        "description": "Removes the updates made to the theme.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "windowId",
+            "description": "The id of the window to reset. No id resets all windows.",
+            "optional": true,
+            "type": "integer"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onUpdated",
+        "description": "Fired when a new theme has been applied",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "updateInfo",
+            "description": "Details of the theme update",
+            "$ref": "ThemeUpdateInfo"
+          }
+        ]
+      }
+    ]
+  }
+]

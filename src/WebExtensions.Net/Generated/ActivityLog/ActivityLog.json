@@ -1,0 +1,89 @@
+[
+  {
+    "namespace": "activityLog",
+    "description": "Monitor extension activity",
+    "permissions": [
+      "activityLog"
+    ],
+    "events": [
+      {
+        "name": "onExtensionActivity",
+        "description": "Receives an activityItem for each logging event.",
+        "extraParameters": [
+          {
+            "name": "id",
+            "type": "string"
+          }
+        ],
+        "type": "function",
+        "parameters": [
+          {
+            "name": "details",
+            "type": "object",
+            "properties": {
+              "timeStamp": {
+                "description": "The date string when this call is triggered.",
+                "$ref": "extensionTypes.Date"
+              },
+              "type": {
+                "description": "The type of log entry.  api_call is a function call made by the extension and api_event is an event callback to the extension.  content_script is logged when a content script is injected.",
+                "type": "string",
+                "enum": [
+                  "api_call",
+                  "api_event",
+                  "content_script",
+                  "user_script"
+                ]
+              },
+              "viewType": {
+                "description": "The type of view where the activity occurred.  Content scripts will not have a viewType.",
+                "optional": true,
+                "type": "string",
+                "enum": [
+                  "background",
+                  "popup",
+                  "sidebar",
+                  "tab",
+                  "devtools_page",
+                  "devtools_panel"
+                ]
+              },
+              "name": {
+                "description": "The name of the api call or event, or the script url if this is a content or user script event.",
+                "type": "string"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "description": "A list of arguments passed to the call.",
+                    "optional": true,
+                    "type": "array",
+                    "items": {
+                      "type": "any"
+                    }
+                  },
+                  "result": {
+                    "description": "The result of the call.",
+                    "optional": true,
+                    "type": "object"
+                  },
+                  "tabId": {
+                    "description": "The tab associated with this event if it is a tab or content script.",
+                    "optional": true,
+                    "type": "integer"
+                  },
+                  "url": {
+                    "description": "If the type is content_script, this is the url of the script that was injected.",
+                    "optional": true,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

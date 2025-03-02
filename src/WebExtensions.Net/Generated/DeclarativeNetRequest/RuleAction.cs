@@ -7,7 +7,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
     // Type Class
     /// <summary>The action to take if this rule is matched.</summary>
     [BindAllProperties]
-    public partial class Action : BaseObject
+    public partial class RuleAction : BaseObject
     {
         /// <summary>Describes how the redirect should be performed. Only valid when type is 'redirect'.</summary>
         [JsAccessPath("redirect")]
@@ -30,7 +30,6 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         /// <summary></summary>
         [JsAccessPath("type")]
         [JsonPropertyName("type")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Type { get; set; }
+        public ActionType Type { get; set; }
     }
 }

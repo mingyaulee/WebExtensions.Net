@@ -1,0 +1,65 @@
+[
+  {
+    "namespace": "trial.ml",
+    "description": "Use the trial ML API to run Machine Learning models requests from extensions pages or content scripts.",
+    "permissions": [
+      "trialML"
+    ],
+    "types": [
+      {
+        "id": "CreateEngineRequest",
+        "type": "object"
+      },
+      {
+        "id": "RunEngineRequest",
+        "type": "object"
+      }
+    ],
+    "functions": [
+      {
+        "name": "createEngine",
+        "description": "Prepare the inference engine",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "CreateEngineRequest",
+            "$ref": "CreateEngineRequest"
+          }
+        ]
+      },
+      {
+        "name": "runEngine",
+        "description": "Call the inference engine",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "RunEngineRequest",
+            "$ref": "RunEngineRequest"
+          }
+        ]
+      },
+      {
+        "name": "deleteCachedModels",
+        "description": "Delete the models the extension downloaded.",
+        "async": true,
+        "type": "function"
+      }
+    ],
+    "events": [
+      {
+        "name": "onProgress",
+        "description": "Events from the inference engine.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "progressData",
+            "description": "Object containing the data, see https://firefox-source-docs.mozilla.org/toolkit/components/ml/notifications.html",
+            "type": "object"
+          }
+        ]
+      }
+    ]
+  }
+]

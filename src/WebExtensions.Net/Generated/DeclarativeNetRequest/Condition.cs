@@ -13,7 +13,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [JsAccessPath("domainType")]
         [JsonPropertyName("domainType")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string DomainType { get; set; }
+        public DomainType? DomainType { get; set; }
 
         /// <summary>The rule will not match network requests originating from the list of 'initiatorDomains'. If the list is empty or omitted, no domains are excluded. This takes precedence over 'initiatorDomains'.</summary>
         [JsAccessPath("excludedInitiatorDomains")]

@@ -8,7 +8,7 @@ namespace WebExtensions.Net.Manifest
     public partial class OptionalPermission : BaseMultiTypeObject
     {
         private readonly OptionalPermissionNoPrompt valueOptionalPermissionNoPrompt;
-        private readonly string valueString;
+        private readonly OptionalPermissionType2 valueOptionalPermissionType2;
 
         /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value.</param>
@@ -19,9 +19,9 @@ namespace WebExtensions.Net.Manifest
 
         /// <summary>Creates a new instance of <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value.</param>
-        public OptionalPermission(string value) : base(value, typeof(string))
+        public OptionalPermission(OptionalPermissionType2 value) : base(value, typeof(OptionalPermissionType2))
         {
-            valueString = value;
+            valueOptionalPermissionType2 = value;
         }
 
         /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="OptionalPermissionNoPrompt" />.</summary>
@@ -32,12 +32,12 @@ namespace WebExtensions.Net.Manifest
         /// <param name="value">The value to convert from.</param>
         public static implicit operator OptionalPermission(OptionalPermissionNoPrompt value) => new(value);
 
-        /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="string" />.</summary>
+        /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="OptionalPermissionType2" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator string(OptionalPermission value) => value.valueString;
+        public static implicit operator OptionalPermissionType2(OptionalPermission value) => value.valueOptionalPermissionType2;
 
-        /// <summary>Converts from <see cref="string" /> to <see cref="OptionalPermission" />.</summary>
+        /// <summary>Converts from <see cref="OptionalPermissionType2" /> to <see cref="OptionalPermission" />.</summary>
         /// <param name="value">The value to convert from.</param>
-        public static implicit operator OptionalPermission(string value) => new(value);
+        public static implicit operator OptionalPermission(OptionalPermissionType2 value) => new(value);
     }
 }

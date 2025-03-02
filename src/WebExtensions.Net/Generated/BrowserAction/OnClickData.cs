@@ -19,6 +19,6 @@ namespace WebExtensions.Net.BrowserAction
         [JsAccessPath("modifiers")]
         [JsonPropertyName("modifiers")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<string> Modifiers { get; set; }
+        public IEnumerable<Modifier> Modifiers { get; set; }
     }
 }

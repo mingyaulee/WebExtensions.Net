@@ -12,7 +12,7 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [JsAccessPath("action")]
         [JsonPropertyName("action")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Action Action { get; set; }
+        public RuleAction Action { get; set; }
 
         /// <summary>The condition under which this rule is triggered.</summary>
         [JsAccessPath("condition")]

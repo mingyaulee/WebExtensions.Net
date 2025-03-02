@@ -1,0 +1,391 @@
+[
+  {
+    "namespace": "telemetry",
+    "description": "Use the \u003Ccode\u003Ebrowser.telemetry\u003C/code\u003E API to send telemetry data to the Mozilla Telemetry service. Restricted to Mozilla privileged webextensions.",
+    "permissions": [
+      "telemetry"
+    ],
+    "types": [
+      {
+        "id": "ScalarType",
+        "description": "Type of scalar: \u0027count\u0027 for numeric values, \u0027string\u0027 for string values, \u0027boolean\u0027 for boolean values. Maps to \u003Ccode\u003EnsITelemetry.SCALAR_TYPE_*\u003C/code\u003E.",
+        "type": "string",
+        "enum": [
+          "count",
+          "string",
+          "boolean"
+        ]
+      },
+      {
+        "id": "ScalarData",
+        "description": "Represents registration data for a Telemetry scalar.",
+        "type": "object",
+        "properties": {
+          "kind": {
+            "$ref": "ScalarType"
+          },
+          "keyed": {
+            "description": "True if this is a keyed scalar.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "record_on_release": {
+            "description": "True if this data should be recorded on release.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "expired": {
+            "description": "True if this scalar entry is expired. This allows recording it without error, but it will be discarded.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      },
+      {
+        "id": "EventData",
+        "description": "Represents registration data for a Telemetry event.",
+        "type": "object",
+        "properties": {
+          "methods": {
+            "description": "List of methods for this event entry.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "objects": {
+            "description": "List of objects for this event entry.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "extra_keys": {
+            "description": "List of allowed extra keys for this event entry.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "record_on_release": {
+            "description": "True if this data should be recorded on release.",
+            "optional": true,
+            "type": "boolean"
+          },
+          "expired": {
+            "description": "True if this event entry is expired. This allows recording it without error, but it will be discarded.",
+            "optional": true,
+            "type": "boolean"
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "submitPing",
+        "description": "Submits a custom ping to the Telemetry back-end. See \u003Ccode\u003EsubmitExternalPing\u003C/code\u003E inside TelemetryController.sys.mjs for more details.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "type",
+            "description": "The type of the ping.",
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]\u002B[a-z0-9]$"
+          },
+          {
+            "name": "message",
+            "description": "The data payload for the ping.",
+            "type": "object"
+          },
+          {
+            "name": "options",
+            "description": "Options object.",
+            "type": "object",
+            "properties": {
+              "addClientId": {
+                "description": "True if the ping should contain the client id.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "addEnvironment": {
+                "description": "True if the ping should contain the environment data.",
+                "optional": true,
+                "type": "boolean"
+              },
+              "overrideEnvironment": {
+                "description": "Set to override the environment data.",
+                "optional": true,
+                "type": "object"
+              },
+              "usePingSender": {
+                "description": "If true, send the ping using the PingSender.",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "canUpload",
+        "description": "Checks if Telemetry upload is enabled.",
+        "async": true,
+        "type": "function",
+        "parameters": []
+      },
+      {
+        "name": "scalarAdd",
+        "description": "Adds the value to the given scalar.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060scalarAdd\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The numeric value to add to the scalar. Only unsigned integers supported.",
+            "type": "integer",
+            "minimum": 1
+          }
+        ]
+      },
+      {
+        "name": "scalarSet",
+        "description": "Sets the named scalar to the given value. Throws if the value type doesn\u0027t match the scalar type.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060scalarSet\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The value to set the scalar to",
+            "choices": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "scalarSetMaximum",
+        "description": "Sets the scalar to the maximum of the current and the passed value",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060scalarSetMaximum\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The numeric value to set the scalar to. Only unsigned integers supported.",
+            "type": "integer",
+            "minimum": 0
+          }
+        ]
+      },
+      {
+        "name": "keyedScalarAdd",
+        "description": "Adds the value to the given keyed scalar.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060keyedScalarAdd\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name",
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "description": "The key name",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The numeric value to add to the scalar. Only unsigned integers supported.",
+            "type": "integer",
+            "minimum": 1
+          }
+        ]
+      },
+      {
+        "name": "keyedScalarSet",
+        "description": "Sets the keyed scalar to the given value. Throws if the value type doesn\u0027t match the scalar type.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060keyedScalarSet\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name.",
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "description": "The key name.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The value to set the scalar to.",
+            "choices": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "keyedScalarSetMaximum",
+        "description": "Sets the keyed scalar to the maximum of the current and the passed value",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060keyedScalarSetMaximum\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "The scalar name.",
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "description": "The key name.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "The numeric value to set the scalar to. Only unsigned integers supported.",
+            "type": "integer",
+            "minimum": 0
+          }
+        ]
+      },
+      {
+        "name": "recordEvent",
+        "description": "Record an event in Telemetry. Throws when trying to record an unknown event.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060recordEvent\u0060 is a no-op since Firefox 132 (see bug 1894533)",
+        "parameters": [
+          {
+            "name": "category",
+            "description": "The category name.",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "description": "The method name.",
+            "type": "string"
+          },
+          {
+            "name": "object",
+            "description": "The object name.",
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "description": "An optional string value to record.",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "extra",
+            "description": "An optional object of the form (string -\u003E string). It should only contain registered extra keys.",
+            "optional": true,
+            "type": "object"
+          }
+        ]
+      },
+      {
+        "name": "registerScalars",
+        "description": "Register new scalars to record them from addons. See nsITelemetry.idl for more details.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060registerScalars\u0060 is a no-op since Firefox 134 (see bug 1930196)",
+        "parameters": [
+          {
+            "name": "category",
+            "description": "The unique category the scalars are registered in.",
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "description": "An object that contains registration data for multiple scalars. Each property name is the scalar name, and the corresponding property value is an object of ScalarData type.",
+            "type": "object"
+          }
+        ]
+      },
+      {
+        "name": "registerEvents",
+        "description": "Register new events to record them from addons. See nsITelemetry.idl for more details.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060registerEvents\u0060 is a no-op since Firefox 132 (see bug 1894533)",
+        "parameters": [
+          {
+            "name": "category",
+            "description": "The unique category the events are registered in.",
+            "type": "string"
+          },
+          {
+            "name": "data",
+            "description": "An object that contains registration data for 1\u002B events. Each property name is the category name, and the corresponding property value is an object of EventData type.",
+            "type": "object"
+          }
+        ]
+      },
+      {
+        "name": "setEventRecordingEnabled",
+        "description": "Enable recording of events in a category. Events default to recording enabled. This allows to toggle recording for all events in the specified category.",
+        "async": true,
+        "type": "function",
+        "deprecated": "\u0060setEventRecordingEnabled\u0060 is a no-op since Firefox 133 (see bug 1920562)",
+        "parameters": [
+          {
+            "name": "category",
+            "description": "The category name.",
+            "type": "string"
+          },
+          {
+            "name": "enabled",
+            "description": "Whether recording is enabled for events in that category.",
+            "type": "boolean"
+          }
+        ]
+      }
+    ]
+  }
+]
