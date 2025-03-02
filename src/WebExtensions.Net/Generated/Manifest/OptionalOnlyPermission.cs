@@ -6,5 +6,12 @@ namespace WebExtensions.Net.Manifest
     [JsonConverter(typeof(EnumStringConverter<OptionalOnlyPermission>))]
     public enum OptionalOnlyPermission
     {
+        /// <summary>trialML</summary>
+        [EnumValue("trialML")]
+        TrialML,
+
+        /// <summary>userScripts</summary>
+        [EnumValue("userScripts")]
+        UserScripts,
     }
 }

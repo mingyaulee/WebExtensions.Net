@@ -32,7 +32,7 @@ namespace WebExtensions.Net.Generator.Extensions
 
         public static string ToCSharpName(this string name, bool toCapitalCase = false, bool avoidReservedKeywords = true)
         {
-            var tokenizedNameSegments = name.Split(['-', '_', '<', '>', ' '], System.StringSplitOptions.RemoveEmptyEntries);
+            var tokenizedNameSegments = name.Split(['-', '_', '.', '<', '>', ' '], System.StringSplitOptions.RemoveEmptyEntries);
             name = string.Join("", tokenizedNameSegments.Select((tokenizedNameSegment, index) =>
             {
                 var startsWithAsciiLetter = char.IsAsciiLetter(tokenizedNameSegment[0]);

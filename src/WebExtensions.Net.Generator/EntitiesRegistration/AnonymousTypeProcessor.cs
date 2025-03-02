@@ -121,7 +121,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 var typeEntity = registrarFactory.TypeEntityRegistrar.GetTypeEntity(typeReference.Ref, namespaceEntity);
                 if (typeReferencesProcessed.Add(typeEntity.NamespaceQualifiedId))
                 {
-                    ProcessTypeDefinition(typeEntity.FormattedName, typeEntity.Definition, typeEntity.NamespaceEntity);
+                    ProcessTypeDefinitionWithExtensions(typeEntity.FormattedName, typeEntity.Definition, typeEntity.Extensions, typeEntity.NamespaceEntity);
                 }
                 return;
             }
@@ -189,12 +189,18 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         private static bool ShouldProcessTypeChoices(TypeReference typeReference)
         {
             if (typeReference.TypeChoices is null ||
-                typeReference.TypeChoices.All(typeChoice => typeChoice.Type == ObjectType.String && typeChoice.EnumValues is not null))
+                // When all type choices are enum, it will be handled by EnumClassEntityRegistrar
+                typeReference.TypeChoices.All(IsEnumString))
             {
                 return false;
             }
 
             return true;
+        }
+
+        private static bool IsEnumString(TypeDefinition typeDefinition)
+        {
+            return typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null;
         }
 
         private static void TryHandleSingleTypeChoice(TypeReference typeReference)
@@ -420,6 +426,36 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             {
                 Process(SetNameSuffix(nameHierarchy, registrationOptions.TypeChoicesTypeNameSuffix + typeChoiceIndex++), typeChoice, namespaceEntity);
             }
+        }
+        private void ProcessTypeDefinitionWithExtensions(string className, TypeDefinition typeDefinition, IList<TypeDefinition> extensions, NamespaceEntity namespaceEntity)
+        {
+            if (extensions.Count > 0)
+            {
+                var enumChoice = typeDefinition.TypeChoices?.FirstOrDefault(IsEnumString);
+                foreach(var extension in extensions)
+                {
+                    var enumChoiceExtension = IsEnumString(extension) ? extension : extension.TypeChoices?.FirstOrDefault(IsEnumString);
+                    if (enumChoiceExtension?.EnumValues?.Any() ?? false)
+                    {
+                        if (typeDefinition.EnumValues is not null)
+                        {
+                            typeDefinition.EnumValues = typeDefinition.EnumValues.Concat(enumChoiceExtension.EnumValues).ToList();
+                        }
+                        else if (enumChoice is not null)
+                        {
+                            enumChoice.EnumValues = (enumChoice.EnumValues ?? []).Concat(enumChoiceExtension.EnumValues).ToList();
+                        }
+                        else
+                        {
+                            enumChoice = SerializationHelper.DeserializeTo<TypeDefinition>(enumChoiceExtension);
+                            typeDefinition.TypeChoices = (typeDefinition.TypeChoices ?? [])
+                                .Concat([enumChoice]);
+                        }
+                    }
+                }
+            }
+
+            Process([className], typeDefinition, namespaceEntity);
         }
 
         private static string[] SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)

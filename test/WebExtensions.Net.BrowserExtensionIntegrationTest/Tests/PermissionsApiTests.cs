@@ -32,9 +32,9 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             {
                 Permissions =
                 [
-                    new Permission(new OptionalPermission("alarms")),
-                    new Permission(new OptionalPermission("bookmarks")),
-                    new Permission(new OptionalPermission("cookies"))
+                    new Permission(PermissionNoPromptType3.Alarms),
+                    new Permission(OptionalPermissionType2.Bookmarks),
+                    new Permission((PermissionNoPrompt)OptionalPermissionNoPrompt.Cookies)
                 ]
             });
 

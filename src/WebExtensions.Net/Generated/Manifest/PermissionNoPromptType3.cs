@@ -17,5 +17,41 @@ namespace WebExtensions.Net.Manifest
         /// <summary>unlimitedStorage</summary>
         [EnumValue("unlimitedStorage")]
         UnlimitedStorage,
+
+        /// <summary>contextualIdentities</summary>
+        [EnumValue("contextualIdentities")]
+        ContextualIdentities,
+
+        /// <summary>declarativeNetRequestWithHostAccess</summary>
+        [EnumValue("declarativeNetRequestWithHostAccess")]
+        DeclarativeNetRequestWithHostAccess,
+
+        /// <summary>dns</summary>
+        [EnumValue("dns")]
+        Dns,
+
+        /// <summary>theme</summary>
+        [EnumValue("theme")]
+        Theme,
+
+        /// <summary>captivePortal</summary>
+        [EnumValue("captivePortal")]
+        CaptivePortal,
+
+        /// <summary>identity</summary>
+        [EnumValue("identity")]
+        Identity,
+
+        /// <summary>menus</summary>
+        [EnumValue("menus")]
+        Menus,
+
+        /// <summary>contextMenus</summary>
+        [EnumValue("contextMenus")]
+        ContextMenus,
+
+        /// <summary>geckoProfiler</summary>
+        [EnumValue("geckoProfiler")]
+        GeckoProfiler,
     }
 }

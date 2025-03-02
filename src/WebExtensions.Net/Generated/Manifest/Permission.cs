@@ -9,6 +9,7 @@ namespace WebExtensions.Net.Manifest
     {
         private readonly PermissionNoPrompt valuePermissionNoPrompt;
         private readonly OptionalPermission valueOptionalPermission;
+        private readonly PermissionType3 valuePermissionType3;
 
         /// <summary>Creates a new instance of <see cref="Permission" />.</summary>
         /// <param name="value">The value.</param>
@@ -22,6 +23,13 @@ namespace WebExtensions.Net.Manifest
         public Permission(OptionalPermission value) : base(value, typeof(OptionalPermission))
         {
             valueOptionalPermission = value;
+        }
+
+        /// <summary>Creates a new instance of <see cref="Permission" />.</summary>
+        /// <param name="value">The value.</param>
+        public Permission(PermissionType3 value) : base(value, typeof(PermissionType3))
+        {
+            valuePermissionType3 = value;
         }
 
         /// <summary>Converts from <see cref="Permission" /> to <see cref="PermissionNoPrompt" />.</summary>
@@ -39,5 +47,13 @@ namespace WebExtensions.Net.Manifest
         /// <summary>Converts from <see cref="OptionalPermission" /> to <see cref="Permission" />.</summary>
         /// <param name="value">The value to convert from.</param>
         public static implicit operator Permission(OptionalPermission value) => new(value);
+
+        /// <summary>Converts from <see cref="Permission" /> to <see cref="PermissionType3" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator PermissionType3(Permission value) => value.valuePermissionType3;
+
+        /// <summary>Converts from <see cref="PermissionType3" /> to <see cref="Permission" />.</summary>
+        /// <param name="value">The value to convert from.</param>
+        public static implicit operator Permission(PermissionType3 value) => new(value);
     }
 }
