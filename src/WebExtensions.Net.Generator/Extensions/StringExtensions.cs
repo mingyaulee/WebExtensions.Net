@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace WebExtensions.Net.Generator.Extensions
 {
@@ -20,6 +21,16 @@ namespace WebExtensions.Net.Generator.Extensions
                 return name[0].ToString().ToUpperInvariant() + name[1..];
             }
             return name.ToUpperInvariant();
+        }
+
+        static readonly HashSet<string> cSharpReservedKeywords =
+        [
+            "object"
+        ];
+
+        public static string ToCSharpName(this string name)
+        {
+            return cSharpReservedKeywords.Contains(name) ? '@' + name : name;
         }
 
         public static string ToXmlContent(this string? content)

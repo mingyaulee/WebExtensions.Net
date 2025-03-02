@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using WebExtensions.Net.Generator.Extensions;
 using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
@@ -19,9 +20,9 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             {
                 if (parameter.IsOptional)
                 {
-                    return $"{parameter.ParameterType.CSharpName} {parameter.Name} = null";
+                    return $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()} = null";
                 }
-                return $"{parameter.ParameterType.CSharpName} {parameter.Name}";
+                return $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()}";
             }));
             var methodReturnType = clrMethodInfo.IsAsync ? nameof(ValueTask) : "void";
             if (clrMethodInfo.Return.HasReturnType)
@@ -35,7 +36,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         protected (string MethodArguments, string MethodReturnType, string ClientMethodInvokeArguments, string ClientMethodInvoke) GetMethodMetadata()
         {
             var signature = GetMethodSignature();
-            var clientMethodInvokeArguments = string.Join("", clrMethodInfo.Parameters.Select(parameter => $", {parameter.Name}"));
+            var clientMethodInvokeArguments = string.Join("", clrMethodInfo.Parameters.Select(parameter => $", {parameter.Name.ToCSharpName()}"));
             var clientMethodInvoke = clrMethodInfo.IsAsync ? "InvokeVoidAsync" : "InvokeVoid";
             if (clrMethodInfo.Return.HasReturnType)
             {
