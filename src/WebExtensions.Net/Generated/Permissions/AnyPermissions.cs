@@ -20,6 +20,6 @@ namespace WebExtensions.Net.Permissions
         [JsAccessPath("permissions")]
         [JsonPropertyName("permissions")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<Permission> Permissions { get; set; }
+        public IEnumerable<PermissionOrOptionalOnlyPermission> Permissions { get; set; }
     }
 }

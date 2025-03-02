@@ -21,6 +21,10 @@ namespace WebExtensions.Net.Commands
         [JsAccessPath("getAll")]
         ValueTask<IEnumerable<Command>> GetAll();
 
+        /// <summary>Open extension shortcuts configuration page.</summary>
+        [JsAccessPath("openShortcutSettings")]
+        void OpenShortcutSettings();
+
         /// <summary>Reset a command's details to what is specified in the manifest.</summary>
         /// <param name="name">The name of the command.</param>
         [JsAccessPath("reset")]

@@ -369,60 +369,6 @@
     "namespace": "manifest",
     "types": [
       {
-        "$extend": "WebExtensionManifest",
-        "properties": {
-          "telemetry": {
-            "optional": true,
-            "type": "object",
-            "properties": {
-              "ping_type": {
-                "type": "string"
-              },
-              "schemaNamespace": {
-                "type": "string"
-              },
-              "public_key": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "key": {
-                    "type": "object",
-                    "properties": {
-                      "crv": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "kty": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "x": {
-                        "optional": false,
-                        "type": "string"
-                      },
-                      "y": {
-                        "optional": false,
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              },
-              "study_name": {
-                "optional": true,
-                "type": "string"
-              },
-              "pioneer_id": {
-                "optional": true,
-                "type": "boolean"
-              }
-            }
-          }
-        }
-      },
-      {
         "$extend": "PermissionPrivileged",
         "choices": [
           {
@@ -809,6 +755,33 @@
     "namespace": "manifest",
     "types": [
       {
+        "$extend": "OptionalOnlyPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "trialML"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalOnlyPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "userScripts"
+            ]
+          }
+        ]
+      },
+      {
         "$extend": "WebExtensionManifest",
         "properties": {
           "user_scripts": {
@@ -1108,51 +1081,6 @@
                     "description": "Sets the default engine to a built-in engine only.",
                     "optional": true,
                     "type": "boolean"
-                  },
-                  "params": {
-                    "description": "A list of optional search url parameters. This allows the additon of search url parameters based on how the search is performed in Firefox.",
-                    "optional": true,
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "description": "A url parameter name",
-                          "type": "string"
-                        },
-                        "condition": {
-                          "description": "The type of param can be either \u0022purpose\u0022 or \u0022pref\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "purpose",
-                            "pref"
-                          ]
-                        },
-                        "pref": {
-                          "description": "The preference to retrieve the value from.",
-                          "optional": true,
-                          "type": "string"
-                        },
-                        "purpose": {
-                          "description": "The context that initiates a search, required if condition is \u0022purpose\u0022.",
-                          "optional": true,
-                          "type": "string",
-                          "enum": [
-                            "contextmenu",
-                            "searchbar",
-                            "homepage",
-                            "keyword",
-                            "newtab"
-                          ]
-                        },
-                        "value": {
-                          "description": "A url parameter value.",
-                          "optional": true,
-                          "type": "string"
-                        }
-                      }
-                    }
                   }
                 }
               }
@@ -1572,6 +1500,7 @@
             "$ref": "BrowserSpecificSettings"
           },
           "name": {
+            "description": "Name must be at least 2, and should be at most 75 characters",
             "optional": false,
             "type": "string"
           },
@@ -1655,25 +1584,23 @@
               {
                 "type": "object",
                 "properties": {
-                  "page": {
+                  "service_worker": {
+                    "optional": true,
                     "$ref": "ExtensionURL"
                   },
-                  "persistent": {
+                  "page": {
                     "optional": true,
-                    "type": "boolean"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "properties": {
+                    "$ref": "ExtensionURL"
+                  },
                   "scripts": {
+                    "optional": true,
                     "type": "array",
                     "items": {
                       "$ref": "ExtensionURL"
                     }
                   },
                   "type": {
+                    "description": "Only supported for page/scripts; not for service_worker yet, see bug 1775574",
                     "optional": true,
                     "type": "string",
                     "enum": [
@@ -1684,14 +1611,17 @@
                   "persistent": {
                     "optional": true,
                     "type": "boolean"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "service_worker": {
-                    "$ref": "ExtensionURL"
+                  },
+                  "preferred_environment": {
+                    "optional": true,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "service_worker",
+                        "document"
+                      ]
+                    }
                   }
                 }
               }
@@ -1896,6 +1826,15 @@
         }
       },
       {
+        "id": "OptionalOnlyPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": []
+          }
+        ]
+      },
+      {
         "id": "OptionalPermissionNoPrompt",
         "choices": [
           {
@@ -1928,6 +1867,9 @@
         "choices": [
           {
             "$ref": "OptionalPermission"
+          },
+          {
+            "$ref": "OptionalOnlyPermission"
           },
           {
             "$ref": "MatchPattern"

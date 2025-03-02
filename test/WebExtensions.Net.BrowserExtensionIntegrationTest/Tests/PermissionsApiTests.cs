@@ -30,12 +30,12 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             // Act
             var containsPermission = await webExtensionsApi.Permissions.Contains(new()
             {
-                Permissions = new Permission[]
-                {
-                    new OptionalPermission("alarms"),
-                    new OptionalPermission("bookmarks"),
-                    new OptionalPermission("cookies")
-                }
+                Permissions =
+                [
+                    new Permission(new OptionalPermission("alarms")),
+                    new Permission(new OptionalPermission("bookmarks")),
+                    new Permission(new OptionalPermission("cookies"))
+                ]
             });
 
             // Assert

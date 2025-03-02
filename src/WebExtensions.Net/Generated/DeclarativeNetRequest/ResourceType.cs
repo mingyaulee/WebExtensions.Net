@@ -82,6 +82,10 @@ namespace WebExtensions.Net.DeclarativeNetRequest
         [EnumValue("speculative")]
         Speculative,
 
+        /// <summary>json</summary>
+        [EnumValue("json")]
+        Json,
+
         /// <summary>other</summary>
         [EnumValue("other")]
         Other,

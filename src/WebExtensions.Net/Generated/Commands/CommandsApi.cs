@@ -50,6 +50,10 @@ namespace WebExtensions.Net.Commands
             => InvokeAsync<IEnumerable<Command>>("getAll");
 
         /// <inheritdoc />
+        public virtual void OpenShortcutSettings()
+            => InvokeVoid("openShortcutSettings");
+
+        /// <inheritdoc />
         public virtual void Reset(string name)
             => InvokeVoid("reset", name);
 

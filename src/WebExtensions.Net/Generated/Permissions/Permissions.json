@@ -10,7 +10,14 @@
             "optional": true,
             "type": "array",
             "items": {
-              "$ref": "manifest.OptionalPermission"
+              "choices": [
+                {
+                  "$ref": "manifest.OptionalPermission"
+                },
+                {
+                  "$ref": "manifest.OptionalOnlyPermission"
+                }
+              ]
             }
           },
           "origins": {
@@ -30,7 +37,14 @@
             "optional": true,
             "type": "array",
             "items": {
-              "$ref": "manifest.Permission"
+              "choices": [
+                {
+                  "$ref": "manifest.Permission"
+                },
+                {
+                  "$ref": "manifest.OptionalOnlyPermission"
+                }
+              ]
             }
           },
           "origins": {

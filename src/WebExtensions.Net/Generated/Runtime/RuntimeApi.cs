@@ -19,6 +19,8 @@ namespace WebExtensions.Net.Runtime
         private Event _onSuspend;
         private Event _onSuspendCanceled;
         private OnUpdateAvailableEvent _onUpdateAvailable;
+        private OnUserScriptConnectEvent _onUserScriptConnect;
+        private OnUserScriptMessageEvent _onUserScriptMessage;
 
         /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
         /// <param name="jsRuntime">The JS runtime adapter.</param>
@@ -170,6 +172,34 @@ namespace WebExtensions.Net.Runtime
                     _onUpdateAvailable.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUpdateAvailable"));
                 }
                 return _onUpdateAvailable;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnUserScriptConnectEvent OnUserScriptConnect
+        {
+            get
+            {
+                if (_onUserScriptConnect is null)
+                {
+                    _onUserScriptConnect = new OnUserScriptConnectEvent();
+                    _onUserScriptConnect.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUserScriptConnect"));
+                }
+                return _onUserScriptConnect;
+            }
+        }
+
+        /// <inheritdoc />
+        public OnUserScriptMessageEvent OnUserScriptMessage
+        {
+            get
+            {
+                if (_onUserScriptMessage is null)
+                {
+                    _onUserScriptMessage = new OnUserScriptMessageEvent();
+                    _onUserScriptMessage.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUserScriptMessage"));
+                }
+                return _onUserScriptMessage;
             }
         }
 

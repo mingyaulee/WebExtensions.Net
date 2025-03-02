@@ -32,5 +32,11 @@ namespace WebExtensions.Net.Runtime
         [JsonPropertyName("url")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Url { get; set; }
+
+        /// <summary>The worldId of the USER_SCRIPT world that sent the message. Only present on onUserScriptMessage and onUserScriptConnect (in port.sender) events.</summary>
+        [JsAccessPath("userScriptWorldId")]
+        [JsonPropertyName("userScriptWorldId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string UserScriptWorldId { get; set; }
     }
 }
