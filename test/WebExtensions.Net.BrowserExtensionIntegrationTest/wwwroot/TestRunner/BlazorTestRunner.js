@@ -87,8 +87,8 @@ class TestResultError extends Error {
                 skip: spec.properties?.testMethod?.skip,
                 declaringTypeFullName: spec.properties?.testMethod?.declaringTypeFullName,
                 methodName: spec.properties?.testMethod?.methodName,
-                failMessage: spec.failedExceptations?.[0]?.message,
-                stackTrace: spec.failedExceptations?.[0]?.stack
+                failMessage: spec.failedExpectations?.[0]?.message,
+                stackTrace: spec.failedExpectations?.[0]?.stack
             };
         });
         return {

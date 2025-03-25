@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Playwright;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebExtensions.Net.IntegrationTestsRunner.Helpers;
 using WebExtensions.Net.IntegrationTestsRunner.Models;
 
@@ -19,7 +20,6 @@ namespace WebExtensions.Net.IntegrationTestsRunner
         {
             var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var solutionDirectory = currentDirectory[..currentDirectory.LastIndexOf("\\test")];
-            var driverPath = "C:\\SeleniumWebDrivers\\ChromeDriver";
             var resultsPath = $"{solutionDirectory}\\test\\TestResults";
 #if DEBUG
             var configuration = "debug";
@@ -34,85 +34,87 @@ namespace WebExtensions.Net.IntegrationTestsRunner
                 Directory.CreateDirectory(resultsPath);
             }
 
-            if (!Directory.Exists(driverPath))
-            {
-                throw new NotSupportedException($"Download the chromedriver from and extract the executable file to {driverPath}. Download the latest version from https://googlechromelabs.github.io/chrome-for-testing/");
-            }
-
             try
             {
-                using var webDriver = GetWebDriver(driverPath, extensionPath);
-                await WaitForExtensionPageLoaded(webDriver);
-                LaunchTestPage(webDriver);
-                await WaitForTestToFinish(webDriver);
+                using var playwright = await Playwright.CreateAsync();
+                var browser = await LaunchBrowser(playwright, currentDirectory, extensionPath);
+                var page = await browser.RunAndWaitForPageAsync(static () => Task.CompletedTask);
+                var consoleMessages = new List<string>();
+                page.Console += (_, message) =>
+                {
+                    consoleMessages.Add(message.Text);
+                };
+                await LaunchTestPage(page);
+                await WaitForTestToFinish(page, consoleMessages);
 
                 // Test results
-                var testResults = GetTestResults(webDriver);
+                var testResults = await GetTestResults(page);
                 var resultsXML = TestResultsGenerator.Generate(testResults);
                 var trxFilePath = $"{resultsPath}\\TestResults_{DateTime.UtcNow:yyyy-MM-dd_HH_mm_ss}.trx";
                 await WriteResultsToFile(trxFilePath, resultsXML);
                 Console.WriteLine($"Results file: {trxFilePath}");
 
                 // Test coverage
-                var testCoverage = await GetTestCoverageHits(webDriver);
+                var testCoverage = await GetTestCoverageHits(page);
                 if (testCoverage is not null)
                 {
                     TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
                     Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
+                }
+
+                if (testResults.Status == "failed")
+                {
+                    var errors = new StringBuilder();
+                    errors.AppendLine("One or more test(s) failed.");
+                    var index = 0;
+                    foreach (var testResult in testResults.Tests.Where(test => test.Status == "failed"))
+                    {
+                        index++;
+                        errors.AppendLine(
+                            $"""
+                            // Start Test Result {index} - {testResult.MethodName}
+                            {testResult.FailMessage}
+                            // End Test Result {index} - {testResult.MethodName}
+                            """);
+                    }
+                    throw new TestRunnerException(errors.ToString());
                 }
             }
             catch (TestRunnerException testRunnerException)
             {
                 Assert.Fail(testRunnerException.Message);
             }
-            catch (Exception exception)
-            {
-                Assert.Fail("Failed to create WebDriver. Exception message: " + exception.Message + Environment.NewLine + "Download the latest version from https://googlechromelabs.github.io/chrome-for-testing/");
-            }
         }
 
-        private static ChromeDriver GetWebDriver(string driverPath, string extensionPath)
+        private static Task<IBrowserContext> LaunchBrowser(IPlaywright playwright, string currentDirectory, string extensionPath)
         {
-            var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument($"load-extension={extensionPath}");
-            return new ChromeDriver(driverPath, chromeOptions);
+            var userDataDir = Path.Combine(currentDirectory, "chrome");
+            if (Directory.Exists(userDataDir))
+            {
+                Directory.Delete(userDataDir, true);
+            }
+            Directory.CreateDirectory(userDataDir);
+
+            return playwright.Chromium.LaunchPersistentContextAsync(userDataDir, new()
+            {
+                Headless = false,
+                Channel = "chromium",
+                Args =
+                [
+                    $"--disable-extensions-except={extensionPath}",
+                    $"--load-extension={extensionPath}"
+                ]
+            });
         }
 
-        private static async Task WaitForExtensionPageLoaded(WebDriver webDriver)
+        private static Task LaunchTestPage(IPage page)
         {
-            await Task.Delay(1000);
-            // wait for 10 seconds
-            var waitTime = 10 * 1000;
-            var interval = 500;
-            var count = waitTime / interval;
-            while (count > 0)
-            {
-                count--;
-                if (webDriver.WindowHandles.Count == 2)
-                {
-                    webDriver.SwitchTo().Window(webDriver.WindowHandles[1]);
-                    break;
-                }
-                await Task.Delay(interval);
-            }
-            if (!webDriver.Url.StartsWith("chrome-extension://"))
-            {
-                webDriver.SwitchTo().Window(webDriver.WindowHandles[0]);
-            }
-            if (!webDriver.Url.StartsWith("chrome-extension://"))
-            {
-                throw new TestRunnerException("Failed to wait for extension page to load.");
-            }
-        }
-
-        private static void LaunchTestPage(WebDriver webDriver)
-        {
-            var extensionUri = new Uri(webDriver.Url);
+            var extensionUri = new Uri(page.Url);
             var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false&coverlet";
-            webDriver.Navigate().GoToUrl(testPageUrl);
+            return page.GotoAsync(testPageUrl);
         }
 
-        private static async Task WaitForTestToFinish(WebDriver webDriver)
+        private static async Task WaitForTestToFinish(IPage page, IEnumerable<string> consoleMessages)
         {
             // wait for 30 seconds
             var waitTime = 30 * 1000;
@@ -124,19 +126,18 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             while (count > 0)
             {
                 count--;
-                finished = (bool)webDriver.ExecuteScript("return window.jsApiReporter && window.jsApiReporter.finished;");
+                finished = await page.EvaluateAsync<bool>("window.jsApiReporter && window.jsApiReporter.finished");
                 if (finished)
                 {
                     break;
                 }
                 await Task.Delay(interval);
             }
+
             if (!finished)
             {
-                var logs = webDriver.Manage().Logs
-                    .GetLog(LogType.Browser)
-                    .Where(log => !log.Message.Contains("ThrowExceptionInTest"))
-                    .Select(log => log.Message)
+                var logs = consoleMessages
+                    .Where(message => !message.Contains("ThrowExceptionInTest"))
                     .ToList();
                 if (logs.Count > 0)
                 {
@@ -146,9 +147,9 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             }
         }
 
-        private static TestRunInfo GetTestResults(WebDriver webDriver)
+        private static async Task<TestRunInfo> GetTestResults(IPage page)
         {
-            var resultsObject = (string)webDriver.ExecuteScript("return JSON.stringify(TestRunner.GetTestResults());");
+            var resultsObject = await page.EvaluateAsync<string>("JSON.stringify(TestRunner.GetTestResults())");
             var testRunResult = JsonSerializer.Deserialize<TestRunInfo>(resultsObject, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -170,7 +171,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             return testRunResult;
         }
 
-        private static async Task<TestCoverage> GetTestCoverageHits(WebDriver webDriver)
+        private static async Task<TestCoverage> GetTestCoverageHits(IPage page)
         {
             // wait for 5 seconds
             var waitTime = 5 * 1000;
@@ -182,7 +183,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             while (count > 0)
             {
                 count--;
-                var resultsObject = (string)webDriver.ExecuteScript("return JSON.stringify(TestRunner.GetTestCoverage());");
+                var resultsObject = await page.EvaluateAsync<string>("JSON.stringify(TestRunner.GetTestCoverage())");
                 testCoverage = JsonSerializer.Deserialize<TestCoverage>(resultsObject, new JsonSerializerOptions()
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
