@@ -19,12 +19,11 @@ namespace WebExtensions.Net
         {
             this.value = value;
             ValueType = valueType;
+            InitializeAction = InitializeBaseObject;
         }
 
-        /// <inheritdoc />
-        protected override void Initialize(IJsRuntimeAdapter jsRuntime)
+        private void InitializeBaseObject(IJsRuntimeAdapter jsRuntime)
         {
-            base.Initialize(jsRuntime);
             if (value is BaseObject baseObject)
             {
                 baseObject.Initialize(jsRuntime, AccessPath);
