@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace WebExtensions.Net
 {
@@ -10,5 +13,21 @@ namespace WebExtensions.Net
         {
             Value = value;
         }
+
+        public static Dictionary<string, object> GetEnumValues(Type type)
+        {
+            if (cachedAttributes.TryGetValue(type, out var cached))
+            {
+                return cached;
+            }
+
+            cached = type.GetFields(BindingFlags.Public | BindingFlags.Static)
+                .Select(enumField => KeyValuePair.Create(enumField.GetCustomAttribute<EnumValueAttribute>()?.Value ?? enumField.Name, enumField.GetValue(null)!))
+                .ToDictionary();
+            cachedAttributes[type] = cached;
+            return cached;
+        }
+
+        private static Dictionary<Type, Dictionary<string, object>> cachedAttributes = new();
     }
 }

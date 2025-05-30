@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace WebExtensions.Net
@@ -18,12 +19,12 @@ namespace WebExtensions.Net
         {
             Value = value;
 
-            if (!string.IsNullOrEmpty(pattern) && !Regex.IsMatch(value, pattern, RegexOptions.None, TimeSpan.FromSeconds(30)))
+            if (!string.IsNullOrEmpty(pattern) && !IsValidPattern(value, pattern))
             {
                 throw new ArgumentException($"The value '{value}' does not match the pattern '{pattern}' specified for type {GetType().Name}.");
             }
 
-            if (!string.IsNullOrEmpty(format) && !IsValid(value, format))
+            if (!string.IsNullOrEmpty(format) && !IsValidFormat(value, format))
             {
                 throw new ArgumentException($"The value '{value}' does not match the format '{format}' specified for type {GetType().Name}.");
             }
@@ -40,7 +41,42 @@ namespace WebExtensions.Net
             return Value;
         }
 
-        private static bool IsValid(string value, string format)
+        internal static bool IsValid(string value, Type type)
+        {
+#pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Static);
+#pragma warning restore S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            string pattern = null;
+            string format = null;
+
+            foreach (var field in fields)
+            {
+                if (field.Name == "FORMAT")
+                {
+                    format = (string)field.GetValue(null);
+                }
+                else if (field.Name == "PATTERN")
+                {
+                    pattern = (string)field.GetValue(null);
+                }
+            }
+
+            return
+                (!string.IsNullOrEmpty(pattern) && IsValidPattern(value, pattern)) ||
+                (!string.IsNullOrEmpty(format) && IsValidFormat(value, format));
+        }
+
+        internal static object TryCreate(string value, Type type)
+        {
+            if (IsValid(value, type))
+            {
+                return Activator.CreateInstance(type, value);
+            }
+
+            return null;
+        }
+
+        private static bool IsValidFormat(string value, string format)
         {
             if (format.Contains("url", StringComparison.OrdinalIgnoreCase))
             {
@@ -63,6 +99,11 @@ namespace WebExtensions.Net
             }
 
             return true;
+        }
+
+        private static bool IsValidPattern(string value, string pattern)
+        {
+            return Regex.IsMatch(value, pattern, RegexOptions.None, TimeSpan.FromSeconds(30));
         }
     }
 }
