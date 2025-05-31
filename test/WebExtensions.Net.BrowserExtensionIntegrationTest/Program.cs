@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using WebExtensions.Net.BrowserExtensionIntegrationTest;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest
-{
-    public static class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("#app");
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddWebExtensions();
-            builder.Services.AddScoped<ITestFactory, TestFactory>();
-            builder.Services.AddScoped<ITestRunner, TestRunner>();
+builder.Services.AddWebExtensions();
+builder.Services.AddScoped<ITestFactory, TestFactory>();
+builder.Services.AddScoped<ITestRunner, TestRunner>();
 
-            await builder.Build().RunAsync();
-        }
-    }
-}
+await builder.Build().RunAsync();
