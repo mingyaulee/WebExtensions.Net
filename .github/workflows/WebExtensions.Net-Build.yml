@@ -41,12 +41,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -85,6 +79,7 @@ jobs:
       run: |
         .\.sonar\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.NuGetVersion }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
         dotnet build --no-restore --configuration Release
+        .\test\WebExtensions.Net.IntegrationTestsRunner\BuildOutput\Release\playwright.ps1 install --with-deps
         .\.coverlet\console\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net9.0/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
