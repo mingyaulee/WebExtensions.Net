@@ -14,7 +14,7 @@ namespace WebExtensions.Net
         private readonly Type objectType;
         private readonly ConstructorInfo parentConstructor;
         private readonly TypeConstructor childTypeConstructor;
-        private static readonly Dictionary<Type, TypeConstructor> cachedConstructors = new();
+        private static readonly Dictionary<Type, TypeConstructor> cachedConstructors = [];
 
         private TypeConstructor(Type type)
         {
@@ -29,7 +29,7 @@ namespace WebExtensions.Net
             }
             else if (typeof(BaseMultiTypeObject).IsAssignableFrom(type))
             {
-                multiTypeConstructors = type
+                multiTypeConstructors = [.. type
                     .GetConstructors(BindingFlags.Public | BindingFlags.Instance)
                     .SelectMany(constructor =>
                     {
@@ -47,8 +47,7 @@ namespace WebExtensions.Net
 
                         return [(parameterInfo.ParameterType, new TypeConstructor(constructor, typeContructor))];
                     })
-                    .OrderBy(OrderTypeChoice)
-                    .ToList();
+                    .OrderBy(OrderTypeChoice)];
             }
             else
             {
@@ -77,32 +76,15 @@ namespace WebExtensions.Net
                 }
 
                 var typeToCheck = primitiveTypeNotNullable ?? primitiveType;
-                if (value.ValueKind == JsonValueKind.True || value.ValueKind == JsonValueKind.False)
+                return value.ValueKind switch
                 {
-                    return typeToCheck == typeof(bool);
-                }
-
-                if (value.ValueKind == JsonValueKind.Number)
-                {
-                    return GetNumericValue(value, typeToCheck) is not null;
-                }
-
-                if (value.ValueKind == JsonValueKind.String)
-                {
-                    if (IsStringFormat(typeToCheck))
-                    {
-                        return BaseStringFormat.IsValid(value.GetString(), typeToCheck);
-                    }
-
-                    if (typeToCheck.IsEnum)
-                    {
-                        return EnumValueAttribute.GetEnumValues(typeToCheck).ContainsKey(value.GetString());
-                    }
-
-                    return IsStringJsonType(typeToCheck);
-                }
-
-                return false;
+                    JsonValueKind.True or JsonValueKind.False => typeToCheck == typeof(bool),
+                    JsonValueKind.Number => GetNumericValue(value, typeToCheck) is not null,
+                    JsonValueKind.String when IsStringFormat(typeToCheck) => BaseStringFormat.IsValid(value.GetString(), typeToCheck),
+                    JsonValueKind.String when typeToCheck.IsEnum => EnumValueAttribute.GetEnumValues(typeToCheck).ContainsKey(value.GetString()),
+                    JsonValueKind.String => IsStringJsonType(typeToCheck),
+                    _ => false
+                };
             }
 
             if (multiTypeConstructors is not null)
@@ -159,25 +141,14 @@ namespace WebExtensions.Net
             if (value.ValueKind == JsonValueKind.String)
             {
                 var valueString = value.GetString();
-                if (type is null)
+                return type switch
                 {
-                    return valueString;
-                }
-
-                if (type is { IsEnum: true })
-                {
-                    return EnumValueAttribute.GetEnumValues(type).TryGetValue(valueString, out var enumValue) ? enumValue : null;
-                }
-
-                if (IsStringFormat(type) && IsValidStringFormat(valueString, type, out var stringFormat))
-                {
-                    return stringFormat;
-                }
-
-                if (IsStringJsonType(type))
-                {
-                    return JsonSerializer.Deserialize(value, type, options);
-                }
+                    null => valueString,
+                    { IsEnum: true } => EnumValueAttribute.GetEnumValues(type).TryGetValue(valueString, out var enumValue) ? enumValue : null,
+                    _ when IsStringFormat(type) && IsValidStringFormat(valueString, type, out var stringFormat) => stringFormat,
+                    _ when IsStringJsonType(type) => JsonSerializer.Deserialize(value, type, options),
+                    _ => null
+                };
             }
 
             return null;
@@ -185,32 +156,31 @@ namespace WebExtensions.Net
 
         private static object GetNumericValue(JsonElement value, Type type)
         {
-            if ((type == typeof(short) || type is null) && value.TryGetInt16(out var shortValue))
+            if (TryParseNumeric<short>(type, value.TryGetInt16, out var numericValue) ||
+                TryParseNumeric<int>(type, value.TryGetInt32, out numericValue) ||
+                TryParseNumeric<long>(type, value.TryGetInt64, out numericValue) ||
+                TryParseNumeric<float>(type, value.TryGetSingle, out numericValue) ||
+                TryParseNumeric<decimal>(type, value.TryGetDecimal, out numericValue) ||
+                TryParseNumeric<double>(type, value.TryGetDouble, out numericValue))
             {
-                return shortValue;
-            }
-            else if ((type == typeof(int) || type is null) && value.TryGetInt32(out var intValue))
-            {
-                return intValue;
-            }
-            else if ((type == typeof(long) || type is null) && value.TryGetInt64(out var longValue))
-            {
-                return longValue;
-            }
-            else if ((type == typeof(float) || type is null) && value.TryGetSingle(out var floatValue))
-            {
-                return floatValue;
-            }
-            else if ((type == typeof(decimal) || type is null) && value.TryGetDecimal(out var decimalValue))
-            {
-                return decimalValue;
-            }
-            else if ((type == typeof(double) || type is null) && value.TryGetDouble(out var doubleValue))
-            {
-                return doubleValue;
+                return numericValue;
             }
 
             return null;
+        }
+
+        private delegate bool TryGetNumericValue<T>(out T value);
+
+        private static bool TryParseNumeric<T>(Type type, TryGetNumericValue<T> tryGetNumericValue, out object value)
+        {
+            if ((type == typeof(T) || type is null) && tryGetNumericValue(out var numericValue))
+            {
+                value = numericValue;
+                return true;
+            }
+
+            value = null;
+            return false;
         }
 
         private object CreateMultiType(JsonElement value, JsonSerializerOptions options)
