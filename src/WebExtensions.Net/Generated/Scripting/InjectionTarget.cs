@@ -19,7 +19,7 @@ namespace WebExtensions.Net.Scripting
         [JsAccessPath("frameIds")]
         [JsonPropertyName("frameIds")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public IEnumerable<double> FrameIds { get; set; }
+        public IEnumerable<int> FrameIds { get; set; }
 
         /// <summary>The ID of the tab into which to inject.</summary>
         [JsAccessPath("tabId")]
