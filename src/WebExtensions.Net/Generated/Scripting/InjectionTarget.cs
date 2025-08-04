@@ -24,6 +24,6 @@ namespace WebExtensions.Net.Scripting
         /// <summary>The ID of the tab into which to inject.</summary>
         [JsAccessPath("tabId")]
         [JsonPropertyName("tabId")]
-        public double TabId { get; set; }
+        public int TabId { get; set; }
     }
 }

@@ -38,10 +38,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
             if (classTranslationOptions.ReplacePropertyTypes is not null &&
                 classTranslationOptions.ReplacePropertyTypes.TryGetValue($"{clrTypeInfo.CSharpName}.{propertyName}", out var replacePropertyType))
             {
-                propertyType = clrTypeStore.GetClrType(new TypeReference()
-                {
-                    Ref = replacePropertyType
-                }, new NamespaceEntity(null, string.Empty, string.Empty));
+                propertyType = clrTypeStore.GetClrType(replacePropertyType, new NamespaceEntity(null, string.Empty, string.Empty));
             }
 
             clrTypeInfo.AddRequiredNamespaces(propertyType.ReferenceNamespaces);

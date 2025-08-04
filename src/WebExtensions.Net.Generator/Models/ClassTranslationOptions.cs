@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.Models
 {
@@ -8,7 +9,7 @@ namespace WebExtensions.Net.Generator.Models
         public IDictionary<string, string> NamespaceAliases { get; set; }
         public IDictionary<string, string> Aliases { get; set; }
         public IDictionary<string, string> ReplaceNames { get; set; }
-        public IDictionary<string, string> ReplacePropertyTypes { get; init; }
+        public IDictionary<string, TypeReference> ReplacePropertyTypes { get; init; }
 #pragma warning restore CS8618
     }
 }
