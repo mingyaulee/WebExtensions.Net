@@ -30,10 +30,6 @@ namespace WebExtensions.Net.WebRequest
         [EnumValue("object")]
         Object,
 
-        /// <summary>object_subrequest</summary>
-        [EnumValue("object_subrequest")]
-        ObjectSubrequest,
-
         /// <summary>xmlhttprequest</summary>
         [EnumValue("xmlhttprequest")]
         Xmlhttprequest,

@@ -1,5 +1,6 @@
 using JsBind.Net;
 using System;
+using System.Collections.Generic;
 
 namespace WebExtensions.Net.Test
 {
@@ -46,7 +47,7 @@ namespace WebExtensions.Net.Test
             => InvokeVoid("assertRejects", promise, expectedError, message);
 
         /// <inheritdoc />
-        public virtual void AssertThrows(Action func, ExpectedError expectedError, string message = null)
+        public virtual void AssertThrows(Action func, ExpectedError expectedError = null, string message = null)
             => InvokeVoid("assertThrows", func, expectedError, message);
 
         /// <inheritdoc />
@@ -68,6 +69,10 @@ namespace WebExtensions.Net.Test
         /// <inheritdoc />
         public virtual void NotifyPass(string message = null)
             => InvokeVoid("notifyPass", message);
+
+        /// <inheritdoc />
+        public virtual void RunTests(IEnumerable<Action> tests)
+            => InvokeVoid("runTests", tests);
 
         /// <inheritdoc />
         public virtual void SendMessage(object arg1 = null, object arg2 = null)

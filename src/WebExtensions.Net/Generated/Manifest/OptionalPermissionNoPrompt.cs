@@ -46,6 +46,10 @@ namespace WebExtensions.Net.Manifest
         [EnumValue("search")]
         Search,
 
+        /// <summary>tabGroups</summary>
+        [EnumValue("tabGroups")]
+        TabGroups,
+
         /// <summary>activeTab</summary>
         [EnumValue("activeTab")]
         ActiveTab,

@@ -11,6 +11,12 @@ namespace WebExtensions.Net.Permissions
     public partial class AnyPermissions : BaseObject
     {
         /// <summary></summary>
+        [JsAccessPath("data_collection")]
+        [JsonPropertyName("data_collection")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public IEnumerable<OptionalDataCollectionPermission> Data_collection { get; set; }
+
+        /// <summary></summary>
         [JsAccessPath("origins")]
         [JsonPropertyName("origins")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

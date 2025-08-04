@@ -151,6 +151,12 @@ namespace WebExtensions.Net.Tabs
         [JsAccessPath("goForward")]
         ValueTask GoForward(int? tabId = null);
 
+        /// <summary>Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.</summary>
+        /// <param name="options"></param>
+        /// <returns>The ID of the group that the tabs were added to.</returns>
+        [JsAccessPath("group")]
+        ValueTask<int> Group(GroupOptions options);
+
         /// <summary>Hides one or more tabs. The <c>"tabHide"</c> permission is required to hide tabs.  Not all tabs are hidable.  Returns an array of hidden tabs.</summary>
         /// <param name="tabIds">The TAB ID or list of TAB IDs to hide.</param>
         [JsAccessPath("hide")]
@@ -290,6 +296,16 @@ namespace WebExtensions.Net.Tabs
         /// <param name="tabId">Defaults to the active tab of the $(topic:current-window)[current window].</param>
         [JsAccessPath("toggleReaderMode")]
         void ToggleReaderMode(int? tabId = null);
+
+        /// <summary>Removes one or more tabs from their respective groups. If any groups become empty, they are deleted.</summary>
+        /// <param name="tabIds">The tab ID or list of tab IDs to remove from their respective groups.</param>
+        [JsAccessPath("ungroup")]
+        void Ungroup(int tabIds);
+
+        /// <summary>Removes one or more tabs from their respective groups. If any groups become empty, they are deleted.</summary>
+        /// <param name="tabIds">The tab ID or list of tab IDs to remove from their respective groups.</param>
+        [JsAccessPath("ungroup")]
+        void Ungroup(IEnumerable<int> tabIds);
 
         /// <summary>Modifies the properties of a tab. Properties that are not specified in <c>updateProperties</c> are not modified.</summary>
         /// <param name="updateProperties"></param>

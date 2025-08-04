@@ -61,5 +61,13 @@ namespace WebExtensions.Net.WebRequest
         /// <summary>any_social_tracking</summary>
         [EnumValue("any_social_tracking")]
         AnySocialTracking,
+
+        /// <summary>consentmanager</summary>
+        [EnumValue("consentmanager")]
+        Consentmanager,
+
+        /// <summary>antifraud</summary>
+        [EnumValue("antifraud")]
+        Antifraud,
     }
 }

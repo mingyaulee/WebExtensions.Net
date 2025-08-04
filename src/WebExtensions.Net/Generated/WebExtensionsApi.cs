@@ -40,6 +40,7 @@ using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
 using WebExtensions.Net.SidebarAction;
 using WebExtensions.Net.Storage;
+using WebExtensions.Net.TabGroups;
 using WebExtensions.Net.Tabs;
 using WebExtensions.Net.Telemetry;
 using WebExtensions.Net.Test;
@@ -97,6 +98,7 @@ namespace WebExtensions.Net
         private ISessionsApi _sessions;
         private ISidebarActionApi _sidebarAction;
         private IStorageApi _storage;
+        private ITabGroupsApi _tabGroups;
         private ITabsApi _tabs;
         private ITelemetryApi _telemetry;
         private ITestApi _test;
@@ -236,6 +238,9 @@ namespace WebExtensions.Net
 
         /// <inheritdoc />
         public IStorageApi Storage => _storage ??= new StorageApi(JsRuntime, AccessPath);
+
+        /// <inheritdoc />
+        public ITabGroupsApi TabGroups => _tabGroups ??= new TabGroupsApi(JsRuntime, AccessPath);
 
         /// <inheritdoc />
         public ITabsApi Tabs => _tabs ??= new TabsApi(JsRuntime, AccessPath);

@@ -26,6 +26,11 @@ namespace WebExtensions.Net.I18n
         [JsAccessPath("getMessage")]
         string GetMessage(string messageName, object substitutions = null);
 
+        /// <summary>Gets the preferred locales of the operating system. This is different from the locales set in the browser; to get those, use $(ref:i18n.getAcceptLanguages).</summary>
+        /// <returns>Array of LanguageCode</returns>
+        [JsAccessPath("getPreferredSystemLanguages")]
+        ValueTask<IEnumerable<LanguageCode>> GetPreferredSystemLanguages();
+
         /// <summary>Gets the browser UI language of the browser. This is different from $(ref:i18n.getAcceptLanguages) which returns the preferred user languages.</summary>
         /// <returns>The browser UI language code such as en-US or fr-FR.</returns>
         [JsAccessPath("getUILanguage")]

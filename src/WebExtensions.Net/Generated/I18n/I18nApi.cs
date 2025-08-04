@@ -27,6 +27,10 @@ namespace WebExtensions.Net.I18n
             => Invoke<string>("getMessage", messageName, substitutions);
 
         /// <inheritdoc />
+        public virtual ValueTask<IEnumerable<LanguageCode>> GetPreferredSystemLanguages()
+            => InvokeAsync<IEnumerable<LanguageCode>>("getPreferredSystemLanguages");
+
+        /// <inheritdoc />
         public virtual string GetUILanguage()
             => Invoke<string>("getUILanguage");
     }

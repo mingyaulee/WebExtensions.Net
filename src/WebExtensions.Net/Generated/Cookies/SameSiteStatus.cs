@@ -6,6 +6,10 @@ namespace WebExtensions.Net.Cookies
     [JsonConverter(typeof(EnumStringConverter<SameSiteStatus>))]
     public enum SameSiteStatus
     {
+        /// <summary>unspecified</summary>
+        [EnumValue("unspecified")]
+        Unspecified,
+
         /// <summary>no_restriction</summary>
         [EnumValue("no_restriction")]
         NoRestriction,
@@ -17,9 +21,5 @@ namespace WebExtensions.Net.Cookies
         /// <summary>strict</summary>
         [EnumValue("strict")]
         Strict,
-
-        /// <summary>unspecified</summary>
-        [EnumValue("unspecified")]
-        Unspecified,
     }
 }

@@ -237,6 +237,10 @@ namespace WebExtensions.Net.Tabs
             => InvokeVoidAsync("goForward", tabId);
 
         /// <inheritdoc />
+        public virtual ValueTask<int> Group(GroupOptions options)
+            => InvokeAsync<int>("group", options);
+
+        /// <inheritdoc />
         public virtual void Hide(int tabIds)
             => InvokeVoid("hide", tabIds);
 
@@ -335,6 +339,14 @@ namespace WebExtensions.Net.Tabs
         /// <inheritdoc />
         public virtual void ToggleReaderMode(int? tabId = null)
             => InvokeVoid("toggleReaderMode", tabId);
+
+        /// <inheritdoc />
+        public virtual void Ungroup(int tabIds)
+            => InvokeVoid("ungroup", tabIds);
+
+        /// <inheritdoc />
+        public virtual void Ungroup(IEnumerable<int> tabIds)
+            => InvokeVoid("ungroup", tabIds);
 
         /// <inheritdoc />
         public virtual ValueTask<Tab> Update(UpdateProperties updateProperties)

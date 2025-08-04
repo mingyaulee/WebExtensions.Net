@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.DeclarativeNetRequest
 {
-    /// <summary>How the requested resource will be used. Comparable to the webRequest.ResourceType type.</summary>
+    /// <summary>How the requested resource will be used. Comparable to the webRequest.ResourceType type. object_subrequest is unsupported.</summary>
     [JsonConverter(typeof(EnumStringConverter<ResourceType>))]
     public enum ResourceType
     {

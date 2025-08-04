@@ -26,6 +26,10 @@ namespace WebExtensions.Net.Tabs
         [EnumValue("favIconUrl")]
         FavIconUrl,
 
+        /// <summary>groupId</summary>
+        [EnumValue("groupId")]
+        GroupId,
+
         /// <summary>hidden</summary>
         [EnumValue("hidden")]
         Hidden,

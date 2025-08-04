@@ -60,6 +60,7 @@
               "audio",
               "launcher",
               "bookmark",
+              "page_action",
               "tab",
               "tools_menu"
             ]
@@ -67,8 +68,7 @@
           {
             "type": "string",
             "enum": [
-              "browser_action",
-              "page_action"
+              "browser_action"
             ]
           },
           {

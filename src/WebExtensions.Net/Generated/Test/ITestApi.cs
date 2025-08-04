@@ -1,5 +1,6 @@
 using JsBind.Net;
 using System;
+using System.Collections.Generic;
 
 namespace WebExtensions.Net.Test
 {
@@ -40,10 +41,10 @@ namespace WebExtensions.Net.Test
 
         /// <summary></summary>
         /// <param name="func"></param>
-        /// <param name="expectedError"></param>
+        /// <param name="expectedError">Required, unless running with extensions.wpt.enabled</param>
         /// <param name="message"></param>
         [JsAccessPath("assertThrows")]
-        void AssertThrows(Action func, ExpectedError expectedError, string message = null);
+        void AssertThrows(Action func, ExpectedError expectedError = null, string message = null);
 
         /// <summary></summary>
         /// <param name="test"></param>
@@ -70,6 +71,11 @@ namespace WebExtensions.Net.Test
         /// <param name="message"></param>
         [JsAccessPath("notifyPass")]
         void NotifyPass(string message = null);
+
+        /// <summary></summary>
+        /// <param name="tests"></param>
+        [JsAccessPath("runTests")]
+        void RunTests(IEnumerable<Action> tests);
 
         /// <summary>Sends a string message to the browser process, generating a Notification that C++ test code can wait for.</summary>
         /// <param name="arg1"></param>

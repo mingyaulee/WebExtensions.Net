@@ -229,6 +229,12 @@
             "optional": true,
             "type": "integer",
             "minimum": -1
+          },
+          "groupId": {
+            "description": "The ID of the group that the tab belongs to. $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) if the tab does not belong to a tab group.",
+            "optional": true,
+            "type": "integer",
+            "minimum": -1
           }
         }
       },
@@ -441,6 +447,7 @@
           "autoDiscardable",
           "discarded",
           "favIconUrl",
+          "groupId",
           "hidden",
           "isArticle",
           "mutedInfo",
@@ -481,6 +488,10 @@
           "windowId": {
             "optional": true,
             "type": "integer"
+          },
+          "cookieStoreId": {
+            "optional": true,
+            "type": "string"
           }
         }
       }
@@ -863,6 +874,12 @@
               },
               "openerTabId": {
                 "description": "The ID of the tab that opened this tab. If specified, the opener tab must be in the same window as this tab.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -1
+              },
+              "groupId": {
+                "description": "The ID of the group that the tabs are in, or $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) for ungrouped tabs.",
                 "optional": true,
                 "type": "integer",
                 "minimum": -1
@@ -1682,6 +1699,95 @@
             "optional": true,
             "type": "function",
             "parameters": []
+          }
+        ]
+      },
+      {
+        "name": "group",
+        "description": "Adds one or more tabs to a specified group, or if no group is specified, adds the given tabs to a newly created group.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "properties": {
+              "tabIds": {
+                "description": "The tab ID or list of tab IDs to add to the specified group.",
+                "choices": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                ]
+              },
+              "groupId": {
+                "description": "The ID of the group to add the tabs to. If not specified, a new group will be created.",
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              },
+              "createProperties": {
+                "description": "Configurations for creating a group. Cannot be used if groupId is already specified.",
+                "optional": true,
+                "type": "object",
+                "properties": {
+                  "windowId": {
+                    "description": "The window of the new group. Defaults to the current window.",
+                    "optional": true,
+                    "type": "integer",
+                    "minimum": -2
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "groupId",
+                "description": "The ID of the group that the tabs were added to.",
+                "type": "integer",
+                "minimum": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ungroup",
+        "description": "Removes one or more tabs from their respective groups. If any groups become empty, they are deleted.",
+        "async": true,
+        "type": "function",
+        "parameters": [
+          {
+            "name": "tabIds",
+            "description": "The tab ID or list of tab IDs to remove from their respective groups.",
+            "choices": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            ]
           }
         ]
       }

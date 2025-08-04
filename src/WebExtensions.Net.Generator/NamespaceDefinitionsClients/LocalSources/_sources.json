@@ -52,24 +52,6 @@
     ]
   },
   {
-    "url": "chrome://extensions/content/parent/ext-contextualIdentities.js",
-    "schema": "chrome://extensions/content/schemas/contextual_identities.json",
-    "scopes": [
-      "addon_parent"
-    ],
-    "events": [
-      "startup"
-    ],
-    "permissions": [
-      "contextualIdentities"
-    ],
-    "paths": [
-      [
-        "contextualIdentities"
-      ]
-    ]
-  },
-  {
     "url": "chrome://extensions/content/parent/ext-cookies.js",
     "schema": "chrome://extensions/content/schemas/cookies.json",
     "scopes": [
@@ -480,6 +462,24 @@
     ]
   },
   {
+    "url": "chrome://extensions/content/parent/ext-contextualIdentities.js",
+    "schema": "chrome://extensions/content/schemas/contextual_identities.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "events": [
+      "startup"
+    ],
+    "permissions": [
+      "contextualIdentities"
+    ],
+    "paths": [
+      [
+        "contextualIdentities"
+      ]
+    ]
+  },
+  {
     "url": "chrome://browser/content/parent/ext-devtools.js",
     "schema": "chrome://browser/content/schemas/devtools.json",
     "scopes": [
@@ -718,6 +718,18 @@
     ],
     "manifest": [
       "sidebar_action"
+    ]
+  },
+  {
+    "url": "chrome://browser/content/parent/ext-tabGroups.js",
+    "schema": "chrome://browser/content/schemas/tabGroups.json",
+    "scopes": [
+      "addon_parent"
+    ],
+    "paths": [
+      [
+        "tabGroups"
+      ]
     ]
   },
   {

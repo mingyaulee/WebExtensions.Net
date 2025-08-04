@@ -44,7 +44,8 @@
         "name": "deleteCachedModels",
         "description": "Delete the models the extension downloaded.",
         "async": true,
-        "type": "function"
+        "type": "function",
+        "parameters": []
       }
     ],
     "events": [

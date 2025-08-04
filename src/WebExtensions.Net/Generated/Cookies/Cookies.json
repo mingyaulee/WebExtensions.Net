@@ -11,6 +11,7 @@
         "description": "A cookie\u0027s \u0027SameSite\u0027 state (https://tools.ietf.org/html/draft-west-first-party-cookies). \u0027no_restriction\u0027 corresponds to a cookie set without a \u0027SameSite\u0027 attribute, \u0027lax\u0027 to \u0027SameSite=Lax\u0027, and \u0027strict\u0027 to \u0027SameSite=Strict\u0027.",
         "type": "string",
         "enum": [
+          "unspecified",
           "no_restriction",
           "lax",
           "strict"

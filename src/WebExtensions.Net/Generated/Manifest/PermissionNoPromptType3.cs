@@ -18,10 +18,6 @@ namespace WebExtensions.Net.Manifest
         [EnumValue("unlimitedStorage")]
         UnlimitedStorage,
 
-        /// <summary>contextualIdentities</summary>
-        [EnumValue("contextualIdentities")]
-        ContextualIdentities,
-
         /// <summary>declarativeNetRequestWithHostAccess</summary>
         [EnumValue("declarativeNetRequestWithHostAccess")]
         DeclarativeNetRequestWithHostAccess,
@@ -37,6 +33,10 @@ namespace WebExtensions.Net.Manifest
         /// <summary>captivePortal</summary>
         [EnumValue("captivePortal")]
         CaptivePortal,
+
+        /// <summary>contextualIdentities</summary>
+        [EnumValue("contextualIdentities")]
+        ContextualIdentities,
 
         /// <summary>identity</summary>
         [EnumValue("identity")]

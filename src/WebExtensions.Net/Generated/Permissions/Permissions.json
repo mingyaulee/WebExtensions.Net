@@ -26,6 +26,13 @@
             "items": {
               "$ref": "manifest.MatchPattern"
             }
+          },
+          "data_collection": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "manifest.OptionalDataCollectionPermission"
+            }
           }
         }
       },
@@ -52,6 +59,13 @@
             "type": "array",
             "items": {
               "$ref": "manifest.MatchPattern"
+            }
+          },
+          "data_collection": {
+            "optional": true,
+            "type": "array",
+            "items": {
+              "$ref": "manifest.OptionalDataCollectionPermission"
             }
           }
         }

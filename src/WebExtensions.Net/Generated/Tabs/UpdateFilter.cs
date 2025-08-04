@@ -9,6 +9,12 @@ namespace WebExtensions.Net.Tabs
     [BindAllProperties]
     public partial class UpdateFilter : BaseObject
     {
+        /// <summary></summary>
+        [JsAccessPath("cookieStoreId")]
+        [JsonPropertyName("cookieStoreId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string CookieStoreId { get; set; }
+
         /// <summary>A list of property names. Events that do not match any of the names will be filtered out.</summary>
         [JsAccessPath("properties")]
         [JsonPropertyName("properties")]

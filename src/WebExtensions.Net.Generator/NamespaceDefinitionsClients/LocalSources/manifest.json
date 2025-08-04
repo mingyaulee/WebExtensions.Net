@@ -411,6 +411,55 @@
         ]
       },
       {
+        "id": "CommonDataCollectionPermission",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "authenticationInfo",
+              "bookmarksInfo",
+              "browsingActivity",
+              "financialAndPaymentInfo",
+              "healthInfo",
+              "locationInfo",
+              "personalCommunications",
+              "personallyIdentifyingInfo",
+              "searchTerms",
+              "websiteActivity",
+              "websiteContent"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "DataCollectionPermission",
+        "choices": [
+          {
+            "$ref": "CommonDataCollectionPermission"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "none"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "OptionalDataCollectionPermission",
+        "choices": [
+          {
+            "$ref": "CommonDataCollectionPermission"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "technicalAndInteraction"
+            ]
+          }
+        ]
+      },
+      {
         "id": "PermissionNoPrompt",
         "choices": [
           {
@@ -510,6 +559,26 @@
           "admin_install_only": {
             "optional": true,
             "type": "boolean"
+          },
+          "data_collection_permissions": {
+            "optional": true,
+            "type": "object",
+            "properties": {
+              "required": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "$ref": "DataCollectionPermission"
+                }
+              },
+              "optional": {
+                "optional": true,
+                "type": "array",
+                "items": {
+                  "$ref": "OptionalDataCollectionPermission"
+                }
+              }
+            }
           }
         }
       },

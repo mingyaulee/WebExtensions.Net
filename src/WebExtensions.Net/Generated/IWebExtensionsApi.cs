@@ -41,6 +41,7 @@ using WebExtensions.Net.Search;
 using WebExtensions.Net.Sessions;
 using WebExtensions.Net.SidebarAction;
 using WebExtensions.Net.Storage;
+using WebExtensions.Net.TabGroups;
 using WebExtensions.Net.Tabs;
 using WebExtensions.Net.Telemetry;
 using WebExtensions.Net.Test;
@@ -222,6 +223,10 @@ namespace WebExtensions.Net
         /// <summary>Use the <c>browser.storage</c> API to store, retrieve, and track changes to user data.<br />Requires manifest permission storage.</summary>
         [JsAccessPath("storage")]
         IStorageApi Storage { get; }
+
+        /// <summary>Use the browser.tabGroups API to interact with the browser's tab grouping system. You can use this API to modify, and rearrange tab groups.<br />Requires manifest permission tabGroups.</summary>
+        [JsAccessPath("tabGroups")]
+        ITabGroupsApi TabGroups { get; }
 
         /// <summary>Use the <c>browser.tabs</c> API to interact with the browser's tab system. You can use this API to create, modify, and rearrange tabs in the browser.</summary>
         [JsAccessPath("tabs")]

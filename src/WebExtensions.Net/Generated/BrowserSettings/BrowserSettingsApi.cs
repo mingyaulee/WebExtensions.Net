@@ -67,6 +67,9 @@ namespace WebExtensions.Net.BrowserSettings
         public Setting UseDocumentFonts => GetProperty<Setting>("useDocumentFonts");
 
         /// <inheritdoc />
+        public Setting VerticalTabs => GetProperty<Setting>("verticalTabs");
+
+        /// <inheritdoc />
         public Setting WebNotificationsDisabled => GetProperty<Setting>("webNotificationsDisabled");
 
         /// <inheritdoc />

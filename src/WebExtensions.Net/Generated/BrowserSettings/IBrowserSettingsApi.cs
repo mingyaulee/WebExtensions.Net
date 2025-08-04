@@ -74,6 +74,10 @@ namespace WebExtensions.Net.BrowserSettings
         [JsAccessPath("useDocumentFonts")]
         Setting UseDocumentFonts { get; }
 
+        /// <summary>This boolean setting controls whether vertical tabs are enabled.</summary>
+        [JsAccessPath("verticalTabs")]
+        Setting VerticalTabs { get; }
+
         /// <summary>Disables webAPI notifications.</summary>
         [JsAccessPath("webNotificationsDisabled")]
         Setting WebNotificationsDisabled { get; }

@@ -25,7 +25,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
         public IEnumerable<ClrTypeInfo> ShallowTranslate(ClassEntity classEntity)
         {
             var classCSharpName = classEntity.FormattedName.ToCSharpName(toCapitalCase: true);
-            if (classTranslationOptions.Aliases.TryGetValue(classEntity.FormattedName, out var classAlias))
+            if (classTranslationOptions.Aliases.TryGetValue($"{classEntity.NamespaceEntity.FullFormattedName}.{classEntity.FormattedName}", out var classAlias))
             {
                 classCSharpName = classAlias;
             }

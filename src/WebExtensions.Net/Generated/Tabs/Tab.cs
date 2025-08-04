@@ -49,6 +49,12 @@ namespace WebExtensions.Net.Tabs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string FavIconUrl { get; set; }
 
+        /// <summary>The ID of the group that the tab belongs to. $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) if the tab does not belong to a tab group.</summary>
+        [JsAccessPath("groupId")]
+        [JsonPropertyName("groupId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? GroupId { get; set; }
+
         /// <summary>The height of the tab in pixels.</summary>
         [JsAccessPath("height")]
         [JsonPropertyName("height")]

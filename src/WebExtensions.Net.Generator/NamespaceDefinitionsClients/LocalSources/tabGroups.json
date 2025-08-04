@@ -1,0 +1,281 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "OptionalPermissionNoPrompt",
+        "choices": [
+          {
+            "type": "string",
+            "enum": [
+              "tabGroups"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "namespace": "tabGroups",
+    "description": "Use the browser.tabGroups API to interact with the browser\u0027s tab grouping system. You can use this API to modify, and rearrange tab groups.",
+    "permissions": [
+      "tabGroups"
+    ],
+    "types": [
+      {
+        "id": "Color",
+        "description": "The group\u0027s color, using \u0027grey\u0027 spelling for compatibility with Chromium.",
+        "type": "string",
+        "enum": [
+          "blue",
+          "cyan",
+          "grey",
+          "green",
+          "orange",
+          "pink",
+          "purple",
+          "red",
+          "yellow"
+        ]
+      },
+      {
+        "id": "TabGroup",
+        "description": "State of a tab group inside of an open window.",
+        "type": "object",
+        "properties": {
+          "collapsed": {
+            "description": "Whether the tab group is collapsed or expanded in the tab strip.",
+            "type": "boolean"
+          },
+          "color": {
+            "description": "User-selected color name for the tab group\u0027s label/icons.",
+            "$ref": "Color"
+          },
+          "id": {
+            "description": "Unique ID of the tab group.",
+            "type": "integer"
+          },
+          "title": {
+            "description": "User-defined name of the tab group.",
+            "optional": true,
+            "type": "string"
+          },
+          "windowId": {
+            "description": "Window that the tab group is in.",
+            "type": "integer"
+          }
+        }
+      }
+    ],
+    "properties": {
+      "TAB_GROUP_ID_NONE": {
+        "description": "An ID that represents the absence of a group.",
+        "value": -1
+      }
+    },
+    "functions": [
+      {
+        "name": "get",
+        "description": "Retrieves details about the specified group.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "groupId",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "group",
+                "$ref": "TabGroup"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "move",
+        "description": "Move a group within, or to another window.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "groupId",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "moveProperties",
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "integer",
+                "minimum": -1
+              },
+              "windowId": {
+                "optional": true,
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "group",
+                "$ref": "TabGroup"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "query",
+        "description": "Return all grups, or find groups with specified properties.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "queryInfo",
+            "type": "object",
+            "properties": {
+              "collapsed": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "color": {
+                "optional": true,
+                "$ref": "Color"
+              },
+              "title": {
+                "optional": true,
+                "type": "string"
+              },
+              "windowId": {
+                "optional": true,
+                "type": "integer",
+                "minimum": -2
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "groups",
+                "type": "array",
+                "items": {
+                  "$ref": "TabGroup"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "update",
+        "description": "Modifies state of a specified group.",
+        "async": "callback",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "groupId",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "updateProperties",
+            "type": "object",
+            "properties": {
+              "collapsed": {
+                "optional": true,
+                "type": "boolean"
+              },
+              "color": {
+                "optional": true,
+                "$ref": "Color"
+              },
+              "title": {
+                "optional": true,
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "callback",
+            "type": "function",
+            "parameters": [
+              {
+                "name": "group",
+                "$ref": "TabGroup"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onCreated",
+        "description": "Fired when a tab group is created.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "group",
+            "$ref": "TabGroup"
+          }
+        ]
+      },
+      {
+        "name": "onMoved",
+        "description": "Fired when a tab group is moved, within a window or to another window.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "group",
+            "$ref": "TabGroup"
+          }
+        ]
+      },
+      {
+        "name": "onRemoved",
+        "description": "Fired when a tab group is removed.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "group",
+            "$ref": "TabGroup"
+          },
+          {
+            "name": "removeInfo",
+            "type": "object",
+            "properties": {
+              "isWindowClosing": {
+                "description": "True when the tab group is being closed because its window is being closed.",
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "onUpdated",
+        "description": "Fired when a tab group is updated.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "group",
+            "$ref": "TabGroup"
+          }
+        ]
+      }
+    ]
+  }
+]

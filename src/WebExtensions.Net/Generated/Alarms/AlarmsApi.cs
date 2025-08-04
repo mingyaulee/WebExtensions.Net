@@ -39,12 +39,12 @@ namespace WebExtensions.Net.Alarms
             => InvokeAsync<bool>("clearAll");
 
         /// <inheritdoc />
-        public virtual void Create(AlarmInfo alarmInfo)
-            => InvokeVoid("create", alarmInfo);
+        public virtual ValueTask Create(AlarmInfo alarmInfo)
+            => InvokeVoidAsync("create", alarmInfo);
 
         /// <inheritdoc />
-        public virtual void Create(string name, AlarmInfo alarmInfo)
-            => InvokeVoid("create", name, alarmInfo);
+        public virtual ValueTask Create(string name, AlarmInfo alarmInfo)
+            => InvokeVoidAsync("create", name, alarmInfo);
 
         /// <inheritdoc />
         public virtual ValueTask<Alarm> Get(string name = null)

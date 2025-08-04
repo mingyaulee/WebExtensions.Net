@@ -56,6 +56,12 @@ namespace WebExtensions.Net.Tabs
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Discarded { get; set; }
 
+        /// <summary>The ID of the group that the tabs are in, or $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) for ungrouped tabs.</summary>
+        [JsAccessPath("groupId")]
+        [JsonPropertyName("groupId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? GroupId { get; set; }
+
         /// <summary>True while the tabs are hidden.</summary>
         [JsAccessPath("hidden")]
         [JsonPropertyName("hidden")]
