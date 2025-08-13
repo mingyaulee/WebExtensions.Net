@@ -1,4 +1,5 @@
 ﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+using WebExtensions.Net.Tabs;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
@@ -98,7 +99,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             // Act
             var tab = await webExtensionsApi.Tabs.Get(testTabId.Value);
             var attemptCount = 0;
-            while (tab.Status != "complete" && attemptCount < 10)
+            while (tab.Status != TabStatus.Complete && attemptCount < 10)
             {
                 attemptCount++;
                 await Task.Delay(500);
@@ -109,7 +110,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             tab.ShouldNotBeNull();
             tab.Id.ShouldBe(testTabId.Value);
             tab.Url.ShouldBe(testTabUrl);
-            tab.Status.ShouldBe("complete");
+            tab.Status.ShouldBe(TabStatus.Complete);
         }
 
         [Fact(Order = 2)]
@@ -141,7 +142,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 
             // Assert
             tab.ShouldNotBeNull();
-            tab.Status.ShouldBe("loading");
+            tab.Status.ShouldBe(TabStatus.Loading);
         }
 
         [Fact(Order = 4)]

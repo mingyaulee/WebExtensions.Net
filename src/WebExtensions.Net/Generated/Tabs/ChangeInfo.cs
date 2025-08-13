@@ -71,8 +71,7 @@ namespace WebExtensions.Net.Tabs
         /// <summary>The status of the tab. Can be either <em>loading</em> or <em>complete</em>.</summary>
         [JsAccessPath("status")]
         [JsonPropertyName("status")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Status { get; set; }
+        public TabStatus Status { get; set; }
 
         /// <summary>The title of the tab if it has changed. This property is only present if the extension's manifest includes the <c>"tabs"</c> permission.</summary>
         [JsAccessPath("title")]

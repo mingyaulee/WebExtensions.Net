@@ -138,8 +138,7 @@ namespace WebExtensions.Net.Tabs
         /// <summary>Either <em>loading</em> or <em>complete</em>.</summary>
         [JsAccessPath("status")]
         [JsonPropertyName("status")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Status { get; set; }
+        public TabStatus Status { get; set; }
 
         /// <summary>The ID of this tab's successor, if any; $(ref:tabs.TAB_ID_NONE) otherwise.</summary>
         [JsAccessPath("successorTabId")]
