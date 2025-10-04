@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="GitVersion.yml" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/WebExtensions.Net.Extensions.DependencyInjection/WebExtensions.Net.Extensions.DependencyInjection.csproj" />
+    <Project Path="src/WebExtensions.Net.Generator/WebExtensions.Net.Generator.csproj" />
+    <Project Path="src/WebExtensions.Net/WebExtensions.Net.csproj" />
+  </Folder>
+  <Folder Name="/src/Icon/">
+    <File Path="src/Icon/Icon.png" />
+    <File Path="src/Icon/Icon.svg" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/WebExtensions.Net.BrowserExtensionIntegrationTest/WebExtensions.Net.BrowserExtensionIntegrationTest.csproj" />
+    <Project Path="test/WebExtensions.Net.IntegrationTestsRunner/WebExtensions.Net.IntegrationTestsRunner.csproj" />
+    <Project Path="test/WebExtensions.Net.Test/WebExtensions.Net.Test.csproj" />
+  </Folder>
+  <Folder Name="/tool/">
+    <File Path="tool/DependenciesUpdater.ps1" />
+    <File Path="tool/LanguageCodeUpdater.ps1" />
+  </Folder>
+</Solution>
