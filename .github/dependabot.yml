@@ -1,20 +1,21 @@
 version: 2
 updates:
-  # Check for updates to GitHub Actions every week
+  # Check for updates to GitHub Actions every month
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 5
-  # Check for updates to NuGet packages every week
+  # Check for updates to NuGet packages every month
   - package-ecosystem: "nuget"
     directories:
     - "/test/WebExtensions.Net.BrowserExtensionIntegrationTest/"
     - "/test/WebExtensions.Net.IntegrationTestsRunner/"
+    - "/tool/WebExtensions.Net.Generator/"
     allow:
     - dependency-type: "direct"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     groups:
       aspnetcore:
