@@ -25,7 +25,7 @@ namespace WebExtensions.Net.Generator
             this.entitiesContext = entitiesContext;
         }
 
-        public void CleanDirectory()
+        public bool CleanDirectory()
         {
             if (File.Exists(Path.Combine(options.RootDirectory, GENERATED_FILE_NAME)))
             {
@@ -46,9 +46,11 @@ namespace WebExtensions.Net.Generator
                 catch (Exception ex)
                 {
                     logger.LogError(ex, "Failed to clean directory.");
-                    throw;
+                    return false;
                 }
             }
+
+            return true;
         }
 
         public void WriteCodeFiles(IEnumerable<CodeFileConverter> codeFileConverters)
