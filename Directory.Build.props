@@ -1,0 +1,47 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ProjectIsInSrc Condition="$(MSBuildProjectDirectory.Contains('$(MSBuildThisFileDirectory)src'))">true</ProjectIsInSrc>
+    <ProjectIsInTool Condition="$(MSBuildProjectDirectory.Contains('$(MSBuildThisFileDirectory)tool'))">true</ProjectIsInTool>
+    <ProjectIsInTest Condition="$(MSBuildProjectDirectory.Contains('$(MSBuildThisFileDirectory)test'))">true</ProjectIsInTest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProjectIsInSrc)' == 'true'">
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <IsShippingPackage>true</IsShippingPackage>
+    <HasReferenceAssembly>false</HasReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProjectIsInTool)' == 'true'">
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(ProjectIsInTest)' == 'true'">
+    <TargetFramework>net9.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <IsPackable>true</IsPackable>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)PackageOutput</PackageOutputPath>
+    <Authors>mingyaulee</Authors>
+    <RepositoryUrl>https://github.com/mingyaulee/WebExtensions.Net</RepositoryUrl>
+    <PackageTags>Browser Chrome Firefox Edge Extension Addons .Net</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <Content Include="..\Icon\Icon.png">
+      <Pack>true</Pack>
+      <PackagePath></PackagePath>
+    </Content>
+  </ItemGroup>
+
+</Project>
