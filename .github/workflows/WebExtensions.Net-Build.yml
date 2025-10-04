@@ -53,33 +53,36 @@ jobs:
       id: cache-sonar-scanner
       uses: actions/cache@v4
       with:
-        path: .\.sonar\scanner
+        path: ${{ runner.temp }}\scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       shell: powershell
       run: |
-        New-Item -Path .\.sonar\scanner -ItemType Directory
-        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+        New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
     - name: Install Coverlet Console
       shell: powershell
       run: |
-        New-Item -Path .\.coverlet\console -ItemType Directory
-        dotnet tool install coverlet.console --tool-path .\.coverlet\console
+        New-Item -Path ${{ runner.temp }}\coverlet -ItemType Directory
+        dotnet tool install coverlet.console --tool-path ${{ runner.temp }}\coverlet
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build and analyze
+    - name: Begin analyze
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      shell: powershell
-      run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /v:"v${{ needs.version.outputs.MajorMinorPatch }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
-        dotnet build --no-restore --configuration Release
-        .\test\WebExtensions.Net.IntegrationTestsRunner\bin\Release\net9.0\playwright.ps1 install --with-deps
-        .\.coverlet\console\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net9.0/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      run: ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"WebExtensions.Net" /o:"mingyaulee" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /v:"v${{ needs.version.outputs.MajorMinorPatch }}" /d:sonar.cs.vstest.reportsPaths="test/TestResults/*.trx" /d:sonar.cs.opencover.reportsPaths="test/TestResults/**/*.opencover.xml"
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+    - name: Install Playwright
+      run: .\test\WebExtensions.Net.IntegrationTestsRunner\bin\Release\net9.0\playwright.ps1 install --with-deps
+    - name: Test
+      run: ${{ runner.temp }}\coverlet\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net9.0/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
+    - name: End analyze
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
   tag:
     needs: [version, buildAndTest]
