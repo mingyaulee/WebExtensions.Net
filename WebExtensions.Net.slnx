@@ -3,13 +3,23 @@
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
     <File Path="CONTRIBUTING.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
     <File Path="GitVersion.yml" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/FUNDING.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github/workflows/WebExtensions.Net-Build.yml" />
+    <File Path=".github/workflows/WebExtensions.Net-PR-Build.yml" />
+    <File Path=".github/workflows/WebExtensions.Net-Release.yml" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/WebExtensions.Net.Extensions.DependencyInjection/WebExtensions.Net.Extensions.DependencyInjection.csproj" />
-    <Project Path="src/WebExtensions.Net.Generator/WebExtensions.Net.Generator.csproj" />
     <Project Path="src/WebExtensions.Net/WebExtensions.Net.csproj" />
   </Folder>
   <Folder Name="/src/Icon/">
@@ -22,6 +32,7 @@
     <Project Path="test/WebExtensions.Net.Test/WebExtensions.Net.Test.csproj" />
   </Folder>
   <Folder Name="/tool/">
+    <Project Path="tool/WebExtensions.Net.Generator/WebExtensions.Net.Generator.csproj" />
     <File Path="tool/DependenciesUpdater.ps1" />
     <File Path="tool/LanguageCodeUpdater.ps1" />
   </Folder>

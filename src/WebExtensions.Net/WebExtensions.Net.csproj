@@ -1,36 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <!-- Build properties. -->
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
-    <GenerateDependencyFile>false</GenerateDependencyFile>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <IsShippingPackage>true</IsShippingPackage>
-    <HasReferenceAssembly>false</HasReferenceAssembly>
-  </PropertyGroup>
-
-  <!-- Package properties. -->
-  <PropertyGroup>
-    <IsPackable>true</IsPackable>
-    <PackageOutputPath>..\PackageOutput</PackageOutputPath>
-    <Authors>mingyaulee</Authors>
     <Description>A package for consuming WebExtensions API in a browser extension.</Description>
-    <RepositoryUrl>https://github.com/mingyaulee/WebExtensions.Net</RepositoryUrl>
-    <PackageTags>Browser Chrome Firefox Edge Extension Addons .Net</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>Icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\Icon\Icon.png">
-      <Pack>true</Pack>
-      <PackagePath></PackagePath>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="JsBind.Net" Version="2.1.1" PrivateAssets="contentfiles" />
+    <PackageReference Include="JsBind.Net" PrivateAssets="contentfiles" />
   </ItemGroup>
 
 </Project>
