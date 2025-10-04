@@ -56,9 +56,11 @@ namespace WebExtensions.Net.Generator
             var codeConverters = codeGenerator.GetCodeFileConverters(clrTypes);
 
             var filesManager = scope.ServiceProvider.GetRequiredService<FilesManager>();
-            filesManager.CleanDirectory();
-            filesManager.WriteCodeFiles(codeConverters);
-            filesManager.WriteJsonFiles();
+            if (filesManager.CleanDirectory())
+            {
+                filesManager.WriteCodeFiles(codeConverters);
+                filesManager.WriteJsonFiles();
+            }
         }
 
         private static IConfigurationRoot GetConfiguration()
