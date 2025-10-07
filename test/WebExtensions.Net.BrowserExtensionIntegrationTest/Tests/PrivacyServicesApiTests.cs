@@ -3,14 +3,9 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.privacy.services API")]
-    public class PrivacyServicesApiTests
+    public class PrivacyServicesApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-
-        public PrivacyServicesApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
 
         [Fact]
         public void GetPasswordSavingEnabled()

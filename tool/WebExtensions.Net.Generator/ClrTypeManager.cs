@@ -5,16 +5,10 @@ using WebExtensions.Net.Generator.ClrTypeTranslators;
 
 namespace WebExtensions.Net.Generator
 {
-    public class ClrTypeManager
+    public class ClrTypeManager(ClrTypeStore clrTypeStore, ClassEntityTranslator classEntityTranslator)
     {
-        private readonly ClrTypeStore clrTypeStore;
-        private readonly ClassEntityTranslator classEntityTranslator;
-
-        public ClrTypeManager(ClrTypeStore clrTypeStore, ClassEntityTranslator classEntityTranslator)
-        {
-            this.clrTypeStore = clrTypeStore;
-            this.classEntityTranslator = classEntityTranslator;
-        }
+        private readonly ClrTypeStore clrTypeStore = clrTypeStore;
+        private readonly ClassEntityTranslator classEntityTranslator = classEntityTranslator;
 
         public IEnumerable<ClrTypeInfo> TranslateToClrType(IEnumerable<ClassEntity> classEntities)
         {

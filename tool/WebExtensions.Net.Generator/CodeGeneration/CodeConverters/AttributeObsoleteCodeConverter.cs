@@ -1,18 +1,11 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class AttributeObsoleteCodeConverter : ICodeConverter, ICodeSectionConverter
+    public class AttributeObsoleteCodeConverter(string? obsoleteMessage) : ICodeConverter, ICodeSectionConverter
     {
-        private readonly string? obsoleteMessage;
-
-        public AttributeObsoleteCodeConverter(string? obsoleteMessage)
-        {
-            this.obsoleteMessage = obsoleteMessage;
-        }
+        private readonly string? obsoleteMessage = obsoleteMessage;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-        {
-            WriteTo(codeWriter.Declaration, options);
-        }
+            => WriteTo(codeWriter.Declaration, options);
 
         public void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options)
         {

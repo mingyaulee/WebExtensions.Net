@@ -3,14 +3,9 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.privacy.services API")]
-    public class PrivacyWebsitesApiTests
+    public class PrivacyWebsitesApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-
-        public PrivacyWebsitesApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
 
         [Fact]
         public void GetHyperlinkAuditingEnabled()

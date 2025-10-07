@@ -7,14 +7,11 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
     public static partial class EnumPropertyDefinitionTranslator
     {
-        public static ClrEnumValueInfo TranslatePropertyDefinition(KeyValuePair<string, PropertyDefinition> propertyDefinitionPair)
+        public static ClrEnumValueInfo TranslatePropertyDefinition(KeyValuePair<string, PropertyDefinition> propertyDefinitionPair) => new()
         {
-            return new ClrEnumValueInfo()
-            {
-                Name = propertyDefinitionPair.Key,
-                CSharpName = propertyDefinitionPair.Key.ToCSharpName(toCapitalCase: true, avoidReservedKeywords: false),
-                Description = propertyDefinitionPair.Value.Description
-            };
-        }
+            Name = propertyDefinitionPair.Key,
+            CSharpName = propertyDefinitionPair.Key.ToCSharpName(toCapitalCase: true, avoidReservedKeywords: false),
+            Description = propertyDefinitionPair.Value.Description
+        };
     }
 }

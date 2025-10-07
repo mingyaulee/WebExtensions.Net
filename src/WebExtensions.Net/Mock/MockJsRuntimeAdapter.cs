@@ -13,25 +13,19 @@ namespace WebExtensions.Net.Mock
     /// </summary>
     public class MockJsRuntimeAdapter : IJsRuntimeAdapter
     {
-        private static readonly Dictionary<string, object> objectReferences = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> objectReferences = [];
 
         /// <inheritdoc />
         public TValue Invoke<TValue>(string identifier, InvokeOptionWithReturnValue invokeOption)
-        {
-            return MockInvoke<TValue>(invokeOption);
-        }
+            => MockInvoke<TValue>(invokeOption);
 
         /// <inheritdoc />
         public ValueTask<TValue> InvokeAsync<TValue>(string identifier, InvokeOptionWithReturnValue invokeOption)
-        {
-            return ValueTask.FromResult(MockInvoke<TValue>(invokeOption));
-        }
+            => ValueTask.FromResult(MockInvoke<TValue>(invokeOption));
 
         /// <inheritdoc />
         public void InvokeVoid(string identifier, InvokeOption invokeOption)
-        {
-            MockInvoke<object>(invokeOption);
-        }
+            => MockInvoke<object>(invokeOption);
 
         /// <inheritdoc />
         public ValueTask InvokeVoidAsync(string identifier, InvokeOption invokeOption)
@@ -41,10 +35,7 @@ namespace WebExtensions.Net.Mock
         }
 
         /// <inheritdoc />
-        public bool IsJsRuntimeEqual(IJsRuntimeAdapter other)
-        {
-            return Equals(other);
-        }
+        public bool IsJsRuntimeEqual(IJsRuntimeAdapter other) => Equals(other);
 
         private TValue MockInvoke<TValue>(InvokeOption invokeOption)
         {
@@ -106,19 +97,16 @@ namespace WebExtensions.Net.Mock
             }
 
             var accessPathIdentifier = accessPaths[0];
-            var targetPath = AccessPaths.Combine(accessPaths.Skip(1).Concat(new[] { getPropertyOption.PropertyName }).ToArray());
+            var targetPath = AccessPaths.Combine([.. accessPaths.Skip(1), .. new[] { getPropertyOption.PropertyName }]);
             
             if (accessPathIdentifier == "browser")
             {
-                return MockInvokeApi(targetPath, Array.Empty<object>());
+                return MockInvokeApi(targetPath, []);
             }
 
-            if (!AccessPaths.IsReferenceId(accessPathIdentifier))
-            {
-                return null;
-            }
-
-            return MockInvokeObjectReference(AccessPaths.GetReferenceId(accessPathIdentifier)?.ToString(), targetPath, Array.Empty<object>());
+            return !AccessPaths.IsReferenceId(accessPathIdentifier)
+                ? null
+                : MockInvokeObjectReference(AccessPaths.GetReferenceId(accessPathIdentifier)?.ToString(), targetPath, []);
         }
 
         private static object MockInvokeFunction(IInvokeFunctionOption invokeFunctionOption)
@@ -130,20 +118,17 @@ namespace WebExtensions.Net.Mock
             }
 
             var accessPathIdentifier = accessPaths[0];
-            var targetPath = AccessPaths.Combine(accessPaths.Skip(1).Concat(new[] { invokeFunctionOption.FunctionName }).ToArray());
-            var functionArguments = invokeFunctionOption.FunctionArguments?.ToArray() ?? Array.Empty<object>();
+            var targetPath = AccessPaths.Combine([.. accessPaths.Skip(1), .. new[] { invokeFunctionOption.FunctionName }]);
+            var functionArguments = invokeFunctionOption.FunctionArguments?.ToArray() ?? [];
 
             if (accessPathIdentifier == "browser")
             {
                 return MockInvokeApi(targetPath, functionArguments);
             }
 
-            if (!AccessPaths.IsReferenceId(accessPathIdentifier))
-            {
-                return null;
-            }
-
-            return MockInvokeObjectReference(AccessPaths.GetReferenceId(accessPathIdentifier)?.ToString(), targetPath, functionArguments);
+            return !AccessPaths.IsReferenceId(accessPathIdentifier)
+                ? null
+                : MockInvokeObjectReference(AccessPaths.GetReferenceId(accessPathIdentifier)?.ToString(), targetPath, functionArguments);
         }
 
         private static object MockInvokeApi(string targetPath, object[] arguments)

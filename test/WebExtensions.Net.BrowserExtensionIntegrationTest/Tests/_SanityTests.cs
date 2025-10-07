@@ -4,15 +4,10 @@ using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "Sanity Tests")]
-    public class _SanityTests
+    public class _SanityTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
         private string testStorageArea;
-
-        public _SanityTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
 
         [Fact(Description = "Execute API with primitive return type", Order = 1)]
         public void ExecuteAPIWithPrimitiveReturnType()
@@ -156,8 +151,6 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
         }
 
         private void HandleOnStorageChange(object storageItem, string storageArea)
-        {
-            testStorageArea = storageArea;
-        }
+            => testStorageArea = storageArea;
     }
 }

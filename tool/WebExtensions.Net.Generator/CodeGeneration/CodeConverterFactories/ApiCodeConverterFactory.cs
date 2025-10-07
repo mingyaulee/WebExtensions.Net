@@ -40,8 +40,6 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
         }
 
         private static IEnumerable<ClrPropertyInfo> GetProperties(ClrTypeInfo clrTypeInfo)
-        {
-            return clrTypeInfo.Properties.OrderBy(property => property.Metadata.TryGetValue(Constants.PropertyMetadata.NestedApiProperty, out var isNestedApiProperty) && (bool)isNestedApiProperty ? 0 : 1);
-        }
+            => clrTypeInfo.Properties.OrderBy(property => property.Metadata.TryGetValue(Constants.PropertyMetadata.NestedApiProperty, out var isNestedApiProperty) && (bool)isNestedApiProperty ? 0 : 1);
     }
 }

@@ -3,23 +3,14 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.i18n API")]
-    public class I18nApiTests
+    public class I18nApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testMessageName;
-        private readonly string testMessageText;
-        private readonly string testWithPlaceholdersMessageName;
-        private readonly string testWithPlaceholdersMessageText;
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testMessageName = "message_key_1";
+        private readonly string testMessageText = "Message";
+        private readonly string testWithPlaceholdersMessageName = "message_key_2";
+        private readonly string testWithPlaceholdersMessageText = "Message with placeholders {0} and {1}.";
         private bool shouldTestLocalization;
-
-        public I18nApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testMessageName = "message_key_1";
-            testMessageText = "Message";
-            testWithPlaceholdersMessageName = "message_key_2";
-            testWithPlaceholdersMessageText = "Message with placeholders {0} and {1}.";
-        }
 
         [Fact]
         public async Task DetectLanguage()

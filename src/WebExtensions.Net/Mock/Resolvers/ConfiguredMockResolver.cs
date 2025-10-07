@@ -12,8 +12,8 @@ namespace WebExtensions.Net.Mock.Resolvers
     internal class ConfiguredMockResolver : IMockResolver
     {
         private static readonly Queue<Action<IMockConfigurator>> configureActions = new();
-        private static readonly List<MockApiHandler> mockApiHandlers = new();
-        private static readonly List<MockObjectReferenceHandler> mockObjectReferenceHandlers = new();
+        private static readonly List<MockApiHandler> mockApiHandlers = [];
+        private static readonly List<MockObjectReferenceHandler> mockObjectReferenceHandlers = [];
 
         public bool TryInvokeApiHandler(string targetPath, object[] arguments, out object result)
         {
@@ -42,9 +42,7 @@ namespace WebExtensions.Net.Mock.Resolvers
         }
 
         internal static void AddConfigureAction(Action<IMockConfigurator> configureAction)
-        {
-            configureActions.Enqueue(configureAction);
-        }
+            => configureActions.Enqueue(configureAction);
 
         internal static void Configure(MockConfigurator configurator)
         {

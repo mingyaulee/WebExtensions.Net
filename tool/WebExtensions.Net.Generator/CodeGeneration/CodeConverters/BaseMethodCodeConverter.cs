@@ -5,25 +5,16 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public abstract class BaseMethodCodeConverter
+    public abstract class BaseMethodCodeConverter(ClrMethodInfo clrMethodInfo)
     {
-        protected readonly ClrMethodInfo clrMethodInfo;
-
-        protected BaseMethodCodeConverter(ClrMethodInfo clrMethodInfo)
-        {
-            this.clrMethodInfo = clrMethodInfo;
-        }
+        protected readonly ClrMethodInfo clrMethodInfo = clrMethodInfo;
 
         protected (string MethodArguments, string MethodReturnType) GetMethodSignature()
         {
             var methodArguments = string.Join(", ", clrMethodInfo.Parameters.Select(parameter =>
-            {
-                if (parameter.IsOptional)
-                {
-                    return $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()} = null";
-                }
-                return $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()}";
-            }));
+                parameter.IsOptional
+                    ? $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()} = null"
+                    : $"{parameter.ParameterType.CSharpName} {parameter.Name.ToCSharpName()}"));
             var methodReturnType = clrMethodInfo.IsAsync ? nameof(ValueTask) : "void";
             if (clrMethodInfo.Return.HasReturnType)
             {
@@ -35,14 +26,14 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
         protected (string MethodArguments, string MethodReturnType, string ClientMethodInvokeArguments, string ClientMethodInvoke) GetMethodMetadata()
         {
-            var signature = GetMethodSignature();
+            var (MethodArguments, MethodReturnType) = GetMethodSignature();
             var clientMethodInvokeArguments = string.Join("", clrMethodInfo.Parameters.Select(parameter => $", {parameter.Name.ToCSharpName()}"));
             var clientMethodInvoke = clrMethodInfo.IsAsync ? "InvokeVoidAsync" : "InvokeVoid";
             if (clrMethodInfo.Return.HasReturnType)
             {
-                clientMethodInvoke = clrMethodInfo.IsAsync ? signature.MethodReturnType.Replace(nameof(ValueTask), "InvokeAsync") : $"Invoke<{signature.MethodReturnType}>";
+                clientMethodInvoke = clrMethodInfo.IsAsync ? MethodReturnType.Replace(nameof(ValueTask), "InvokeAsync") : $"Invoke<{MethodReturnType}>";
             }
-            return (signature.MethodArguments, signature.MethodReturnType, clientMethodInvokeArguments, clientMethodInvoke);
+            return (MethodArguments, MethodReturnType, clientMethodInvokeArguments, clientMethodInvoke);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
     {
         public CodeSection()
         {
-            Lines = new List<string>();
+            Lines = [];
         }
 
         public IList<string> Lines { get; }

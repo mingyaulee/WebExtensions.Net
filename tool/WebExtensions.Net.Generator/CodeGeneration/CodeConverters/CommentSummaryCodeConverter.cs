@@ -2,23 +2,14 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class CommentSummaryCodeConverter : ICodeConverter, ICodeSectionConverter
+    public class CommentSummaryCodeConverter(string? content) : ICodeConverter, ICodeSectionConverter
     {
-        private readonly string? content;
-
-        public CommentSummaryCodeConverter(string? content)
-        {
-            this.content = content;
-        }
+        private readonly string? content = content;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-        {
-            WriteTo(codeWriter.Declaration, options);
-        }
+            => WriteTo(codeWriter.Declaration, options);
 
         public void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options)
-        {
-            codeWriter.WriteLine($"/// <summary>{content.ToXmlContent()}</summary>");
-        }
+            => codeWriter.WriteLine($"/// <summary>{content.ToXmlContent()}</summary>");
     }
 }

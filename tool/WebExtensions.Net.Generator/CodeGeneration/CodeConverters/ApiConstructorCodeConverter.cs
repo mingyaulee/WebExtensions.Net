@@ -1,15 +1,9 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiConstructorCodeConverter : ICodeConverter
+    public class ApiConstructorCodeConverter(string className, string apiName) : ICodeConverter
     {
-        private readonly string className;
-        private readonly string apiName;
-
-        public ApiConstructorCodeConverter(string className, string apiName)
-        {
-            this.className = className;
-            this.apiName = apiName;
-        }
+        private readonly string className = className;
+        private readonly string apiName = apiName;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

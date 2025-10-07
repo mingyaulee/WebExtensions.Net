@@ -2,14 +2,9 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class TypePropertyCodeConverter : ICodeConverter
+    public class TypePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
     {
-        private readonly ClrPropertyInfo clrPropertyInfo;
-
-        public TypePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
-        {
-            this.clrPropertyInfo = clrPropertyInfo;
-        }
+        private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

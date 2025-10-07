@@ -7,21 +7,12 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class TypeEntityRegistrar
+    public class TypeEntityRegistrar(EntitiesContext entitiesContext, ILogger logger)
     {
-        private readonly EntitiesContext entitiesContext;
-        private readonly ILogger logger;
+        private readonly EntitiesContext entitiesContext = entitiesContext;
+        private readonly ILogger logger = logger;
 
-        public TypeEntityRegistrar(EntitiesContext entitiesContext, ILogger logger)
-        {
-            this.entitiesContext = entitiesContext;
-            this.logger = logger;
-        }
-
-        public void Reset()
-        {
-            entitiesContext.Types.Clear();
-        }
+        public void Reset() => entitiesContext.Types.Clear();
 
         public void RegisterNamespaceType(TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
         {
@@ -52,19 +43,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             }
         }
 
-        public bool HasTypeEntity(string typeId, NamespaceEntity namespaceEntity)
-        {
-            return entitiesContext.Types.HasTypeEntity(typeId, namespaceEntity);
-        }
+        public bool HasTypeEntity(string typeId, NamespaceEntity namespaceEntity) => entitiesContext.Types.HasTypeEntity(typeId, namespaceEntity);
 
-        public TypeEntity GetTypeEntity(string typeId, NamespaceEntity namespaceEntity)
-        {
-            return entitiesContext.Types.GetTypeEntity(typeId, namespaceEntity);
-        }
+        public TypeEntity GetTypeEntity(string typeId, NamespaceEntity namespaceEntity) => entitiesContext.Types.GetTypeEntity(typeId, namespaceEntity);
 
-        public IEnumerable<TypeEntity> GetAllEntities()
-        {
-            return entitiesContext.Types.GetAllTypes();
-        }
+        public IEnumerable<TypeEntity> GetAllEntities() => entitiesContext.Types.GetAllTypes();
     }
 }

@@ -46,7 +46,7 @@ namespace WebExtensions.Net.Generator.Repositories
                 }
                 else
                 {
-                    typeExtensions.Add(namespaceQualifiedId, new List<TypeDefinition>() { typeDefinition });
+                    typeExtensions.Add(namespaceQualifiedId, [typeDefinition]);
                 }
             }
             else
@@ -66,16 +66,11 @@ namespace WebExtensions.Net.Generator.Repositories
         {
             var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);
             var entity = Entities.Find(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId));
-            if (entity is null)
-            {
-                throw new InvalidOperationException($"Type entity with id '{namespaceQualifiedId}' does not exists.");
-            }
-            return entity;
+            return entity is null
+                ? throw new InvalidOperationException($"Type entity with id '{namespaceQualifiedId}' does not exists.")
+                : entity;
         }
 
-        public IEnumerable<TypeEntity> GetAllTypes()
-        {
-            return Entities;
-        }
+        public IEnumerable<TypeEntity> GetAllTypes() => Entities;
     }
 }

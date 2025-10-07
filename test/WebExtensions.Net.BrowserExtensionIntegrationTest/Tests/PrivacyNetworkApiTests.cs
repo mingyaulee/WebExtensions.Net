@@ -3,14 +3,9 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.privacy.network API")]
-    public class PrivacyNetworkApiTests
+    public class PrivacyNetworkApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-
-        public PrivacyNetworkApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
 
         [Fact]
         public void GetNetworkPredictionEnabled()

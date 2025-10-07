@@ -6,13 +6,9 @@ using System.Reflection;
 namespace WebExtensions.Net
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple =false, Inherited = false)]
-    internal class EnumValueAttribute : Attribute
+    internal class EnumValueAttribute(string value) : Attribute
     {
-        public string Value { get; }
-        public EnumValueAttribute(string value)
-        {
-            Value = value;
-        }
+        public string Value { get; } = value;
 
         public static Dictionary<string, object> GetEnumValues(Type type)
         {
@@ -28,6 +24,6 @@ namespace WebExtensions.Net
             return cached;
         }
 
-        private static Dictionary<Type, Dictionary<string, object>> cachedAttributes = new();
+        private static Dictionary<Type, Dictionary<string, object>> cachedAttributes = [];
     }
 }

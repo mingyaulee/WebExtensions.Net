@@ -8,26 +8,14 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class NamespaceEntityRegistrar
+    public class NamespaceEntityRegistrar(EntitiesContext entitiesContext, ILogger logger)
     {
-        private readonly EntitiesContext entitiesContext;
-        private readonly ILogger logger;
+        private readonly EntitiesContext entitiesContext = entitiesContext;
+        private readonly ILogger logger = logger;
 
-        public NamespaceEntityRegistrar(EntitiesContext entitiesContext, ILogger logger)
-        {
-            this.entitiesContext = entitiesContext;
-            this.logger = logger;
-        }
+        public void Reset() => entitiesContext.Namespaces.Clear();
 
-        public void Reset()
-        {
-            entitiesContext.Namespaces.Clear();
-        }
-
-        public IEnumerable<NamespaceEntity> GetAllNamespaceEntities()
-        {
-            return entitiesContext.Namespaces.GetAllNamespaceEntities();
-        }
+        public IEnumerable<NamespaceEntity> GetAllNamespaceEntities() => entitiesContext.Namespaces.GetAllNamespaceEntities();
 
         public NamespaceEntity? RegisterNamespace(NamespaceDefinition namespaceDefinition)
         {
@@ -42,7 +30,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             if (@namespace.Contains('.'))
             {
                 var parentNamespaces = @namespace.Split('.');
-                @namespace = parentNamespaces[parentNamespaces.Length - 1];
+                @namespace = parentNamespaces[^1];
                 foreach (var parentNamespace in parentNamespaces.SkipLast(1))
                 {
                     parentEntity = entitiesContext.Namespaces.RegisterNamespace(parentEntity, parentNamespace);

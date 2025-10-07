@@ -4,16 +4,10 @@ using WebExtensions.Net.Notifications;
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.notifications API")]
-    public class NotificationsApiTests
+    public class NotificationsApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testNotificationId;
-
-        public NotificationsApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testNotificationId = Guid.NewGuid().ToString();
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testNotificationId = Guid.NewGuid().ToString();
 
         [Fact(Order = 1)]
         public async Task Create()

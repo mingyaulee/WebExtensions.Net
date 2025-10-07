@@ -7,9 +7,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
     public class CombinedCallbackParameterCodeConverterFactory : ICodeConverterFactory
     {
         public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {

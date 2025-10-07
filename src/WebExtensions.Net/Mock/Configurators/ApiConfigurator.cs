@@ -22,15 +22,12 @@ namespace WebExtensions.Net.Mock.Configurators
         {
             MockConfigurationContext.ResetContext();
             InvokeExpression(expression);
-            if (MockConfigurationContext.TryGetApiInvoked(out var targetPath))
-            {
-                return new MockApiHandler()
+            return MockConfigurationContext.TryGetApiInvoked(out var targetPath)
+                ? (IMockHandler)new MockApiHandler()
                 {
                     ApiTargetPath = targetPath
-                };
-            }
-
-            throw new InvalidOperationException("There was no invocation on the API.");
+                }
+                : throw new InvalidOperationException("There was no invocation on the API.");
         }
     }
 }

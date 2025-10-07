@@ -20,8 +20,8 @@ namespace WebExtensions.Net.Mock.Configurators
         /// </summary>
         public MockConfigurator(IWebExtensionsApi webExtensionsApi)
         {
-            apiHandlers = new List<IMockHandler>();
-            objectReferenceHandlers = new List<IMockHandler>();
+            apiHandlers = [];
+            objectReferenceHandlers = [];
             apiConfigurator = new ApiConfigurator(webExtensionsApi, apiHandlers);
             this.webExtensionsApi = webExtensionsApi;
         }
@@ -36,15 +36,11 @@ namespace WebExtensions.Net.Mock.Configurators
 
         /// <inheritdoc />
         public void ApiHandler(ApiHandler apiHandler)
-        {
-            MockResolvers.Resolvers.Insert(1, new CustomMockResolver(apiHandler, null));
-        }
+            => MockResolvers.Resolvers.Insert(1, new CustomMockResolver(apiHandler, null));
 
         /// <inheritdoc />
         public void ObjectReferenceHandler(ObjectReferenceHandler objectReferenceHandler)
-        {
-            MockResolvers.Resolvers.Insert(1, new CustomMockResolver(null, objectReferenceHandler));
-        }
+            => MockResolvers.Resolvers.Insert(1, new CustomMockResolver(null, objectReferenceHandler));
 
         internal void MergeTo(IList<MockApiHandler> mockApiHandlers, IList<MockObjectReferenceHandler> mockObjectReferenceHandlers)
         {

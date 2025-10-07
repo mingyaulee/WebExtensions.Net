@@ -20,19 +20,14 @@ namespace WebExtensions.Net
                 return null;
             }
 
-            var constructor = typeToConvert.GetConstructor(new[] { typeof(string) });
-            if (constructor is null)
-            {
-                throw new InvalidOperationException($"Unable to get constructor which accepts string for String Format class type '{typeToConvert.FullName}'.");
-            }
-
-            return (T)constructor.Invoke(new[] { stringValue });
+            var constructor = typeToConvert.GetConstructor([typeof(string)]);
+            return constructor is null
+                ? throw new InvalidOperationException($"Unable to get constructor which accepts string for String Format class type '{typeToConvert.FullName}'.")
+                : (T)constructor.Invoke([stringValue]);
         }
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value?.Value, options);
-        }
+            => JsonSerializer.Serialize(writer, value?.Value, options);
     }
 }

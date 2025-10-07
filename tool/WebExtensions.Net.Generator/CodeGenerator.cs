@@ -10,35 +10,20 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator
 {
-    public class CodeGenerator
+    public class CodeGenerator(IServiceProvider serviceProvider)
     {
-        private readonly ApiRootCodeConverterFactory apiRootCodeConverterFactory;
-        private readonly ApiCodeConverterFactory apiCodeConverterFactory;
-        private readonly TypeCodeConverterFactory typeCodeConverterFactory;
-        private readonly EnumCodeConverterFactory enumCodeConverterFactory;
-        private readonly StringFormatCodeConverterFactory stringFormatCodeConverterFactory;
-        private readonly ArrayCodeConverterFactory arrayCodeConverterFactory;
-        private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory;
-        private readonly EmptyCodeConverterFactory emptyCodeConverterFactory;
-        private readonly CombinedCallbackParameterCodeConverterFactory combinedCallbackParameterCodeConverterFactory;
-
-        public CodeGenerator(IServiceProvider serviceProvider)
-        {
-            apiRootCodeConverterFactory = serviceProvider.GetRequiredService<ApiRootCodeConverterFactory>();
-            apiCodeConverterFactory = serviceProvider.GetRequiredService<ApiCodeConverterFactory>();
-            typeCodeConverterFactory = serviceProvider.GetRequiredService<TypeCodeConverterFactory>();
-            enumCodeConverterFactory = serviceProvider.GetRequiredService<EnumCodeConverterFactory>();
-            stringFormatCodeConverterFactory = serviceProvider.GetRequiredService<StringFormatCodeConverterFactory>();
-            arrayCodeConverterFactory = serviceProvider.GetRequiredService<ArrayCodeConverterFactory>();
-            multitypeCodeConverterFactory = serviceProvider.GetRequiredService<MultitypeCodeConverterFactory>();
-            emptyCodeConverterFactory = serviceProvider.GetRequiredService<EmptyCodeConverterFactory>();
-            combinedCallbackParameterCodeConverterFactory = serviceProvider.GetRequiredService<CombinedCallbackParameterCodeConverterFactory>();
-        }
+        private readonly ApiRootCodeConverterFactory apiRootCodeConverterFactory = serviceProvider.GetRequiredService<ApiRootCodeConverterFactory>();
+        private readonly ApiCodeConverterFactory apiCodeConverterFactory = serviceProvider.GetRequiredService<ApiCodeConverterFactory>();
+        private readonly TypeCodeConverterFactory typeCodeConverterFactory = serviceProvider.GetRequiredService<TypeCodeConverterFactory>();
+        private readonly EnumCodeConverterFactory enumCodeConverterFactory = serviceProvider.GetRequiredService<EnumCodeConverterFactory>();
+        private readonly StringFormatCodeConverterFactory stringFormatCodeConverterFactory = serviceProvider.GetRequiredService<StringFormatCodeConverterFactory>();
+        private readonly ArrayCodeConverterFactory arrayCodeConverterFactory = serviceProvider.GetRequiredService<ArrayCodeConverterFactory>();
+        private readonly MultitypeCodeConverterFactory multitypeCodeConverterFactory = serviceProvider.GetRequiredService<MultitypeCodeConverterFactory>();
+        private readonly EmptyCodeConverterFactory emptyCodeConverterFactory = serviceProvider.GetRequiredService<EmptyCodeConverterFactory>();
+        private readonly CombinedCallbackParameterCodeConverterFactory combinedCallbackParameterCodeConverterFactory = serviceProvider.GetRequiredService<CombinedCallbackParameterCodeConverterFactory>();
 
         public IEnumerable<CodeFileConverter> GetCodeFileConverters(IEnumerable<ClrTypeInfo> clrTypes)
-        {
-            return clrTypes.Select(GetClrTypeCodeConverter).ToArray();
-        }
+            => [.. clrTypes.Select(GetClrTypeCodeConverter)];
 
         private CodeFileConverter GetClrTypeCodeConverter(ClrTypeInfo clrTypeInfo)
         {
@@ -79,11 +64,7 @@ namespace WebExtensions.Net.Generator
             {
                 return "interface";
             }
-            if (clrTypeInfo.IsEnum)
-            {
-                return "enum";
-            }
-            return "class";
+            return clrTypeInfo.IsEnum ? "enum" : "class";
         }
 
         private void TranslateClrTypeToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
@@ -100,21 +81,18 @@ namespace WebExtensions.Net.Generator
             }
         }
 
-        private ICodeConverterFactory GetFactory(ClassType classType)
+        private ICodeConverterFactory GetFactory(ClassType classType) => classType switch
         {
-            return classType switch
-            {
-                ClassType.ApiRootClass => apiRootCodeConverterFactory,
-                ClassType.ApiClass => apiCodeConverterFactory,
-                ClassType.TypeClass => typeCodeConverterFactory,
-                ClassType.EnumClass => enumCodeConverterFactory,
-                ClassType.StringFormatClass => stringFormatCodeConverterFactory,
-                ClassType.ArrayClass => arrayCodeConverterFactory,
-                ClassType.MultitypeClass => multitypeCodeConverterFactory,
-                ClassType.EmptyClass => emptyCodeConverterFactory,
-                ClassType.CombinedCallbackParameterClass => combinedCallbackParameterCodeConverterFactory,
-                _ => throw new NotImplementedException()
-            };
-        }
+            ClassType.ApiRootClass => apiRootCodeConverterFactory,
+            ClassType.ApiClass => apiCodeConverterFactory,
+            ClassType.TypeClass => typeCodeConverterFactory,
+            ClassType.EnumClass => enumCodeConverterFactory,
+            ClassType.StringFormatClass => stringFormatCodeConverterFactory,
+            ClassType.ArrayClass => arrayCodeConverterFactory,
+            ClassType.MultitypeClass => multitypeCodeConverterFactory,
+            ClassType.EmptyClass => emptyCodeConverterFactory,
+            ClassType.CombinedCallbackParameterClass => combinedCallbackParameterCodeConverterFactory,
+            _ => throw new NotImplementedException()
+        };
     }
 }

@@ -20,9 +20,6 @@ namespace WebExtensions.Net.Generator.Models.ClrTypes
         public IDictionary<string, object> Metadata { get; set; }
 #pragma warning restore CS8618
 
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
+        public object Clone() => MemberwiseClone();
     }
 }

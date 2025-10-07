@@ -6,16 +6,10 @@ using WebExtensions.Net.Generator.Models.Entities;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class NamespaceRegistrationFilter
+    public class NamespaceRegistrationFilter(ILogger logger, RegistrationOptions registrationOptions)
     {
-        private readonly ILogger logger;
-        private readonly RegistrationOptions registrationOptions;
-
-        public NamespaceRegistrationFilter(ILogger logger, RegistrationOptions registrationOptions)
-        {
-            this.logger = logger;
-            this.registrationOptions = registrationOptions;
-        }
+        private readonly ILogger logger = logger;
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
 
         public bool ShouldProcess(NamespaceEntity namespaceEntity)
         {

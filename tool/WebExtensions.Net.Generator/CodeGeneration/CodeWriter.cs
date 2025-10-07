@@ -44,10 +44,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
         public CodeSectionWriter Methods => methodsSectionWriter.WriteNewLine();
         public CodeSectionWriter PublicMethods => publicMethodsSectionWriter.WriteNewLine();
 
-        public void WriteUsingStatement(string @namespace)
-        {
-            UsingNamespaces.Add(@namespace);
-        }
+        public void WriteUsingStatement(string @namespace) => UsingNamespaces.Add(@namespace);
 
         public void WriteUsingStatement(IEnumerable<string> namespaces)
         {

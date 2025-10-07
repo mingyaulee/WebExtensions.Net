@@ -3,14 +3,9 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.extension API")]
-    public class ExtensionApiTests
+    public class ExtensionApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-
-        public ExtensionApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
 
         [Fact]
         public void GetInIncognitoContext()

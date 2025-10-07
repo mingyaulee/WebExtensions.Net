@@ -8,30 +8,20 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator
 {
-    public class EntitiesRegistrationManager
+    public class EntitiesRegistrationManager(
+        ILogger logger,
+        RegistrarFactory registrarFactory,
+        NamespaceRegistrationFilter namespaceRegistrationFilter,
+        AnonymousTypeProcessor anonymousTypeProcessor,
+        TypeUsageProcessor typeUsageProcessor,
+        RegisteredClassEntityProcessor registeredClassEntityProcessor)
     {
-        private readonly ILogger logger;
-        private readonly RegistrarFactory registrarFactory;
-        private readonly NamespaceRegistrationFilter namespaceRegistrationFilter;
-        private readonly AnonymousTypeProcessor anonymousTypeProcessor;
-        private readonly TypeUsageProcessor typeUsageProcessor;
-        private readonly RegisteredClassEntityProcessor registeredClassEntityProcessor;
-
-        public EntitiesRegistrationManager(
-            ILogger logger,
-            RegistrarFactory registrarFactory,
-            NamespaceRegistrationFilter namespaceRegistrationFilter,
-            AnonymousTypeProcessor anonymousTypeProcessor,
-            TypeUsageProcessor typeUsageProcessor,
-            RegisteredClassEntityProcessor registeredClassEntityProcessor)
-        {
-            this.logger = logger;
-            this.registrarFactory = registrarFactory;
-            this.namespaceRegistrationFilter = namespaceRegistrationFilter;
-            this.anonymousTypeProcessor = anonymousTypeProcessor;
-            this.typeUsageProcessor = typeUsageProcessor;
-            this.registeredClassEntityProcessor = registeredClassEntityProcessor;
-        }
+        private readonly ILogger logger = logger;
+        private readonly RegistrarFactory registrarFactory = registrarFactory;
+        private readonly NamespaceRegistrationFilter namespaceRegistrationFilter = namespaceRegistrationFilter;
+        private readonly AnonymousTypeProcessor anonymousTypeProcessor = anonymousTypeProcessor;
+        private readonly TypeUsageProcessor typeUsageProcessor = typeUsageProcessor;
+        private readonly RegisteredClassEntityProcessor registeredClassEntityProcessor = registeredClassEntityProcessor;
 
         public IEnumerable<ClassEntity> RegisterEntities(IEnumerable<NamespaceDefinition> namespaceDefinitions)
         {
@@ -83,24 +73,21 @@ namespace WebExtensions.Net.Generator
         }
 
         private static bool ShouldRegisterNamespaceApi(NamespaceDefinition namespaceDefinition)
-        {
-            return !(namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null);
-        }
+            => !(namespaceDefinition.Events is null && namespaceDefinition.Functions is null && namespaceDefinition.Properties is null);
 
         private ClassEntity[] RegisterNamespaceEntitiesAsClassEntities(IEnumerable<NamespaceEntity> namespaceEntities)
         {
             var nestedNamespaceEntities = namespaceEntities
                 .Where(namespaceEntity => namespaceEntity.Parent is not null)
                 .ToArray();
-            return namespaceEntities
+            return [.. namespaceEntities
                 .Except(nestedNamespaceEntities)
                 .SelectMany(namespaceEntity =>
                 {
                     var classEntity = registrarFactory.ClassEntityRegistrar.RegisterNamespaceApi(namespaceEntity.NamespaceDefinitions, namespaceEntity);
                     var nestedClassEntities = RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(classEntity, nestedNamespaceEntities);
                     return new[] { classEntity }.Concat(nestedClassEntities);
-                })
-                .ToArray();
+                })];
         }
 
         private ClassEntity[] RegisterNestedNamespaceEntitiesAsPropertyToClassEntity(ClassEntity classEntity, IEnumerable<NamespaceEntity> namespaceEntities)
@@ -108,20 +95,17 @@ namespace WebExtensions.Net.Generator
             var nestedNamespaceEntities = namespaceEntities
                 .Where(namespaceEntity => namespaceEntity.Parent == classEntity.NamespaceEntity)
                 .ToArray();
-            return nestedNamespaceEntities
+            return [.. nestedNamespaceEntities
                 .Select(nestedNamespaceEntity =>
                 {
                     var nestedClassEntity = registrarFactory.ClassEntityRegistrar.RegisterNamespaceApi(nestedNamespaceEntity.NamespaceDefinitions, nestedNamespaceEntity);
                     registrarFactory.ClassEntityRegistrar.RegisterNestedNamespaceApi(classEntity, nestedClassEntity);
                     return nestedClassEntity;
-                })
-                .ToArray();
+                })];
         }
 
         private void RegisterApiRoot(IEnumerable<ClassEntity> apiClassEntities)
-        {
-            registrarFactory.ClassEntityRegistrar.RegisterRootApi(apiClassEntities);
-        }
+            => registrarFactory.ClassEntityRegistrar.RegisterRootApi(apiClassEntities);
 
         private void RegisterAnonymousTypesAsTypeEntities(IEnumerable<ClassEntity> apiClassEntities)
         {

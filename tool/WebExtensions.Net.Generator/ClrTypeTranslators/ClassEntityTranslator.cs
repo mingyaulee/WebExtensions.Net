@@ -7,20 +7,12 @@ using WebExtensions.Net.Generator.Models.Entities;
 
 namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
-    public class ClassEntityTranslator
+    public class ClassEntityTranslator(ClrTypeStore clrTypeStore, FunctionDefinitionTranslator functionDefinitionTranslator, PropertyDefinitionTranslator propertyDefinitionTranslator, ClassTranslationOptions classTranslationOptions)
     {
-        private readonly ClrTypeStore clrTypeStore;
-        private readonly FunctionDefinitionTranslator functionDefinitionTranslator;
-        private readonly PropertyDefinitionTranslator propertyDefinitionTranslator;
-        private readonly ClassTranslationOptions classTranslationOptions;
-
-        public ClassEntityTranslator(ClrTypeStore clrTypeStore, FunctionDefinitionTranslator functionDefinitionTranslator, PropertyDefinitionTranslator propertyDefinitionTranslator, ClassTranslationOptions classTranslationOptions)
-        {
-            this.clrTypeStore = clrTypeStore;
-            this.functionDefinitionTranslator = functionDefinitionTranslator;
-            this.propertyDefinitionTranslator = propertyDefinitionTranslator;
-            this.classTranslationOptions = classTranslationOptions;
-        }
+        private readonly ClrTypeStore clrTypeStore = clrTypeStore;
+        private readonly FunctionDefinitionTranslator functionDefinitionTranslator = functionDefinitionTranslator;
+        private readonly PropertyDefinitionTranslator propertyDefinitionTranslator = propertyDefinitionTranslator;
+        private readonly ClassTranslationOptions classTranslationOptions = classTranslationOptions;
 
         public IEnumerable<ClrTypeInfo> ShallowTranslate(ClassEntity classEntity)
         {
@@ -55,7 +47,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsInterface = false,
                 IsNullType = false,
                 IsGenericType = false,
-                GenericTypeArguments = Enumerable.Empty<ClrTypeInfo>(),
+                GenericTypeArguments = [],
                 IsObsolete = classEntity.TypeDefinition.IsDeprecated,
                 ObsoleteMessage = classEntity.TypeDefinition.Deprecated,
                 IsGenerated = true,
@@ -103,8 +95,8 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 clrTypeInfo.BaseTypeName = clrTypeInfo.BaseTypeName[(namespaceSeparatorIndex + 1)..];
             }
 
-            clrTypeInfo.Methods = classEntity.Functions.SelectMany(functionDefinition => functionDefinitionTranslator.TranslateFunctionDefinition(functionDefinition, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
-            clrTypeInfo.Properties = classEntity.Properties.Select(propertyDefinitionPair => propertyDefinitionTranslator.TranslatePropertyDefinition(propertyDefinitionPair.Key, propertyDefinitionPair.Value, classEntity.NamespaceEntity, clrTypeInfo)).ToArray();
+            clrTypeInfo.Methods = [.. classEntity.Functions.SelectMany(functionDefinition => functionDefinitionTranslator.TranslateFunctionDefinition(functionDefinition, classEntity.NamespaceEntity, clrTypeInfo))];
+            clrTypeInfo.Properties = [.. classEntity.Properties.Select(propertyDefinitionPair => propertyDefinitionTranslator.TranslatePropertyDefinition(propertyDefinitionPair.Key, propertyDefinitionPair.Value, classEntity.NamespaceEntity, clrTypeInfo))];
 
             if (classEntity.Type == ClassType.ArrayClass)
             {
@@ -138,8 +130,6 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
         }
 
         private static string FullyQualifyNamespace(string? @namespace)
-        {
-            return string.IsNullOrEmpty(@namespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{@namespace}";
-        }
+            => string.IsNullOrEmpty(@namespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{@namespace}";
     }
 }

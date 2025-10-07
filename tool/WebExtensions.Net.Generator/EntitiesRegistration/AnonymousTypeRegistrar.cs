@@ -6,14 +6,9 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class AnonymousTypeRegistrar
+    public class AnonymousTypeRegistrar(TypeEntityRegistrar typeEntityRegistrar)
     {
-        private readonly TypeEntityRegistrar typeEntityRegistrar;
-
-        public AnonymousTypeRegistrar(TypeEntityRegistrar typeEntityRegistrar)
-        {
-            this.typeEntityRegistrar = typeEntityRegistrar;
-        }
+        private readonly TypeEntityRegistrar typeEntityRegistrar = typeEntityRegistrar;
 
         public string RegisterType(AnonymousTypeEntityRegistrationInfo typeEntityRegistrationInfo)
         {
@@ -38,10 +33,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             return typeId;
         }
 
-        private static bool IsSystemType(string type)
-        {
-            return type == "Type" || type == "Action";
-        }
+        private static bool IsSystemType(string type) => type is "Type" or "Action";
 
         private static TypeDefinition CloneAsTypeDefinition(TypeReference typeReference)
         {

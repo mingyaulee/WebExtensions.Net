@@ -4,22 +4,13 @@ using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.storage API")]
-    public class StorageApiTests
+    public class StorageApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string storageTestKey1;
-        private readonly string storageTestValue1;
-        private readonly string storageTestKey2;
-        private readonly string storageTestValue2;
-
-        public StorageApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            storageTestKey1 = "test";
-            storageTestValue1 = Guid.NewGuid().ToString();
-            storageTestKey2 = "toRemove";
-            storageTestValue2 = Guid.NewGuid().ToString();
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string storageTestKey1 = "test";
+        private readonly string storageTestValue1 = Guid.NewGuid().ToString();
+        private readonly string storageTestKey2 = "toRemove";
+        private readonly string storageTestValue2 = Guid.NewGuid().ToString();
 
         [Fact(Description = "sync.set", Order = 1)]
         public async Task SetSyncStorageValue()

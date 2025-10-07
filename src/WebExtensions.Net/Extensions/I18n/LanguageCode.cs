@@ -10,16 +10,28 @@ namespace WebExtensions.Net.I18n
         private readonly string valueString;
 
         /// <summary>The ISO-639-1 code for the language.</summary>
-        public string Code1 { get; }
+        public string Code1
+        {
+            get;
+        }
 
         /// <summary>The ISO-639-2 code for the language.</summary>
-        public string Code2 { get; }
+        public string Code2
+        {
+            get;
+        }
 
         /// <summary>Some nonstandard code for the language.</summary>
-        public string CodeOther { get; }
+        public string CodeOther
+        {
+            get;
+        }
 
         /// <summary>The name of the language.</summary>
-        public string Name { get; }
+        public string Name
+        {
+            get;
+        }
 
         /// <summary>Creates a new instance of <see cref="LanguageCode" />.</summary>
         /// <param name="value">The value.</param>
@@ -68,42 +80,20 @@ namespace WebExtensions.Net.I18n
 
         /// <inheritdoc />
         public override bool Equals(object obj)
-        {
-            if (obj is LanguageCode languageCode)
-            {
-                return LanguageCodesEqual(this, languageCode);
-            }
-
-            return false;
-        }
+            => obj is LanguageCode languageCode && LanguageCodesEqual(this, languageCode);
 
         /// <inheritdoc />
-        public bool Equals(LanguageCode other)
-        {
-            return LanguageCodesEqual(this, other);
-        }
+        public bool Equals(LanguageCode other) => LanguageCodesEqual(this, other);
 
         /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
+        public override int GetHashCode() => Name.GetHashCode();
 
-        private static bool LanguageCodesEqual(LanguageCode languageCode1, LanguageCode languageCode2)
-        {
-            return languageCode1.Name == languageCode2.Name;
-        }
+        private static bool LanguageCodesEqual(LanguageCode languageCode1, LanguageCode languageCode2) => languageCode1.Name == languageCode2.Name;
 
         private static LanguageCode GetMatchingLanguageCode(string value)
-        {
-            return LanguageDictionary.Values.FirstOrDefault(languageCode =>
-            {
-                return
-                    (languageCode.Code1 is not null && languageCode.Code1.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
-                    (languageCode.Code2 is not null && languageCode.Code2.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
-                    (languageCode.CodeOther is not null && languageCode.CodeOther.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
-                    (languageCode.Name is not null && languageCode.Name.Equals(value, StringComparison.OrdinalIgnoreCase));
-            });
-        }
+            => LanguageDictionary.Values.FirstOrDefault(languageCode => (languageCode.Code1 is not null && languageCode.Code1.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
+                (languageCode.Code2 is not null && languageCode.Code2.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
+                (languageCode.CodeOther is not null && languageCode.CodeOther.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
+                (languageCode.Name is not null && languageCode.Name.Equals(value, StringComparison.OrdinalIgnoreCase)));
     }
 }

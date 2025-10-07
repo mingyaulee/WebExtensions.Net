@@ -16,7 +16,7 @@ namespace WebExtensions.Net
         /// <inheritdoc/>
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.Null || reader.TokenType == JsonTokenType.None)
+            if (reader.TokenType is JsonTokenType.Null or JsonTokenType.None)
             {
                 reader.Read();
                 return null;
@@ -58,11 +58,11 @@ namespace WebExtensions.Net
             IEnumerable<object> values = null;
             if (value is not null)
             {
-                values = value.PropertyNames.Select(propertyName=>
+                values = [.. value.PropertyNames.Select(propertyName=>
                 {
                     var propertyInfo = typeof(T).GetProperty(propertyName);
                     return propertyInfo.GetValue(value);
-                }).ToArray();
+                })];
             }
 
             JsonSerializer.Serialize(writer, values, options);

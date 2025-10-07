@@ -5,26 +5,17 @@ using System.Text;
 
 namespace WebExtensions.Net.Generator.CodeGeneration
 {
-    public class CodeFileWriter : CodeWriter
+    public class CodeFileWriter(string filePath, CodeFile codeFile, CodeWriterOptions codeWriterOptions) : CodeWriter(codeWriterOptions)
     {
         private const int INDENTATION = 4;
-        private readonly string filePath;
-        private readonly CodeFile codeFile;
-        private readonly CodeWriterOptions codeWriterOptions;
-        private readonly StringBuilder fileContent;
+        private readonly string filePath = filePath;
+        private readonly CodeFile codeFile = codeFile;
+        private readonly CodeWriterOptions codeWriterOptions = codeWriterOptions;
+        private readonly StringBuilder fileContent = new();
         private int currentIndentation = 0;
         private bool appendLine = false;
 
-        protected override ISet<string> UsingNamespaces { get; }
-
-        public CodeFileWriter(string filePath, CodeFile codeFile, CodeWriterOptions codeWriterOptions) : base(codeWriterOptions)
-        {
-            this.filePath = filePath;
-            this.codeFile = codeFile;
-            this.codeWriterOptions = codeWriterOptions;
-            UsingNamespaces = codeFile.UsingNamespaces;
-            fileContent = new StringBuilder();
-        }
+        protected override ISet<string> UsingNamespaces { get; } = codeFile.UsingNamespaces;
 
         public void WriteUsingStatements()
         {
@@ -62,19 +53,13 @@ namespace WebExtensions.Net.Generator.CodeGeneration
         }
 
         public void WriteConstructorsSection(bool ignoreNewLineInSection = false)
-        {
-            WriteSection(ConstructorsSection, ignoreNewLineInSection);
-        }
+            => WriteSection(ConstructorsSection, ignoreNewLineInSection);
 
         public void WritePropertiesSection(bool ignoreNewLineInSection = false)
-        {
-            WriteSection(PropertiesSection, ignoreNewLineInSection);
-        }
+            => WriteSection(PropertiesSection, ignoreNewLineInSection);
 
         public void WritePublicPropertiesSection(bool ignoreNewLineInSection = false)
-        {
-            WriteSection(PublicPropertiesSection, ignoreNewLineInSection);
-        }
+            => WriteSection(PublicPropertiesSection, ignoreNewLineInSection);
 
         public void WriteMethodsSection(bool ignoreNewLineInSection = false)
         {
@@ -127,10 +112,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
             }
         }
 
-        private void WriteNewLine()
-        {
-            fileContent.AppendLine();
-        }
+        private void WriteNewLine() => fileContent.AppendLine();
 
         private void WriteIndentation()
         {
@@ -140,10 +122,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
             }
         }
 
-        private void Write(string str)
-        {
-            fileContent.Append(str);
-        }
+        private void Write(string str) => fileContent.Append(str);
 
         private void AppendLineIfNeeded()
         {
@@ -154,9 +133,6 @@ namespace WebExtensions.Net.Generator.CodeGeneration
             }
         }
 
-        public void Flush()
-        {
-            File.WriteAllText(filePath, fileContent.ToString());
-        }
+        public void Flush() => File.WriteAllText(filePath, fileContent.ToString());
     }
 }

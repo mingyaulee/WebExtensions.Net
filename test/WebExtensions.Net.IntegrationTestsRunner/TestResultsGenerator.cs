@@ -22,32 +22,32 @@ namespace WebExtensions.Net.IntegrationTestsRunner
         {
             var results = new ResultsType()
             {
-                Items = testRunInfo.Tests.Select(MapTestResult).ToArray(),
-                ItemsElementName = testRunInfo.Tests.Select(_ => ItemsChoiceType3.UnitTestResult).ToArray()
+                Items = [.. testRunInfo.Tests.Select(MapTestResult)],
+                ItemsElementName = [.. testRunInfo.Tests.Select(_ => ItemsChoiceType3.UnitTestResult)]
             };
             var testDefinitions = new TestDefinitionType()
             {
-                Items = testRunInfo.Tests.Select(MapTestDefinition).ToArray(),
-                ItemsElementName = testRunInfo.Tests.Select(_ => ItemsChoiceType4.UnitTest).ToArray()
+                Items = [.. testRunInfo.Tests.Select(MapTestDefinition)],
+                ItemsElementName = [.. testRunInfo.Tests.Select(_ => ItemsChoiceType4.UnitTest)]
             };
             var testEntries = new TestEntriesType1()
             {
-                TestEntry = testRunInfo.Tests.Select(MapTestEntry).ToArray(),
+                TestEntry = [.. testRunInfo.Tests.Select(MapTestEntry)],
             };
             var testLists = new TestRunTypeTestLists()
             {
-                TestList = new[]
-                {
+                TestList =
+                [
                     new TestListType() { name = "Results Not in a List", id = TestListId },
                     new TestListType() { name = "All Loaded Results", id = "19431567-8539-422a-85d7-44ee4e166bda" }
-                }
+                ]
             };
             var resultsSummary = MapSummary(testRunInfo);
 
             return new TestRunType()
             {
                 id = Guid.NewGuid().ToString(),
-                Items = new object[] { results, testDefinitions, testEntries, testLists, resultsSummary }
+                Items = [results, testDefinitions, testEntries, testLists, resultsSummary]
             };
         }
 
@@ -70,7 +70,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
                 {
                     StdOut = testInfo.Skip
                 };
-                testResult.Items = new[] { output };
+                testResult.Items = [output];
             }
             else if (testResult.outcome == "Failed")
             {
@@ -82,21 +82,18 @@ namespace WebExtensions.Net.IntegrationTestsRunner
                         StackTrace = testInfo.StackTrace
                     }
                 };
-                testResult.Items = new[] { output };
+                testResult.Items = [output];
             }
             return testResult;
         }
 
-        private static TestStatus MapStatus(string status)
+        private static TestStatus MapStatus(string status) => status switch
         {
-            return status switch
-            {
-                "passed" => TestStatus.Passed,
-                "failed" => TestStatus.Failed,
-                "pending" => TestStatus.NotExecuted,
-                _ => throw new TestRunnerException($"Test status '{status}' is not recognized.")
-            };
-        }
+            "passed" => TestStatus.Passed,
+            "failed" => TestStatus.Failed,
+            "pending" => TestStatus.NotExecuted,
+            _ => throw new TestRunnerException($"Test status '{status}' is not recognized.")
+        };
 
         private static object MapTestDefinition(TestInfo testInfo)
         {
@@ -117,19 +114,16 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             {
                 id = testInfo.ExecutionId
             };
-            testDefinition.Items = new[] { execution };
+            testDefinition.Items = [execution];
             return testDefinition;
         }
 
-        private static TestEntryType MapTestEntry(TestInfo testInfo)
+        private static TestEntryType MapTestEntry(TestInfo testInfo) => new()
         {
-            return new TestEntryType()
-            {
-                testId = testInfo.TestId,
-                executionId = testInfo.ExecutionId,
-                testListId = TestListId
-            };
-        }
+            testId = testInfo.TestId,
+            executionId = testInfo.ExecutionId,
+            testListId = TestListId
+        };
 
         private static TestRunTypeResultSummary MapSummary(TestRunInfo testRunInfo)
         {
@@ -176,7 +170,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             };
             var output = new TestRunOutputType();
             var runInfos = new TestRunTypeResultSummaryRunInfos();
-            testSummary.Items = new object[] { counters, output, runInfos };
+            testSummary.Items = [counters, output, runInfos];
             return testSummary;
         }
 

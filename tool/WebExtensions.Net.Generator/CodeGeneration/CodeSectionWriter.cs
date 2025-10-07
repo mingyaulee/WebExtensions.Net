@@ -2,30 +2,19 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration
 {
-    public class CodeSectionWriter
+    public class CodeSectionWriter(CodeSection codeSection, CodeWriterOptions codeWriterOptions, CodeWriter codeWriter)
     {
         private const int INDENTATION = 4;
-        private readonly CodeSection codeSection;
-        private readonly CodeWriterOptions codeWriterOptions;
-        private readonly CodeWriter codeWriter;
+        private readonly CodeSection codeSection = codeSection;
+        private readonly CodeWriterOptions codeWriterOptions = codeWriterOptions;
+        private readonly CodeWriter codeWriter = codeWriter;
         private int appendLine = 0;
 
-        public CodeSectionWriter(CodeSection codeSection, CodeWriterOptions codeWriterOptions, CodeWriter codeWriter)
-        {
-            this.codeSection = codeSection;
-            this.codeWriterOptions = codeWriterOptions;
-            this.codeWriter = codeWriter;
-        }
-
         public void WriteUsingStatement(string @namespace)
-        {
-            codeWriter.WriteUsingStatement(@namespace);
-        }
+            => codeWriter.WriteUsingStatement(@namespace);
 
         public void WriteUsingStatement(IEnumerable<string> namespaces)
-        {
-            codeWriter.WriteUsingStatement(namespaces);
-        }
+            => codeWriter.WriteUsingStatement(namespaces);
 
         public CodeSectionWriter WriteLine(string? line)
         {

@@ -10,25 +10,15 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class AnonymousTypeProcessor
+    public class AnonymousTypeProcessor(RegistrarFactory registrarFactory, RegistrationOptions registrationOptions)
     {
-        private readonly RegistrarFactory registrarFactory;
-        private readonly RegistrationOptions registrationOptions;
-        private readonly Dictionary<TypeReference, AnonymousTypeEntityRegistrationInfo> typesToRegister;
-        private readonly HashSet<string> typeReferencesProcessed;
-
-        public AnonymousTypeProcessor(RegistrarFactory registrarFactory, RegistrationOptions registrationOptions)
-        {
-            this.registrarFactory = registrarFactory;
-            this.registrationOptions = registrationOptions;
-            typesToRegister = new Dictionary<TypeReference, AnonymousTypeEntityRegistrationInfo>();
-            typeReferencesProcessed = new HashSet<string>();
-        }
+        private readonly RegistrarFactory registrarFactory = registrarFactory;
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
+        private readonly Dictionary<TypeReference, AnonymousTypeEntityRegistrationInfo> typesToRegister = [];
+        private readonly HashSet<string> typeReferencesProcessed = [];
 
         public void ProcessTypeDefinition(string className, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
-        {
-            Process([className], typeDefinition, namespaceEntity);
-        }
+            => Process([className], typeDefinition, namespaceEntity);
 
         public void Reset()
         {
@@ -157,14 +147,12 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         }
 
         private static bool IsObjectType(TypeReference typeReference)
-        {
-            return typeReference.Type == ObjectType.Object ||
+            => typeReference.Type == ObjectType.Object ||
                 typeReference.Type == ObjectType.ApiObject ||
                 typeReference.Type == ObjectType.EventTypeObject ||
                 typeReference.Type == ObjectType.CombinedCallbackParameterObject ||
                 typeReference.Type == ObjectType.String ||
                 typeReference.TypeChoices != null;
-        }
 
         private static bool ShouldRegisterObjectType(TypeReference typeReference)
         {
@@ -173,35 +161,23 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 return false;
             }
 
-            if (typeReference.Type == ObjectType.String)
-            {
-                return typeReference.EnumValues?.Any() ??
-                    false;
-            }
-
-            return
-                typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
+            return typeReference.Type == ObjectType.String
+                ? typeReference.EnumValues?.Any() ??
+                    false
+                : typeReference.ObjectProperties?.Any(propertyDefinitionPair => !propertyDefinitionPair.Value.IsUnsupported) ??
                 typeReference.ObjectFunctions?.Any(functionDefinition => !functionDefinition.IsUnsupported) ??
                 typeReference.TypeChoices?.Any(typeChoice => !typeChoice.IsUnsupported) ??
                 false;
         }
 
         private static bool ShouldProcessTypeChoices(TypeReference typeReference)
-        {
-            if (typeReference.TypeChoices is null ||
+            => typeReference.TypeChoices is not null &&
+!
                 // When all type choices are enum, it will be handled by EnumClassEntityRegistrar
-                typeReference.TypeChoices.All(IsEnumString))
-            {
-                return false;
-            }
-
-            return true;
-        }
+                typeReference.TypeChoices.All(IsEnumString);
 
         private static bool IsEnumString(TypeDefinition typeDefinition)
-        {
-            return typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null;
-        }
+            => typeDefinition.Type == ObjectType.String && typeDefinition.EnumValues is not null;
 
         private static void TryHandleSingleTypeChoice(TypeReference typeReference)
         {
@@ -252,18 +228,18 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             if (registrationOptions.CombineCallbackParameter.TryGetValue(namePath, out var name))
             {
                 var parameters = typeReference.FunctionParameters;
-                typeReference.FunctionParameters = new[]
-                {
+                typeReference.FunctionParameters =
+                [
                     new ParameterDefinition()
                     {
                         Name = name,
                         Type = ObjectType.CombinedCallbackParameterObject,
                         ObjectProperties = parameters.ToDictionary(
                             parameter => parameter.Name ?? throw new InvalidOperationException("Function parameter should have a name."),
-                            parameter => SerializationHelper.DeserializeTo<PropertyDefinition>(parameter)),
+                            SerializationHelper.DeserializeTo<PropertyDefinition>),
                         Deprecated = parameters.All(parameter => parameter.IsDeprecated) ? "True" : null
                     }
-                };
+                ];
             }
         }
 
@@ -410,9 +386,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         }
 
         private void ProcessProperty(IEnumerable<string> nameHierarchy, string propertyName, PropertyDefinition propertyDefinition, NamespaceEntity namespaceEntity)
-        {
-            Process(ConcatName(nameHierarchy, propertyName.ToCapitalCase()), propertyDefinition, namespaceEntity);
-        }
+            => Process(ConcatName(nameHierarchy, propertyName.ToCapitalCase()), propertyDefinition, namespaceEntity);
 
         private void ProcessTypeChoices(IEnumerable<string> nameHierarchy, IEnumerable<TypeDefinition>? typeChoices, NamespaceEntity namespaceEntity)
         {
@@ -439,11 +413,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                     {
                         if (typeDefinition.EnumValues is not null)
                         {
-                            typeDefinition.EnumValues = typeDefinition.EnumValues.Concat(enumChoiceExtension.EnumValues).ToList();
+                            typeDefinition.EnumValues = [.. typeDefinition.EnumValues, .. enumChoiceExtension.EnumValues];
                         }
                         else if (enumChoice is not null)
                         {
-                            enumChoice.EnumValues = (enumChoice.EnumValues ?? []).Concat(enumChoiceExtension.EnumValues).ToList();
+                            enumChoice.EnumValues = [.. (enumChoice.EnumValues ?? []), .. enumChoiceExtension.EnumValues];
                         }
                         else
                         {
@@ -461,13 +435,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
         private static string[] SetNameSuffix(IEnumerable<string> nameHierarchy, string suffix)
         {
             var lastIndex = nameHierarchy.Count() - 1;
-            return nameHierarchy.Select((name, index) => index == lastIndex ? name + suffix : name).ToArray();
+            return [.. nameHierarchy.Select((name, index) => index == lastIndex ? name + suffix : name)];
         }
 
         private static string[] ConcatName(IEnumerable<string> nameHierarchy, string name)
-        {
-            return nameHierarchy.Concat([name]).ToArray();
-        }
+            => [.. nameHierarchy, name];
 
         private static readonly string[] IgnoreWords = ["Css", "Js"];
         private static readonly string[] SimplePlurals = ["Cookies", "Devices", "Files", "Hostnames", "Languages", "Resources", "Rules", "Schemes", "Scopes", "Stores", "Types"];

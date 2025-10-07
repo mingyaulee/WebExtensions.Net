@@ -8,16 +8,10 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
-    public class PropertyDefinitionTranslator
+    public class PropertyDefinitionTranslator(ClrTypeStore clrTypeStore, ClassTranslationOptions classTranslationOptions)
     {
-        private readonly ClrTypeStore clrTypeStore;
-        private readonly ClassTranslationOptions classTranslationOptions;
-
-        public PropertyDefinitionTranslator(ClrTypeStore clrTypeStore, ClassTranslationOptions classTranslationOptions)
-        {
-            this.clrTypeStore = clrTypeStore;
-            this.classTranslationOptions = classTranslationOptions;
-        }
+        private readonly ClrTypeStore clrTypeStore = clrTypeStore;
+        private readonly ClassTranslationOptions classTranslationOptions = classTranslationOptions;
 
         public ClrPropertyInfo TranslatePropertyDefinition(string propertyName, PropertyDefinition propertyDefinition, NamespaceEntity namespaceEntity, ClrTypeInfo clrTypeInfo)
         {

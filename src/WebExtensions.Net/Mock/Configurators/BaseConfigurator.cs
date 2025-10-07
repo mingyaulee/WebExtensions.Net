@@ -11,21 +11,12 @@ namespace WebExtensions.Net.Mock.Configurators
     /// The base configurator.
     /// </summary>
     /// <typeparam name="TObject">The type of object to configure.</typeparam>
-    public abstract class BaseConfigurator<TObject>
+    /// <param name="webExtensionsApi">The web extension API.</param>
+    /// <param name="mockHandlers">The mock handlers.</param>
+    public abstract class BaseConfigurator<TObject>(IWebExtensionsApi webExtensionsApi, IList<IMockHandler> mockHandlers)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly IList<IMockHandler> mockHandlers;
-
-        /// <summary>
-        /// Creates a new instance of BaseConfigurator.
-        /// </summary>
-        /// <param name="webExtensionsApi">The web extension API.</param>
-        /// <param name="mockHandlers">The mock handlers.</param>
-        protected BaseConfigurator(IWebExtensionsApi webExtensionsApi, IList<IMockHandler> mockHandlers)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            this.mockHandlers = mockHandlers;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly IList<IMockHandler> mockHandlers = mockHandlers;
 
         /// <summary>Configures the mock handler for the property.</summary>
         /// <typeparam name="T">The property type.</typeparam>

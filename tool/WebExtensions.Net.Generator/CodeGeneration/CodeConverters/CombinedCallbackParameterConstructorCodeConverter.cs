@@ -4,16 +4,10 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class CombinedCallbackParameterConstructorCodeConverter : ICodeConverter
+    public class CombinedCallbackParameterConstructorCodeConverter(string className, IEnumerable<ClrPropertyInfo> clrPropertyInfos) : ICodeConverter
     {
-        private readonly string className;
-        private readonly IEnumerable<ClrPropertyInfo> clrPropertyInfos;
-
-        public CombinedCallbackParameterConstructorCodeConverter(string className, IEnumerable<ClrPropertyInfo> clrPropertyInfos)
-        {
-            this.className = className;
-            this.clrPropertyInfos = clrPropertyInfos;
-        }
+        private readonly string className = className;
+        private readonly IEnumerable<ClrPropertyInfo> clrPropertyInfos = clrPropertyInfos;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

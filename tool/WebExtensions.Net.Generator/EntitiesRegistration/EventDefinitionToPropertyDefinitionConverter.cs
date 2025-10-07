@@ -8,46 +8,33 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class EventDefinitionToPropertyDefinitionConverter
+    public class EventDefinitionToPropertyDefinitionConverter(RegistrationOptions registrationOptions, TypeEntityRegistrar typeEntityRegistrar)
     {
-        private readonly RegistrationOptions registrationOptions;
-        private readonly TypeEntityRegistrar typeEntityRegistrar;
-
-        public EventDefinitionToPropertyDefinitionConverter(RegistrationOptions registrationOptions, TypeEntityRegistrar typeEntityRegistrar)
-        {
-            this.registrationOptions = registrationOptions;
-            this.typeEntityRegistrar = typeEntityRegistrar;
-        }
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
+        private readonly TypeEntityRegistrar typeEntityRegistrar = typeEntityRegistrar;
 
         public PropertyDefinition Convert(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
-        {
-            if (ShouldCreateEventTypeObject(eventDefinition))
-            {
-                return new PropertyDefinition()
+            => ShouldCreateEventTypeObject(eventDefinition)
+                ? new PropertyDefinition()
                 {
                     Type = ObjectType.EventTypeObject,
                     Description = eventDefinition.Description,
                     IsUnsupported = eventDefinition.IsUnsupported,
                     Deprecated = eventDefinition.Deprecated,
                     ObjectFunctions = GetEventFunctions(eventDefinition, namespaceEntity)
+                }
+                : new PropertyDefinition()
+                {
+                    Ref = registrationOptions.BaseEventTypeName,
+                    Type = ObjectType.EventTypeObject,
+                    Description = eventDefinition.Description,
+                    IsUnsupported = eventDefinition.IsUnsupported,
+                    Deprecated = eventDefinition.Deprecated
                 };
-            }
-
-            return new PropertyDefinition()
-            {
-                Ref = registrationOptions.BaseEventTypeName,
-                Type = ObjectType.EventTypeObject,
-                Description = eventDefinition.Description,
-                IsUnsupported = eventDefinition.IsUnsupported,
-                Deprecated = eventDefinition.Deprecated
-            };
-        }
 
         private static bool ShouldCreateEventTypeObject(EventDefinition eventDefinition)
-        {
-            return (eventDefinition.FunctionParameters is not null && eventDefinition.FunctionParameters.Any()) ||
+            => (eventDefinition.FunctionParameters is not null && eventDefinition.FunctionParameters.Any()) ||
                 (eventDefinition.ExtraParameters is not null && eventDefinition.ExtraParameters.Any());
-        }
 
         private List<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
         {
@@ -87,7 +74,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
             functionParameters.Add(functionParameter);
 
             var clonedEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
-            clonedEventFunction.FunctionParameters = functionParameters.ToArray();
+            clonedEventFunction.FunctionParameters = [.. functionParameters];
             eventFunctionDefinitions.Add(clonedEventFunction);
 
             if (eventDefinition.ExtraParameters is not null)
@@ -100,7 +87,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 }));
 
                 var extraParameterEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
-                extraParameterEventFunction.FunctionParameters = functionParameters.ToArray();
+                extraParameterEventFunction.FunctionParameters = [.. functionParameters];
                 eventFunctionDefinitions.Add(extraParameterEventFunction);
             }
 

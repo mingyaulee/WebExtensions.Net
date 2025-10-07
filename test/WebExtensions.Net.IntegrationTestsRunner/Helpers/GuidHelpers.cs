@@ -12,7 +12,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner.Helpers
         /// <summary>
         /// The namespace for ISO OIDs (from RFC 4122, Appendix C).
         /// </summary>
-        private static readonly Guid IsoOidNamespace = new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+        private static readonly Guid IsoOidNamespace = new("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
 
         /// <summary>
         /// Creates a name-based UUID using the algorithm from RFC 4122 §4.3.
@@ -22,10 +22,10 @@ namespace WebExtensions.Net.IntegrationTestsRunner.Helpers
         public static Guid Create(string name)
         {
             // convert the name to a sequence of octets (as defined by the standard or conventions of its namespace) (step 3)
-            byte[] nameBytes = Encoding.UTF8.GetBytes(name);
+            var nameBytes = Encoding.UTF8.GetBytes(name);
 
             // convert the namespace UUID to network order (step 3)
-            byte[] namespaceBytes = IsoOidNamespace.ToByteArray();
+            var namespaceBytes = IsoOidNamespace.ToByteArray();
             SwapByteOrder(namespaceBytes);
 
             // compute the hash of the name space ID concatenated with the name (step 4)
@@ -35,7 +35,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner.Helpers
             var hash = algorithm.Hash;
 
             // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
-            byte[] newGuid = new byte[16];
+            var newGuid = new byte[16];
             Array.Copy(hash, 0, newGuid, 0, 16);
 
             // set the four most significant bits (bits 12 through 15) of the time_hi_and_version field to the appropriate 4-bit version number from Section 4.1.3 (step 8)
@@ -59,10 +59,6 @@ namespace WebExtensions.Net.IntegrationTestsRunner.Helpers
         }
 
         private static void SwapBytes(byte[] guid, int left, int right)
-        {
-            byte temp = guid[left];
-            guid[left] = guid[right];
-            guid[right] = temp;
-        }
+            => (guid[right], guid[left]) = (guid[left], guid[right]);
     }
 }

@@ -9,14 +9,9 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
-    public class FunctionDefinitionTranslator
+    public class FunctionDefinitionTranslator(ClrTypeStore clrTypeStore)
     {
-        private readonly ClrTypeStore clrTypeStore;
-
-        public FunctionDefinitionTranslator(ClrTypeStore clrTypeStore)
-        {
-            this.clrTypeStore = clrTypeStore;
-        }
+        private readonly ClrTypeStore clrTypeStore = clrTypeStore;
 
         public IEnumerable<ClrMethodInfo> TranslateFunctionDefinition(FunctionDefinition functionDefinition, NamespaceEntity namespaceEntity, ClrTypeInfo clrTypeInfo)
         {
@@ -25,7 +20,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 throw new InvalidOperationException("Function definition should have a name.");
             }
 
-            var parameterDefinitions = functionDefinition.FunctionParameters?.ToList() ?? new List<ParameterDefinition>();
+            var parameterDefinitions = functionDefinition.FunctionParameters?.ToList() ?? [];
             var returnDefinition = GetReturnDefinition(functionDefinition, parameterDefinitions, out var isCallbackParameter);
 
             var methodParameters = parameterDefinitions.Select(parameterDefinition =>

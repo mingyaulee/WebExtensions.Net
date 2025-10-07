@@ -3,16 +3,10 @@
     /// <summary>
     /// Custom mock resolver.
     /// </summary>
-    internal class CustomMockResolver : IMockResolver
+    internal class CustomMockResolver(ApiHandler apiHandler, ObjectReferenceHandler objectReferenceHandler) : IMockResolver
     {
-        private readonly ApiHandler apiHandler;
-        private readonly ObjectReferenceHandler objectReferenceHandler;
-
-        public CustomMockResolver(ApiHandler apiHandler, ObjectReferenceHandler objectReferenceHandler)
-        {
-            this.apiHandler = apiHandler;
-            this.objectReferenceHandler = objectReferenceHandler;
-        }
+        private readonly ApiHandler apiHandler = apiHandler;
+        private readonly ObjectReferenceHandler objectReferenceHandler = objectReferenceHandler;
 
         public bool TryInvokeApiHandler(string targetPath, object[] arguments, out object result)
         {

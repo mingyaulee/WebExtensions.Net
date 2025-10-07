@@ -7,13 +7,7 @@ namespace WebExtensions.Net.Generator.JsonConverters
     public class FunctionAsyncConverter : JsonConverter<string?>
     {
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType == JsonTokenType.True)
-            {
-                return "void";
-            }
-            return reader.GetString();
-        }
+            => reader.TokenType == JsonTokenType.True ? "void" : reader.GetString();
 
         public override void Write(Utf8JsonWriter writer, string? value, JsonSerializerOptions options)
         {

@@ -6,16 +6,10 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public partial class MultitypeConstructorCodeConverter : ICodeConverter
+    public partial class MultitypeConstructorCodeConverter(string className, IEnumerable<ClrTypeInfo> typeChoices) : ICodeConverter
     {
-        private readonly string className;
-        private readonly IEnumerable<ClrTypeInfo> typeChoices;
-
-        public MultitypeConstructorCodeConverter(string className, IEnumerable<ClrTypeInfo> typeChoices)
-        {
-            this.className = className;
-            this.typeChoices = typeChoices;
-        }
+        private readonly string className = className;
+        private readonly IEnumerable<ClrTypeInfo> typeChoices = typeChoices;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
@@ -79,8 +73,6 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         private static partial Regex ReplacePattern();
 
         private static string SanitizeVariableName(string variableName)
-        {
-            return ReplacePattern().Replace(variableName, "");
-        }
+            => ReplacePattern().Replace(variableName, "");
     }
 }

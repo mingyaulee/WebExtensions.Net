@@ -3,19 +3,12 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.downloads API")]
-    public class DownloadsApiTests
+    public class DownloadsApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testDownloadFileName;
-        private readonly string testDownloadUrl;
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testDownloadFileName = Guid.NewGuid().ToString() + ".md";
+        private readonly string testDownloadUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtensions.Net/main/README.md";
         private int testDownloadId;
-
-        public DownloadsApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testDownloadFileName = Guid.NewGuid().ToString() + ".md";
-            testDownloadUrl = "https://raw.githubusercontent.com/mingyaulee/WebExtensions.Net/main/README.md";
-        }
 
         [Fact(Order = 1)]
         public async Task Download()

@@ -11,7 +11,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 {
     public class ClrTypeStore
     {
-        private readonly Dictionary<string, ClrTypeInfo> clrTypeStore = new();
+        private readonly Dictionary<string, ClrTypeInfo> clrTypeStore = [];
 
         public void Reset()
         {
@@ -25,9 +25,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
         }
 
         public void AddClrType(ClrTypeInfo clrTypeInfo)
-        {
-            clrTypeStore.Add(clrTypeInfo.Id, clrTypeInfo);
-        }
+            => clrTypeStore.Add(clrTypeInfo.Id, clrTypeInfo);
 
         public ClrTypeInfo GetClrType(TypeReference? typeReference, NamespaceEntity namespaceEntity)
         {
@@ -56,12 +54,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
 
             var typeId = GetTypeId(typeReference, namespaceEntity);
 
-            if (!clrTypeStore.TryGetValue(typeId, out var clrType))
-            {
-                throw new InvalidOperationException($"Type id '{typeId}' is not defined in the CLR types store.");
-            }
-
-            return clrType;
+            return !clrTypeStore.TryGetValue(typeId, out var clrType)
+                ? throw new InvalidOperationException($"Type id '{typeId}' is not defined in the CLR types store.")
+                : clrType;
         }
 
         private ClrTypeInfo GetClrType(Type type)
@@ -105,7 +100,7 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 IsInterface = type.IsInterface,
                 IsNullType = type == typeof(void),
                 IsGenericType = type.IsGenericType,
-                GenericTypeArguments = type.GenericTypeArguments.Select(GetClrTypeFromSystemType).ToArray(),
+                GenericTypeArguments = [.. type.GenericTypeArguments.Select(GetClrTypeFromSystemType)],
                 IsObsolete = false,
                 ObsoleteMessage = null,
                 IsGenerated = false,
@@ -117,8 +112,8 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 BaseTypeName = null,
                 Description = null,
                 Metadata = new Dictionary<string, object>(),
-                Methods = Enumerable.Empty<ClrMethodInfo>(),
-                Properties = Enumerable.Empty<ClrPropertyInfo>(),
+                Methods = [],
+                Properties = [],
                 TypeChoices = null
             };
 #pragma warning restore CS8601, CS8604
@@ -222,12 +217,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
                 return $"{Constants.RelativeNamespaceToken}.{namespaceEntity.FullFormattedName}.{typeReference.Ref.ToCapitalCase()}";
             }
 
-            if (IsEpochMillisecondsType(typeReference))
-            {
-                return GetTypeFullName(typeof(EpochTime));
-            }
-
-            return typeReference.Type switch
+            return IsEpochMillisecondsType(typeReference)
+                ? GetTypeFullName(typeof(EpochTime))
+                : typeReference.Type switch
             {
                 ObjectType.Array => GetTypeId(typeReference.ArrayItems, namespaceEntity) + "Array",
                 ObjectType.Boolean => GetTypeFullName(typeof(bool)),
@@ -240,23 +232,9 @@ namespace WebExtensions.Net.Generator.ClrTypeTranslators
         }
 
         private static string GetTypeFullName(Type type)
-        {
-            return type.FullName ?? throw new InvalidOperationException("Type full name should not be null.");
-        }
+            => type.FullName ?? throw new InvalidOperationException("Type full name should not be null.");
 
         private static bool IsEpochMillisecondsType(TypeReference typeReference)
-        {
-            if (typeReference.Type != ObjectType.Integer && typeReference.Type != ObjectType.Number)
-            {
-                return false;
-            }
-
-            if (typeReference is PropertyDefinition propertyDefinition && propertyDefinition.Description is not null)
-            {
-                return propertyDefinition.Description.Contains("milliseconds");
-            }
-
-            return false;
-        }
+            => (typeReference.Type is ObjectType.Integer or ObjectType.Number) && typeReference is PropertyDefinition { Description: not null } propertyDefinition && propertyDefinition.Description.Contains("milliseconds");
     }
 }

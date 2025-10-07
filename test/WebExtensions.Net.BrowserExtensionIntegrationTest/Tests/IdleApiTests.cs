@@ -3,14 +3,9 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.idle API")]
-    public class IdleApiTests
+    public class IdleApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-
-        public IdleApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
 
         [Fact]
         public async Task QueryState()

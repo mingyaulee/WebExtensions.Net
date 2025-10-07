@@ -20,7 +20,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
             this.logger = logger;
             this.serviceProvider = serviceProvider;
             thisRef = DotNetObjectReference.Create(this);
-            testClassInstances = new Dictionary<Type, object>();
+            testClassInstances = [];
         }
 
         public async Task RunTests()
@@ -46,7 +46,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
                 {
                     throw new NotSupportedException("Test method info should not be null");
                 }
-                var response = methodInfo.Invoke(testClassInstance, Array.Empty<object>());
+                var response = methodInfo.Invoke(testClassInstance, []);
                 if (response is Task task)
                 {
                     await task;

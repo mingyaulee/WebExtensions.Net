@@ -11,34 +11,18 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class ClassEntityRegistrar
+    public class ClassEntityRegistrar(ClassEntityRegistrarFactory classEntityRegistrarFactory, ApiRootClassEntityRegistrar rootApiClassEntityRegistrar, ApiClassEntityRegistrar apiClassEntityRegistrar, EntitiesContext entitiesContext, NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter, RegistrationOptions registrationOptions)
     {
-        private readonly ClassEntityRegistrarFactory classEntityRegistrarFactory;
-        private readonly ApiRootClassEntityRegistrar rootApiClassEntityRegistrar;
-        private readonly ApiClassEntityRegistrar apiClassEntityRegistrar;
-        private readonly EntitiesContext entitiesContext;
-        private readonly NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter;
-        private readonly RegistrationOptions registrationOptions;
+        private readonly ClassEntityRegistrarFactory classEntityRegistrarFactory = classEntityRegistrarFactory;
+        private readonly ApiRootClassEntityRegistrar rootApiClassEntityRegistrar = rootApiClassEntityRegistrar;
+        private readonly ApiClassEntityRegistrar apiClassEntityRegistrar = apiClassEntityRegistrar;
+        private readonly EntitiesContext entitiesContext = entitiesContext;
+        private readonly NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter = namespaceApiToTypeDefinitionConverter;
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
 
-        public ClassEntityRegistrar(ClassEntityRegistrarFactory classEntityRegistrarFactory, ApiRootClassEntityRegistrar rootApiClassEntityRegistrar, ApiClassEntityRegistrar apiClassEntityRegistrar, EntitiesContext entitiesContext, NamespaceApiToTypeDefinitionConverter namespaceApiToTypeDefinitionConverter, RegistrationOptions registrationOptions)
-        {
-            this.classEntityRegistrarFactory = classEntityRegistrarFactory;
-            this.rootApiClassEntityRegistrar = rootApiClassEntityRegistrar;
-            this.apiClassEntityRegistrar = apiClassEntityRegistrar;
-            this.entitiesContext = entitiesContext;
-            this.namespaceApiToTypeDefinitionConverter = namespaceApiToTypeDefinitionConverter;
-            this.registrationOptions = registrationOptions;
-        }
+        public void Reset() => entitiesContext.Classes.Clear();
 
-        public void Reset()
-        {
-            entitiesContext.Classes.Clear();
-        }
-
-        public IEnumerable<ClassEntity> GetAllClassEntities()
-        {
-            return entitiesContext.Classes.GetAllClassEntities();
-        }
+        public IEnumerable<ClassEntity> GetAllClassEntities() => entitiesContext.Classes.GetAllClassEntities();
 
         public ClassEntity RegisterNamespaceApi(IEnumerable<NamespaceDefinition> namespaceDefinitions, NamespaceEntity namespaceEntity)
         {
@@ -49,13 +33,13 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 {
                     Description = namespaceDefinitions.FirstOrDefault(definition => definition.Description is not null)?.Description,
                     Deprecated = namespaceDefinitions.FirstOrDefault(definition => definition.Deprecated is not null)?.Deprecated,
-                    Events = namespaceDefinitions.SelectMany(definition => definition.Events ?? Enumerable.Empty<EventDefinition>()).ToArray(),
-                    Functions = namespaceDefinitions.SelectMany(definition => definition.Functions ?? Enumerable.Empty<FunctionDefinition>()).ToArray(),
+                    Events = [.. namespaceDefinitions.SelectMany(definition => definition.Events ?? [])],
+                    Functions = [.. namespaceDefinitions.SelectMany(definition => definition.Functions ?? [])],
                     Namespace = namespaceDefinition.Namespace,
-                    Permissions = namespaceDefinitions.SelectMany(definition => definition.Permissions ?? Enumerable.Empty<string>()).Distinct().ToArray(),
+                    Permissions = [.. namespaceDefinitions.SelectMany(definition => definition.Permissions ?? []).Distinct()],
                     Properties = namespaceDefinitions.SelectMany(definition => definition.Properties ?? Enumerable.Empty<KeyValuePair<string, PropertyDefinition>>()).ToDictionary(propertyDefinitionPair => propertyDefinitionPair.Key, propertyDefinitionPair => propertyDefinitionPair.Value),
                     Source = namespaceDefinition.Source,
-                    Types = namespaceDefinitions.SelectMany(definition => definition.Types ?? Enumerable.Empty<TypeDefinition>()).ToArray()
+                    Types = [.. namespaceDefinitions.SelectMany(definition => definition.Types ?? [])]
                 };
             }
             var namespaceApiTypeDefinition = namespaceApiToTypeDefinitionConverter.Convert(namespaceDefinition, namespaceEntity);
@@ -113,7 +97,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration
                 .Select(namespaceDefinition => namespaceDefinition.Description)
                 .Where(namespaceDescription => !string.IsNullOrEmpty(namespaceDescription)));
             var permissions = string.Join(", ", classEntity.NamespaceEntity.NamespaceDefinitions
-                .SelectMany(namespaceDefinition => namespaceDefinition.Permissions ?? Enumerable.Empty<string>())
+                .SelectMany(namespaceDefinition => namespaceDefinition.Permissions ?? [])
                 .Where(permission => !string.IsNullOrEmpty(permission))
                 .Distinct());
             if (!string.IsNullOrEmpty(permissions))

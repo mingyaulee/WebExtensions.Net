@@ -1,13 +1,8 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class StringFormatCastOperatorCodeConverter : ICodeConverter
+    public class StringFormatCastOperatorCodeConverter(string className) : ICodeConverter
     {
-        private readonly string className;
-
-        public StringFormatCastOperatorCodeConverter(string className)
-        {
-            this.className = className;
-        }
+        private readonly string className = className;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

@@ -1,17 +1,10 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class StringFormatConstructorCodeConverter : ICodeConverter
+    public class StringFormatConstructorCodeConverter(string className, string? stringFormat, string? stringPattern) : ICodeConverter
     {
-        private readonly string className;
-        private readonly string? stringFormat;
-        private readonly string? stringPattern;
-
-        public StringFormatConstructorCodeConverter(string className, string? stringFormat, string? stringPattern)
-        {
-            this.className = className;
-            this.stringFormat = stringFormat;
-            this.stringPattern = stringPattern?.Replace(@"\", @"\\");
-        }
+        private readonly string className = className;
+        private readonly string? stringFormat = stringFormat;
+        private readonly string? stringPattern = stringPattern?.Replace(@"\", @"\\");
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

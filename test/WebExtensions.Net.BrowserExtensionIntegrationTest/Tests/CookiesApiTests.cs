@@ -3,22 +3,13 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.cookies API")]
-    public class CookiesApiTests
+    public class CookiesApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testCookieName;
-        private readonly string testCookieUrl;
-        private readonly string testCookieDomain;
-        private readonly string testCookieValue;
-
-        public CookiesApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testCookieName = "TestCookie";
-            testCookieUrl = "https://non-existent-domain.com/";
-            testCookieDomain = "non-existent-domain.com";
-            testCookieValue = Guid.NewGuid().ToString();
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testCookieName = "TestCookie";
+        private readonly string testCookieUrl = "https://non-existent-domain.com/";
+        private readonly string testCookieDomain = "non-existent-domain.com";
+        private readonly string testCookieValue = Guid.NewGuid().ToString();
 
         [Fact(Order = 1)]
         public async Task Set()

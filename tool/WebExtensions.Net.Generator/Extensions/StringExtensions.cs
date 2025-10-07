@@ -7,22 +7,10 @@ namespace WebExtensions.Net.Generator.Extensions
     public static partial class StringExtensions
     {
         public static string ToCamelCase(this string name)
-        {
-            if (name.Length > 1)
-            {
-                return name[0].ToString().ToLowerInvariant() + name[1..];
-            }
-            return name.ToUpperInvariant();
-        }
+            => name.Length > 1 ? name[0].ToString().ToLowerInvariant() + name[1..] : name.ToUpperInvariant();
 
         public static string ToCapitalCase(this string name)
-        {
-            if (name.Length > 1)
-            {
-                return name[0].ToString().ToUpperInvariant() + name[1..];
-            }
-            return name.ToUpperInvariant();
-        }
+            => name.Length > 1 ? name[0].ToString().ToUpperInvariant() + name[1..] : name.ToUpperInvariant();
 
         static readonly HashSet<string> cSharpReservedKeywords =
         [
@@ -41,12 +29,7 @@ namespace WebExtensions.Net.Generator.Extensions
                     return tokenizedNameSegment.ToCapitalCase();
                 }
 
-                if (index == 0)
-                {
-                    return tokenizedNameSegment;
-                }
-
-                return startsWithAsciiLetter ? tokenizedNameSegment.ToCapitalCase() : '_' + tokenizedNameSegment;
+                return index == 0 ? tokenizedNameSegment : startsWithAsciiLetter ? tokenizedNameSegment.ToCapitalCase() : '_' + tokenizedNameSegment;
             }));
 
             return avoidReservedKeywords && cSharpReservedKeywords.Contains(name) ?
@@ -55,13 +38,7 @@ namespace WebExtensions.Net.Generator.Extensions
         }
 
         public static string ToXmlContent(this string? content)
-        {
-            if (content is not null)
-            {
-                return ReplacePattern().Replace(content, XmlContentMatchEvaluator);
-            }
-            return string.Empty;
-        }
+            => content is not null ? ReplacePattern().Replace(content, XmlContentMatchEvaluator) : string.Empty;
 
         [GeneratedRegex(@"(?'mdash'&mdash;)|(?'ampersand'&)|(?'tag'</?\w+\s*(?'tagAttributes'([^>])*)>)")]
         private static partial Regex ReplacePattern();

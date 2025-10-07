@@ -19,9 +19,6 @@ namespace WebExtensions.Net.Generator.Repositories
             return entity;
         }
 
-        public IEnumerable<NamespaceEntity> GetAllNamespaceEntities()
-        {
-            return Entities;
-        }
+        public IEnumerable<NamespaceEntity> GetAllNamespaceEntities() => Entities;
     }
 }

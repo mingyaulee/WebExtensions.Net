@@ -2,20 +2,12 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class CommentParamCodeSectionConverter : ICodeSectionConverter
+    public class CommentParamCodeSectionConverter(string? paramName, string? description) : ICodeSectionConverter
     {
-        private readonly string? paramName;
-        private readonly string? description;
-
-        public CommentParamCodeSectionConverter(string? paramName, string? description)
-        {
-            this.paramName = paramName;
-            this.description = description;
-        }
+        private readonly string? paramName = paramName;
+        private readonly string? description = description;
 
         public void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options)
-        {
-            codeWriter.WriteLine($"/// <param name=\"{paramName}\">{description.ToXmlContent()}</param>");
-        }
+            => codeWriter.WriteLine($"/// <param name=\"{paramName}\">{description.ToXmlContent()}</param>");
     }
 }

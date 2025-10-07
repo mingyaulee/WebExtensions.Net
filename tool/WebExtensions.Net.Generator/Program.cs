@@ -64,21 +64,16 @@ namespace WebExtensions.Net.Generator
         }
 
         private static IConfigurationRoot GetConfiguration()
-        {
-            return new ConfigurationBuilder()
+            => new ConfigurationBuilder()
                .AddJsonFile("appsettings.json", false)
                .Build();
-        }
 
         private static void RegisterServices(IServiceCollection services)
         {
-            using var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder
+            using var loggerFactory = LoggerFactory.Create(builder => builder
                     .AddFilter("Microsoft", LogLevel.Warning)
                     .AddFilter("System", LogLevel.Warning)
-                    .AddSimpleConsole(options => options.SingleLine = true);
-            });
+                    .AddSimpleConsole(options => options.SingleLine = true));
             var logger = loggerFactory.CreateLogger("Generator");
             services.AddSingleton(logger);
             services.AddScoped<NamespaceDefinitionsManager>();

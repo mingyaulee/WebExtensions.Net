@@ -13,18 +13,11 @@ namespace WebExtensions.Net.Generator
     /// <summary>
     /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
     /// </summary>
-    public class NamespaceDefinitionsManager
+    public class NamespaceDefinitionsManager(NamespaceDefinitionsClient namespaceDefinitionsClient, SourceOptions sourceOptions, ILogger logger)
     {
-        private readonly NamespaceDefinitionsClient namespaceDefinitionsClient;
-        private readonly SourceOptions sourceOptions;
-        private readonly ILogger logger;
-
-        public NamespaceDefinitionsManager(NamespaceDefinitionsClient namespaceDefinitionsClient, SourceOptions sourceOptions, ILogger logger)
-        {
-            this.namespaceDefinitionsClient = namespaceDefinitionsClient;
-            this.sourceOptions = sourceOptions;
-            this.logger = logger;
-        }
+        private readonly NamespaceDefinitionsClient namespaceDefinitionsClient = namespaceDefinitionsClient;
+        private readonly SourceOptions sourceOptions = sourceOptions;
+        private readonly ILogger logger = logger;
 
         public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions()
         {

@@ -10,20 +10,18 @@ namespace WebExtensions.Net.Mock
     /// </summary>
     public static class MockResolvers
     {
-        internal static readonly IList<IMockResolver> Resolvers = new List<IMockResolver>()
-        {
+        internal static readonly IList<IMockResolver> Resolvers =
+        [
             new ConfiguredMockResolver(),
             new DefaultMockResolver()
-        };
+        ];
 
         /// <summary>
         /// Configures the mock resolver.
         /// </summary>
         /// <param name="configureAction">The action for configuration.</param>
         public static void Configure(Action<IMockConfigurator> configureAction)
-        {
-            ConfiguredMockResolver.AddConfigureAction(configureAction);
-        }
+            => ConfiguredMockResolver.AddConfigureAction(configureAction);
 
         internal static object InvokeApiHandler(string targetPath, object[] arguments)
         {

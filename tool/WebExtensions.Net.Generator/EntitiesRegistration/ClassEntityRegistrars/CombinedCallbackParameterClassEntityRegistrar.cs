@@ -3,14 +3,9 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
-    public class CombinedCallbackParameterClassEntityRegistrar : BaseClassEntityRegistrar
+    public class CombinedCallbackParameterClassEntityRegistrar(EntitiesContext entitiesContext, RegistrationOptions registrationOptions) : BaseClassEntityRegistrar(entitiesContext)
     {
-        private readonly RegistrationOptions registrationOptions;
-
-        public CombinedCallbackParameterClassEntityRegistrar(EntitiesContext entitiesContext, RegistrationOptions registrationOptions) : base(entitiesContext)
-        {
-            this.registrationOptions = registrationOptions;
-        }
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
 
         protected override ClassType GetClassType() => ClassType.CombinedCallbackParameterClass;
         protected override bool ShouldSortProperties() => false;

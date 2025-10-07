@@ -11,8 +11,8 @@ namespace WebExtensions.Net.Mock.Resolvers
     internal class DefaultMockResolver : IMockResolver
     {
         private static bool isConfigured;
-        public static readonly List<MockApiHandler> mockApiHandlers = new();
-        public static readonly List<MockObjectReferenceHandler> mockObjectReferenceHandlers = new();
+        public static readonly List<MockApiHandler> mockApiHandlers = [];
+        public static readonly List<MockObjectReferenceHandler> mockObjectReferenceHandlers = [];
 
         public bool TryInvokeApiHandler(string targetPath, object[] arguments, out object result)
         {

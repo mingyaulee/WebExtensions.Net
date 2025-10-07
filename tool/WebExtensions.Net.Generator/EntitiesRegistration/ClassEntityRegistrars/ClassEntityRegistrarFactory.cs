@@ -5,28 +5,16 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
-    public class ClassEntityRegistrarFactory
+    public class ClassEntityRegistrarFactory(IServiceProvider serviceProvider)
     {
-        private readonly TypeClassEntityRegistrar typeClassEntityRegistrar;
-        private readonly EventTypeClassEntityRegistrar eventTypeClassEntityRegistrar;
-        private readonly CombinedCallbackParameterClassEntityRegistrar combinedCallbackParameterClassEntityRegistrar;
-        private readonly EnumClassEntityRegistrar enumClassEntityRegistrar;
-        private readonly StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar;
-        private readonly ArrayClassEntityRegistrar arrayClassEntityRegistrar;
-        private readonly MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar;
-        private readonly EmptyClassEntityRegistrar emptyClassEntityRegistrar;
-
-        public ClassEntityRegistrarFactory(IServiceProvider serviceProvider)
-        {
-            typeClassEntityRegistrar = serviceProvider.GetRequiredService<TypeClassEntityRegistrar>();
-            eventTypeClassEntityRegistrar = serviceProvider.GetRequiredService<EventTypeClassEntityRegistrar>();
-            combinedCallbackParameterClassEntityRegistrar = serviceProvider.GetRequiredService<CombinedCallbackParameterClassEntityRegistrar>();
-            enumClassEntityRegistrar = serviceProvider.GetRequiredService<EnumClassEntityRegistrar>();
-            stringFormatClassEntityRegistrar = serviceProvider.GetRequiredService<StringFormatClassEntityRegistrar>();
-            arrayClassEntityRegistrar = serviceProvider.GetRequiredService<ArrayClassEntityRegistrar>();
-            multiTypeClassEntityRegistrar = serviceProvider.GetRequiredService<MultiTypeClassEntityRegistrar>();
-            emptyClassEntityRegistrar = serviceProvider.GetRequiredService<EmptyClassEntityRegistrar>();
-        }
+        private readonly TypeClassEntityRegistrar typeClassEntityRegistrar = serviceProvider.GetRequiredService<TypeClassEntityRegistrar>();
+        private readonly EventTypeClassEntityRegistrar eventTypeClassEntityRegistrar = serviceProvider.GetRequiredService<EventTypeClassEntityRegistrar>();
+        private readonly CombinedCallbackParameterClassEntityRegistrar combinedCallbackParameterClassEntityRegistrar = serviceProvider.GetRequiredService<CombinedCallbackParameterClassEntityRegistrar>();
+        private readonly EnumClassEntityRegistrar enumClassEntityRegistrar = serviceProvider.GetRequiredService<EnumClassEntityRegistrar>();
+        private readonly StringFormatClassEntityRegistrar stringFormatClassEntityRegistrar = serviceProvider.GetRequiredService<StringFormatClassEntityRegistrar>();
+        private readonly ArrayClassEntityRegistrar arrayClassEntityRegistrar = serviceProvider.GetRequiredService<ArrayClassEntityRegistrar>();
+        private readonly MultiTypeClassEntityRegistrar multiTypeClassEntityRegistrar = serviceProvider.GetRequiredService<MultiTypeClassEntityRegistrar>();
+        private readonly EmptyClassEntityRegistrar emptyClassEntityRegistrar = serviceProvider.GetRequiredService<EmptyClassEntityRegistrar>();
 
         public BaseClassEntityRegistrar? GetClassEntityRegistrar(TypeDefinition typeDefinition)
         {
@@ -67,9 +55,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
         }
 
         private static bool IsTypeClassEntity(TypeDefinition typeDefinition)
-        {
-            return typeDefinition.Type == ObjectType.Object || typeDefinition.Type == ObjectType.ApiObject;
-        }
+            => typeDefinition.Type is ObjectType.Object or ObjectType.ApiObject;
 
         private static bool IsEnumClassEntity(TypeDefinition typeDefinition)
         {
@@ -78,12 +64,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                 return true;
             }
 
-            if (typeDefinition.TypeChoices is not null && typeDefinition.TypeChoices.All(IsEnumClassEntity))
-            {
-                return true;
-            }
-
-            return false;
+            return typeDefinition.TypeChoices is not null && typeDefinition.TypeChoices.All(IsEnumClassEntity);
         }
 
         private static bool IsStringFormatClassEntity(TypeDefinition typeDefinition)
@@ -93,17 +74,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                 return true;
             }
 
-            if (typeDefinition.Type == ObjectType.String && !string.IsNullOrEmpty(typeDefinition.StringPattern))
-            {
-                return true;
-            }
-            
-            return false;
+            return typeDefinition.Type == ObjectType.String && !string.IsNullOrEmpty(typeDefinition.StringPattern);
         }
 
         private static bool IsArrayClassEntity(TypeDefinition typeDefinition)
-        {
-            return typeDefinition.Type == ObjectType.Array && typeDefinition.ArrayItems is not null;
-        }
+            => typeDefinition.Type == ObjectType.Array && typeDefinition.ArrayItems is not null;
     }
 }

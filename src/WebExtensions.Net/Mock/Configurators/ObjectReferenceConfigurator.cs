@@ -35,12 +35,9 @@ namespace WebExtensions.Net.Mock.Configurators
             InvokeExpression(expression);
             if (MockConfigurationContext.TryGetObjectReferenceInvoked(out var obj, out var targetPath))
             {
-                if (!objectReference.Equals(obj))
-                {
-                    throw new InvalidOperationException("Object reference invoked is different from the object reference configured.");
-                }
-
-                return new MockObjectReferenceHandler()
+                return !objectReference.Equals(obj)
+                    ? throw new InvalidOperationException("Object reference invoked is different from the object reference configured.")
+                    : (IMockHandler)new MockObjectReferenceHandler()
                 {
                     ObjectReference = obj,
                     TargetPath = targetPath

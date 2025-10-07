@@ -9,29 +9,20 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class NamespaceApiToTypeDefinitionConverter
+    public class NamespaceApiToTypeDefinitionConverter(EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter, RegistrationOptions registrationOptions)
     {
-        private readonly EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter;
-        private readonly RegistrationOptions registrationOptions;
+        private readonly EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter = eventDefinitionToPropertyDefinitionConverter;
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
 
-        public NamespaceApiToTypeDefinitionConverter(EventDefinitionToPropertyDefinitionConverter eventDefinitionToPropertyDefinitionConverter, RegistrationOptions registrationOptions)
+        public TypeDefinition Convert(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity) => new()
         {
-            this.eventDefinitionToPropertyDefinitionConverter = eventDefinitionToPropertyDefinitionConverter;
-            this.registrationOptions = registrationOptions;
-        }
-
-        public TypeDefinition Convert(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
-        {
-            return new TypeDefinition()
-            {
-                Id = namespaceEntity.FormattedName + registrationOptions.ApiClassNameSuffix,
-                Description = namespaceDefinition.Description,
-                Deprecated = namespaceDefinition.Deprecated,
-                Type = ObjectType.Object,
-                ObjectFunctions = namespaceDefinition.Functions,
-                ObjectProperties = GetNamespaceApiPropertyDefinitions(namespaceDefinition, namespaceEntity),
-            };
-        }
+            Id = namespaceEntity.FormattedName + registrationOptions.ApiClassNameSuffix,
+            Description = namespaceDefinition.Description,
+            Deprecated = namespaceDefinition.Deprecated,
+            Type = ObjectType.Object,
+            ObjectFunctions = namespaceDefinition.Functions,
+            ObjectProperties = GetNamespaceApiPropertyDefinitions(namespaceDefinition, namespaceEntity),
+        };
 
         private Dictionary<string, PropertyDefinition>? GetNamespaceApiPropertyDefinitions(NamespaceDefinition namespaceDefinition, NamespaceEntity namespaceEntity)
         {

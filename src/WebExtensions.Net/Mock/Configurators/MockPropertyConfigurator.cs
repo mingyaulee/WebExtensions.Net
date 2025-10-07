@@ -6,21 +6,12 @@ namespace WebExtensions.Net.Mock.Configurators
 {
     /// <summary>Mock property configurator.</summary>
     /// <typeparam name="T">The property type.</typeparam>
-    public class MockPropertyConfigurator<T>
+    /// <param name="mockHandlers">The list of mock handlers.</param>
+    /// <param name="mockHandler">The mock handler to configure</param>
+    public class MockPropertyConfigurator<T>(IList<IMockHandler> mockHandlers, IMockHandler mockHandler)
     {
-        private readonly IList<IMockHandler> mockHandlers;
-        private readonly IMockHandler mockHandler;
-
-        /// <summary>
-        /// Creates a new instance of MockPropertyConfigurator
-        /// </summary>
-        /// <param name="mockHandlers">The list of mock handlers.</param>
-        /// <param name="mockHandler">The mock handler to configure</param>
-        public MockPropertyConfigurator(IList<IMockHandler> mockHandlers, IMockHandler mockHandler)
-        {
-            this.mockHandlers = mockHandlers;
-            this.mockHandler = mockHandler;
-        }
+        private readonly IList<IMockHandler> mockHandlers = mockHandlers;
+        private readonly IMockHandler mockHandler = mockHandler;
 
         /// <summary>Sets an object to be returned from this mock.</summary>
         /// <param name="returnThis">The object to return.</param>

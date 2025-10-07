@@ -3,18 +3,11 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.alarms API")]
-    public class AlarmsApiTests
+    public class AlarmsApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testAlarmName;
-        private readonly DateTime testAlarmTime;
-
-        public AlarmsApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testAlarmName = Guid.NewGuid().ToString();
-            testAlarmTime = DateTime.UtcNow.AddMinutes(10);
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testAlarmName = Guid.NewGuid().ToString();
+        private readonly DateTime testAlarmTime = DateTime.UtcNow.AddMinutes(10);
 
         [Fact(Order = 1)]
         public void Create()

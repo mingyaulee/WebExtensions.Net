@@ -11,19 +11,12 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator
 {
-    public class FilesManager
+    public class FilesManager(ILogger logger, CodeWriterOptions options, EntitiesContext entitiesContext)
     {
         private const string GENERATED_FILE_NAME = "generated.txt";
-        private readonly ILogger logger;
-        private readonly CodeWriterOptions options;
-        private readonly EntitiesContext entitiesContext;
-
-        public FilesManager(ILogger logger, CodeWriterOptions options, EntitiesContext entitiesContext)
-        {
-            this.logger = logger;
-            this.options = options;
-            this.entitiesContext = entitiesContext;
-        }
+        private readonly ILogger logger = logger;
+        private readonly CodeWriterOptions options = options;
+        private readonly EntitiesContext entitiesContext = entitiesContext;
 
         public bool CleanDirectory()
         {
@@ -149,13 +142,6 @@ namespace WebExtensions.Net.Generator
         }
 
         private static string NormalizePath(string? path)
-        {
-            if (path is null)
-            {
-                return string.Empty;
-            }
-
-            return path.Replace('.', Path.DirectorySeparatorChar);
-        }
+            => path is null ? string.Empty : path.Replace('.', Path.DirectorySeparatorChar);
     }
 }

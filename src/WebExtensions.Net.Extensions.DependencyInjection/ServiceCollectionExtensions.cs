@@ -3,7 +3,9 @@ using JsBind.Net;
 using WebExtensions.Net;
 using WebExtensions.Net.Mock;
 
+#pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace Microsoft.Extensions.DependencyInjection
+#pragma warning restore IDE0130 // Namespace does not match folder structure
 {
     /// <summary>
     /// Extension method for service registration.

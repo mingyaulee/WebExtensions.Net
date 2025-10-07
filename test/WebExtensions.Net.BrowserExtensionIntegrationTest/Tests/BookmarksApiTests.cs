@@ -3,20 +3,13 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.bookmarks API")]
-    public class BookmarksApiTests
+    public class BookmarksApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testBookmarkTitle;
-        private readonly string testBookmarkUrl;
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testBookmarkTitle = Guid.NewGuid().ToString();
+        private readonly string testBookmarkUrl = $"https://non-existent-url.com/?id={Guid.NewGuid()}";
         private string testBookmarkId;
         private string testBookmarkFolderId;
-
-        public BookmarksApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testBookmarkTitle = Guid.NewGuid().ToString();
-            testBookmarkUrl = $"https://non-existent-url.com/?id={Guid.NewGuid()}";
-        }
 
         [Fact(Order = 1)]
         public async Task Create()

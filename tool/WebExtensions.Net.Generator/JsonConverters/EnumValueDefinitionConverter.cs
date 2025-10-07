@@ -16,7 +16,7 @@ namespace WebExtensions.Net.Generator.JsonConverters
                     Name = reader.GetString()
                 };
             }
-            else if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False)
+            else if (reader.TokenType is JsonTokenType.True or JsonTokenType.False)
             {
                 return new EnumValueDefinition()
                 {

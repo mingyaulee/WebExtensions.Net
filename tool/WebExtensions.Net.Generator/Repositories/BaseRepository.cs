@@ -8,12 +8,9 @@ namespace WebExtensions.Net.Generator.Repositories
 
         public BaseRepository()
         {
-            Entities = new List<TEntity>();
+            Entities = [];
         }
 
-        public void Clear()
-        {
-            Entities.Clear();
-        }
+        public void Clear() => Entities.Clear();
     }
 }

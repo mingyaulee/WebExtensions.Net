@@ -36,8 +36,8 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
             var tab = await webExtensionsApi.Tabs.GetCurrent();
 
             // Act
-            Func<object[]> accessProperties = () => new object[]
-            {
+            Func<object[]> accessProperties = () =>
+            [
                 tab.Active,
                 tab.Attention,
                 tab.Audible,
@@ -70,7 +70,7 @@ namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
                 tab.Url,
                 tab.Width,
                 tab.WindowId
-            };
+            ];
 
             // Assert
             accessProperties.ShouldNotThrow();

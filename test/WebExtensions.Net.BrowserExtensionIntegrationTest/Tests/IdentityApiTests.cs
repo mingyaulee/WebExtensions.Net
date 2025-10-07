@@ -3,16 +3,10 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.identity API")]
-    public class IdentityApiTests
+    public class IdentityApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testIdentityRedirectUrl;
-
-        public IdentityApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testIdentityRedirectUrl = "https://non-existent-url.com";
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testIdentityRedirectUrl = "https://non-existent-url.com";
 
         [Fact]
         public void GetRedirectURL()

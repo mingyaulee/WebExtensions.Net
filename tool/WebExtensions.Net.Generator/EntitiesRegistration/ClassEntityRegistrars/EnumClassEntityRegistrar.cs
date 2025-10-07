@@ -8,14 +8,9 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
-    public class EnumClassEntityRegistrar : BaseClassEntityRegistrar
+    public class EnumClassEntityRegistrar(EntitiesContext entitiesContext, RegistrationOptions registrationOptions) : BaseClassEntityRegistrar(entitiesContext)
     {
-        private readonly RegistrationOptions registrationOptions;
-
-        public EnumClassEntityRegistrar(EntitiesContext entitiesContext, RegistrationOptions registrationOptions) : base(entitiesContext)
-        {
-            this.registrationOptions = registrationOptions;
-        }
+        private readonly RegistrationOptions registrationOptions = registrationOptions;
 
         protected override ClassType GetClassType() => ClassType.EnumClass;
         protected override bool ShouldSortProperties() => false;
@@ -29,7 +24,7 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 
             if (typeEntity.Definition.TypeChoices is not null)
             {
-                AddEnumValueProperties(typeEntity.Definition.TypeChoices.SelectMany(typeChoice => typeChoice.EnumValues ?? Enumerable.Empty<EnumValueDefinition>()), classProperties);
+                AddEnumValueProperties(typeEntity.Definition.TypeChoices.SelectMany(typeChoice => typeChoice.EnumValues ?? []), classProperties);
             }
 
             if (registrationOptions.EnumClassExtensions is not null &&

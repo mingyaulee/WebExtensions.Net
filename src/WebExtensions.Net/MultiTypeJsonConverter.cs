@@ -14,7 +14,7 @@ namespace WebExtensions.Net
         /// <inheritdoc/>
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.Null || reader.TokenType == JsonTokenType.None)
+            if (reader.TokenType is JsonTokenType.Null or JsonTokenType.None)
             {
                 reader.Read();
                 return null;
@@ -26,8 +26,6 @@ namespace WebExtensions.Net
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value?.Value, options);
-        }
+            => JsonSerializer.Serialize(writer, value?.Value, options);
     }
 }

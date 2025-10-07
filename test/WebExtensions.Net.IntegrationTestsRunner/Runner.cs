@@ -39,10 +39,7 @@ namespace WebExtensions.Net.IntegrationTestsRunner
                 var browser = await LaunchBrowser(playwright, currentDirectory, extensionPath);
                 var page = await browser.RunAndWaitForPageAsync(static () => Task.CompletedTask);
                 var consoleMessages = new List<string>();
-                page.Console += (_, message) =>
-                {
-                    consoleMessages.Add(message.Text);
-                };
+                page.Console += (_, message) => consoleMessages.Add(message.Text);
                 await LaunchTestPage(page);
                 await WaitForTestToFinish(page, consoleMessages);
 

@@ -9,14 +9,9 @@ using WebExtensions.Net.Generator.Repositories;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
 {
-    public abstract class BaseClassEntityRegistrar
+    public abstract class BaseClassEntityRegistrar(EntitiesContext entitiesContext)
     {
-        private readonly EntitiesContext entitiesContext;
-
-        protected BaseClassEntityRegistrar(EntitiesContext entitiesContext)
-        {
-            this.entitiesContext = entitiesContext;
-        }
+        private readonly EntitiesContext entitiesContext = entitiesContext;
 
         protected abstract ClassType GetClassType();
         protected virtual string? GetBaseClassName() => null;
@@ -32,10 +27,10 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             AddClassFunctions(typeEntity, classFunctions);
             AddClassProperties(typeEntity, classProperties);
 
-            classFunctions = classFunctions.OrderBy(classFunction => classFunction.Name).ToList();
+            classFunctions = [.. classFunctions.OrderBy(classFunction => classFunction.Name)];
             if (ShouldSortProperties())
             {
-                classProperties = classProperties.OrderBy(propertyDefinitionPair => propertyDefinitionPair.Key).ToList();
+                classProperties = [.. classProperties.OrderBy(propertyDefinitionPair => propertyDefinitionPair.Key)];
             }
 
             AddFunctionsToClassEntity(classFunctions, classEntity);
@@ -125,13 +120,11 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
             if (!parameterDefinitions.Any())
             {
                 // return 1 combination of no parameters
-                return new[] { Enumerable.Empty<ParameterDefinition>() };
+                return [[]];
             }
-            var parameters = parameterDefinitions.Select(parameterDefinition =>
-            {
-                if (parameterDefinition.TypeChoices is not null)
-                {
-                    return parameterDefinition.TypeChoices.Select(typeChoice =>
+            var parameters = parameterDefinitions.Select(parameterDefinition
+                => parameterDefinition.TypeChoices is not null
+                    ? parameterDefinition.TypeChoices.Select(typeChoice =>
                     {
                         var subParameterDefinition = SerializationHelper.DeserializeTo<ParameterDefinition>(typeChoice);
                         subParameterDefinition.Name = parameterDefinition.Name;
@@ -139,10 +132,8 @@ namespace WebExtensions.Net.Generator.EntitiesRegistration.ClassEntityRegistrars
                         subParameterDefinition.Optional = parameterDefinition.Optional;
                         subParameterDefinition.Default = parameterDefinition.Default;
                         return subParameterDefinition;
-                    });
-                }
-                return new[] { parameterDefinition };
-            }).ToArray();
+                    })
+                    : [parameterDefinition]).ToArray();
             return parameters.GetCombinations();
         }
 

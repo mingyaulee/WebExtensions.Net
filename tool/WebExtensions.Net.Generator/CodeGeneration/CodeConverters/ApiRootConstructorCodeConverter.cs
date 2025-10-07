@@ -1,13 +1,8 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiRootConstructorCodeConverter : ICodeConverter
+    public class ApiRootConstructorCodeConverter(string apiRootName) : ICodeConverter
     {
-        private readonly string apiRootName;
-
-        public ApiRootConstructorCodeConverter(string apiRootName)
-        {
-            this.apiRootName = apiRootName;
-        }
+        private readonly string apiRootName = apiRootName;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

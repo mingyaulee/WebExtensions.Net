@@ -2,21 +2,14 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class EnumPropertyCodeConverter : ICodeConverter
+    public class EnumPropertyCodeConverter(ClrEnumValueInfo clrEnumValueInfo) : ICodeConverter
     {
-        private readonly ClrEnumValueInfo clrEnumValueInfo;
-
-        public EnumPropertyCodeConverter(ClrEnumValueInfo clrEnumValueInfo)
-        {
-            this.clrEnumValueInfo = clrEnumValueInfo;
-        }
+        private readonly ClrEnumValueInfo clrEnumValueInfo = clrEnumValueInfo;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-        {
-            codeWriter.PublicProperties
+            => codeWriter.PublicProperties
                 .WriteWithConverter(new CommentSummaryCodeConverter(!string.IsNullOrEmpty(clrEnumValueInfo.Description) ? clrEnumValueInfo.Description : clrEnumValueInfo.Name))
                 .WriteLine($"[EnumValue(\"{clrEnumValueInfo.Name}\")]")
                 .WriteLine($"{clrEnumValueInfo.CSharpName},");
-        }
     }
 }

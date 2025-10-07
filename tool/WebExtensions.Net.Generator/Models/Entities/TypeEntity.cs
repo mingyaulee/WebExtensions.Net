@@ -15,7 +15,7 @@ namespace WebExtensions.Net.Generator.Models.Entities
             FormattedName = Id.ToCapitalCase();
             NamespaceEntity = namespaceEntity;
             Definition = typeDefinition;
-            Extensions = new List<TypeDefinition>();
+            Extensions = [];
         }
 
         public string Id { get; }

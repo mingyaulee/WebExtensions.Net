@@ -40,13 +40,9 @@ namespace WebExtensions.Net
                         }
 
                         var typeContructor = GetOrCreateTypeContructor(parameterInfo.ParameterType);
-                        if (typeContructor.multiTypeConstructors is not null)
-                        {
-                            return typeContructor.multiTypeConstructors.Select(typeChoice => (typeChoice.Type, new TypeConstructor(constructor, typeChoice.TypeConstructor)));
-                        }
-
-                        return [(parameterInfo.ParameterType, new TypeConstructor(constructor, typeContructor))];
-                    })
+                        return typeContructor.multiTypeConstructors is not null
+                            ? typeContructor.multiTypeConstructors.Select(typeChoice => (typeChoice.Type, new TypeConstructor(constructor, typeChoice.TypeConstructor)))
+                            : [(parameterInfo.ParameterType, new TypeConstructor(constructor, typeContructor))]; })
                     .OrderBy(OrderTypeChoice)];
             }
             else
@@ -87,12 +83,7 @@ namespace WebExtensions.Net
                 };
             }
 
-            if (multiTypeConstructors is not null)
-            {
-                return multiTypeConstructors.Exists(typeChoice => typeChoice.TypeConstructor.IsCompatible(value));
-            }
-
-            return true;
+            return multiTypeConstructors is null || multiTypeConstructors.Exists(typeChoice => typeChoice.TypeConstructor.IsCompatible(value));
         }
 
         private object CreateInstance(JsonElement value, JsonSerializerOptions options)
@@ -113,12 +104,7 @@ namespace WebExtensions.Net
                 return CreateMultiType(value, options);
             }
 
-            if (objectType == typeof(object))
-            {
-                return CreatePrimitive(value, null, options);
-            }
-
-            return JsonSerializer.Deserialize(value, objectType, options);
+            return objectType == typeof(object) ? CreatePrimitive(value, null, options) : JsonSerializer.Deserialize(value, objectType, options);
         }
 
         private static object CreatePrimitive(JsonElement value, Type type, JsonSerializerOptions options)
@@ -128,7 +114,7 @@ namespace WebExtensions.Net
                 return null;
             }
 
-            if (value.ValueKind == JsonValueKind.True || value.ValueKind == JsonValueKind.False)
+            if (value.ValueKind is JsonValueKind.True or JsonValueKind.False)
             {
                 return value.ValueKind == JsonValueKind.True;
             }
@@ -155,19 +141,14 @@ namespace WebExtensions.Net
         }
 
         private static object GetNumericValue(JsonElement value, Type type)
-        {
-            if (TryParseNumeric<short>(type, value.TryGetInt16, out var numericValue) ||
+            => TryParseNumeric<short>(type, value.TryGetInt16, out var numericValue) ||
                 TryParseNumeric<int>(type, value.TryGetInt32, out numericValue) ||
                 TryParseNumeric<long>(type, value.TryGetInt64, out numericValue) ||
                 TryParseNumeric<float>(type, value.TryGetSingle, out numericValue) ||
                 TryParseNumeric<decimal>(type, value.TryGetDecimal, out numericValue) ||
-                TryParseNumeric<double>(type, value.TryGetDouble, out numericValue))
-            {
-                return numericValue;
-            }
-
-            return null;
-        }
+                TryParseNumeric<double>(type, value.TryGetDouble, out numericValue)
+                ? numericValue
+                : null;
 
         private delegate bool TryGetNumericValue<T>(out T value);
 
@@ -198,29 +179,22 @@ namespace WebExtensions.Net
         }
 
         private static bool IsPrimitive(Type type)
-        {
-            return type.IsPrimitive ||
+            => type.IsPrimitive ||
                 IsStringJsonType(type);
-        }
 
         private static bool IsStringFormat(Type type)
             => typeof(BaseStringFormat).IsAssignableFrom(type);
 
         private static bool IsNullablePrimitive(Type type)
-        {
-            return type.IsGenericType &&
+            => type.IsGenericType &&
                 type.GetGenericTypeDefinition() == typeof(Nullable<>) &&
                 IsPrimitive(type.GenericTypeArguments[0]);
-        }
 
         private static bool IsStringJsonType(Type type)
-        {
-            return
-                type.IsEnum ||
+            => type.IsEnum ||
                 type == typeof(string) ||
                 type == typeof(Guid) ||
                 type == typeof(DateTime);
-        }
 
         private static bool IsValidStringFormat(string valueString, Type type, out object value)
         {
@@ -252,9 +226,7 @@ namespace WebExtensions.Net
         }
 
         public static object CreateInstance(Type type, JsonElement value, JsonSerializerOptions options)
-        {
-            return GetOrCreateTypeContructor(type).CreateInstance(value, options);
-        }
+            => GetOrCreateTypeContructor(type).CreateInstance(value, options);
 
         private static TypeConstructor GetOrCreateTypeContructor(Type type)
         {

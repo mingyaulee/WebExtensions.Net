@@ -3,20 +3,12 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.extension API")]
-    public class HistoryApiTests
+    public class HistoryApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testHistoryUrl;
-        private readonly string testHistorySearchText;
-        private readonly DateTime testHistoryTime;
-
-        public HistoryApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testHistoryUrl = "https://non-existent-url.com/";
-            testHistorySearchText = "non-existent-url";
-            testHistoryTime = DateTime.UtcNow;
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testHistoryUrl = "https://non-existent-url.com/";
+        private readonly string testHistorySearchText = "non-existent-url";
+        private readonly DateTime testHistoryTime = DateTime.UtcNow;
 
         [Fact(Order = 1)]
         public async Task AddUrl()

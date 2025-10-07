@@ -13,7 +13,7 @@ namespace WebExtensions.Net.Generator.Extensions
             }
             if (arrays.Count() == 1)
             {
-                return arrays.First().Select(item => new[] { item }).ToArray();
+                return [.. arrays.First().Select(item => new[] { item })];
             }
             var firstArray = arrays.First();
             var restArray = arrays.Skip(1).ToArray();

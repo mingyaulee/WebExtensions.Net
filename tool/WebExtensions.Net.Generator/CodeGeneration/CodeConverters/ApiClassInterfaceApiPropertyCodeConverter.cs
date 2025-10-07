@@ -2,22 +2,15 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiClassInterfaceApiPropertyCodeConverter : ICodeConverter
+    public class ApiClassInterfaceApiPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
     {
-        private readonly ClrPropertyInfo clrPropertyInfo;
-
-        public ApiClassInterfaceApiPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
-        {
-            this.clrPropertyInfo = clrPropertyInfo;
-        }
+        private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-        {
-            codeWriter.PublicProperties
+            => codeWriter.PublicProperties
                 .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
                 .WriteWithConverter(new AttributeJsAccessPathCodeConverter((string)clrPropertyInfo.PropertyType.Metadata[Constants.TypeMetadata.ApiNamespace]))
                 .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
                 .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
-        }
     }
 }

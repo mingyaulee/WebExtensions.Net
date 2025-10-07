@@ -3,14 +3,9 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiInterfacePropertyCodeConverter : ICodeConverter
+    public class ApiInterfacePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
     {
-        private readonly ClrPropertyInfo clrPropertyInfo;
-
-        public ApiInterfacePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
-        {
-            this.clrPropertyInfo = clrPropertyInfo;
-        }
+        private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {

@@ -13,7 +13,7 @@ namespace WebExtensions.Net.Generator.Extensions
             enumerableClrType.IsGenericType = true;
             enumerableClrType.IsInterface = true;
             enumerableClrType.IsNullable = true;
-            enumerableClrType.GenericTypeArguments = new[] { clrTypeInfo };
+            enumerableClrType.GenericTypeArguments = [clrTypeInfo];
 #pragma warning disable CS8601 // Possible null reference assignment.
             enumerableClrType.FullName = typeof(IEnumerable<>).FullName;
 #pragma warning restore CS8601 // Possible null reference assignment.

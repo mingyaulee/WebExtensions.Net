@@ -15,18 +15,13 @@ namespace WebExtensions.Net
         public override EnumType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var stringValue = reader.GetString();
-            if (stringValue is not null && EnumValueAttribute.GetEnumValues(typeof(EnumType)).TryGetValue(stringValue, out var enumValue))
-            {
-                return (EnumType)enumValue;
-            }
-
-            throw new JsonException($"Invalid enum value of '{stringValue}' for type '{typeof(EnumType).Name}'.");
+            return stringValue is not null && EnumValueAttribute.GetEnumValues(typeof(EnumType)).TryGetValue(stringValue, out var enumValue)
+                ? (EnumType)enumValue
+                : throw new JsonException($"Invalid enum value of '{stringValue}' for type '{typeof(EnumType).Name}'.");
         }
 
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, EnumType value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(EnumValueAttribute.GetEnumValues(typeof(EnumType)).SingleOrDefault(mapping => mapping.Value.Equals(value)).Key);
-        }
+            => writer.WriteStringValue(EnumValueAttribute.GetEnumValues(typeof(EnumType)).SingleOrDefault(mapping => mapping.Value.Equals(value)).Key);
     }
 }

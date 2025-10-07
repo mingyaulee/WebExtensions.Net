@@ -7,7 +7,7 @@ namespace WebExtensions.Net
     /// Represents the Epoch time/Unix timestamp, can be created from an instance of <see cref="DateTime" /> or <see cref="double"/>.
     /// </summary>
     [JsonConverter(typeof(EpochTimeConverter))]
-    public struct EpochTime
+    public readonly struct EpochTime
     {
         private static readonly DateTime epoch = DateTime.UnixEpoch;
         private readonly DateTime dateTimeValue;
@@ -18,10 +18,7 @@ namespace WebExtensions.Net
         }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return dateTimeValue.ToString();
-        }
+        public override string ToString() => dateTimeValue.ToString();
 
         /// <summary>Converts from <see cref="EpochTime" /> to <see cref="DateTime" />.</summary>
         /// <param name="value">The value to convert from.</param>

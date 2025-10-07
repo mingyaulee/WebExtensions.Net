@@ -2,12 +2,8 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiMethodCodeConverter : BaseMethodCodeConverter, ICodeConverter
+    public class ApiMethodCodeConverter(ClrMethodInfo clrMethodInfo) : BaseMethodCodeConverter(clrMethodInfo), ICodeConverter
     {
-        public ApiMethodCodeConverter(ClrMethodInfo clrMethodInfo) : base(clrMethodInfo)
-        {
-        }
-
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
             if (clrMethodInfo.IsAsync)
@@ -15,12 +11,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                 codeWriter.WriteUsingStatement("System.Threading.Tasks");
             }
 
-            var metadata = GetMethodMetadata();
+            var (MethodArguments, MethodReturnType, ClientMethodInvokeArguments, ClientMethodInvoke) = GetMethodMetadata();
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentInheritDocCodeConverter())
                 .WriteWithConverter(clrMethodInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrMethodInfo.ObsoleteMessage) : null)
-                .WriteLine($"public virtual {metadata.MethodReturnType} {clrMethodInfo.PublicName}({metadata.MethodArguments})")
-                .WriteLine($"    => {metadata.ClientMethodInvoke}(\"{clrMethodInfo.Name}\"{metadata.ClientMethodInvokeArguments});");
+                .WriteLine($"public virtual {MethodReturnType} {clrMethodInfo.PublicName}({MethodArguments})")
+                .WriteLine($"    => {ClientMethodInvoke}(\"{clrMethodInfo.Name}\"{ClientMethodInvokeArguments});");
         }
     }
 }

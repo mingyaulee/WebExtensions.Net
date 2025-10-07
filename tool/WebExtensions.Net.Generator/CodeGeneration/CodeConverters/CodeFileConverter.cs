@@ -2,14 +2,9 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class CodeFileConverter : ICodeConverter
+    public class CodeFileConverter(CodeFile codeFile) : ICodeConverter
     {
-        public CodeFile CodeFile { get; }
-
-        public CodeFileConverter(CodeFile codeFile)
-        {
-            CodeFile = codeFile;
-        }
+        public CodeFile CodeFile { get; } = codeFile;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
@@ -19,9 +14,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
         }
 
         private void WriteUsingStatements(CodeWriter codeWriter)
-        {
-            codeWriter.WriteUsingStatement(CodeFile.UsingNamespaces);
-        }
+            => codeWriter.WriteUsingStatement(CodeFile.UsingNamespaces);
 
         private void WriteCodeConverters(CodeWriter codeWriter, CodeWriterOptions options)
         {

@@ -4,18 +4,11 @@ using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.commands API")]
-    public class CommandsApiTests
+    public class CommandsApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
-        private readonly string testCommandName;
-        private readonly string testCommandDescription;
-
-        public CommandsApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-            testCommandName = "dummy-command";
-            testCommandDescription = "This is a dummy command";
-        }
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        private readonly string testCommandName = "dummy-command";
+        private readonly string testCommandDescription = "This is a dummy command";
 
         [Fact]
         public async Task GetAll()

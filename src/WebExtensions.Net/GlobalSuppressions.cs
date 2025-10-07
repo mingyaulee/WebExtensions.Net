@@ -8,3 +8,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtensions.Net.ExtensionTypes.Rect.X")]
 [assembly: SuppressMessage("Maintainability", "CA1507:Use nameof to express symbol names", Justification = "Code is generated", Scope = "member", Target = "~P:WebExtensions.Net.ExtensionTypes.Rect.Y")]
 [assembly: SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "I18n is in Pascal case", Scope = "type", Target = "~T:WebExtensions.Net.I18n.I18nApi")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Code is generated", Scope = "module")]

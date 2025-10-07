@@ -5,21 +5,12 @@ using WebExtensions.Net.Generator.Models.Schema;
 namespace WebExtensions.Net.Generator.Models.Entities
 {
     [DebuggerDisplay("{Name}")]
-    public class AnonymousTypeEntityRegistrationInfo
+    public class AnonymousTypeEntityRegistrationInfo(IEnumerable<string> nameHierarchy, TypeReference typeReference, NamespaceEntity namespaceEntity)
     {
-        public AnonymousTypeEntityRegistrationInfo(IEnumerable<string> nameHierarchy, TypeReference typeReference, NamespaceEntity namespaceEntity)
-        {
-            Name = string.Join('.', nameHierarchy);
-            NameHierarchy = nameHierarchy;
-            TypeReference = typeReference;
-            OtherReferences = [];
-            NamespaceEntity = namespaceEntity;
-        }
-
-        public string Name { get; }
-        public IEnumerable<string> NameHierarchy { get; set; }
-        public TypeReference TypeReference { get; }
-        public ICollection<TypeReference> OtherReferences { get; }
-        public NamespaceEntity NamespaceEntity { get; }
+        public string Name { get; } = string.Join('.', nameHierarchy);
+        public IEnumerable<string> NameHierarchy { get; set; } = nameHierarchy;
+        public TypeReference TypeReference { get; } = typeReference;
+        public ICollection<TypeReference> OtherReferences { get; } = [];
+        public NamespaceEntity NamespaceEntity { get; } = namespaceEntity;
     }
 }

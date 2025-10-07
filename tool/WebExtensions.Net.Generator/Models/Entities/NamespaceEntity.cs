@@ -15,8 +15,8 @@ namespace WebExtensions.Net.Generator.Models.Entities
             FullName = fullName;
             FormattedName = name.ToCapitalCase();
             FullFormattedName = parentEntity is null ? FormattedName : $"{parentEntity.FullFormattedName}.{FormattedName}";
-            NamespaceDefinitions = new List<NamespaceDefinition>();
-            OriginalNamespaceDefinitions = new List<NamespaceDefinition>();
+            NamespaceDefinitions = [];
+            OriginalNamespaceDefinitions = [];
         }
 
         public NamespaceEntity? Parent { get; }

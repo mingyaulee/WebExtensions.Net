@@ -36,10 +36,7 @@ namespace WebExtensions.Net
         public string Value { get; }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return Value;
-        }
+        public override string ToString() => Value;
 
         internal static bool IsValid(string value, Type type)
         {
@@ -67,14 +64,7 @@ namespace WebExtensions.Net
         }
 
         internal static object TryCreate(string value, Type type)
-        {
-            if (IsValid(value, type))
-            {
-                return Activator.CreateInstance(type, value);
-            }
-
-            return null;
-        }
+            => IsValid(value, type) ? Activator.CreateInstance(type, value) : null;
 
         private static bool IsValidFormat(string value, string format)
         {
@@ -102,8 +92,6 @@ namespace WebExtensions.Net
         }
 
         private static bool IsValidPattern(string value, string pattern)
-        {
-            return Regex.IsMatch(value, pattern, RegexOptions.None, TimeSpan.FromSeconds(30));
-        }
+            => Regex.IsMatch(value, pattern, RegexOptions.None, TimeSpan.FromSeconds(30));
     }
 }

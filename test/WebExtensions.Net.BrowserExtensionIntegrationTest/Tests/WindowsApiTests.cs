@@ -3,15 +3,10 @@
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
 {
     [TestClass(Description = "browser.windows API")]
-    public class WindowsApiTests
+    public class WindowsApiTests(IWebExtensionsApi webExtensionsApi)
     {
-        private readonly IWebExtensionsApi webExtensionsApi;
+        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
         private int? testWindowId;
-
-        public WindowsApiTests(IWebExtensionsApi webExtensionsApi)
-        {
-            this.webExtensionsApi = webExtensionsApi;
-        }
 
         [Fact(Order = 1)]
         public async Task Create()

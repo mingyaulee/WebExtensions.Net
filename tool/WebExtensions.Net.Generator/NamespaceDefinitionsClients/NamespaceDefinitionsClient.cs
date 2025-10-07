@@ -15,16 +15,10 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
     /// <summary>
     /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
     /// </summary>
-    public class NamespaceDefinitionsClient : IDisposable
+    public class NamespaceDefinitionsClient(ILogger logger) : IDisposable
     {
-        private readonly ILogger logger;
-        private readonly HttpClient httpClient;
-
-        public NamespaceDefinitionsClient(ILogger logger)
-        {
-            this.logger = logger;
-            httpClient = new HttpClient();
-        }
+        private readonly ILogger logger = logger;
+        private readonly HttpClient httpClient = new();
 
         public void Dispose()
         {
@@ -32,10 +26,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            ((IDisposable)httpClient).Dispose();
-        }
+        protected virtual void Dispose(bool disposing) => ((IDisposable)httpClient).Dispose();
 
         public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions(IEnumerable<ApiDefinitionSource> sources, IEnumerable<NamespaceSourceDefinition> additionalNamespaceSourceDefinitions, bool runInParallel)
         {
@@ -45,10 +36,7 @@ namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
             if (runInParallel)
             {
                 var unorderedNamespaceDefinitions = new ConcurrentDictionary<long, IEnumerable<NamespaceDefinition>>();
-                Parallel.ForEach(namespaceSourceDefinitions, (namespaceSourceDefinition, _, i) =>
-                {
-                    unorderedNamespaceDefinitions[i] = GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult();
-                });
+                Parallel.ForEach(namespaceSourceDefinitions, (namespaceSourceDefinition, _, i) => unorderedNamespaceDefinitions[i] = GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult());
                 namespaceDefinitions.AddRange(unorderedNamespaceDefinitions.OrderBy(item => item.Key).SelectMany(item => item.Value));
             }
             else

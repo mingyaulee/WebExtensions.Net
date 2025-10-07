@@ -2,19 +2,12 @@
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiRootInterfacePropertyCodeConverter : ICodeConverter
+    public class ApiRootInterfacePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
     {
-        private readonly ClrPropertyInfo clrPropertyInfo;
-
-        public ApiRootInterfacePropertyCodeConverter(ClrPropertyInfo clrPropertyInfo)
-        {
-            this.clrPropertyInfo = clrPropertyInfo;
-        }
+        private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-        {
-            new ApiClassInterfaceApiPropertyCodeConverter(clrPropertyInfo)
+            => new ApiClassInterfaceApiPropertyCodeConverter(clrPropertyInfo)
                 .WriteTo(codeWriter, options);
-        }
     }
 }

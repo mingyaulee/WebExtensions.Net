@@ -5,14 +5,9 @@ using WebExtensions.Net.Generator.Models.Schema;
 
 namespace WebExtensions.Net.Generator.EntitiesRegistration
 {
-    public class TypeUsageProcessor
+    public class TypeUsageProcessor(TypeEntityRegistrar typeEntityRegistrar)
     {
-        private readonly TypeEntityRegistrar typeEntityRegistrar;
-
-        public TypeUsageProcessor(TypeEntityRegistrar typeEntityRegistrar)
-        {
-            this.typeEntityRegistrar = typeEntityRegistrar;
-        }
+        private readonly TypeEntityRegistrar typeEntityRegistrar = typeEntityRegistrar;
 
         public void MarkTypeUsage(IEnumerable<TypeReference>? typeReferences, NamespaceEntity namespaceEntity)
         {
