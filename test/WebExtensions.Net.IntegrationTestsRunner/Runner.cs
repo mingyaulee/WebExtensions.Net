@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,13 +23,10 @@ namespace WebExtensions.Net.IntegrationTestsRunner
             var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var solutionDirectory = currentDirectory[..currentDirectory.LastIndexOf("\\test")];
             var resultsPath = $"{solutionDirectory}\\test\\TestResults";
-#if DEBUG
-            var configuration = "debug";
-#else
-            var configuration = "release";
-#endif
-
-            var extensionPath = @$"{solutionDirectory}\test\WebExtensions.Net.BrowserExtensionIntegrationTest\bin\{configuration}\net9.0\browserextension";
+            var assembly = Assembly.GetExecutingAssembly();
+            var targetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkDisplayName.ToLower().Replace(" ", string.Empty).TrimStart('.');
+            var configuration = assembly.GetCustomAttribute<AssemblyConfigurationAttribute>().Configuration;
+            var extensionPath = @$"{solutionDirectory}\test\WebExtensions.Net.BrowserExtensionIntegrationTest\bin\{configuration}\{targetFramework}\browserextension";
 
             if (!Directory.Exists(resultsPath))
             {
