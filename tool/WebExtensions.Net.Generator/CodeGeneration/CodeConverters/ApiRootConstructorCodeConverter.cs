@@ -1,19 +1,14 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class ApiRootConstructorCodeConverter(string apiRootName) : ICodeConverter
+    public class ApiRootConstructorCodeConverter : ICodeConverter
     {
-        private readonly string apiRootName = apiRootName;
-
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
         {
             codeWriter.WriteUsingStatement("JsBind.Net");
 
-            codeWriter.Constructors
-                .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{apiRootName}\" />."))
+            codeWriter.Declaration
                 .WriteWithConverter(new CommentParamCodeSectionConverter("jsRuntime", "The JS runtime adapter."))
-                .WriteLine($"public {apiRootName}(IJsRuntimeAdapter jsRuntime) : base(jsRuntime, \"browser\")")
-                .WriteStartBlock()
-                .WriteEndBlock();
+                .WritePrimaryConstructor(["IJsRuntimeAdapter jsRuntime"], ["jsRuntime", "\"browser\""]);
         }
     }
 }

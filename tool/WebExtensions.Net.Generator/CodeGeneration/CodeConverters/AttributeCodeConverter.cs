@@ -7,7 +7,7 @@
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
             => WriteTo(codeWriter.Declaration, options);
 
-        public virtual void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options)
+        public virtual void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
             => codeWriter.WriteLine($"[{attribute}]");
     }
 }

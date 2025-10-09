@@ -26,7 +26,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
         public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentInheritDocCodeConverter());
-            codeFile.Constructors.Add(new ApiConstructorCodeConverter(clrTypeInfo.CSharpName, (string)clrTypeInfo.Metadata[Constants.TypeMetadata.ApiNamespace]));
+            codeFile.Constructors.Add(new ApiConstructorCodeConverter((string)clrTypeInfo.Metadata[Constants.TypeMetadata.ApiNamespace]));
 
             foreach (var property in GetProperties(clrTypeInfo))
             {

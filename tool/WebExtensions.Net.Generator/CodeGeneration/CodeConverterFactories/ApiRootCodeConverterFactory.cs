@@ -20,7 +20,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
         public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
         {
             codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
-            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter(clrTypeInfo.CSharpName));
+            codeFile.Constructors.Add(new ApiRootConstructorCodeConverter());
 
             // Api Root has properties and no functions or events
             foreach (var property in clrTypeInfo.Properties)

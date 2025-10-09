@@ -30,8 +30,10 @@ namespace WebExtensions.Net.Generator
                 throw new InvalidOperationException("Invalid appsettings file.");
             }
 
-            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, sourceOptions.LocalDirectory));
-            codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, codeWriterOptions.RootDirectory));
+            var generatorDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", ".."));
+            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.LocalDirectory));
+            sourceOptions.AdditionalLocalDefinitions = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.AdditionalLocalDefinitions));
+            codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, codeWriterOptions.RootDirectory));
 
             var services = new ServiceCollection();
             RegisterServices(services);

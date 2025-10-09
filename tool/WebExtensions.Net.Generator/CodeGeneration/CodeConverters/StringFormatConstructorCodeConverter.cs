@@ -12,11 +12,8 @@
                 .WriteLine($"private const string FORMAT = \"{stringFormat}\";")
                 .WriteLine($"private const string PATTERN = \"{stringPattern}\";");
 
-            codeWriter.Constructors
-                .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
-                .WriteLine($"public {className}(string value) : base(value, FORMAT, PATTERN)")
-                .WriteStartBlock()
-                .WriteEndBlock();
+            codeWriter.Declaration
+                .WritePrimaryConstructor(["string value"], ["value", "FORMAT", "PATTERN"]);
         }
     }
 }

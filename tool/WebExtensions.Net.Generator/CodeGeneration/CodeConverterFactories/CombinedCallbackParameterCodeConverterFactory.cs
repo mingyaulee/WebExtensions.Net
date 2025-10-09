@@ -21,7 +21,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
             }
             codeFile.Attributes.Add(new AttributeCodeConverter($"JsonConverter(typeof(CombinedCallbackParameterJsonConverter<{clrTypeInfo.CSharpName}>))"));
 
-            codeFile.Constructors.Add(new CombinedCallbackParameterConstructorCodeConverter(clrTypeInfo.CSharpName, clrTypeInfo.Properties));
+            codeFile.Constructors.Add(new CombinedCallbackParameterConstructorCodeConverter(clrTypeInfo.Properties));
 
             foreach (var property in clrTypeInfo.Properties)
             {

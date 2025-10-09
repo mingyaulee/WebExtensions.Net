@@ -23,17 +23,17 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
                 comment.WriteTo(codeWriter, options);
             }
 
-            foreach (var attribute in CodeFile.Attributes)
-            {
-                attribute.WriteTo(codeWriter, options);
-            }
-
             if (CodeFile.Constructors.Any())
             {
                 foreach (var constructor in CodeFile.Constructors)
                 {
                     constructor.WriteTo(codeWriter, options);
                 }
+            }
+
+            foreach (var attribute in CodeFile.Attributes)
+            {
+                attribute.WriteTo(codeWriter, options);
             }
 
             if (CodeFile.Properties.Any())
@@ -60,7 +60,6 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 
             // start namespace block
             codeFileWriter.WriteStartBlock();
-            codeFileWriter.Declaration.WriteLine(CodeFile.Declaration);
             codeFileWriter.WriteDeclarationSection();
 
             // start declaration block

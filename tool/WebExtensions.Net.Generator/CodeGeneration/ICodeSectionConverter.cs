@@ -2,6 +2,6 @@
 {
     public interface ICodeSectionConverter
     {
-        void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options);
+        void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options);
     }
 }

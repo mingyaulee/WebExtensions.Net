@@ -13,12 +13,12 @@ namespace WebExtensions.Net.Generator.CodeGeneration
         protected CodeSection MethodsSection { get; }
         protected CodeSection PublicMethodsSection { get; }
 
+        private readonly DeclarationCodeSectionWriter declarationSectionWriter;
         private readonly CodeSectionWriter constructorsSectionWriter;
         private readonly CodeSectionWriter propertiesSectionWriter;
         private readonly CodeSectionWriter publicPropertiesSectionWriter;
         private readonly CodeSectionWriter methodsSectionWriter;
         private readonly CodeSectionWriter publicMethodsSectionWriter;
-        private readonly CodeSectionWriter declarationSectionWriter;
 
         protected CodeWriter(CodeWriterOptions codeWriterOptions)
         {
@@ -29,7 +29,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
             MethodsSection = new CodeSection();
             PublicMethodsSection = new CodeSection();
 
-            declarationSectionWriter = new CodeSectionWriter(DeclarationSection, codeWriterOptions, this);
+            declarationSectionWriter = new DeclarationCodeSectionWriter(DeclarationSection, codeWriterOptions, this);
             constructorsSectionWriter = new CodeSectionWriter(ConstructorsSection, codeWriterOptions, this);
             propertiesSectionWriter = new CodeSectionWriter(PropertiesSection, codeWriterOptions, this);
             publicPropertiesSectionWriter = new CodeSectionWriter(PublicPropertiesSection, codeWriterOptions, this);
@@ -37,7 +37,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
             publicMethodsSectionWriter = new CodeSectionWriter(PublicMethodsSection, codeWriterOptions, this);
         }
 
-        public CodeSectionWriter Declaration => declarationSectionWriter;
+        public DeclarationCodeSectionWriter Declaration => declarationSectionWriter;
         public CodeSectionWriter Constructors => constructorsSectionWriter.WriteNewLine();
         public CodeSectionWriter Properties => propertiesSectionWriter.WriteNewLine();
         public CodeSectionWriter PublicProperties => publicPropertiesSectionWriter.WriteNewLine();

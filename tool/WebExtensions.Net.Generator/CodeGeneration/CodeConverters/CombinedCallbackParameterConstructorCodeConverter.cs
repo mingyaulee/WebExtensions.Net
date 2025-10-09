@@ -4,9 +4,8 @@ using WebExtensions.Net.Generator.Models.ClrTypes;
 
 namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
 {
-    public class CombinedCallbackParameterConstructorCodeConverter(string className, IEnumerable<ClrPropertyInfo> clrPropertyInfos) : ICodeConverter
+    public class CombinedCallbackParameterConstructorCodeConverter(IEnumerable<ClrPropertyInfo> clrPropertyInfos) : ICodeConverter
     {
-        private readonly string className = className;
         private readonly IEnumerable<ClrPropertyInfo> clrPropertyInfos = clrPropertyInfos;
 
         public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
@@ -17,14 +16,11 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
             var propertyNames = clrPropertyInfos.Select(property => $"\"{property.PublicName}\"");
 
             codeWriter.Properties
-                .WriteLine($"private static readonly Type[] propertyTypes = new[] {{ {string.Join(", ", propertyTypes)} }};")
-                .WriteLine($"private static readonly string[] propertyNames = new[] {{ {string.Join(", ", propertyNames)} }};");
+                .WriteLine($"private static readonly Type[] propertyTypes = [{string.Join(", ", propertyTypes)}];")
+                .WriteLine($"private static readonly string[] propertyNames = [{string.Join(", ", propertyNames)}];");
 
-            codeWriter.Constructors
-                .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
-                .WriteLine($"public {className}() : base(propertyTypes, propertyNames)")
-                .WriteStartBlock()
-                .WriteEndBlock();
+            codeWriter.Declaration
+                .WritePrimaryConstructor([], ["propertyTypes", "propertyNames"]);
         }
     }
 }

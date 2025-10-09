@@ -48,6 +48,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
 
         public void WriteDeclarationSection(bool ignoreNewLineInSection = false)
         {
+            Declaration.WriteDeclaration(codeFile);
             WriteSection(DeclarationSection, ignoreNewLineInSection);
             appendLine = false;
         }

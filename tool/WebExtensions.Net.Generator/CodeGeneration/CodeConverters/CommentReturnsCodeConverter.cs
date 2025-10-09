@@ -6,7 +6,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
     {
         private readonly string? description = description;
 
-        public void WriteTo(CodeSectionWriter codeWriter, CodeWriterOptions options)
+        public void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
             => codeWriter.WriteLine($"/// <returns>{description.ToXmlContent()}</returns>");
     }
 }

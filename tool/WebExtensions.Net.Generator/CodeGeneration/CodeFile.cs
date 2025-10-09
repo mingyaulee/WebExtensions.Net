@@ -10,7 +10,7 @@ namespace WebExtensions.Net.Generator.CodeGeneration
         public string Namespace { get; } = string.IsNullOrEmpty(relativeNamespace) ? Constants.RelativeNamespaceToken : $"{Constants.RelativeNamespaceToken}.{relativeNamespace}";
         public IList<ICodeConverter> Comments { get; } = [];
         public IList<ICodeConverter> Attributes { get; } = [];
-        public string Declaration { get; set; } = declaration;
+        public string Declaration { get; } = declaration;
         public IList<ICodeConverter> Constructors { get; } = [];
         public IList<ICodeConverter> Properties { get; } = [];
         public IList<ICodeConverter> Methods { get; } = [];

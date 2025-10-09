@@ -32,10 +32,10 @@ namespace WebExtensions.Net.Generator
             {
                 codeType = $"partial {codeType}";
             }
-            var declaration = $"public {codeType} {clrTypeInfo.CSharpName}";
+            var declaration = $"public {codeType} {clrTypeInfo.CSharpName}{{0}}";
             if (!string.IsNullOrEmpty(clrTypeInfo.BaseTypeName))
             {
-                declaration += $" : {clrTypeInfo.BaseTypeName}";
+                declaration += $" : {clrTypeInfo.BaseTypeName}{{1}}";
                 if (clrTypeInfo.Interfaces.Any())
                 {
                     declaration += $", {string.Join(", ", clrTypeInfo.Interfaces)}";
@@ -45,6 +45,7 @@ namespace WebExtensions.Net.Generator
             {
                 declaration += $" : {string.Join(", ", clrTypeInfo.Interfaces)}";
             }
+
             var codeFile = new CodeFile(
                 fileName: clrTypeInfo.CSharpName,
                 relativePath: clrTypeInfo.InitialGeneratedNamespace,
