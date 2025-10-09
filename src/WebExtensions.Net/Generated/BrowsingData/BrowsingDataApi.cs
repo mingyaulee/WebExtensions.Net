@@ -4,15 +4,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.BrowsingData
 {
     /// <inheritdoc />
-    public partial class BrowsingDataApi : BaseApi, IBrowsingDataApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class BrowsingDataApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "browsingData")), IBrowsingDataApi
     {
-        /// <summary>Creates a new instance of <see cref="BrowsingDataApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public BrowsingDataApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browsingData"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual ValueTask Remove(RemovalOptions options, DataTypeSet dataToRemove)
             => InvokeVoidAsync("remove", options, dataToRemove);

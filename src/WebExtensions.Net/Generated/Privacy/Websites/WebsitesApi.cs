@@ -4,15 +4,10 @@ using WebExtensions.Net.Types;
 namespace WebExtensions.Net.Privacy.Websites
 {
     /// <inheritdoc />
-    public partial class WebsitesApi : BaseApi, IWebsitesApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class WebsitesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "websites")), IWebsitesApi
     {
-        /// <summary>Creates a new instance of <see cref="WebsitesApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public WebsitesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "websites"))
-        {
-        }
-
         /// <inheritdoc />
         public Setting CookieConfig => GetProperty<Setting>("cookieConfig");
 

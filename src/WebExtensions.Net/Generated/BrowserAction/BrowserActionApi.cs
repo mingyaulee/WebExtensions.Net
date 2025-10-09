@@ -4,16 +4,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.BrowserAction
 {
     /// <inheritdoc />
-    public partial class BrowserActionApi : BaseApi, IBrowserActionApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class BrowserActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "browserAction")), IBrowserActionApi
     {
         private OnClickedEvent _onClicked;
-
-        /// <summary>Creates a new instance of <see cref="BrowserActionApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public BrowserActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browserAction"))
-        {
-        }
 
         /// <inheritdoc />
         public OnClickedEvent OnClicked

@@ -5,15 +5,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.I18n
 {
     /// <inheritdoc />
-    public partial class I18nApi : BaseApi, II18nApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class I18nApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "i18n")), II18nApi
     {
-        /// <summary>Creates a new instance of <see cref="I18nApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public I18nApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "i18n"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual ValueTask<Result> DetectLanguage(string text)
             => InvokeAsync<Result>("detectLanguage", text);

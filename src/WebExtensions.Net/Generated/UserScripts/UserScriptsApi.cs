@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.UserScripts
 {
     /// <inheritdoc />
-    public partial class UserScriptsApi : BaseApi, IUserScriptsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class UserScriptsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "userScripts")), IUserScriptsApi
     {
         private OnBeforeScriptEvent _onBeforeScript;
-
-        /// <summary>Creates a new instance of <see cref="UserScriptsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public UserScriptsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "userScripts"))
-        {
-        }
 
         /// <inheritdoc />
         public OnBeforeScriptEvent OnBeforeScript

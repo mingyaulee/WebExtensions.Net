@@ -6,18 +6,13 @@ using WebExtensions.Net.Devtools.Panels;
 namespace WebExtensions.Net.Devtools
 {
     /// <inheritdoc />
-    public partial class DevtoolsApi : BaseApi, IDevtoolsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class DevtoolsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "devtools")), IDevtoolsApi
     {
         private IInspectedWindowApi _inspectedWindow;
         private INetworkApi _network;
         private IPanelsApi _panels;
-
-        /// <summary>Creates a new instance of <see cref="DevtoolsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public DevtoolsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "devtools"))
-        {
-        }
 
         /// <inheritdoc />
         public IInspectedWindowApi InspectedWindow => _inspectedWindow ??= new InspectedWindowApi(JsRuntime, AccessPath);

@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Extension
 {
     /// <inheritdoc />
-    public partial class ExtensionApi : BaseApi, IExtensionApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class ExtensionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "extension")), IExtensionApi
     {
-        /// <summary>Creates a new instance of <see cref="ExtensionApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public ExtensionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "extension"))
-        {
-        }
-
         /// <inheritdoc />
         public bool? InIncognitoContext => GetProperty<bool?>("inIncognitoContext");
 

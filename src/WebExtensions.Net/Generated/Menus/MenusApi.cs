@@ -7,18 +7,13 @@ using WebExtensions.Net.Events;
 namespace WebExtensions.Net.Menus
 {
     /// <inheritdoc />
-    public partial class MenusApi : BaseApi, IMenusApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class MenusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "menus")), IMenusApi
     {
         private OnClickedEvent _onClicked;
         private Event _onHidden;
         private OnShownEvent _onShown;
-
-        /// <summary>Creates a new instance of <see cref="MenusApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public MenusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "menus"))
-        {
-        }
 
         /// <inheritdoc />
         public int ACTION_MENU_TOP_LEVEL_LIMIT => 6;

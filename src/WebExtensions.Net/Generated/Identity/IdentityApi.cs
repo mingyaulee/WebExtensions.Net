@@ -4,15 +4,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Identity
 {
     /// <inheritdoc />
-    public partial class IdentityApi : BaseApi, IIdentityApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class IdentityApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "identity")), IIdentityApi
     {
-        /// <summary>Creates a new instance of <see cref="IdentityApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public IdentityApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "identity"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual string GetRedirectURL(string path = null)
             => Invoke<string>("getRedirectURL", path);

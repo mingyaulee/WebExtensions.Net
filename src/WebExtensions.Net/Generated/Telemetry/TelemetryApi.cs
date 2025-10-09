@@ -4,15 +4,10 @@ using System;
 namespace WebExtensions.Net.Telemetry
 {
     /// <inheritdoc />
-    public partial class TelemetryApi : BaseApi, ITelemetryApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class TelemetryApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "telemetry")), ITelemetryApi
     {
-        /// <summary>Creates a new instance of <see cref="TelemetryApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public TelemetryApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "telemetry"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual void CanUpload()
             => InvokeVoid("canUpload");

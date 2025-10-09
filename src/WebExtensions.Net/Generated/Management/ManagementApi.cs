@@ -6,19 +6,14 @@ using WebExtensions.Net.Manifest;
 namespace WebExtensions.Net.Management
 {
     /// <inheritdoc />
-    public partial class ManagementApi : BaseApi, IManagementApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class ManagementApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "management")), IManagementApi
     {
         private OnDisabledEvent _onDisabled;
         private OnEnabledEvent _onEnabled;
         private OnInstalledEvent _onInstalled;
         private OnUninstalledEvent _onUninstalled;
-
-        /// <summary>Creates a new instance of <see cref="ManagementApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public ManagementApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "management"))
-        {
-        }
 
         /// <inheritdoc />
         public OnDisabledEvent OnDisabled

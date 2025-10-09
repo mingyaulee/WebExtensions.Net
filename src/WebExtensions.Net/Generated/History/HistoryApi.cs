@@ -5,18 +5,13 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.History
 {
     /// <inheritdoc />
-    public partial class HistoryApi : BaseApi, IHistoryApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class HistoryApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "history")), IHistoryApi
     {
         private OnTitleChangedEvent _onTitleChanged;
         private OnVisitedEvent _onVisited;
         private OnVisitRemovedEvent _onVisitRemoved;
-
-        /// <summary>Creates a new instance of <see cref="HistoryApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public HistoryApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "history"))
-        {
-        }
 
         /// <inheritdoc />
         public OnTitleChangedEvent OnTitleChanged

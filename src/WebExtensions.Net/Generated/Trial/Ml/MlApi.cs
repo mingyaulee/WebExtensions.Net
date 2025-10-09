@@ -3,16 +3,11 @@ using JsBind.Net;
 namespace WebExtensions.Net.Trial.Ml
 {
     /// <inheritdoc />
-    public partial class MlApi : BaseApi, IMlApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class MlApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "ml")), IMlApi
     {
         private OnProgressEvent _onProgress;
-
-        /// <summary>Creates a new instance of <see cref="MlApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public MlApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "ml"))
-        {
-        }
 
         /// <inheritdoc />
         public OnProgressEvent OnProgress

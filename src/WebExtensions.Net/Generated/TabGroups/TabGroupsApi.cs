@@ -5,19 +5,14 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.TabGroups
 {
     /// <inheritdoc />
-    public partial class TabGroupsApi : BaseApi, ITabGroupsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class TabGroupsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "tabGroups")), ITabGroupsApi
     {
         private OnCreatedEvent _onCreated;
         private OnMovedEvent _onMoved;
         private OnRemovedEvent _onRemoved;
         private OnUpdatedEvent _onUpdated;
-
-        /// <summary>Creates a new instance of <see cref="TabGroupsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public TabGroupsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "tabGroups"))
-        {
-        }
 
         /// <inheritdoc />
         public OnCreatedEvent OnCreated

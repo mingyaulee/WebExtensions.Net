@@ -4,16 +4,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Idle
 {
     /// <inheritdoc />
-    public partial class IdleApi : BaseApi, IIdleApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class IdleApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "idle")), IIdleApi
     {
         private OnStateChangedEvent _onStateChanged;
-
-        /// <summary>Creates a new instance of <see cref="IdleApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public IdleApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "idle"))
-        {
-        }
 
         /// <inheritdoc />
         public OnStateChangedEvent OnStateChanged

@@ -3,16 +3,11 @@ using JsBind.Net;
 namespace WebExtensions.Net.NormandyAddonStudy
 {
     /// <inheritdoc />
-    public partial class NormandyAddonStudyApi : BaseApi, INormandyAddonStudyApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class NormandyAddonStudyApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "normandyAddonStudy")), INormandyAddonStudyApi
     {
         private OnUnenrollEvent _onUnenroll;
-
-        /// <summary>Creates a new instance of <see cref="NormandyAddonStudyApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public NormandyAddonStudyApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "normandyAddonStudy"))
-        {
-        }
 
         /// <inheritdoc />
         public OnUnenrollEvent OnUnenroll

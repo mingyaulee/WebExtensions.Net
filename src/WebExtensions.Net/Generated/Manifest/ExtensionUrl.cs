@@ -5,15 +5,10 @@ namespace WebExtensions.Net.Manifest
     // String Format Class
     /// <summary></summary>
     [JsonConverter(typeof(StringFormatJsonConverter<ExtensionUrl>))]
-    public partial class ExtensionUrl : BaseStringFormat
+    public partial class ExtensionUrl(string value) : BaseStringFormat(value, FORMAT, PATTERN)
     {
         private const string FORMAT = "strictRelativeUrl";
         private const string PATTERN = "";
-
-        /// <summary>Creates a new instance of <see cref="ExtensionUrl" />.</summary>
-        public ExtensionUrl(string value) : base(value, FORMAT, PATTERN)
-        {
-        }
 
         /// <summary>Converts from <see cref="ExtensionUrl" /> to <see cref="string" />.</summary>
         /// <param name="value">The value to convert from.</param>

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.WebNavigation
 {
     /// <inheritdoc />
-    public partial class WebNavigationApi : BaseApi, IWebNavigationApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class WebNavigationApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "webNavigation")), IWebNavigationApi
     {
         private OnBeforeNavigateEvent _onBeforeNavigate;
         private OnCommittedEvent _onCommitted;
@@ -16,13 +18,6 @@ namespace WebExtensions.Net.WebNavigation
         private OnHistoryStateUpdatedEvent _onHistoryStateUpdated;
         private OnReferenceFragmentUpdatedEvent _onReferenceFragmentUpdated;
         private OnTabReplacedEvent _onTabReplaced;
-
-        /// <summary>Creates a new instance of <see cref="WebNavigationApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public WebNavigationApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "webNavigation"))
-        {
-        }
 
         /// <inheritdoc />
         public OnBeforeNavigateEvent OnBeforeNavigate

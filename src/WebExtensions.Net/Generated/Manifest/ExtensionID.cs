@@ -1,20 +1,14 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace WebExtensions.Net.Manifest
 {
     // Multitype Class
     /// <summary></summary>
+    /// <param name="value">The value.</param>
     [JsonConverter(typeof(MultiTypeJsonConverter<ExtensionID>))]
-    public partial class ExtensionID : BaseMultiTypeObject
+    public partial class ExtensionID(string value) : BaseMultiTypeObject(value, typeof(string))
     {
         private readonly string valueString;
-
-        /// <summary>Creates a new instance of <see cref="ExtensionID" />.</summary>
-        /// <param name="value">The value.</param>
-        public ExtensionID(string value) : base(value, typeof(string))
-        {
-            valueString = value;
-        }
 
         /// <summary>Converts from <see cref="ExtensionID" /> to <see cref="string" />.</summary>
         /// <param name="value">The value to convert from.</param>

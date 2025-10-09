@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Cookies
 {
     /// <inheritdoc />
-    public partial class CookiesApi : BaseApi, ICookiesApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class CookiesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "cookies")), ICookiesApi
     {
         private OnChangedEvent _onChanged;
-
-        /// <summary>Creates a new instance of <see cref="CookiesApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public CookiesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "cookies"))
-        {
-        }
 
         /// <inheritdoc />
         public OnChangedEvent OnChanged

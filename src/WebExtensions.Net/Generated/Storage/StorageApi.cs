@@ -3,16 +3,11 @@ using JsBind.Net;
 namespace WebExtensions.Net.Storage
 {
     /// <inheritdoc />
-    public partial class StorageApi : BaseApi, IStorageApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class StorageApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "storage")), IStorageApi
     {
         private OnChangedEvent _onChanged;
-
-        /// <summary>Creates a new instance of <see cref="StorageApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public StorageApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "storage"))
-        {
-        }
 
         /// <inheritdoc />
         public StorageArea Local => GetProperty<StorageArea>("local");

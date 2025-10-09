@@ -8,15 +8,10 @@ namespace WebExtensions.Net.Devtools.InspectedWindow
     // Combined Callback Parameter Class
     /// <summary></summary>
     [JsonConverter(typeof(CombinedCallbackParameterJsonConverter<EvalResult>))]
-    public partial class EvalResult : BaseCombinedCallbackParameterObject
+    public partial class EvalResult() : BaseCombinedCallbackParameterObject(propertyTypes, propertyNames)
     {
-        private static readonly Type[] propertyTypes = new[] { typeof(JsonElement), typeof(ExceptionInfo) };
-        private static readonly string[] propertyNames = new[] { "Result", "ExceptionInfo" };
-
-        /// <summary>Creates a new instance of <see cref="EvalResult" />.</summary>
-        public EvalResult() : base(propertyTypes, propertyNames)
-        {
-        }
+        private static readonly Type[] propertyTypes = [typeof(JsonElement), typeof(ExceptionInfo)];
+        private static readonly string[] propertyNames = ["Result", "ExceptionInfo"];
 
         /// <summary>The result of evaluation.</summary>
         [JsAccessPath("result")]

@@ -4,20 +4,15 @@ using WebExtensions.Net.Events;
 namespace WebExtensions.Net.Omnibox
 {
     /// <inheritdoc />
-    public partial class OmniboxApi : BaseApi, IOmniboxApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class OmniboxApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "omnibox")), IOmniboxApi
     {
         private OnDeleteSuggestionEvent _onDeleteSuggestion;
         private Event _onInputCancelled;
         private OnInputChangedEvent _onInputChanged;
         private OnInputEnteredEvent _onInputEntered;
         private Event _onInputStarted;
-
-        /// <summary>Creates a new instance of <see cref="OmniboxApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public OmniboxApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "omnibox"))
-        {
-        }
 
         /// <inheritdoc />
         public OnDeleteSuggestionEvent OnDeleteSuggestion

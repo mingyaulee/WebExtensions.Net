@@ -5,15 +5,10 @@ namespace WebExtensions.Net.Manifest
     // String Format Class
     /// <summary></summary>
     [JsonConverter(typeof(StringFormatJsonConverter<ImageDataOrExtensionUrl>))]
-    public partial class ImageDataOrExtensionUrl : BaseStringFormat
+    public partial class ImageDataOrExtensionUrl(string value) : BaseStringFormat(value, FORMAT, PATTERN)
     {
         private const string FORMAT = "imageDataOrStrictRelativeUrl";
         private const string PATTERN = "";
-
-        /// <summary>Creates a new instance of <see cref="ImageDataOrExtensionUrl" />.</summary>
-        public ImageDataOrExtensionUrl(string value) : base(value, FORMAT, PATTERN)
-        {
-        }
 
         /// <summary>Converts from <see cref="ImageDataOrExtensionUrl" /> to <see cref="string" />.</summary>
         /// <param name="value">The value to convert from.</param>

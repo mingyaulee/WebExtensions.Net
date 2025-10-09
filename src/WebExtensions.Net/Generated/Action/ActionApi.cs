@@ -4,16 +4,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.ActionNs
 {
     /// <inheritdoc />
-    public partial class ActionApi : BaseApi, IActionApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class ActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "action")), IActionApi
     {
         private OnClickedEvent _onClicked;
-
-        /// <summary>Creates a new instance of <see cref="ActionApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public ActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "action"))
-        {
-        }
 
         /// <inheritdoc />
         public OnClickedEvent OnClicked

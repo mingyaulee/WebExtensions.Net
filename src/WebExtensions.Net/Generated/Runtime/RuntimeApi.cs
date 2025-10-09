@@ -7,7 +7,9 @@ using WebExtensions.Net.Events;
 namespace WebExtensions.Net.Runtime
 {
     /// <inheritdoc />
-    public partial class RuntimeApi : BaseApi, IRuntimeApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class RuntimeApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "runtime")), IRuntimeApi
     {
         private OnConnectEvent _onConnect;
         private OnConnectExternalEvent _onConnectExternal;
@@ -21,13 +23,6 @@ namespace WebExtensions.Net.Runtime
         private OnUpdateAvailableEvent _onUpdateAvailable;
         private OnUserScriptConnectEvent _onUserScriptConnect;
         private OnUserScriptMessageEvent _onUserScriptMessage;
-
-        /// <summary>Creates a new instance of <see cref="RuntimeApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public RuntimeApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "runtime"))
-        {
-        }
 
         /// <inheritdoc />
         public string Id => GetProperty<string>("id");

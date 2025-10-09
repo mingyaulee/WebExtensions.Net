@@ -4,18 +4,13 @@ using System.Collections.Generic;
 namespace WebExtensions.Net.ContextualIdentities
 {
     /// <inheritdoc />
-    public partial class ContextualIdentitiesApi : BaseApi, IContextualIdentitiesApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class ContextualIdentitiesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "contextualIdentities")), IContextualIdentitiesApi
     {
         private OnCreatedEvent _onCreated;
         private OnRemovedEvent _onRemoved;
         private OnUpdatedEvent _onUpdated;
-
-        /// <summary>Creates a new instance of <see cref="ContextualIdentitiesApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public ContextualIdentitiesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "contextualIdentities"))
-        {
-        }
 
         /// <inheritdoc />
         public OnCreatedEvent OnCreated

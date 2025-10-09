@@ -9,7 +9,9 @@ using WebExtensions.Net.Windows;
 namespace WebExtensions.Net.Tabs
 {
     /// <inheritdoc />
-    public partial class TabsApi : BaseApi, ITabsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class TabsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "tabs")), ITabsApi
     {
         private OnActivatedEvent _onActivated;
         private OnAttachedEvent _onAttached;
@@ -21,13 +23,6 @@ namespace WebExtensions.Net.Tabs
         private OnReplacedEvent _onReplaced;
         private OnUpdatedEvent _onUpdated;
         private OnZoomChangeEvent _onZoomChange;
-
-        /// <summary>Creates a new instance of <see cref="TabsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public TabsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "tabs"))
-        {
-        }
 
         /// <inheritdoc />
         public OnActivatedEvent OnActivated

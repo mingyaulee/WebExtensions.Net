@@ -5,15 +5,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.DeclarativeNetRequest
 {
     /// <inheritdoc />
-    public partial class DeclarativeNetRequestApi : BaseApi, IDeclarativeNetRequestApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class DeclarativeNetRequestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "declarativeNetRequest")), IDeclarativeNetRequestApi
     {
-        /// <summary>Creates a new instance of <see cref="DeclarativeNetRequestApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public DeclarativeNetRequestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "declarativeNetRequest"))
-        {
-        }
-
         /// <inheritdoc />
         public string DYNAMIC_RULESET_ID => "_dynamic";
 

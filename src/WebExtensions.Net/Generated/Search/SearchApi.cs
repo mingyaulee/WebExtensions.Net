@@ -4,15 +4,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Search
 {
     /// <inheritdoc />
-    public partial class SearchApi : BaseApi, ISearchApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class SearchApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "search")), ISearchApi
     {
-        /// <summary>Creates a new instance of <see cref="SearchApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public SearchApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "search"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual void Get()
             => InvokeVoid("get");

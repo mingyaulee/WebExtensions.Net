@@ -5,18 +5,13 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Windows
 {
     /// <inheritdoc />
-    public partial class WindowsApi : BaseApi, IWindowsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class WindowsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "windows")), IWindowsApi
     {
         private OnCreatedEvent _onCreated;
         private OnFocusChangedEvent _onFocusChanged;
         private OnRemovedEvent _onRemoved;
-
-        /// <summary>Creates a new instance of <see cref="WindowsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public WindowsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "windows"))
-        {
-        }
 
         /// <inheritdoc />
         public OnCreatedEvent OnCreated

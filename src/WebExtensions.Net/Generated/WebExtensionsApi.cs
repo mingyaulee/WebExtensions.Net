@@ -55,7 +55,8 @@ using WebExtensions.Net.Windows;
 namespace WebExtensions.Net
 {
     /// <summary>Web Extension Api</summary>
-    public partial class WebExtensionsApi : BaseApi, IWebExtensionsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    public partial class WebExtensionsApi(IJsRuntimeAdapter jsRuntime) : BaseApi(jsRuntime, "browser"), IWebExtensionsApi
     {
         private IActionApi _action;
         private IActivityLogApi _activityLog;
@@ -109,12 +110,6 @@ namespace WebExtensions.Net
         private IWebNavigationApi _webNavigation;
         private IWebRequestApi _webRequest;
         private IWindowsApi _windows;
-
-        /// <summary>Creates a new instance of <see cref="WebExtensionsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        public WebExtensionsApi(IJsRuntimeAdapter jsRuntime) : base(jsRuntime, "browser")
-        {
-        }
 
         /// <inheritdoc />
         public IActionApi Action => _action ??= new ActionApi(JsRuntime, AccessPath);

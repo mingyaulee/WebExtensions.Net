@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Alarms
 {
     /// <inheritdoc />
-    public partial class AlarmsApi : BaseApi, IAlarmsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class AlarmsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "alarms")), IAlarmsApi
     {
         private OnAlarmEvent _onAlarm;
-
-        /// <summary>Creates a new instance of <see cref="AlarmsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public AlarmsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "alarms"))
-        {
-        }
 
         /// <inheritdoc />
         public OnAlarmEvent OnAlarm

@@ -5,18 +5,13 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Downloads
 {
     /// <inheritdoc />
-    public partial class DownloadsApi : BaseApi, IDownloadsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class DownloadsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "downloads")), IDownloadsApi
     {
         private OnChangedEvent _onChanged;
         private OnCreatedEvent _onCreated;
         private OnErasedEvent _onErased;
-
-        /// <summary>Creates a new instance of <see cref="DownloadsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public DownloadsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "downloads"))
-        {
-        }
 
         /// <inheritdoc />
         public OnChangedEvent OnChanged

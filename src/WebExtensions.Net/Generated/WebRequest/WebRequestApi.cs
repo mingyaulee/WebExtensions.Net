@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.WebRequest
 {
     /// <inheritdoc />
-    public partial class WebRequestApi : BaseApi, IWebRequestApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class WebRequestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "webRequest")), IWebRequestApi
     {
         private OnAuthRequiredEvent _onAuthRequired;
         private OnBeforeRedirectEvent _onBeforeRedirect;
@@ -16,13 +18,6 @@ namespace WebExtensions.Net.WebRequest
         private OnHeadersReceivedEvent _onHeadersReceived;
         private OnResponseStartedEvent _onResponseStarted;
         private OnSendHeadersEvent _onSendHeaders;
-
-        /// <summary>Creates a new instance of <see cref="WebRequestApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public WebRequestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "webRequest"))
-        {
-        }
 
         /// <inheritdoc />
         public int MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES => 20;

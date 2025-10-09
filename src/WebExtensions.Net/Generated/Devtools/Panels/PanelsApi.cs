@@ -5,16 +5,11 @@ using WebExtensions.Net.Manifest;
 namespace WebExtensions.Net.Devtools.Panels
 {
     /// <inheritdoc />
-    public partial class PanelsApi : BaseApi, IPanelsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class PanelsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "panels")), IPanelsApi
     {
         private OnThemeChangedEvent _onThemeChanged;
-
-        /// <summary>Creates a new instance of <see cref="PanelsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public PanelsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "panels"))
-        {
-        }
 
         /// <inheritdoc />
         public ElementsPanel Elements => GetProperty<ElementsPanel>("elements");

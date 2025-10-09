@@ -4,17 +4,12 @@ using WebExtensions.Net.Types;
 namespace WebExtensions.Net.CaptivePortal
 {
     /// <inheritdoc />
-    public partial class CaptivePortalApi : BaseApi, ICaptivePortalApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class CaptivePortalApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "captivePortal")), ICaptivePortalApi
     {
         private OnConnectivityAvailableEvent _onConnectivityAvailable;
         private OnStateChangedEvent _onStateChanged;
-
-        /// <summary>Creates a new instance of <see cref="CaptivePortalApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public CaptivePortalApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "captivePortal"))
-        {
-        }
 
         /// <inheritdoc />
         public Setting CanonicalURL => GetProperty<Setting>("canonicalURL");

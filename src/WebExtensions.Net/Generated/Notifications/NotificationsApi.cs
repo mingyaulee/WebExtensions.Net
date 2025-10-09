@@ -5,19 +5,14 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Notifications
 {
     /// <inheritdoc />
-    public partial class NotificationsApi : BaseApi, INotificationsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class NotificationsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "notifications")), INotificationsApi
     {
         private OnButtonClickedEvent _onButtonClicked;
         private OnClickedEvent _onClicked;
         private OnClosedEvent _onClosed;
         private OnShownEvent _onShown;
-
-        /// <summary>Creates a new instance of <see cref="NotificationsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public NotificationsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "notifications"))
-        {
-        }
 
         /// <inheritdoc />
         public OnButtonClickedEvent OnButtonClicked

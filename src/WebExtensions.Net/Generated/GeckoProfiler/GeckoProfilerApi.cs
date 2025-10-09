@@ -3,16 +3,11 @@ using JsBind.Net;
 namespace WebExtensions.Net.GeckoProfiler
 {
     /// <inheritdoc />
-    public partial class GeckoProfilerApi : BaseApi, IGeckoProfilerApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class GeckoProfilerApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "geckoProfiler")), IGeckoProfilerApi
     {
         private OnRunningEvent _onRunning;
-
-        /// <summary>Creates a new instance of <see cref="GeckoProfilerApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public GeckoProfilerApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "geckoProfiler"))
-        {
-        }
 
         /// <inheritdoc />
         public OnRunningEvent OnRunning

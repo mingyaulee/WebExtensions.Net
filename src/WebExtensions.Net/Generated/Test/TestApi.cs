@@ -5,16 +5,11 @@ using System.Collections.Generic;
 namespace WebExtensions.Net.Test
 {
     /// <inheritdoc />
-    public partial class TestApi : BaseApi, ITestApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class TestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "test")), ITestApi
     {
         private OnMessageEvent _onMessage;
-
-        /// <summary>Creates a new instance of <see cref="TestApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public TestApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "test"))
-        {
-        }
 
         /// <inheritdoc />
         public OnMessageEvent OnMessage

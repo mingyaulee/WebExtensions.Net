@@ -5,17 +5,12 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Commands
 {
     /// <inheritdoc />
-    public partial class CommandsApi : BaseApi, ICommandsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class CommandsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "commands")), ICommandsApi
     {
         private OnChangedEvent _onChanged;
         private OnCommandEvent _onCommand;
-
-        /// <summary>Creates a new instance of <see cref="CommandsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public CommandsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "commands"))
-        {
-        }
 
         /// <inheritdoc />
         public OnChangedEvent OnChanged

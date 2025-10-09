@@ -6,16 +6,11 @@ using WebExtensions.Net.Types;
 namespace WebExtensions.Net.BrowserSettings
 {
     /// <inheritdoc />
-    public partial class BrowserSettingsApi : BaseApi, IBrowserSettingsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class BrowserSettingsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "browserSettings")), IBrowserSettingsApi
     {
         private IColorManagementApi _colorManagement;
-
-        /// <summary>Creates a new instance of <see cref="BrowserSettingsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public BrowserSettingsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "browserSettings"))
-        {
-        }
 
         /// <inheritdoc />
         public IColorManagementApi ColorManagement => _colorManagement ??= new ColorManagementApi(JsRuntime, AccessPath);

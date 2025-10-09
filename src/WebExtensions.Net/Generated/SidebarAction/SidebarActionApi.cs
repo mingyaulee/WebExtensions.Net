@@ -3,15 +3,10 @@ using JsBind.Net;
 namespace WebExtensions.Net.SidebarAction
 {
     /// <inheritdoc />
-    public partial class SidebarActionApi : BaseApi, ISidebarActionApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class SidebarActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "sidebarAction")), ISidebarActionApi
     {
-        /// <summary>Creates a new instance of <see cref="SidebarActionApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public SidebarActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "sidebarAction"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual void Close()
             => InvokeVoid("close");

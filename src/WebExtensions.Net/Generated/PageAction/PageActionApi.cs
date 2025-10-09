@@ -4,16 +4,11 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.PageAction
 {
     /// <inheritdoc />
-    public partial class PageActionApi : BaseApi, IPageActionApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class PageActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "pageAction")), IPageActionApi
     {
         private OnClickedEvent _onClicked;
-
-        /// <summary>Creates a new instance of <see cref="PageActionApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public PageActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "pageAction"))
-        {
-        }
 
         /// <inheritdoc />
         public OnClickedEvent OnClicked

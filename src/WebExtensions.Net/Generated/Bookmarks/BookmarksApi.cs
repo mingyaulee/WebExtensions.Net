@@ -5,19 +5,14 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Bookmarks
 {
     /// <inheritdoc />
-    public partial class BookmarksApi : BaseApi, IBookmarksApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class BookmarksApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "bookmarks")), IBookmarksApi
     {
         private OnChangedEvent _onChanged;
         private OnCreatedEvent _onCreated;
         private OnMovedEvent _onMoved;
         private OnRemovedEvent _onRemoved;
-
-        /// <summary>Creates a new instance of <see cref="BookmarksApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public BookmarksApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "bookmarks"))
-        {
-        }
 
         /// <inheritdoc />
         public OnChangedEvent OnChanged

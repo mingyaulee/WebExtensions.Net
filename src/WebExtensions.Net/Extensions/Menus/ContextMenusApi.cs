@@ -3,9 +3,13 @@
 namespace WebExtensions.Net.Menus
 {
     /// <inheritdoc />
-    /// <param name="jsRuntime">The JS runtime adapter.</param>
-    /// <param name="accessPath">The base API access path.</param>
-    public partial class ContextMenusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : MenusApi(jsRuntime, accessPath, "contextMenus"), IContextMenusApi
+    public partial class ContextMenusApi : MenusApi, IContextMenusApi
     {
+        /// <param name="jsRuntime">The JS runtime adapter.</param>
+        /// <param name="accessPath">The base API access path.</param>
+        public ContextMenusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, accessPath)
+        {
+            SetAccessPath(AccessPaths.Combine(accessPath, "contextMenus"));
+        }
     }
 }

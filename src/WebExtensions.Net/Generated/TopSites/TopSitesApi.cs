@@ -5,15 +5,10 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.TopSites
 {
     /// <inheritdoc />
-    public partial class TopSitesApi : BaseApi, ITopSitesApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class TopSitesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "topSites")), ITopSitesApi
     {
-        /// <summary>Creates a new instance of <see cref="TopSitesApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public TopSitesApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "topSites"))
-        {
-        }
-
         /// <inheritdoc />
         public virtual ValueTask<IEnumerable<MostVisitedUrl>> Get(Options options = null)
             => InvokeAsync<IEnumerable<MostVisitedUrl>>("get", options);

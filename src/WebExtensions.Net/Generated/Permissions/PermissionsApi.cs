@@ -4,17 +4,12 @@ using System.Threading.Tasks;
 namespace WebExtensions.Net.Permissions
 {
     /// <inheritdoc />
-    public partial class PermissionsApi : BaseApi, IPermissionsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class PermissionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "permissions")), IPermissionsApi
     {
         private OnAddedEvent _onAdded;
         private OnRemovedEvent _onRemoved;
-
-        /// <summary>Creates a new instance of <see cref="PermissionsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public PermissionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "permissions"))
-        {
-        }
 
         /// <inheritdoc />
         public OnAddedEvent OnAdded

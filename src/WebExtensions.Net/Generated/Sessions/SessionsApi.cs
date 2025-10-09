@@ -6,16 +6,11 @@ using WebExtensions.Net.Events;
 namespace WebExtensions.Net.Sessions
 {
     /// <inheritdoc />
-    public partial class SessionsApi : BaseApi, ISessionsApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class SessionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "sessions")), ISessionsApi
     {
         private Event _onChanged;
-
-        /// <summary>Creates a new instance of <see cref="SessionsApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public SessionsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "sessions"))
-        {
-        }
 
         /// <inheritdoc />
         public int MAX_SESSION_RESULTS => 25;

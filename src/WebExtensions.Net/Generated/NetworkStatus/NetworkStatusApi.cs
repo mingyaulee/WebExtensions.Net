@@ -3,16 +3,11 @@ using JsBind.Net;
 namespace WebExtensions.Net.NetworkStatus
 {
     /// <inheritdoc />
-    public partial class NetworkStatusApi : BaseApi, INetworkStatusApi
+    /// <param name="jsRuntime">The JS runtime adapter.</param>
+    /// <param name="accessPath">The base API access path.</param>
+    public partial class NetworkStatusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "networkStatus")), INetworkStatusApi
     {
         private OnConnectionChangedEvent _onConnectionChanged;
-
-        /// <summary>Creates a new instance of <see cref="NetworkStatusApi" />.</summary>
-        /// <param name="jsRuntime">The JS runtime adapter.</param>
-        /// <param name="accessPath">The base API access path.</param>
-        public NetworkStatusApi(IJsRuntimeAdapter jsRuntime, string accessPath) : base(jsRuntime, AccessPaths.Combine(accessPath, "networkStatus"))
-        {
-        }
 
         /// <inheritdoc />
         public OnConnectionChangedEvent OnConnectionChanged
