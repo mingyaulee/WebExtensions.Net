@@ -1,10 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace WebExtensions.Net.Dns
+namespace WebExtensions.Net.Dns;
+
+// Array Class
+/// <summary></summary>
+public partial class ResolveFlags : List<ResolveFlag>
 {
-    // Array Class
-    /// <summary></summary>
-    public partial class ResolveFlags : List<ResolveFlag>
-    {
-    }
 }

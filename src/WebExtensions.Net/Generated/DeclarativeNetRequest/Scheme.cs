@@ -1,21 +1,20 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.DeclarativeNetRequest
+namespace WebExtensions.Net.DeclarativeNetRequest;
+
+/// <summary>The new scheme for the request.</summary>
+[JsonConverter(typeof(EnumStringConverter<Scheme>))]
+public enum Scheme
 {
-    /// <summary>The new scheme for the request.</summary>
-    [JsonConverter(typeof(EnumStringConverter<Scheme>))]
-    public enum Scheme
-    {
-        /// <summary>http</summary>
-        [EnumValue("http")]
-        Http,
+    /// <summary>http</summary>
+    [EnumValue("http")]
+    Http,
 
-        /// <summary>https</summary>
-        [EnumValue("https")]
-        Https,
+    /// <summary>https</summary>
+    [EnumValue("https")]
+    Https,
 
-        /// <summary>moz-extension</summary>
-        [EnumValue("moz-extension")]
-        MozExtension,
-    }
+    /// <summary>moz-extension</summary>
+    [EnumValue("moz-extension")]
+    MozExtension,
 }

@@ -1,21 +1,20 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.WebRequest
+namespace WebExtensions.Net.WebRequest;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<OnAuthRequiredOptions>))]
+public enum OnAuthRequiredOptions
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<OnAuthRequiredOptions>))]
-    public enum OnAuthRequiredOptions
-    {
-        /// <summary>responseHeaders</summary>
-        [EnumValue("responseHeaders")]
-        ResponseHeaders,
+    /// <summary>responseHeaders</summary>
+    [EnumValue("responseHeaders")]
+    ResponseHeaders,
 
-        /// <summary>blocking</summary>
-        [EnumValue("blocking")]
-        Blocking,
+    /// <summary>blocking</summary>
+    [EnumValue("blocking")]
+    Blocking,
 
-        /// <summary>asyncBlocking</summary>
-        [EnumValue("asyncBlocking")]
-        AsyncBlocking,
-    }
+    /// <summary>asyncBlocking</summary>
+    [EnumValue("asyncBlocking")]
+    AsyncBlocking,
 }

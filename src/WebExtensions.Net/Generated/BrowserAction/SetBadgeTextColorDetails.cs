@@ -1,17 +1,16 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.BrowserAction
+namespace WebExtensions.Net.BrowserAction;
+
+// Type Class
+/// <summary></summary>
+[BindAllProperties]
+public partial class SetBadgeTextColorDetails : BaseObject
 {
-    // Type Class
     /// <summary></summary>
-    [BindAllProperties]
-    public partial class SetBadgeTextColorDetails : BaseObject
-    {
-        /// <summary></summary>
-        [JsAccessPath("color")]
-        [JsonPropertyName("color")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public ColorValue Color { get; set; }
-    }
+    [JsAccessPath("color")]
+    [JsonPropertyName("color")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ColorValue Color { get; set; }
 }

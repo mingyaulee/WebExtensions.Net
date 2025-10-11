@@ -1,25 +1,24 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Manifest
+namespace WebExtensions.Net.Manifest;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<ColorScheme>))]
+public enum ColorScheme
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<ColorScheme>))]
-    public enum ColorScheme
-    {
-        /// <summary>auto</summary>
-        [EnumValue("auto")]
-        Auto,
+    /// <summary>auto</summary>
+    [EnumValue("auto")]
+    Auto,
 
-        /// <summary>light</summary>
-        [EnumValue("light")]
-        Light,
+    /// <summary>light</summary>
+    [EnumValue("light")]
+    Light,
 
-        /// <summary>dark</summary>
-        [EnumValue("dark")]
-        Dark,
+    /// <summary>dark</summary>
+    [EnumValue("dark")]
+    Dark,
 
-        /// <summary>system</summary>
-        [EnumValue("system")]
-        System,
-    }
+    /// <summary>system</summary>
+    [EnumValue("system")]
+    System,
 }

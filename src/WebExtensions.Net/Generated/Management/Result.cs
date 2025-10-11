@@ -1,18 +1,17 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System.Text.Json.Serialization;
 using WebExtensions.Net.Manifest;
 
-namespace WebExtensions.Net.Management
+namespace WebExtensions.Net.Management;
+
+// Type Class
+/// <summary></summary>
+[BindAllProperties]
+public partial class Result : BaseObject
 {
-    // Type Class
     /// <summary></summary>
-    [BindAllProperties]
-    public partial class Result : BaseObject
-    {
-        /// <summary></summary>
-        [JsAccessPath("id")]
-        [JsonPropertyName("id")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public ExtensionID Id { get; set; }
-    }
+    [JsAccessPath("id")]
+    [JsonPropertyName("id")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ExtensionID Id { get; set; }
 }

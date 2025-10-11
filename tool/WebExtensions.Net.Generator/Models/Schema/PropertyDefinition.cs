@@ -2,23 +2,22 @@
 using System.Text.Json.Serialization;
 using WebExtensions.Net.Generator.JsonConverters;
 
-namespace WebExtensions.Net.Generator.Models.Schema
+namespace WebExtensions.Net.Generator.Models.Schema;
+
+public class PropertyDefinition : TypeReference
 {
-    public class PropertyDefinition : TypeReference
-    {
-        [JsonPropertyName("description")]
-        public string? Description { get; set; }
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
 
-        [JsonPropertyName("optional"), JsonConverter(typeof(BooleanStringConverter))]
-        public string? Optional { get; set; }
+    [JsonPropertyName("optional"), JsonConverter(typeof(BooleanStringConverter))]
+    public string? Optional { get; set; }
 
-        [JsonIgnore]
-        public bool IsOptional => !string.IsNullOrEmpty(Optional);
+    [JsonIgnore]
+    public bool IsOptional => !string.IsNullOrEmpty(Optional);
 
-        [JsonPropertyName("value")]
-        public JsonElement? ConstantValue { get; set; }
+    [JsonPropertyName("value")]
+    public JsonElement? ConstantValue { get; set; }
 
-        [JsonIgnore]
-        public bool IsConstant => ConstantValue is not null;
-    }
+    [JsonIgnore]
+    public bool IsConstant => ConstantValue is not null;
 }

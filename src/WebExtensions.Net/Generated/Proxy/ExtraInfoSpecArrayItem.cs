@@ -1,13 +1,12 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Proxy
+namespace WebExtensions.Net.Proxy;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<ExtraInfoSpecArrayItem>))]
+public enum ExtraInfoSpecArrayItem
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<ExtraInfoSpecArrayItem>))]
-    public enum ExtraInfoSpecArrayItem
-    {
-        /// <summary>requestHeaders</summary>
-        [EnumValue("requestHeaders")]
-        RequestHeaders,
-    }
+    /// <summary>requestHeaders</summary>
+    [EnumValue("requestHeaders")]
+    RequestHeaders,
 }

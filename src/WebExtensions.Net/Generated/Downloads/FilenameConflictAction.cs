@@ -1,21 +1,20 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Downloads
+namespace WebExtensions.Net.Downloads;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<FilenameConflictAction>))]
+public enum FilenameConflictAction
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<FilenameConflictAction>))]
-    public enum FilenameConflictAction
-    {
-        /// <summary>uniquify</summary>
-        [EnumValue("uniquify")]
-        Uniquify,
+    /// <summary>uniquify</summary>
+    [EnumValue("uniquify")]
+    Uniquify,
 
-        /// <summary>overwrite</summary>
-        [EnumValue("overwrite")]
-        Overwrite,
+    /// <summary>overwrite</summary>
+    [EnumValue("overwrite")]
+    Overwrite,
 
-        /// <summary>prompt</summary>
-        [EnumValue("prompt")]
-        Prompt,
-    }
+    /// <summary>prompt</summary>
+    [EnumValue("prompt")]
+    Prompt,
 }

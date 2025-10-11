@@ -13,122 +13,121 @@ using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.NamespaceDefinitionsClients;
 using WebExtensions.Net.Generator.Repositories;
 
-namespace WebExtensions.Net.Generator
+namespace WebExtensions.Net.Generator;
+
+public static class Program
 {
-    public static class Program
+    public static async Task Main()
     {
-        public static async Task Main()
+        var configuration = GetConfiguration();
+        var sourceOptions = configuration.GetSection("sourceOptions").Get<SourceOptions>();
+        var codeWriterOptions = configuration.GetSection("codeWriterOptions").Get<CodeWriterOptions>();
+        var registrationOptions = configuration.GetSection("registrationOptions").Get<RegistrationOptions>();
+        var classTranslationOptions = configuration.GetSection("classTranslationOptions").Get<ClassTranslationOptions>();
+        
+        if (sourceOptions is null || codeWriterOptions is null || registrationOptions is null || classTranslationOptions is null)
         {
-            var configuration = GetConfiguration();
-            var sourceOptions = configuration.GetSection("sourceOptions").Get<SourceOptions>();
-            var codeWriterOptions = configuration.GetSection("codeWriterOptions").Get<CodeWriterOptions>();
-            var registrationOptions = configuration.GetSection("registrationOptions").Get<RegistrationOptions>();
-            var classTranslationOptions = configuration.GetSection("classTranslationOptions").Get<ClassTranslationOptions>();
-            
-            if (sourceOptions is null || codeWriterOptions is null || registrationOptions is null || classTranslationOptions is null)
-            {
-                throw new InvalidOperationException("Invalid appsettings file.");
-            }
-
-            var generatorDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", ".."));
-            sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.LocalDirectory));
-            sourceOptions.AdditionalLocalDefinitions = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.AdditionalLocalDefinitions));
-            codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, codeWriterOptions.RootDirectory));
-
-            var services = new ServiceCollection();
-            RegisterServices(services);
-            services.AddSingleton(sourceOptions);
-            services.AddSingleton(codeWriterOptions);
-            services.AddSingleton(registrationOptions);
-            services.AddSingleton(classTranslationOptions);
-
-            var serviceProvider = services.BuildServiceProvider();
-            using var scope = serviceProvider.CreateScope();
-
-            var namespaceDefinitionsManager = scope.ServiceProvider.GetRequiredService<NamespaceDefinitionsManager>();
-            var namespaceDefinitions = await namespaceDefinitionsManager.GetNamespaceDefinitions();
-
-            var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
-            var classEntities = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
-
-            var clrTypeManager = scope.ServiceProvider.GetRequiredService<ClrTypeManager>();
-            var clrTypes = clrTypeManager.TranslateToClrType(classEntities);
-
-            var codeGenerator = scope.ServiceProvider.GetRequiredService<CodeGenerator>();
-            var codeConverters = codeGenerator.GetCodeFileConverters(clrTypes);
-
-            var filesManager = scope.ServiceProvider.GetRequiredService<FilesManager>();
-            if (filesManager.CleanDirectory())
-            {
-                filesManager.WriteCodeFiles(codeConverters);
-                filesManager.WriteJsonFiles();
-            }
+            throw new InvalidOperationException("Invalid appsettings file.");
         }
 
-        private static IConfigurationRoot GetConfiguration()
-            => new ConfigurationBuilder()
-               .AddJsonFile("appsettings.json", false)
-               .Build();
+        var generatorDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..", "..", ".."));
+        sourceOptions.LocalDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.LocalDirectory));
+        sourceOptions.AdditionalLocalDefinitions = Path.GetFullPath(Path.Combine(generatorDirectory, sourceOptions.AdditionalLocalDefinitions));
+        codeWriterOptions.RootDirectory = Path.GetFullPath(Path.Combine(generatorDirectory, codeWriterOptions.RootDirectory));
 
-        private static void RegisterServices(IServiceCollection services)
+        var services = new ServiceCollection();
+        RegisterServices(services);
+        services.AddSingleton(sourceOptions);
+        services.AddSingleton(codeWriterOptions);
+        services.AddSingleton(registrationOptions);
+        services.AddSingleton(classTranslationOptions);
+
+        var serviceProvider = services.BuildServiceProvider();
+        using var scope = serviceProvider.CreateScope();
+
+        var namespaceDefinitionsManager = scope.ServiceProvider.GetRequiredService<NamespaceDefinitionsManager>();
+        var namespaceDefinitions = await namespaceDefinitionsManager.GetNamespaceDefinitions();
+
+        var entitiesRegistrationManager = scope.ServiceProvider.GetRequiredService<EntitiesRegistrationManager>();
+        var classEntities = entitiesRegistrationManager.RegisterEntities(namespaceDefinitions);
+
+        var clrTypeManager = scope.ServiceProvider.GetRequiredService<ClrTypeManager>();
+        var clrTypes = clrTypeManager.TranslateToClrType(classEntities);
+
+        var codeGenerator = scope.ServiceProvider.GetRequiredService<CodeGenerator>();
+        var codeConverters = codeGenerator.GetCodeFileConverters(clrTypes);
+
+        var filesManager = scope.ServiceProvider.GetRequiredService<FilesManager>();
+        if (filesManager.CleanDirectory())
         {
-            using var loggerFactory = LoggerFactory.Create(builder => builder
-                    .AddFilter("Microsoft", LogLevel.Warning)
-                    .AddFilter("System", LogLevel.Warning)
-                    .AddSimpleConsole(options => options.SingleLine = true));
-            var logger = loggerFactory.CreateLogger("Generator");
-            services.AddSingleton(logger);
-            services.AddScoped<NamespaceDefinitionsManager>();
-            services.AddScoped<EntitiesContext>();
-            services.AddScoped<EntitiesRegistrationManager>();
-            services.AddScoped<ClrTypeManager>();
-            services.AddScoped<CodeGenerator>();
-            services.AddScoped<FilesManager>();
-
-            // namespace definition clients
-            services.AddTransient<NamespaceDefinitionsClient>();
-
-            // entity registrars
-            services.AddTransient<ApiClassEntityRegistrar>();
-            services.AddTransient<ApiRootClassEntityRegistrar>();
-            services.AddTransient<ArrayClassEntityRegistrar>();
-            services.AddTransient<ClassEntityRegistrarFactory>();
-            services.AddTransient<EnumClassEntityRegistrar>();
-            services.AddTransient<EventTypeClassEntityRegistrar>();
-            services.AddTransient<MultiTypeClassEntityRegistrar>();
-            services.AddTransient<StringFormatClassEntityRegistrar>();
-            services.AddTransient<TypeClassEntityRegistrar>();
-            services.AddTransient<EmptyClassEntityRegistrar>();
-
-            services.AddTransient<RegistrarFactory>();
-            services.AddTransient<AnonymousTypeProcessor>();
-            services.AddTransient<AnonymousTypeRegistrar>();
-            services.AddTransient<ClassEntityRegistrar>();
-            services.AddTransient<CombinedCallbackParameterClassEntityRegistrar>();
-            services.AddTransient<EventDefinitionToPropertyDefinitionConverter>();
-            services.AddTransient<NamespaceApiToTypeDefinitionConverter>();
-            services.AddTransient<NamespaceEntityRegistrar>();
-            services.AddTransient<NamespaceRegistrationFilter>();
-            services.AddTransient<TypeEntityRegistrar>();
-            services.AddTransient<TypeUsageProcessor>();
-            services.AddTransient<RegisteredClassEntityProcessor>();
-
-            // clr type translators
-            services.AddTransient<ClassEntityTranslator>();
-            services.AddScoped<ClrTypeStore>();
-            services.AddTransient<FunctionDefinitionTranslator>();
-            services.AddTransient<PropertyDefinitionTranslator>();
-
-            // code converter factories
-            services.AddTransient<ApiCodeConverterFactory>();
-            services.AddTransient<ApiRootCodeConverterFactory>();
-            services.AddTransient<ArrayCodeConverterFactory>();
-            services.AddTransient<CombinedCallbackParameterCodeConverterFactory>();
-            services.AddTransient<EnumCodeConverterFactory>();
-            services.AddTransient<MultitypeCodeConverterFactory>();
-            services.AddTransient<StringFormatCodeConverterFactory>();
-            services.AddTransient<TypeCodeConverterFactory>();
-            services.AddTransient<EmptyCodeConverterFactory>();
+            filesManager.WriteCodeFiles(codeConverters);
+            filesManager.WriteJsonFiles();
         }
+    }
+
+    private static IConfigurationRoot GetConfiguration()
+        => new ConfigurationBuilder()
+           .AddJsonFile("appsettings.json", false)
+           .Build();
+
+    private static void RegisterServices(IServiceCollection services)
+    {
+        using var loggerFactory = LoggerFactory.Create(builder => builder
+                .AddFilter("Microsoft", LogLevel.Warning)
+                .AddFilter("System", LogLevel.Warning)
+                .AddSimpleConsole(options => options.SingleLine = true));
+        var logger = loggerFactory.CreateLogger("Generator");
+        services.AddSingleton(logger);
+        services.AddScoped<NamespaceDefinitionsManager>();
+        services.AddScoped<EntitiesContext>();
+        services.AddScoped<EntitiesRegistrationManager>();
+        services.AddScoped<ClrTypeManager>();
+        services.AddScoped<CodeGenerator>();
+        services.AddScoped<FilesManager>();
+
+        // namespace definition clients
+        services.AddTransient<NamespaceDefinitionsClient>();
+
+        // entity registrars
+        services.AddTransient<ApiClassEntityRegistrar>();
+        services.AddTransient<ApiRootClassEntityRegistrar>();
+        services.AddTransient<ArrayClassEntityRegistrar>();
+        services.AddTransient<ClassEntityRegistrarFactory>();
+        services.AddTransient<EnumClassEntityRegistrar>();
+        services.AddTransient<EventTypeClassEntityRegistrar>();
+        services.AddTransient<MultiTypeClassEntityRegistrar>();
+        services.AddTransient<StringFormatClassEntityRegistrar>();
+        services.AddTransient<TypeClassEntityRegistrar>();
+        services.AddTransient<EmptyClassEntityRegistrar>();
+
+        services.AddTransient<RegistrarFactory>();
+        services.AddTransient<AnonymousTypeProcessor>();
+        services.AddTransient<AnonymousTypeRegistrar>();
+        services.AddTransient<ClassEntityRegistrar>();
+        services.AddTransient<CombinedCallbackParameterClassEntityRegistrar>();
+        services.AddTransient<EventDefinitionToPropertyDefinitionConverter>();
+        services.AddTransient<NamespaceApiToTypeDefinitionConverter>();
+        services.AddTransient<NamespaceEntityRegistrar>();
+        services.AddTransient<NamespaceRegistrationFilter>();
+        services.AddTransient<TypeEntityRegistrar>();
+        services.AddTransient<TypeUsageProcessor>();
+        services.AddTransient<RegisteredClassEntityProcessor>();
+
+        // clr type translators
+        services.AddTransient<ClassEntityTranslator>();
+        services.AddScoped<ClrTypeStore>();
+        services.AddTransient<FunctionDefinitionTranslator>();
+        services.AddTransient<PropertyDefinitionTranslator>();
+
+        // code converter factories
+        services.AddTransient<ApiCodeConverterFactory>();
+        services.AddTransient<ApiRootCodeConverterFactory>();
+        services.AddTransient<ArrayCodeConverterFactory>();
+        services.AddTransient<CombinedCallbackParameterCodeConverterFactory>();
+        services.AddTransient<EnumCodeConverterFactory>();
+        services.AddTransient<MultitypeCodeConverterFactory>();
+        services.AddTransient<StringFormatCodeConverterFactory>();
+        services.AddTransient<TypeCodeConverterFactory>();
+        services.AddTransient<EmptyCodeConverterFactory>();
     }
 }

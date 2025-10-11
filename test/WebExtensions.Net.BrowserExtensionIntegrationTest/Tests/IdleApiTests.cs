@@ -1,30 +1,29 @@
 ﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests;
+
+[TestClass(Description = "browser.idle API")]
+public class IdleApiTests(IWebExtensionsApi webExtensionsApi)
 {
-    [TestClass(Description = "browser.idle API")]
-    public class IdleApiTests(IWebExtensionsApi webExtensionsApi)
+    private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+
+    [Fact]
+    public async Task QueryState()
     {
-        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        // Act
+        Func<Task> action = async () => await webExtensionsApi.Idle.QueryState(60);
 
-        [Fact]
-        public async Task QueryState()
-        {
-            // Act
-            Func<Task> action = async () => await webExtensionsApi.Idle.QueryState(60);
+        // Assert
+        await action.ShouldNotThrowAsync();
+    }
 
-            // Assert
-            await action.ShouldNotThrowAsync();
-        }
+    [Fact]
+    public void SetDetectionInterval()
+    {
+        // Act
+        Action action = () => webExtensionsApi.Idle.SetDetectionInterval(60);
 
-        [Fact]
-        public void SetDetectionInterval()
-        {
-            // Act
-            Action action = () => webExtensionsApi.Idle.SetDetectionInterval(60);
-
-            // Assert
-            action.ShouldNotThrow();
-        }
+        // Assert
+        action.ShouldNotThrow();
     }
 }

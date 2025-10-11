@@ -1,7 +1,6 @@
-﻿namespace WebExtensions.Net.Generator.CodeGeneration
+﻿namespace WebExtensions.Net.Generator.CodeGeneration;
+
+public interface ICodeSectionConverter
 {
-    public interface ICodeSectionConverter
-    {
-        void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options);
-    }
+    void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options);
 }

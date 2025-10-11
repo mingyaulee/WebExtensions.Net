@@ -2,26 +2,25 @@
 using System.IO;
 using WebExtensions.Net.IntegrationTestsRunner.Models;
 
-namespace WebExtensions.Net.IntegrationTestsRunner
+namespace WebExtensions.Net.IntegrationTestsRunner;
+
+public static class TestCoverageWriter
 {
-    public static class TestCoverageWriter
+    public static void Write(string hitsFilePath, int[] hitsArray)
     {
-        public static void Write(string hitsFilePath, int[] hitsArray)
+        try
         {
-            try
+            using var fs = new FileStream(hitsFilePath, FileMode.CreateNew);
+            using var bw = new BinaryWriter(fs);
+            bw.Write(hitsArray.Length);
+            foreach (var hitCount in hitsArray)
             {
-                using var fs = new FileStream(hitsFilePath, FileMode.CreateNew);
-                using var bw = new BinaryWriter(fs);
-                bw.Write(hitsArray.Length);
-                foreach (var hitCount in hitsArray)
-                {
-                    bw.Write(hitCount);
-                }
+                bw.Write(hitCount);
             }
-            catch (Exception exception)
-            {
-                throw new TestRunnerException($"Failed to write test coverage hits file at path '{hitsFilePath}'. Exception message: {exception.Message}");
-            }
+        }
+        catch (Exception exception)
+        {
+            throw new TestRunnerException($"Failed to write test coverage hits file at path '{hitsFilePath}'. Exception message: {exception.Message}");
         }
     }
 }

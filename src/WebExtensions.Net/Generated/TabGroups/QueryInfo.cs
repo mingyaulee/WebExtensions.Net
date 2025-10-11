@@ -1,35 +1,34 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.TabGroups
+namespace WebExtensions.Net.TabGroups;
+
+// Type Class
+/// <summary></summary>
+[BindAllProperties]
+public partial class QueryInfo : BaseObject
 {
-    // Type Class
     /// <summary></summary>
-    [BindAllProperties]
-    public partial class QueryInfo : BaseObject
-    {
-        /// <summary></summary>
-        [JsAccessPath("collapsed")]
-        [JsonPropertyName("collapsed")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? Collapsed { get; set; }
+    [JsAccessPath("collapsed")]
+    [JsonPropertyName("collapsed")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? Collapsed { get; set; }
 
-        /// <summary></summary>
-        [JsAccessPath("color")]
-        [JsonPropertyName("color")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Color? Color { get; set; }
+    /// <summary></summary>
+    [JsAccessPath("color")]
+    [JsonPropertyName("color")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Color? Color { get; set; }
 
-        /// <summary></summary>
-        [JsAccessPath("title")]
-        [JsonPropertyName("title")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Title { get; set; }
+    /// <summary></summary>
+    [JsAccessPath("title")]
+    [JsonPropertyName("title")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Title { get; set; }
 
-        /// <summary></summary>
-        [JsAccessPath("windowId")]
-        [JsonPropertyName("windowId")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? WindowId { get; set; }
-    }
+    /// <summary></summary>
+    [JsAccessPath("windowId")]
+    [JsonPropertyName("windowId")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? WindowId { get; set; }
 }

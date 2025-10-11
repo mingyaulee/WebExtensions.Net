@@ -1,29 +1,28 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Management
+namespace WebExtensions.Net.Management;
+
+/// <summary>How the extension was installed. One of<br /><c>development</c>: The extension was loaded unpacked in developer mode,<br /><c>normal</c>: The extension was installed normally via an .xpi file,<br /><c>sideload</c>: The extension was installed by other software on the machine,<br /><c>admin</c>: The extension was installed by policy,<br /><c>other</c>: The extension was installed by other means.</summary>
+[JsonConverter(typeof(EnumStringConverter<ExtensionInstallType>))]
+public enum ExtensionInstallType
 {
-    /// <summary>How the extension was installed. One of<br /><c>development</c>: The extension was loaded unpacked in developer mode,<br /><c>normal</c>: The extension was installed normally via an .xpi file,<br /><c>sideload</c>: The extension was installed by other software on the machine,<br /><c>admin</c>: The extension was installed by policy,<br /><c>other</c>: The extension was installed by other means.</summary>
-    [JsonConverter(typeof(EnumStringConverter<ExtensionInstallType>))]
-    public enum ExtensionInstallType
-    {
-        /// <summary>development</summary>
-        [EnumValue("development")]
-        Development,
+    /// <summary>development</summary>
+    [EnumValue("development")]
+    Development,
 
-        /// <summary>normal</summary>
-        [EnumValue("normal")]
-        Normal,
+    /// <summary>normal</summary>
+    [EnumValue("normal")]
+    Normal,
 
-        /// <summary>sideload</summary>
-        [EnumValue("sideload")]
-        Sideload,
+    /// <summary>sideload</summary>
+    [EnumValue("sideload")]
+    Sideload,
 
-        /// <summary>admin</summary>
-        [EnumValue("admin")]
-        Admin,
+    /// <summary>admin</summary>
+    [EnumValue("admin")]
+    Admin,
 
-        /// <summary>other</summary>
-        [EnumValue("other")]
-        Other,
-    }
+    /// <summary>other</summary>
+    [EnumValue("other")]
+    Other,
 }

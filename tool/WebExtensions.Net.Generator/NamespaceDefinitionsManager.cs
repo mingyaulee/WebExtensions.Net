@@ -8,49 +8,48 @@ using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Schema;
 using WebExtensions.Net.Generator.NamespaceDefinitionsClients;
 
-namespace WebExtensions.Net.Generator
+namespace WebExtensions.Net.Generator;
+
+/// <summary>
+/// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
+/// </summary>
+public class NamespaceDefinitionsManager(NamespaceDefinitionsClient namespaceDefinitionsClient, SourceOptions sourceOptions, ILogger logger)
 {
-    /// <summary>
-    /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
-    /// </summary>
-    public class NamespaceDefinitionsManager(NamespaceDefinitionsClient namespaceDefinitionsClient, SourceOptions sourceOptions, ILogger logger)
+    private readonly NamespaceDefinitionsClient namespaceDefinitionsClient = namespaceDefinitionsClient;
+    private readonly SourceOptions sourceOptions = sourceOptions;
+    private readonly ILogger logger = logger;
+
+    public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions()
     {
-        private readonly NamespaceDefinitionsClient namespaceDefinitionsClient = namespaceDefinitionsClient;
-        private readonly SourceOptions sourceOptions = sourceOptions;
-        private readonly ILogger logger = logger;
-
-        public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions()
+        IEnumerable<NamespaceDefinition> namespaceDefinitions;
+        if (sourceOptions.UseLocalSources)
         {
-            IEnumerable<NamespaceDefinition> namespaceDefinitions;
-            if (sourceOptions.UseLocalSources)
+            logger.LogInformation("Using local namespace definition sources.");
+            namespaceDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.LocalDirectory);
+        }
+        else
+        {
+            foreach (var additionalNamespaceSourceDefinition in sourceOptions.AdditionalNamespaceSourceDefinitions)
             {
-                logger.LogInformation("Using local namespace definition sources.");
-                namespaceDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.LocalDirectory);
-            }
-            else
-            {
-                foreach (var additionalNamespaceSourceDefinition in sourceOptions.AdditionalNamespaceSourceDefinitions)
+                if (additionalNamespaceSourceDefinition.HttpUrl is null)
                 {
-                    if (additionalNamespaceSourceDefinition.HttpUrl is null)
-                    {
-                        throw new InvalidOperationException("Additional namespace source definition should have value for HttpUrl.");
-                    }
-
-                    additionalNamespaceSourceDefinition.Schema = Path.GetFileName(additionalNamespaceSourceDefinition.HttpUrl);
+                    throw new InvalidOperationException("Additional namespace source definition should have value for HttpUrl.");
                 }
 
-                namespaceDefinitions = await namespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.Sources, sourceOptions.AdditionalNamespaceSourceDefinitions, sourceOptions.RunInParallel);
-
-                LocalNamespaceDefinitionsClient.StoreNamespaceDefinitions(sourceOptions.LocalDirectory, namespaceDefinitions);
+                additionalNamespaceSourceDefinition.Schema = Path.GetFileName(additionalNamespaceSourceDefinition.HttpUrl);
             }
 
-            if (Directory.Exists(sourceOptions.AdditionalLocalDefinitions))
-            {
-                var additionalLocalDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.AdditionalLocalDefinitions);
-                return namespaceDefinitions.Concat(additionalLocalDefinitions);
-            }
+            namespaceDefinitions = await namespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.Sources, sourceOptions.AdditionalNamespaceSourceDefinitions, sourceOptions.RunInParallel);
 
-            return namespaceDefinitions;
+            LocalNamespaceDefinitionsClient.StoreNamespaceDefinitions(sourceOptions.LocalDirectory, namespaceDefinitions);
         }
+
+        if (Directory.Exists(sourceOptions.AdditionalLocalDefinitions))
+        {
+            var additionalLocalDefinitions = LocalNamespaceDefinitionsClient.GetNamespaceDefinitions(sourceOptions.AdditionalLocalDefinitions);
+            return namespaceDefinitions.Concat(additionalLocalDefinitions);
+        }
+
+        return namespaceDefinitions;
     }
 }

@@ -6,92 +6,91 @@ using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtensions.Net.Generator.EntitiesRegistration
+namespace WebExtensions.Net.Generator.EntitiesRegistration;
+
+public class EventDefinitionToPropertyDefinitionConverter(RegistrationOptions registrationOptions, TypeEntityRegistrar typeEntityRegistrar)
 {
-    public class EventDefinitionToPropertyDefinitionConverter(RegistrationOptions registrationOptions, TypeEntityRegistrar typeEntityRegistrar)
+    private readonly RegistrationOptions registrationOptions = registrationOptions;
+    private readonly TypeEntityRegistrar typeEntityRegistrar = typeEntityRegistrar;
+
+    public PropertyDefinition Convert(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+        => ShouldCreateEventTypeObject(eventDefinition)
+            ? new PropertyDefinition()
+            {
+                Type = ObjectType.EventTypeObject,
+                Description = eventDefinition.Description,
+                IsUnsupported = eventDefinition.IsUnsupported,
+                Deprecated = eventDefinition.Deprecated,
+                ObjectFunctions = GetEventFunctions(eventDefinition, namespaceEntity)
+            }
+            : new PropertyDefinition()
+            {
+                Ref = registrationOptions.BaseEventTypeName,
+                Type = ObjectType.EventTypeObject,
+                Description = eventDefinition.Description,
+                IsUnsupported = eventDefinition.IsUnsupported,
+                Deprecated = eventDefinition.Deprecated
+            };
+
+    private static bool ShouldCreateEventTypeObject(EventDefinition eventDefinition)
+        => (eventDefinition.FunctionParameters is not null && eventDefinition.FunctionParameters.Any()) ||
+            (eventDefinition.ExtraParameters is not null && eventDefinition.ExtraParameters.Any());
+
+    private List<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
     {
-        private readonly RegistrationOptions registrationOptions = registrationOptions;
-        private readonly TypeEntityRegistrar typeEntityRegistrar = typeEntityRegistrar;
+        var functionDefinitions = new List<FunctionDefinition>();
+        var baseEventTypeEntity = typeEntityRegistrar.GetTypeEntity(registrationOptions.BaseEventTypeName, namespaceEntity);
 
-        public PropertyDefinition Convert(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
-            => ShouldCreateEventTypeObject(eventDefinition)
-                ? new PropertyDefinition()
-                {
-                    Type = ObjectType.EventTypeObject,
-                    Description = eventDefinition.Description,
-                    IsUnsupported = eventDefinition.IsUnsupported,
-                    Deprecated = eventDefinition.Deprecated,
-                    ObjectFunctions = GetEventFunctions(eventDefinition, namespaceEntity)
-                }
-                : new PropertyDefinition()
-                {
-                    Ref = registrationOptions.BaseEventTypeName,
-                    Type = ObjectType.EventTypeObject,
-                    Description = eventDefinition.Description,
-                    IsUnsupported = eventDefinition.IsUnsupported,
-                    Deprecated = eventDefinition.Deprecated
-                };
+        functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "addListener", false));
+        functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "hasListener", true));
+        functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "removeListener", true));
 
-        private static bool ShouldCreateEventTypeObject(EventDefinition eventDefinition)
-            => (eventDefinition.FunctionParameters is not null && eventDefinition.FunctionParameters.Any()) ||
-                (eventDefinition.ExtraParameters is not null && eventDefinition.ExtraParameters.Any());
+        return functionDefinitions;
+    }
 
-        private List<FunctionDefinition> GetEventFunctions(EventDefinition eventDefinition, NamespaceEntity namespaceEntity)
+    private static List<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
+    {
+        var eventFunctionDefinitions = new List<FunctionDefinition>();
+        var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName);
+        if (baseEventFunction is null)
         {
-            var functionDefinitions = new List<FunctionDefinition>();
-            var baseEventTypeEntity = typeEntityRegistrar.GetTypeEntity(registrationOptions.BaseEventTypeName, namespaceEntity);
-
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "addListener", false));
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "hasListener", true));
-            functionDefinitions.AddRange(GetEventFunctionDefinitions(eventDefinition, baseEventTypeEntity, "removeListener", true));
-
-            return functionDefinitions;
+            throw new InvalidOperationException($"Failed to locate '{functionName}' function in type entity '{baseEventTypeEntity.NamespaceQualifiedId}'.");
         }
 
-        private static List<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
+        var baseEventFunctionParameter = baseEventFunction.FunctionParameters?.SingleOrDefault();
+        if (baseEventFunctionParameter is null)
         {
-            var eventFunctionDefinitions = new List<FunctionDefinition>();
-            var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName);
-            if (baseEventFunction is null)
-            {
-                throw new InvalidOperationException($"Failed to locate '{functionName}' function in type entity '{baseEventTypeEntity.NamespaceQualifiedId}'.");
-            }
-
-            var baseEventFunctionParameter = baseEventFunction.FunctionParameters?.SingleOrDefault();
-            if (baseEventFunctionParameter is null)
-            {
-                throw new InvalidOperationException($"'{functionName}' function should have one parameter.");
-            }
-
-            var functionParameters = new List<ParameterDefinition>();
-            var functionParameter = SerializationHelper.DeserializeTo<ParameterDefinition>(eventDefinition);
-
-            functionParameter.Name = baseEventFunctionParameter.Name;
-            if (useBaseFunctionDescription)
-            {
-                functionParameter.Description = baseEventFunctionParameter.Description;
-            }
-            functionParameters.Add(functionParameter);
-
-            var clonedEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
-            clonedEventFunction.FunctionParameters = [.. functionParameters];
-            eventFunctionDefinitions.Add(clonedEventFunction);
-
-            if (eventDefinition.ExtraParameters is not null)
-            {
-                functionParameters.AddRange(eventDefinition.ExtraParameters.Select(extraParameter =>
-                {
-                    // Set IsOptional to false so that we don't get an ambiguous method overload
-                    extraParameter.Optional = null;
-                    return extraParameter;
-                }));
-
-                var extraParameterEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
-                extraParameterEventFunction.FunctionParameters = [.. functionParameters];
-                eventFunctionDefinitions.Add(extraParameterEventFunction);
-            }
-
-            return eventFunctionDefinitions;
+            throw new InvalidOperationException($"'{functionName}' function should have one parameter.");
         }
+
+        var functionParameters = new List<ParameterDefinition>();
+        var functionParameter = SerializationHelper.DeserializeTo<ParameterDefinition>(eventDefinition);
+
+        functionParameter.Name = baseEventFunctionParameter.Name;
+        if (useBaseFunctionDescription)
+        {
+            functionParameter.Description = baseEventFunctionParameter.Description;
+        }
+        functionParameters.Add(functionParameter);
+
+        var clonedEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
+        clonedEventFunction.FunctionParameters = [.. functionParameters];
+        eventFunctionDefinitions.Add(clonedEventFunction);
+
+        if (eventDefinition.ExtraParameters is not null)
+        {
+            functionParameters.AddRange(eventDefinition.ExtraParameters.Select(extraParameter =>
+            {
+                // Set IsOptional to false so that we don't get an ambiguous method overload
+                extraParameter.Optional = null;
+                return extraParameter;
+            }));
+
+            var extraParameterEventFunction = SerializationHelper.DeserializeTo<FunctionDefinition>(baseEventFunction);
+            extraParameterEventFunction.FunctionParameters = [.. functionParameters];
+            eventFunctionDefinitions.Add(extraParameterEventFunction);
+        }
+
+        return eventFunctionDefinitions;
     }
 }

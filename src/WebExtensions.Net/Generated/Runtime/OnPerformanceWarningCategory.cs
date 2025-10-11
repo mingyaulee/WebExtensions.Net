@@ -1,13 +1,12 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Runtime
+namespace WebExtensions.Net.Runtime;
+
+/// <summary>The performance warning event category, e.g. 'content_script'.</summary>
+[JsonConverter(typeof(EnumStringConverter<OnPerformanceWarningCategory>))]
+public enum OnPerformanceWarningCategory
 {
-    /// <summary>The performance warning event category, e.g. 'content_script'.</summary>
-    [JsonConverter(typeof(EnumStringConverter<OnPerformanceWarningCategory>))]
-    public enum OnPerformanceWarningCategory
-    {
-        /// <summary>content_script</summary>
-        [EnumValue("content_script")]
-        ContentScript,
-    }
+    /// <summary>content_script</summary>
+    [EnumValue("content_script")]
+    ContentScript,
 }

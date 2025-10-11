@@ -1,9 +1,8 @@
 ﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+
+public interface ITestFactory
 {
-    public interface ITestFactory
-    {
-        IEnumerable<TestClassInfo> GetAllTests();
-    }
+    IEnumerable<TestClassInfo> GetAllTests();
 }

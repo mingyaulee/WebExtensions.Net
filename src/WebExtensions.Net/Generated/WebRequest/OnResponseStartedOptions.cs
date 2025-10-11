@@ -1,13 +1,12 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.WebRequest
+namespace WebExtensions.Net.WebRequest;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<OnResponseStartedOptions>))]
+public enum OnResponseStartedOptions
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<OnResponseStartedOptions>))]
-    public enum OnResponseStartedOptions
-    {
-        /// <summary>responseHeaders</summary>
-        [EnumValue("responseHeaders")]
-        ResponseHeaders,
-    }
+    /// <summary>responseHeaders</summary>
+    [EnumValue("responseHeaders")]
+    ResponseHeaders,
 }

@@ -1,13 +1,12 @@
-﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
+﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
+
+public class AttributeCodeConverter(string attribute) : ICodeConverter, ICodeSectionConverter
 {
-    public class AttributeCodeConverter(string attribute) : ICodeConverter, ICodeSectionConverter
-    {
-        private readonly string attribute = attribute;
+    private readonly string attribute = attribute;
 
-        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-            => WriteTo(codeWriter.Declaration, options);
+    public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        => WriteTo(codeWriter.Declaration, options);
 
-        public virtual void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
-            => codeWriter.WriteLine($"[{attribute}]");
-    }
+    public virtual void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
+        => codeWriter.WriteLine($"[{attribute}]");
 }

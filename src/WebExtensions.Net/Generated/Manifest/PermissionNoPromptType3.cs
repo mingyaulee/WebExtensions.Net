@@ -1,57 +1,56 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Manifest
+namespace WebExtensions.Net.Manifest;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<PermissionNoPromptType3>))]
+public enum PermissionNoPromptType3
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<PermissionNoPromptType3>))]
-    public enum PermissionNoPromptType3
-    {
-        /// <summary>alarms</summary>
-        [EnumValue("alarms")]
-        Alarms,
+    /// <summary>alarms</summary>
+    [EnumValue("alarms")]
+    Alarms,
 
-        /// <summary>storage</summary>
-        [EnumValue("storage")]
-        Storage,
+    /// <summary>storage</summary>
+    [EnumValue("storage")]
+    Storage,
 
-        /// <summary>unlimitedStorage</summary>
-        [EnumValue("unlimitedStorage")]
-        UnlimitedStorage,
+    /// <summary>unlimitedStorage</summary>
+    [EnumValue("unlimitedStorage")]
+    UnlimitedStorage,
 
-        /// <summary>declarativeNetRequestWithHostAccess</summary>
-        [EnumValue("declarativeNetRequestWithHostAccess")]
-        DeclarativeNetRequestWithHostAccess,
+    /// <summary>declarativeNetRequestWithHostAccess</summary>
+    [EnumValue("declarativeNetRequestWithHostAccess")]
+    DeclarativeNetRequestWithHostAccess,
 
-        /// <summary>dns</summary>
-        [EnumValue("dns")]
-        Dns,
+    /// <summary>dns</summary>
+    [EnumValue("dns")]
+    Dns,
 
-        /// <summary>theme</summary>
-        [EnumValue("theme")]
-        Theme,
+    /// <summary>theme</summary>
+    [EnumValue("theme")]
+    Theme,
 
-        /// <summary>captivePortal</summary>
-        [EnumValue("captivePortal")]
-        CaptivePortal,
+    /// <summary>captivePortal</summary>
+    [EnumValue("captivePortal")]
+    CaptivePortal,
 
-        /// <summary>contextualIdentities</summary>
-        [EnumValue("contextualIdentities")]
-        ContextualIdentities,
+    /// <summary>contextualIdentities</summary>
+    [EnumValue("contextualIdentities")]
+    ContextualIdentities,
 
-        /// <summary>identity</summary>
-        [EnumValue("identity")]
-        Identity,
+    /// <summary>identity</summary>
+    [EnumValue("identity")]
+    Identity,
 
-        /// <summary>menus</summary>
-        [EnumValue("menus")]
-        Menus,
+    /// <summary>menus</summary>
+    [EnumValue("menus")]
+    Menus,
 
-        /// <summary>contextMenus</summary>
-        [EnumValue("contextMenus")]
-        ContextMenus,
+    /// <summary>contextMenus</summary>
+    [EnumValue("contextMenus")]
+    ContextMenus,
 
-        /// <summary>geckoProfiler</summary>
-        [EnumValue("geckoProfiler")]
-        GeckoProfiler,
-    }
+    /// <summary>geckoProfiler</summary>
+    [EnumValue("geckoProfiler")]
+    GeckoProfiler,
 }

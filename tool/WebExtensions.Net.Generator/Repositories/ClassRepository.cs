@@ -5,33 +5,32 @@ using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Entities;
 using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtensions.Net.Generator.Repositories
+namespace WebExtensions.Net.Generator.Repositories;
+
+public class ClassRepository : BaseRepository<ClassEntity>
 {
-    public class ClassRepository : BaseRepository<ClassEntity>
+    public ClassEntity RegisterClass(ClassType type, string className, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
     {
-        public ClassEntity RegisterClass(ClassType type, string className, TypeDefinition typeDefinition, NamespaceEntity namespaceEntity)
+        var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(className);
+        if (Entities.Exists(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId)))
         {
-            var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(className);
-            if (Entities.Exists(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId)))
-            {
-                throw new InvalidOperationException($"Class entity with id '{namespaceQualifiedId}' already exists.");
-            }
-
-            var entity = new ClassEntity(type, className, namespaceQualifiedId, typeDefinition, namespaceEntity);
-            Entities.Add(entity);
-
-            return entity;
+            throw new InvalidOperationException($"Class entity with id '{namespaceQualifiedId}' already exists.");
         }
 
-        public ClassEntity GetClassEntity(string typeId, NamespaceEntity namespaceEntity)
-        {
-            var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);
-            var entity = Entities.Find(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId));
-            return entity is null
-                ? throw new InvalidOperationException($"Class entity with id '{namespaceQualifiedId}' does not exists.")
-                : entity;
-        }
+        var entity = new ClassEntity(type, className, namespaceQualifiedId, typeDefinition, namespaceEntity);
+        Entities.Add(entity);
 
-        public IEnumerable<ClassEntity> GetAllClassEntities() => Entities;
+        return entity;
     }
+
+    public ClassEntity GetClassEntity(string typeId, NamespaceEntity namespaceEntity)
+    {
+        var namespaceQualifiedId = namespaceEntity.GetNamespaceQualifiedId(typeId);
+        var entity = Entities.Find(e => e.NamespaceQualifiedId.Equals(namespaceQualifiedId));
+        return entity is null
+            ? throw new InvalidOperationException($"Class entity with id '{namespaceQualifiedId}' does not exists.")
+            : entity;
+    }
+
+    public IEnumerable<ClassEntity> GetAllClassEntities() => Entities;
 }

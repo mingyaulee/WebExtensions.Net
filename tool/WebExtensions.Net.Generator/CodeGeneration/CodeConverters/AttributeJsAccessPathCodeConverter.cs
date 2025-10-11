@@ -1,11 +1,10 @@
-﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
+﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
+
+public class AttributeJsAccessPathCodeConverter(string? accessPath) : AttributeCodeConverter($"JsAccessPath(\"{accessPath}\")")
 {
-    public class AttributeJsAccessPathCodeConverter(string? accessPath) : AttributeCodeConverter($"JsAccessPath(\"{accessPath}\")")
+    public override void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
     {
-        public override void WriteTo(ICodeSectionWriter codeWriter, CodeWriterOptions options)
-        {
-            base.WriteTo(codeWriter, options);
-            codeWriter.WriteUsingStatement("JsBind.Net");
-        }
+        base.WriteTo(codeWriter, options);
+        codeWriter.WriteUsingStatement("JsBind.Net");
     }
 }

@@ -1,18 +1,17 @@
 ﻿using System.Text.Json;
 using WebExtensions.Net.Generator.JsonConverters;
 
-namespace WebExtensions.Net.Generator
-{
-    public static class JsonSerializerConstant
-    {
-        public static readonly JsonSerializerOptions Options = new()
-        {
-            ReadCommentHandling = JsonCommentHandling.Skip
-        };
+namespace WebExtensions.Net.Generator;
 
-        static JsonSerializerConstant()
-        {
-            Options.Converters.Add(new EnumValueDefinitionConverter());
-        }
+public static class JsonSerializerConstant
+{
+    public static readonly JsonSerializerOptions Options = new()
+    {
+        ReadCommentHandling = JsonCommentHandling.Skip
+    };
+
+    static JsonSerializerConstant()
+    {
+        Options.Converters.Add(new EnumValueDefinitionConverter());
     }
 }

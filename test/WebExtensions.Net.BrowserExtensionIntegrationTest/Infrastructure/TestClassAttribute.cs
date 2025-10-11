@@ -1,8 +1,7 @@
-﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
+﻿namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
+
+[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+public class TestClassAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public class TestClassAttribute : Attribute
-    {
-        public string Description { get; set; }
-    }
+    public string Description { get; set; }
 }

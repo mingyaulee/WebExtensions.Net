@@ -1,17 +1,16 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Types
+namespace WebExtensions.Net.Types;
+
+// Type Class
+/// <summary>Which setting to clear.</summary>
+[BindAllProperties]
+public partial class ClearDetails : BaseObject
 {
-    // Type Class
-    /// <summary>Which setting to clear.</summary>
-    [BindAllProperties]
-    public partial class ClearDetails : BaseObject
-    {
-        /// <summary>Where to clear the setting (default: regular).</summary>
-        [JsAccessPath("scope")]
-        [JsonPropertyName("scope")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public SettingScope? Scope { get; set; }
-    }
+    /// <summary>Where to clear the setting (default: regular).</summary>
+    [JsAccessPath("scope")]
+    [JsonPropertyName("scope")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public SettingScope? Scope { get; set; }
 }

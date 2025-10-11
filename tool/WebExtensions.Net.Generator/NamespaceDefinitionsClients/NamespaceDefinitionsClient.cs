@@ -10,126 +10,125 @@ using System.Threading.Tasks;
 using WebExtensions.Net.Generator.Models;
 using WebExtensions.Net.Generator.Models.Schema;
 
-namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients
+namespace WebExtensions.Net.Generator.NamespaceDefinitionsClients;
+
+/// <summary>
+/// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
+/// </summary>
+public class NamespaceDefinitionsClient(ILogger logger) : IDisposable
 {
-    /// <summary>
-    /// Implementation based on https://firefox-source-docs.mozilla.org/toolkit/components/extensions/webextensions/schema.html
-    /// </summary>
-    public class NamespaceDefinitionsClient(ILogger logger) : IDisposable
+    private readonly ILogger logger = logger;
+    private readonly HttpClient httpClient = new();
+
+    public void Dispose()
     {
-        private readonly ILogger logger = logger;
-        private readonly HttpClient httpClient = new();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        public void Dispose()
+    protected virtual void Dispose(bool disposing) => ((IDisposable)httpClient).Dispose();
+
+    public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions(IEnumerable<ApiDefinitionSource> sources, IEnumerable<NamespaceSourceDefinition> additionalNamespaceSourceDefinitions, bool runInParallel)
+    {
+        var namespaceDefinitions = new List<NamespaceDefinition>();
+        var namespaceSourceDefinitions = await GetNamespaceSourceDefinitions(sources);
+        namespaceSourceDefinitions.AddRange(additionalNamespaceSourceDefinitions);
+        if (runInParallel)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            var unorderedNamespaceDefinitions = new ConcurrentDictionary<long, IEnumerable<NamespaceDefinition>>();
+            Parallel.ForEach(namespaceSourceDefinitions, (namespaceSourceDefinition, _, i) => unorderedNamespaceDefinitions[i] = GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult());
+            namespaceDefinitions.AddRange(unorderedNamespaceDefinitions.OrderBy(item => item.Key).SelectMany(item => item.Value));
+        }
+        else
+        {
+            foreach (var namespaceSourceDefinition in namespaceSourceDefinitions)
+            {
+                namespaceDefinitions.AddRange(await GetNamespaceDefinition(namespaceSourceDefinition));
+            }
+        }
+        return namespaceDefinitions;
+    }
+
+    private async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinition(NamespaceSourceDefinition namespaceSourceDefinition)
+    {
+        logger.LogInformation("Reading from URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
+
+        IEnumerable<NamespaceDefinition>? namespaceDefinitionsResponse;
+        try
+        {
+            namespaceDefinitionsResponse = await GetFromHttpWithRetry<IEnumerable<NamespaceDefinition>>(namespaceSourceDefinition.HttpUrl);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to get response from url '{namespaceSourceDefinition.HttpUrl}'", ex);
+        }
+        if (namespaceDefinitionsResponse is null)
+        {
+            throw new InvalidOperationException($"Failed to deserialize response from url '{namespaceSourceDefinition.HttpUrl}'");
+        }
+        foreach (var namespaceDefinition in namespaceDefinitionsResponse)
+        {
+            namespaceDefinition.Source = namespaceSourceDefinition;
         }
 
-        protected virtual void Dispose(bool disposing) => ((IDisposable)httpClient).Dispose();
+        logger.LogInformation("Reading complete for URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
+        return namespaceDefinitionsResponse;
+    }
 
-        public async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinitions(IEnumerable<ApiDefinitionSource> sources, IEnumerable<NamespaceSourceDefinition> additionalNamespaceSourceDefinitions, bool runInParallel)
+    private async Task<List<NamespaceSourceDefinition>> GetNamespaceSourceDefinitions(IEnumerable<ApiDefinitionSource> sources)
+    {
+        var namespaceSourceDefinitions = new List<NamespaceSourceDefinition>();
+        foreach (var source in sources)
         {
-            var namespaceDefinitions = new List<NamespaceDefinition>();
-            var namespaceSourceDefinitions = await GetNamespaceSourceDefinitions(sources);
-            namespaceSourceDefinitions.AddRange(additionalNamespaceSourceDefinitions);
-            if (runInParallel)
+            var namespaceSourceDefinitionDictionary = await GetFromHttpWithRetry<IDictionary<string, NamespaceSourceDefinition>>(source.BaseUrl + source.FileName);
+            if (namespaceSourceDefinitionDictionary is null)
             {
-                var unorderedNamespaceDefinitions = new ConcurrentDictionary<long, IEnumerable<NamespaceDefinition>>();
-                Parallel.ForEach(namespaceSourceDefinitions, (namespaceSourceDefinition, _, i) => unorderedNamespaceDefinitions[i] = GetNamespaceDefinition(namespaceSourceDefinition).GetAwaiter().GetResult());
-                namespaceDefinitions.AddRange(unorderedNamespaceDefinitions.OrderBy(item => item.Key).SelectMany(item => item.Value));
+                logger.LogError("Failed to retrieve namespace source definitions from source url. Source url: '{Source}'", source);
+                continue;
             }
-            else
+
+            foreach (var item in namespaceSourceDefinitionDictionary)
             {
-                foreach (var namespaceSourceDefinition in namespaceSourceDefinitions)
+                var namespaceSourceDefinition = item.Value;
+                namespaceSourceDefinition.Namespace = item.Key;
+
+                if (namespaceSourceDefinition.Schema is null)
                 {
-                    namespaceDefinitions.AddRange(await GetNamespaceDefinition(namespaceSourceDefinition));
-                }
-            }
-            return namespaceDefinitions;
-        }
-
-        private async Task<IEnumerable<NamespaceDefinition>> GetNamespaceDefinition(NamespaceSourceDefinition namespaceSourceDefinition)
-        {
-            logger.LogInformation("Reading from URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
-
-            IEnumerable<NamespaceDefinition>? namespaceDefinitionsResponse;
-            try
-            {
-                namespaceDefinitionsResponse = await GetFromHttpWithRetry<IEnumerable<NamespaceDefinition>>(namespaceSourceDefinition.HttpUrl);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Failed to get response from url '{namespaceSourceDefinition.HttpUrl}'", ex);
-            }
-            if (namespaceDefinitionsResponse is null)
-            {
-                throw new InvalidOperationException($"Failed to deserialize response from url '{namespaceSourceDefinition.HttpUrl}'");
-            }
-            foreach (var namespaceDefinition in namespaceDefinitionsResponse)
-            {
-                namespaceDefinition.Source = namespaceSourceDefinition;
-            }
-
-            logger.LogInformation("Reading complete for URL {HttpUrl}", namespaceSourceDefinition.HttpUrl);
-            return namespaceDefinitionsResponse;
-        }
-
-        private async Task<List<NamespaceSourceDefinition>> GetNamespaceSourceDefinitions(IEnumerable<ApiDefinitionSource> sources)
-        {
-            var namespaceSourceDefinitions = new List<NamespaceSourceDefinition>();
-            foreach (var source in sources)
-            {
-                var namespaceSourceDefinitionDictionary = await GetFromHttpWithRetry<IDictionary<string, NamespaceSourceDefinition>>(source.BaseUrl + source.FileName);
-                if (namespaceSourceDefinitionDictionary is null)
-                {
-                    logger.LogError("Failed to retrieve namespace source definitions from source url. Source url: '{Source}'", source);
+                    logger.LogWarning("Skipping source definition: Namespace definition schema url is null. Key: '{Key}'", item.Key);
                     continue;
                 }
+                var namespaceSource = sources.Single(s => namespaceSourceDefinition.Schema.StartsWith(s.SchemaBaseUrl));
+                namespaceSourceDefinition.HttpUrl = namespaceSource.BaseUrl + namespaceSourceDefinition.Schema[namespaceSource.SchemaBaseUrl.Length..];
 
-                foreach (var item in namespaceSourceDefinitionDictionary)
-                {
-                    var namespaceSourceDefinition = item.Value;
-                    namespaceSourceDefinition.Namespace = item.Key;
-
-                    if (namespaceSourceDefinition.Schema is null)
-                    {
-                        logger.LogWarning("Skipping source definition: Namespace definition schema url is null. Key: '{Key}'", item.Key);
-                        continue;
-                    }
-                    var namespaceSource = sources.Single(s => namespaceSourceDefinition.Schema.StartsWith(s.SchemaBaseUrl));
-                    namespaceSourceDefinition.HttpUrl = namespaceSource.BaseUrl + namespaceSourceDefinition.Schema[namespaceSource.SchemaBaseUrl.Length..];
-
-                    namespaceSourceDefinitions.Add(namespaceSourceDefinition);
-                }
+                namespaceSourceDefinitions.Add(namespaceSourceDefinition);
             }
-            return namespaceSourceDefinitions;
         }
+        return namespaceSourceDefinitions;
+    }
 
-        static readonly Random random = new();
-        private async Task<T?> GetFromHttpWithRetry<T>(string? url)
+    static readonly Random random = new();
+    private async Task<T?> GetFromHttpWithRetry<T>(string? url)
+    {
+        var attempt = 0;
+        while (attempt < 100)
         {
-            var attempt = 0;
-            while (attempt < 100)
+            try
             {
-                try
+                return await httpClient.GetFromJsonAsync<T>(url, JsonSerializerConstant.Options);
+            }
+            catch (HttpRequestException exception)
+            {
+                attempt++;
+                if (exception.StatusCode == HttpStatusCode.TooManyRequests)
                 {
-                    return await httpClient.GetFromJsonAsync<T>(url, JsonSerializerConstant.Options);
+                    await Task.Delay(random.Next(1, attempt) * 1000);
                 }
-                catch (HttpRequestException exception)
+                else if (attempt >= 5)
                 {
-                    attempt++;
-                    if (exception.StatusCode == HttpStatusCode.TooManyRequests)
-                    {
-                        await Task.Delay(random.Next(1, attempt) * 1000);
-                    }
-                    else if (attempt >= 5)
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
-            throw new TimeoutException();
         }
+        throw new TimeoutException();
     }
 }

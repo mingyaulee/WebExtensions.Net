@@ -1,23 +1,22 @@
-using JsBind.Net;
+﻿using JsBind.Net;
 using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Types
-{
-    // Type Class
-    /// <summary>Which setting to change.</summary>
-    [BindAllProperties]
-    public partial class SetDetails : BaseObject
-    {
-        /// <summary>Where to set the setting (default: regular).</summary>
-        [JsAccessPath("scope")]
-        [JsonPropertyName("scope")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public SettingScope? Scope { get; set; }
+namespace WebExtensions.Net.Types;
 
-        /// <summary>The value of the setting. <br/>Note that every setting has a specific value type, which is described together with the setting. An extension should <em>not</em> set a value of a different type.</summary>
-        [JsAccessPath("value")]
-        [JsonPropertyName("value")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object Value { get; set; }
-    }
+// Type Class
+/// <summary>Which setting to change.</summary>
+[BindAllProperties]
+public partial class SetDetails : BaseObject
+{
+    /// <summary>Where to set the setting (default: regular).</summary>
+    [JsAccessPath("scope")]
+    [JsonPropertyName("scope")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public SettingScope? Scope { get; set; }
+
+    /// <summary>The value of the setting. <br/>Note that every setting has a specific value type, which is described together with the setting. An extension should <em>not</em> set a value of a different type.</summary>
+    [JsAccessPath("value")]
+    [JsonPropertyName("value")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public object Value { get; set; }
 }

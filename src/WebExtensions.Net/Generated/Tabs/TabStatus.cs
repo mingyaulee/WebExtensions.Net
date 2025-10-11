@@ -1,17 +1,16 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Tabs
+namespace WebExtensions.Net.Tabs;
+
+/// <summary>Whether the tabs have completed loading.</summary>
+[JsonConverter(typeof(EnumStringConverter<TabStatus>))]
+public enum TabStatus
 {
-    /// <summary>Whether the tabs have completed loading.</summary>
-    [JsonConverter(typeof(EnumStringConverter<TabStatus>))]
-    public enum TabStatus
-    {
-        /// <summary>loading</summary>
-        [EnumValue("loading")]
-        Loading,
+    /// <summary>loading</summary>
+    [EnumValue("loading")]
+    Loading,
 
-        /// <summary>complete</summary>
-        [EnumValue("complete")]
-        Complete,
-    }
+    /// <summary>complete</summary>
+    [EnumValue("complete")]
+    Complete,
 }

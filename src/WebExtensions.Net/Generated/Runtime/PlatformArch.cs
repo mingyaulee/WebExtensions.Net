@@ -1,41 +1,40 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Runtime
+namespace WebExtensions.Net.Runtime;
+
+/// <summary>The machine's processor architecture.</summary>
+[JsonConverter(typeof(EnumStringConverter<PlatformArch>))]
+public enum PlatformArch
 {
-    /// <summary>The machine's processor architecture.</summary>
-    [JsonConverter(typeof(EnumStringConverter<PlatformArch>))]
-    public enum PlatformArch
-    {
-        /// <summary>aarch64</summary>
-        [EnumValue("aarch64")]
-        Aarch64,
+    /// <summary>aarch64</summary>
+    [EnumValue("aarch64")]
+    Aarch64,
 
-        /// <summary>arm</summary>
-        [EnumValue("arm")]
-        Arm,
+    /// <summary>arm</summary>
+    [EnumValue("arm")]
+    Arm,
 
-        /// <summary>ppc64</summary>
-        [EnumValue("ppc64")]
-        Ppc64,
+    /// <summary>ppc64</summary>
+    [EnumValue("ppc64")]
+    Ppc64,
 
-        /// <summary>s390x</summary>
-        [EnumValue("s390x")]
-        S390x,
+    /// <summary>s390x</summary>
+    [EnumValue("s390x")]
+    S390x,
 
-        /// <summary>sparc64</summary>
-        [EnumValue("sparc64")]
-        Sparc64,
+    /// <summary>sparc64</summary>
+    [EnumValue("sparc64")]
+    Sparc64,
 
-        /// <summary>x86-32</summary>
-        [EnumValue("x86-32")]
-        X86_32,
+    /// <summary>x86-32</summary>
+    [EnumValue("x86-32")]
+    X86_32,
 
-        /// <summary>x86-64</summary>
-        [EnumValue("x86-64")]
-        X86_64,
+    /// <summary>x86-64</summary>
+    [EnumValue("x86-64")]
+    X86_64,
 
-        /// <summary>noarch</summary>
-        [EnumValue("noarch")]
-        Noarch,
-    }
+    /// <summary>noarch</summary>
+    [EnumValue("noarch")]
+    Noarch,
 }

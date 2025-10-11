@@ -1,9 +1,8 @@
-﻿namespace WebExtensions.Net.IntegrationTestsRunner.Models
+﻿namespace WebExtensions.Net.IntegrationTestsRunner.Models;
+
+public enum TestStatus
 {
-    public enum TestStatus
-    {
-        Passed,
-        Failed,
-        NotExecuted
-    }
+    Passed,
+    Failed,
+    NotExecuted
 }

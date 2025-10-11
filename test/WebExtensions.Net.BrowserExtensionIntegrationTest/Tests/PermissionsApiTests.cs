@@ -1,40 +1,39 @@
 ﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 using WebExtensions.Net.Manifest;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests;
+
+[TestClass(Description = "browser.permissions API")]
+public class PermissionsApiTests(IWebExtensionsApi webExtensionsApi)
 {
-    [TestClass(Description = "browser.permissions API")]
-    public class PermissionsApiTests(IWebExtensionsApi webExtensionsApi)
+    private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+
+    [Fact]
+    public async Task GetAll()
     {
-        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        // Act
+        var permissions = await webExtensionsApi.Permissions.GetAll();
 
-        [Fact]
-        public async Task GetAll()
+        // Assert
+        permissions.ShouldNotBeNull();
+        permissions.Permissions.ShouldNotBeNullOrEmpty();
+    }
+
+    [Fact]
+    public async Task GetSelf()
+    {
+        // Act
+        var containsPermission = await webExtensionsApi.Permissions.Contains(new()
         {
-            // Act
-            var permissions = await webExtensionsApi.Permissions.GetAll();
+            Permissions =
+            [
+                new Permission(PermissionNoPromptType3.Alarms),
+                new Permission(OptionalPermissionType2.Bookmarks),
+                new Permission((PermissionNoPrompt)OptionalPermissionNoPrompt.Cookies)
+            ]
+        });
 
-            // Assert
-            permissions.ShouldNotBeNull();
-            permissions.Permissions.ShouldNotBeNullOrEmpty();
-        }
-
-        [Fact]
-        public async Task GetSelf()
-        {
-            // Act
-            var containsPermission = await webExtensionsApi.Permissions.Contains(new()
-            {
-                Permissions =
-                [
-                    new Permission(PermissionNoPromptType3.Alarms),
-                    new Permission(OptionalPermissionType2.Bookmarks),
-                    new Permission((PermissionNoPrompt)OptionalPermissionNoPrompt.Cookies)
-                ]
-            });
-
-            // Assert
-            containsPermission.ShouldBeTrue();
-        }
+        // Assert
+        containsPermission.ShouldBeTrue();
     }
 }

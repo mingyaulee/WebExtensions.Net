@@ -1,16 +1,15 @@
-﻿namespace WebExtensions.Net.Generator.Repositories
-{
-    public class EntitiesContext
-    {
-        public EntitiesContext()
-        {
-            Namespaces = new NamespaceRepository();
-            Types = new TypeRepository();
-            Classes = new ClassRepository();
-        }
+﻿namespace WebExtensions.Net.Generator.Repositories;
 
-        public NamespaceRepository Namespaces { get; }
-        public TypeRepository Types { get; }
-        public ClassRepository Classes { get; }
+public class EntitiesContext
+{
+    public EntitiesContext()
+    {
+        Namespaces = new NamespaceRepository();
+        Types = new TypeRepository();
+        Classes = new ClassRepository();
     }
+
+    public NamespaceRepository Namespaces { get; }
+    public TypeRepository Types { get; }
+    public ClassRepository Classes { get; }
 }

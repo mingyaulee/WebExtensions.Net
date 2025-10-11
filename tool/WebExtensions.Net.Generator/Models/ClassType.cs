@@ -1,15 +1,14 @@
-﻿namespace WebExtensions.Net.Generator.Models
+﻿namespace WebExtensions.Net.Generator.Models;
+
+public enum ClassType
 {
-    public enum ClassType
-    {
-        ApiRootClass,
-        ApiClass,
-        TypeClass,
-        EnumClass,
-        StringFormatClass,
-        ArrayClass,
-        MultitypeClass,
-        EmptyClass,
-        CombinedCallbackParameterClass
-    }
+    ApiRootClass,
+    ApiClass,
+    TypeClass,
+    EnumClass,
+    StringFormatClass,
+    ArrayClass,
+    MultitypeClass,
+    EmptyClass,
+    CombinedCallbackParameterClass
 }

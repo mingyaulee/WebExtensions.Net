@@ -2,90 +2,89 @@
 using WebExtensions.Net.Mock.Configurators;
 using WebExtensions.Net.Mock.Resolvers;
 
-namespace WebExtensions.Net.Mock
+namespace WebExtensions.Net.Mock;
+
+internal static class MockConfigurationContext
 {
-    internal static class MockConfigurationContext
+    private static bool hasContext;
+    private static string apiTargetPath;
+    private static object objectReference;
+    private static string objectReferenceTargetPath;
+
+    public static bool IsConfiguring { get; private set; }
+    public static bool IsConfigured { get; private set; }
+
+    public static void Configure()
     {
-        private static bool hasContext;
-        private static string apiTargetPath;
-        private static object objectReference;
-        private static string objectReferenceTargetPath;
+        IsConfiguring = true;
+        IsConfigured = false;
 
-        public static bool IsConfiguring { get; private set; }
-        public static bool IsConfigured { get; private set; }
+        var webExtensionsApi = new WebExtensionsApi(new MockJsRuntimeAdapter());
+        var configurator = new MockConfigurator(webExtensionsApi);
+        DefaultMockResolver.Configure(configurator);
+        ConfiguredMockResolver.Configure(configurator);
 
-        public static void Configure()
+        IsConfiguring = false;
+        IsConfigured = true;
+    }
+
+    public static void ApiInvoked(string targetPath)
+    {
+        if (hasContext)
         {
-            IsConfiguring = true;
-            IsConfigured = false;
-
-            var webExtensionsApi = new WebExtensionsApi(new MockJsRuntimeAdapter());
-            var configurator = new MockConfigurator(webExtensionsApi);
-            DefaultMockResolver.Configure(configurator);
-            ConfiguredMockResolver.Configure(configurator);
-
-            IsConfiguring = false;
-            IsConfigured = true;
+            throw new InvalidOperationException("Invalid mock configuration.");
         }
 
-        public static void ApiInvoked(string targetPath)
-        {
-            if (hasContext)
-            {
-                throw new InvalidOperationException("Invalid mock configuration.");
-            }
+        ResetContext();
+        hasContext = true;
+        apiTargetPath = targetPath;
+    }
 
+    public static void ObjectReferenceInvoked(object obj, string targetPath)
+    {
+        if (hasContext)
+        {
+            throw new InvalidOperationException("Invalid mock configuration.");
+        }
+
+        ResetContext();
+        hasContext = true;
+        objectReference = obj;
+        objectReferenceTargetPath = targetPath;
+    }
+
+    public static bool TryGetApiInvoked(out string targetPath)
+    {
+        targetPath = apiTargetPath;
+
+        if (hasContext && apiTargetPath is not null)
+        {
             ResetContext();
-            hasContext = true;
-            apiTargetPath = targetPath;
+            return true;
         }
 
-        public static void ObjectReferenceInvoked(object obj, string targetPath)
-        {
-            if (hasContext)
-            {
-                throw new InvalidOperationException("Invalid mock configuration.");
-            }
+        return false;
+    }
 
+    public static bool TryGetObjectReferenceInvoked(out object obj, out string targetPath)
+    {
+        obj = objectReference;
+        targetPath = objectReferenceTargetPath;
+
+        if (hasContext && objectReference is not null && objectReferenceTargetPath is not null)
+        {
             ResetContext();
-            hasContext = true;
-            objectReference = obj;
-            objectReferenceTargetPath = targetPath;
+            return true;
         }
 
-        public static bool TryGetApiInvoked(out string targetPath)
-        {
-            targetPath = apiTargetPath;
+        return false;
+    }
 
-            if (hasContext && apiTargetPath is not null)
-            {
-                ResetContext();
-                return true;
-            }
-
-            return false;
-        }
-
-        public static bool TryGetObjectReferenceInvoked(out object obj, out string targetPath)
-        {
-            obj = objectReference;
-            targetPath = objectReferenceTargetPath;
-
-            if (hasContext && objectReference is not null && objectReferenceTargetPath is not null)
-            {
-                ResetContext();
-                return true;
-            }
-
-            return false;
-        }
-
-        public static void ResetContext()
-        {
-            hasContext = false;
-            apiTargetPath = null;
-            objectReference = null;
-            objectReferenceTargetPath = null;
-        }
+    public static void ResetContext()
+    {
+        hasContext = false;
+        apiTargetPath = null;
+        objectReference = null;
+        objectReferenceTargetPath = null;
     }
 }

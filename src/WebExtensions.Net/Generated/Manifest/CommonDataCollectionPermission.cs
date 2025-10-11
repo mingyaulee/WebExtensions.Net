@@ -1,53 +1,52 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Manifest
+namespace WebExtensions.Net.Manifest;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<CommonDataCollectionPermission>))]
+public enum CommonDataCollectionPermission
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<CommonDataCollectionPermission>))]
-    public enum CommonDataCollectionPermission
-    {
-        /// <summary>authenticationInfo</summary>
-        [EnumValue("authenticationInfo")]
-        AuthenticationInfo,
+    /// <summary>authenticationInfo</summary>
+    [EnumValue("authenticationInfo")]
+    AuthenticationInfo,
 
-        /// <summary>bookmarksInfo</summary>
-        [EnumValue("bookmarksInfo")]
-        BookmarksInfo,
+    /// <summary>bookmarksInfo</summary>
+    [EnumValue("bookmarksInfo")]
+    BookmarksInfo,
 
-        /// <summary>browsingActivity</summary>
-        [EnumValue("browsingActivity")]
-        BrowsingActivity,
+    /// <summary>browsingActivity</summary>
+    [EnumValue("browsingActivity")]
+    BrowsingActivity,
 
-        /// <summary>financialAndPaymentInfo</summary>
-        [EnumValue("financialAndPaymentInfo")]
-        FinancialAndPaymentInfo,
+    /// <summary>financialAndPaymentInfo</summary>
+    [EnumValue("financialAndPaymentInfo")]
+    FinancialAndPaymentInfo,
 
-        /// <summary>healthInfo</summary>
-        [EnumValue("healthInfo")]
-        HealthInfo,
+    /// <summary>healthInfo</summary>
+    [EnumValue("healthInfo")]
+    HealthInfo,
 
-        /// <summary>locationInfo</summary>
-        [EnumValue("locationInfo")]
-        LocationInfo,
+    /// <summary>locationInfo</summary>
+    [EnumValue("locationInfo")]
+    LocationInfo,
 
-        /// <summary>personalCommunications</summary>
-        [EnumValue("personalCommunications")]
-        PersonalCommunications,
+    /// <summary>personalCommunications</summary>
+    [EnumValue("personalCommunications")]
+    PersonalCommunications,
 
-        /// <summary>personallyIdentifyingInfo</summary>
-        [EnumValue("personallyIdentifyingInfo")]
-        PersonallyIdentifyingInfo,
+    /// <summary>personallyIdentifyingInfo</summary>
+    [EnumValue("personallyIdentifyingInfo")]
+    PersonallyIdentifyingInfo,
 
-        /// <summary>searchTerms</summary>
-        [EnumValue("searchTerms")]
-        SearchTerms,
+    /// <summary>searchTerms</summary>
+    [EnumValue("searchTerms")]
+    SearchTerms,
 
-        /// <summary>websiteActivity</summary>
-        [EnumValue("websiteActivity")]
-        WebsiteActivity,
+    /// <summary>websiteActivity</summary>
+    [EnumValue("websiteActivity")]
+    WebsiteActivity,
 
-        /// <summary>websiteContent</summary>
-        [EnumValue("websiteContent")]
-        WebsiteContent,
-    }
+    /// <summary>websiteContent</summary>
+    [EnumValue("websiteContent")]
+    WebsiteContent,
 }

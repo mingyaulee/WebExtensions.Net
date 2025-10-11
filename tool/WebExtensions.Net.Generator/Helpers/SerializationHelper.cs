@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Text.Json;
 
-namespace WebExtensions.Net.Generator.Helpers
+namespace WebExtensions.Net.Generator.Helpers;
+
+public static class SerializationHelper
 {
-    public static class SerializationHelper
+    public static T DeserializeTo<T>(object obj)
     {
-        public static T DeserializeTo<T>(object obj)
-        {
-            var serializedObject = JsonSerializer.Serialize(obj, JsonSerializerConstant.Options);
-            var deserializedObject = JsonSerializer.Deserialize<T>(serializedObject, JsonSerializerConstant.Options);
-            return deserializedObject is null
-                ? throw new InvalidCastException($"Failed to deserialize object '{serializedObject}' to type '{typeof(T).Name}'.")
-                : deserializedObject;
-        }
+        var serializedObject = JsonSerializer.Serialize(obj, JsonSerializerConstant.Options);
+        var deserializedObject = JsonSerializer.Deserialize<T>(serializedObject, JsonSerializerConstant.Options);
+        return deserializedObject is null
+            ? throw new InvalidCastException($"Failed to deserialize object '{serializedObject}' to type '{typeof(T).Name}'.")
+            : deserializedObject;
     }
 }

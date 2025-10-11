@@ -1,52 +1,51 @@
 ﻿using System.Text.Json;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests;
+
+[TestClass(Description = "browser.runtime API")]
+public class RuntimeApiTests(IWebExtensionsApi webExtensionsApi)
 {
-    [TestClass(Description = "browser.runtime API")]
-    public class RuntimeApiTests(IWebExtensionsApi webExtensionsApi)
+    private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+
+    [Fact]
+    public void GetId()
     {
-        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        // Act
+        var extensionId = webExtensionsApi.Runtime.Id;
 
-        [Fact]
-        public void GetId()
-        {
-            // Act
-            var extensionId = webExtensionsApi.Runtime.Id;
+        // Assert
+        extensionId.ShouldNotBeNullOrEmpty();
+    }
 
-            // Assert
-            extensionId.ShouldNotBeNullOrEmpty();
-        }
+    [Fact]
+    public void GetManifest()
+    {
+        // Act
+        var manifest = webExtensionsApi.Runtime.GetManifest();
 
-        [Fact]
-        public void GetManifest()
-        {
-            // Act
-            var manifest = webExtensionsApi.Runtime.GetManifest();
+        // Assert
+        manifest.ValueKind.ShouldBe(JsonValueKind.Object);
+    }
 
-            // Assert
-            manifest.ValueKind.ShouldBe(JsonValueKind.Object);
-        }
+    [Fact]
+    public void GetURL()
+    {
+        // Act
+        var url = webExtensionsApi.Runtime.GetURL("index.html");
 
-        [Fact]
-        public void GetURL()
-        {
-            // Act
-            var url = webExtensionsApi.Runtime.GetURL("index.html");
+        // Assert
+        url.ShouldStartWith("chrome-extension://");
+        url.ShouldEndWith("/index.html");
+    }
 
-            // Assert
-            url.ShouldStartWith("chrome-extension://");
-            url.ShouldEndWith("/index.html");
-        }
+    [Fact]
+    public async Task GetPlatformInfo()
+    {
+        // Act
+        var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
 
-        [Fact]
-        public async Task GetPlatformInfo()
-        {
-            // Act
-            var platformInfo = await webExtensionsApi.Runtime.GetPlatformInfo();
-
-            // Assert
-            platformInfo.ShouldNotBeNull();
-        }
+        // Assert
+        platformInfo.ShouldNotBeNull();
     }
 }

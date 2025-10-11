@@ -2,22 +2,21 @@
 using WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
 using WebExtensions.Net.Generator.Models.ClrTypes;
 
-namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverterFactories;
+
+public class EmptyCodeConverterFactory : ICodeConverterFactory
 {
-    public class EmptyCodeConverterFactory : ICodeConverterFactory
+    public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
+        => throw new NotImplementedException();
+
+    public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
     {
-        public void AddInterfaceConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
-            => throw new NotImplementedException();
+        codeFile.Comments.Add(new CommentCodeConverter("Empty Class"));
+        codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
 
-        public void AddConvertersToCodeFile(ClrTypeInfo clrTypeInfo, CodeFile codeFile)
+        if (clrTypeInfo.IsObsolete)
         {
-            codeFile.Comments.Add(new CommentCodeConverter("Empty Class"));
-            codeFile.Comments.Add(new CommentSummaryCodeConverter(clrTypeInfo.Description));
-
-            if (clrTypeInfo.IsObsolete)
-            {
-                codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
-            }
+            codeFile.Attributes.Add(new AttributeObsoleteCodeConverter(clrTypeInfo.ObsoleteMessage));
         }
     }
 }

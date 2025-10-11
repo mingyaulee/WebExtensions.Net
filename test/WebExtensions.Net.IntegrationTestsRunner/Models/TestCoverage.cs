@@ -1,8 +1,7 @@
-﻿namespace WebExtensions.Net.IntegrationTestsRunner.Models
+﻿namespace WebExtensions.Net.IntegrationTestsRunner.Models;
+
+public class TestCoverage
 {
-    public class TestCoverage
-    {
-        public string HitsFilePath { get; set; }
-        public int[] HitsArray { get; set; }
-    }
+    public string HitsFilePath { get; set; }
+    public int[] HitsArray { get; set; }
 }

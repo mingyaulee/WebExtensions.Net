@@ -1,29 +1,28 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace WebExtensions.Net.Menus
+namespace WebExtensions.Net.Menus;
+
+/// <summary></summary>
+[JsonConverter(typeof(EnumStringConverter<Modifier>))]
+public enum Modifier
 {
-    /// <summary></summary>
-    [JsonConverter(typeof(EnumStringConverter<Modifier>))]
-    public enum Modifier
-    {
-        /// <summary>Shift</summary>
-        [EnumValue("Shift")]
-        Shift,
+    /// <summary>Shift</summary>
+    [EnumValue("Shift")]
+    Shift,
 
-        /// <summary>Alt</summary>
-        [EnumValue("Alt")]
-        Alt,
+    /// <summary>Alt</summary>
+    [EnumValue("Alt")]
+    Alt,
 
-        /// <summary>Command</summary>
-        [EnumValue("Command")]
-        Command,
+    /// <summary>Command</summary>
+    [EnumValue("Command")]
+    Command,
 
-        /// <summary>Ctrl</summary>
-        [EnumValue("Ctrl")]
-        Ctrl,
+    /// <summary>Ctrl</summary>
+    [EnumValue("Ctrl")]
+    Ctrl,
 
-        /// <summary>MacCtrl</summary>
-        [EnumValue("MacCtrl")]
-        MacCtrl,
-    }
+    /// <summary>MacCtrl</summary>
+    [EnumValue("MacCtrl")]
+    MacCtrl,
 }

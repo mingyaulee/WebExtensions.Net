@@ -1,40 +1,39 @@
 ﻿using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
 
-namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests
+namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Tests;
+
+[TestClass(Description = "browser.extension API")]
+public class ExtensionApiTests(IWebExtensionsApi webExtensionsApi)
 {
-    [TestClass(Description = "browser.extension API")]
-    public class ExtensionApiTests(IWebExtensionsApi webExtensionsApi)
+    private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+
+    [Fact]
+    public void GetInIncognitoContext()
     {
-        private readonly IWebExtensionsApi webExtensionsApi = webExtensionsApi;
+        // Act
+        var inIncognitoContext = webExtensionsApi.Extension.InIncognitoContext;
 
-        [Fact]
-        public void GetInIncognitoContext()
-        {
-            // Act
-            var inIncognitoContext = webExtensionsApi.Extension.InIncognitoContext;
+        // Assert
+        inIncognitoContext.ShouldBeFalse();
+    }
 
-            // Assert
-            inIncognitoContext.ShouldBeFalse();
-        }
+    [Fact]
+    public async Task IsAllowedFileSchemeAccess()
+    {
+        // Act
+        Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedFileSchemeAccess();
 
-        [Fact]
-        public async Task IsAllowedFileSchemeAccess()
-        {
-            // Act
-            Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedFileSchemeAccess();
+        // Assert
+        await action.ShouldNotThrowAsync();
+    }
 
-            // Assert
-            await action.ShouldNotThrowAsync();
-        }
+    [Fact]
+    public async Task IsAllowedIncognitoAccesss()
+    {
+        // Act
+        Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedIncognitoAccess();
 
-        [Fact]
-        public async Task IsAllowedIncognitoAccesss()
-        {
-            // Act
-            Func<Task> action = async () => await webExtensionsApi.Extension.IsAllowedIncognitoAccess();
-
-            // Assert
-            await action.ShouldNotThrowAsync();
-        }
+        // Assert
+        await action.ShouldNotThrowAsync();
     }
 }

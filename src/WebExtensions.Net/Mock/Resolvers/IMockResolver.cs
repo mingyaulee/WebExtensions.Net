@@ -1,8 +1,7 @@
-﻿namespace WebExtensions.Net.Mock.Resolvers
+﻿namespace WebExtensions.Net.Mock.Resolvers;
+
+internal interface IMockResolver
 {
-    internal interface IMockResolver
-    {
-        bool TryInvokeApiHandler(string targetPath, object[] arguments, out object result);
-        bool TryInvokeObjectReferenceHandler(object objectReference, string targetPath, object[] arguments, out object result);
-    }
+    bool TryInvokeApiHandler(string targetPath, object[] arguments, out object result);
+    bool TryInvokeObjectReferenceHandler(object objectReference, string targetPath, object[] arguments, out object result);
 }

@@ -1,16 +1,15 @@
 ﻿using JsBind.Net;
 
-namespace WebExtensions.Net
+namespace WebExtensions.Net;
+
+/// <summary>
+/// Base API class.
+/// </summary>
+public class BaseApi : ObjectBindingBase
 {
-    /// <summary>
-    /// Base API class.
-    /// </summary>
-    public class BaseApi : ObjectBindingBase
+    internal BaseApi(IJsRuntimeAdapter jsRuntime, string apiNamespace)
     {
-        internal BaseApi(IJsRuntimeAdapter jsRuntime, string apiNamespace)
-        {
-            SetAccessPath(apiNamespace);
-            Initialize(jsRuntime);
-        }
+        SetAccessPath(apiNamespace);
+        Initialize(jsRuntime);
     }
 }

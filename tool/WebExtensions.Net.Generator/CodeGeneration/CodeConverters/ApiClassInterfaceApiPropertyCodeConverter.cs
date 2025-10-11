@@ -1,16 +1,15 @@
 ﻿using WebExtensions.Net.Generator.Models.ClrTypes;
 
-namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters
-{
-    public class ApiClassInterfaceApiPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
-    {
-        private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
+namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
 
-        public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
-            => codeWriter.PublicProperties
-                .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
-                .WriteWithConverter(new AttributeJsAccessPathCodeConverter((string)clrPropertyInfo.PropertyType.Metadata[Constants.TypeMetadata.ApiNamespace]))
-                .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
-                .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
-    }
+public class ApiClassInterfaceApiPropertyCodeConverter(ClrPropertyInfo clrPropertyInfo) : ICodeConverter
+{
+    private readonly ClrPropertyInfo clrPropertyInfo = clrPropertyInfo;
+
+    public void WriteTo(CodeWriter codeWriter, CodeWriterOptions options)
+        => codeWriter.PublicProperties
+            .WriteWithConverter(new CommentSummaryCodeConverter(clrPropertyInfo.Description))
+            .WriteWithConverter(new AttributeJsAccessPathCodeConverter((string)clrPropertyInfo.PropertyType.Metadata[Constants.TypeMetadata.ApiNamespace]))
+            .WriteWithConverter(clrPropertyInfo.IsObsolete ? new AttributeObsoleteCodeConverter(clrPropertyInfo.ObsoleteMessage) : null)
+            .WriteLine($"I{clrPropertyInfo.PropertyType.CSharpName} {clrPropertyInfo.PublicName} {{ get; }}");
 }
