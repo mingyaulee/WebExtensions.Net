@@ -74,6 +74,7 @@ public partial class MultitypeConstructorCodeConverter(string className, IEnumer
 
     private void WriteConstructor(CodeWriter codeWriter, ClrTypeInfo clrTypeInfo, bool usePrimaryConstructor)
     {
+        const string valueParameterName = "value";
         string? privateField = null;
         // object and interface implicit conversion is not allowed in C#
         if (clrTypeInfo.FullName != typeof(object).FullName && !clrTypeInfo.IsInterface)
@@ -84,17 +85,17 @@ public partial class MultitypeConstructorCodeConverter(string className, IEnumer
         if (usePrimaryConstructor)
         {
             codeWriter.Declaration
-                .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value."))
-                .WritePrimaryConstructor([$"{clrTypeInfo.CSharpName} value"], ["value", $"typeof({clrTypeInfo.CSharpName})"]);
+                .WriteWithConverter(new CommentParamCodeSectionConverter(valueParameterName, "The value."))
+                .WritePrimaryConstructor([$"{clrTypeInfo.CSharpName} {valueParameterName}"], [valueParameterName, $"typeof({clrTypeInfo.CSharpName})"]);
         }
         else
         {
             codeWriter.Constructors
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Creates a new instance of <see cref=\"{className}\" />."))
-                .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value."))
-                .WriteLine($"public {className}({clrTypeInfo.CSharpName} value) : base(value, typeof({clrTypeInfo.CSharpName}))")
+                .WriteWithConverter(new CommentParamCodeSectionConverter(valueParameterName, "The value."))
+                .WriteLine($"public {className}({clrTypeInfo.CSharpName} {valueParameterName}) : base({valueParameterName}, typeof({clrTypeInfo.CSharpName}))")
                 .WriteStartBlock()
-                .WriteLine(privateField is null ? null : $"{privateField} = value;")
+                .WriteLine(privateField is null ? null : $"{privateField} = {valueParameterName};")
                 .WriteEndBlock();
         }
 
@@ -105,13 +106,13 @@ public partial class MultitypeConstructorCodeConverter(string className, IEnumer
 
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{className}\" /> to <see cref=\"{clrTypeInfo.CSharpName}\" />."))
-                .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value to convert from."))
-                .WriteLine($"public static implicit operator {clrTypeInfo.CSharpName}({className} value) => value.{privateField};");
+                .WriteWithConverter(new CommentParamCodeSectionConverter(valueParameterName, "The value to convert from."))
+                .WriteLine($"public static implicit operator {clrTypeInfo.CSharpName}({className} {valueParameterName}) => {valueParameterName}.{privateField};");
 
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{clrTypeInfo.CSharpName}\" /> to <see cref=\"{className}\" />."))
-                .WriteWithConverter(new CommentParamCodeSectionConverter("value", "The value to convert from."))
-                .WriteLine($"public static implicit operator {className}({clrTypeInfo.CSharpName} value) => new(value);");
+                .WriteWithConverter(new CommentParamCodeSectionConverter(valueParameterName, "The value to convert from."))
+                .WriteLine($"public static implicit operator {className}({clrTypeInfo.CSharpName} {valueParameterName}) => new({valueParameterName});");
         }
     }
 

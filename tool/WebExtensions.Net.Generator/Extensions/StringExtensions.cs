@@ -12,7 +12,7 @@ public static partial class StringExtensions
     public static string ToCapitalCase(this string name)
         => name.Length > 1 ? name[0].ToString().ToUpperInvariant() + name[1..] : name.ToUpperInvariant();
 
-    static readonly HashSet<string> cSharpReservedKeywords =
+    private static readonly HashSet<string> cSharpReservedKeywords =
     [
         "object",
         "params",
@@ -29,7 +29,12 @@ public static partial class StringExtensions
                 return tokenizedNameSegment.ToCapitalCase();
             }
 
-            return index == 0 ? tokenizedNameSegment : startsWithAsciiLetter ? tokenizedNameSegment.ToCapitalCase() : '_' + tokenizedNameSegment;
+            if (index == 0)
+            {
+                return tokenizedNameSegment;
+            }
+
+            return startsWithAsciiLetter ? tokenizedNameSegment.ToCapitalCase() : '_' + tokenizedNameSegment;
         }));
 
         return avoidReservedKeywords && cSharpReservedKeywords.Contains(name) ?

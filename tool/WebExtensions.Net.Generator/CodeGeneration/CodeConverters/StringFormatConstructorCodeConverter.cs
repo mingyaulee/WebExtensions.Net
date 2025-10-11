@@ -1,8 +1,7 @@
 ﻿namespace WebExtensions.Net.Generator.CodeGeneration.CodeConverters;
 
-public class StringFormatConstructorCodeConverter(string className, string? stringFormat, string? stringPattern) : ICodeConverter
+public class StringFormatConstructorCodeConverter(string? stringFormat, string? stringPattern) : ICodeConverter
 {
-    private readonly string className = className;
     private readonly string? stringFormat = stringFormat;
     private readonly string? stringPattern = stringPattern?.Replace(@"\", @"\\");
 

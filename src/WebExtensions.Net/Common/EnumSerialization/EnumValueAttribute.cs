@@ -24,5 +24,5 @@ internal class EnumValueAttribute(string value) : Attribute
         return cached;
     }
 
-    private static Dictionary<Type, Dictionary<string, object>> cachedAttributes = [];
+    private static readonly Dictionary<Type, Dictionary<string, object>> cachedAttributes = [];
 }

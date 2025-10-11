@@ -19,12 +19,8 @@ public static class LocalNamespaceDefinitionsClient
     {
         var namespaceDefinitions = new List<NamespaceDefinition>();
         var definitionSourceFilePath = Path.Combine(path, DefinitionSourcesFileName);
-        var definitionSources = JsonSerializer.Deserialize<IEnumerable<NamespaceSourceDefinition>>(File.ReadAllText(definitionSourceFilePath));
-        if (definitionSources is null)
-        {
-            throw new InvalidOperationException($"Order file {definitionSourceFilePath} is invalid.");
-        }
-
+        var definitionSources = JsonSerializer.Deserialize<IEnumerable<NamespaceSourceDefinition>>(File.ReadAllText(definitionSourceFilePath))
+            ?? throw new InvalidOperationException($"Order file {definitionSourceFilePath} is invalid.");
         foreach (var definitionSource in definitionSources)
         {
             var namespaceDefinitionFileName = Path.GetFileName(definitionSource.Schema) ?? throw new InvalidOperationException("Namespace definition schema should not be null");

@@ -24,7 +24,7 @@ public class StringFormatCodeConverterFactory : ICodeConverterFactory
 
         var stringFormat = clrTypeInfo.Metadata.TryGetValue(Constants.TypeMetadata.StringFormat, out var stringFormatObj) ? (string)stringFormatObj : null;
         var stringPattern = clrTypeInfo.Metadata.TryGetValue(Constants.TypeMetadata.StringPattern, out var stringPatternObj) ? (string)stringPatternObj : null;
-        codeFile.Constructors.Add(new StringFormatConstructorCodeConverter(clrTypeInfo.CSharpName, stringFormat, stringPattern));
+        codeFile.Constructors.Add(new StringFormatConstructorCodeConverter(stringFormat, stringPattern));
 
         codeFile.Methods.Add(new StringFormatCastOperatorCodeConverter(clrTypeInfo.CSharpName));
     }

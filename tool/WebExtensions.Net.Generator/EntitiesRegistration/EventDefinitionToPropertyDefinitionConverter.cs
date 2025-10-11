@@ -51,18 +51,10 @@ public class EventDefinitionToPropertyDefinitionConverter(RegistrationOptions re
     private static List<FunctionDefinition> GetEventFunctionDefinitions(EventDefinition eventDefinition, TypeEntity baseEventTypeEntity, string functionName, bool useBaseFunctionDescription)
     {
         var eventFunctionDefinitions = new List<FunctionDefinition>();
-        var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName);
-        if (baseEventFunction is null)
-        {
-            throw new InvalidOperationException($"Failed to locate '{functionName}' function in type entity '{baseEventTypeEntity.NamespaceQualifiedId}'.");
-        }
-
-        var baseEventFunctionParameter = baseEventFunction.FunctionParameters?.SingleOrDefault();
-        if (baseEventFunctionParameter is null)
-        {
-            throw new InvalidOperationException($"'{functionName}' function should have one parameter.");
-        }
-
+        var baseEventFunction = baseEventTypeEntity.Definition?.ObjectFunctions?.SingleOrDefault(functionDefinition => functionDefinition.Name == functionName)
+            ?? throw new InvalidOperationException($"Failed to locate '{functionName}' function in type entity '{baseEventTypeEntity.NamespaceQualifiedId}'.");
+        var baseEventFunctionParameter = baseEventFunction.FunctionParameters?.SingleOrDefault()
+            ?? throw new InvalidOperationException($"'{functionName}' function should have one parameter.");
         var functionParameters = new List<ParameterDefinition>();
         var functionParameter = SerializationHelper.DeserializeTo<ParameterDefinition>(eventDefinition);
 

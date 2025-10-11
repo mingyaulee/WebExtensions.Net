@@ -106,7 +106,8 @@ public class NamespaceDefinitionsClient(ILogger logger) : IDisposable
         return namespaceSourceDefinitions;
     }
 
-    static readonly Random random = new();
+    private static readonly Random random = new();
+
     private async Task<T?> GetFromHttpWithRetry<T>(string? url)
     {
         var attempt = 0;
