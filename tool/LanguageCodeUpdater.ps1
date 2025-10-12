@@ -82,17 +82,16 @@ $languageCodes | ForEach-Object {
 $LF = "`r`n"
 $languageCodeFile += "using System.Collections.Generic;"
 $languageCodeFile += ""
-$languageCodeFile += "namespace WebExtensions.Net.I18n"
-$languageCodeFile += "{"
-$languageCodeFile += "    public partial class LanguageCode"
-$languageCodeFile += "    {"
-$languageCodeFile += "        private static readonly IDictionary<string, LanguageCode> LanguageDictionary = new Dictionary<string, LanguageCode>()"
-$languageCodeFile += "        {"
-$languageCodeFile += "            " + ($languageDictionaryDefinition -join ",$LF            ")
-$languageCodeFile += "        };"
+$languageCodeFile += "namespace WebExtensions.Net.I18n;"
 $languageCodeFile += ""
-$languageCodeFile += "        " + ($languagePropertiesDefinition -join "$LF        ")
-$languageCodeFile += "    }"
+$languageCodeFile += "public partial class LanguageCode"
+$languageCodeFile += "{"
+$languageCodeFile += "    private static readonly IDictionary<string, LanguageCode> LanguageDictionary = new Dictionary<string, LanguageCode>()"
+$languageCodeFile += "    {"
+$languageCodeFile += "        " + ($languageDictionaryDefinition -join ",$LF        ")
+$languageCodeFile += "    };"
+$languageCodeFile += ""
+$languageCodeFile += "    " + ($languagePropertiesDefinition -join "$LF    ")
 $languageCodeFile += "}"
 
-$languageCodeFile | Set-Content $languageCodeFilePath
+$languageCodeFile | Set-Content $languageCodeFilePath -Encoding UTF8BOM
