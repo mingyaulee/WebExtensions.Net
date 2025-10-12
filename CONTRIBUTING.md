@@ -73,10 +73,5 @@ Refer to `INotificationsApi.cs` and `NotificationsApi.cs` under the path `WebExt
 ### In case of conflicts in the file generated.txt
 It is best to do a rebase and run the generator again to make sure the changes in the generated files are not overwritten by your pull request.
 
-### Running the integration tests
-1. Download the chrome driver from (here)[http://chromedriver.storage.googleapis.com/]
-0. Extract the chrome driver to the directory C:\SeleniumWebDrivers\ChromeDriver
-0. Run the tests using either the Test Explorer in VS or `dotnet test` command
-
 ## License
 By contributing, you agree that your contributions will be licensed under its MIT License.
