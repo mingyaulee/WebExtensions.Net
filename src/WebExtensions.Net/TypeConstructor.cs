@@ -230,12 +230,15 @@ internal sealed class TypeConstructor
 
     private static TypeConstructor GetOrCreateTypeContructor(Type type)
     {
-        if (!cachedConstructors.TryGetValue(type, out var constructor))
+        lock (cachedConstructors)
         {
-            constructor = new TypeConstructor(type);
-            cachedConstructors.Add(type, constructor);
-        }
+            if (!cachedConstructors.TryGetValue(type, out var constructor))
+            {
+                constructor = new TypeConstructor(type);
+                cachedConstructors.Add(type, constructor);
+            }
 
-        return constructor;
+            return constructor;
+        }
     }
 }

@@ -8,11 +8,9 @@ namespace WebExtensions.Net.Manifest;
 [JsonConverter(typeof(MultiTypeJsonConverter<MatchPatternRestricted>))]
 public partial class MatchPatternRestricted(string value) : BaseMultiTypeObject(value, typeof(string))
 {
-    private readonly string valueString;
-
     /// <summary>Converts from <see cref="MatchPatternRestricted" /> to <see cref="string" />.</summary>
     /// <param name="value">The value to convert from.</param>
-    public static implicit operator string(MatchPatternRestricted value) => value.valueString;
+    public static implicit operator string(MatchPatternRestricted value) => value.Value as string;
 
     /// <summary>Converts from <see cref="string" /> to <see cref="MatchPatternRestricted" />.</summary>
     /// <param name="value">The value to convert from.</param>

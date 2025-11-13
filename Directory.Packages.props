@@ -5,25 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(ProjectIsInSrc)' == 'true'">
-    <PackageVersion Include="JsBind.Net" Version="2.2.1" />
-    <PackageVersion Include="JsBind.Net.Extensions.DependencyInjection" Version="2.2.1" />
+    <PackageVersion Include="JsBind.Net" Version="3.0.0" />
+    <PackageVersion Include="JsBind.Net.Extensions.DependencyInjection" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(ProjectIsInTool)' == 'true'">
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(ProjectIsInTest)' == 'true'">
-    <PackageVersion Include="Blazor.BrowserExtension.Build" Version="3.2.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.9" />
+    <PackageVersion Include="Blazor.BrowserExtension.Build" Version="3.2.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.55.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="4.0.0" />
     <PackageVersion Include="MSTest.TestFramework" Version="4.0.0" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

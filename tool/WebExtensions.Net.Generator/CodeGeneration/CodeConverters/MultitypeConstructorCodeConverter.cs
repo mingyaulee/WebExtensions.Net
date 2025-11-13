@@ -101,13 +101,16 @@ public partial class MultitypeConstructorCodeConverter(string className, IEnumer
 
         if (privateField is not null)
         {
-            codeWriter.Properties
-                .WriteLine($"private readonly {clrTypeInfo.CSharpName} {privateField};");
+            if (!usePrimaryConstructor)
+            {
+                codeWriter.Properties
+                    .WriteLine($"private readonly {clrTypeInfo.CSharpName} {privateField};");
+            }
 
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{className}\" /> to <see cref=\"{clrTypeInfo.CSharpName}\" />."))
                 .WriteWithConverter(new CommentParamCodeSectionConverter(valueParameterName, "The value to convert from."))
-                .WriteLine($"public static implicit operator {clrTypeInfo.CSharpName}({className} {valueParameterName}) => {valueParameterName}.{privateField};");
+                .WriteLine($"public static implicit operator {clrTypeInfo.CSharpName}({className} {valueParameterName}) => {valueParameterName}.{(usePrimaryConstructor ? $"Value as {clrTypeInfo.CSharpName}" : privateField)};");
 
             codeWriter.PublicMethods
                 .WriteWithConverter(new CommentSummaryCodeConverter($"Converts from <see cref=\"{clrTypeInfo.CSharpName}\" /> to <see cref=\"{className}\" />."))

@@ -8,11 +8,9 @@ namespace WebExtensions.Net.Manifest;
 [JsonConverter(typeof(MultiTypeJsonConverter<ExtensionID>))]
 public partial class ExtensionID(string value) : BaseMultiTypeObject(value, typeof(string))
 {
-    private readonly string valueString;
-
     /// <summary>Converts from <see cref="ExtensionID" /> to <see cref="string" />.</summary>
     /// <param name="value">The value to convert from.</param>
-    public static implicit operator string(ExtensionID value) => value.valueString;
+    public static implicit operator string(ExtensionID value) => value.Value as string;
 
     /// <summary>Converts from <see cref="string" /> to <see cref="ExtensionID" />.</summary>
     /// <param name="value">The value to convert from.</param>
