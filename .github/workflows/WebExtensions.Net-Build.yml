@@ -84,7 +84,7 @@ jobs:
     - name: Install Playwright
       run: .\test\WebExtensions.Net.IntegrationTestsRunner\bin\Release\net${{ env.DOTNET_VERSION }}\playwright.ps1 install chromium --with-deps
     - name: Test
-      run: ${{ runner.temp }}\coverlet\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net${{ env.DOTNET_VERSION }}/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
+      run: ${{ runner.temp }}\coverlet\coverlet ./test/WebExtensions.Net.BrowserExtensionIntegrationTest/bin/Release/net${{ env.DOTNET_VERSION }}/browserextension/framework --include "[WebExtensions.Net]*" --target "dotnet" --targetargs "test --solution . --no-restore --no-build --configuration Release" --format opencover --output ./test/TestResults/coverage --verbosity detailed
     - name: End analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
