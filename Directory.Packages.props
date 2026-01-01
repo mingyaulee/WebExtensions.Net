@@ -16,8 +16,8 @@
 
   <ItemGroup Condition="'$(ProjectIsInTest)' == 'true'">
     <PackageVersion Include="Blazor.BrowserExtension.Build" Version="3.2.4" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.1" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
   </ItemGroup>
 
