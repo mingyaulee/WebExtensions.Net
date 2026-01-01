@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Playwright.MSTest.v4" />
     <ProjectReference Include="..\WebExtensions.Net.BrowserExtensionIntegrationTest\WebExtensions.Net.BrowserExtensionIntegrationTest.csproj" />
   </ItemGroup>
 
