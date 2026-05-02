@@ -235,6 +235,12 @@
             "optional": true,
             "type": "integer",
             "minimum": -1
+          },
+          "splitViewId": {
+            "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view.",
+            "optional": true,
+            "type": "integer",
+            "minimum": -1
           }
         }
       },
@@ -453,6 +459,7 @@
           "mutedInfo",
           "pinned",
           "sharingState",
+          "splitViewId",
           "status",
           "title",
           "url"
@@ -499,6 +506,10 @@
     "properties": {
       "TAB_ID_NONE": {
         "description": "An ID which represents the absence of a browser tab.",
+        "value": -1
+      },
+      "SPLIT_VIEW_ID_NONE": {
+        "description": "A value for use with splitViewId to represent that the tab is not a member of a Split View.",
         "value": -1
       }
     },
@@ -880,6 +891,12 @@
               },
               "groupId": {
                 "description": "The ID of the group that the tabs are in, or $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) for ungrouped tabs.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -1
+              },
+              "splitViewId": {
+                "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view.",
                 "optional": true,
                 "type": "integer",
                 "minimum": -1
@@ -1853,6 +1870,12 @@
                 "optional": true,
                 "type": "string"
               },
+              "groupId": {
+                "description": "The tab\u0027s new group ID. $(ref:tabGroups.TAB_GROUP_ID_NONE) (-1) if the tab no longer belongs to a tab group.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -1
+              },
               "hidden": {
                 "description": "The tab\u0027s new hidden state.",
                 "optional": true,
@@ -1877,6 +1900,12 @@
                 "description": "The tab\u0027s new sharing state for screen, microphone and camera.",
                 "optional": true,
                 "$ref": "SharingState"
+              },
+              "splitViewId": {
+                "description": "The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view.",
+                "optional": true,
+                "type": "integer",
+                "minimum": -1
               },
               "status": {
                 "description": "The status of the tab. Can be either \u003Cem\u003Eloading\u003C/em\u003E or \u003Cem\u003Ecomplete\u003C/em\u003E.",

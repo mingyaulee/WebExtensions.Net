@@ -497,7 +497,17 @@
         "parameters": [
           {
             "name": "details",
-            "$ref": "Details"
+            "optional": true,
+            "choices": [
+              {
+                "$ref": "Details"
+              },
+              {
+                "description": "The id of the tab for which you want to query its enabled state.",
+                "type": "integer",
+                "minimum": 0
+              }
+            ]
           }
         ]
       },
@@ -538,6 +548,24 @@
             "name": "info",
             "optional": true,
             "$ref": "OnClickData"
+          }
+        ]
+      },
+      {
+        "name": "onUserSettingsChanged",
+        "description": "Fired when user-specified settings relating to an extension\u0027s action change.",
+        "type": "function",
+        "parameters": [
+          {
+            "name": "change",
+            "type": "object",
+            "properties": {
+              "isOnToolbar": {
+                "description": "Whether the extension\u0027s action icon is visible on browser windows\u0027 top-level toolbar (i.e., whether the extension has been \u0027pinned\u0027 by the user).",
+                "optional": true,
+                "type": "boolean"
+              }
+            }
           }
         ]
       }
