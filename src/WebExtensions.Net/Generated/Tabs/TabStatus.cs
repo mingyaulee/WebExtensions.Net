@@ -13,4 +13,8 @@ public enum TabStatus
     /// <summary>complete</summary>
     [EnumValue("complete")]
     Complete,
+
+    /// <summary>unloaded</summary>
+    [EnumValue("unloaded")]
+    Unloaded,
 }
