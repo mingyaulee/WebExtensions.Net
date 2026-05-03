@@ -50,6 +50,10 @@ public enum UpdatePropertyName
     [EnumValue("sharingState")]
     SharingState,
 
+    /// <summary>splitViewId</summary>
+    [EnumValue("splitViewId")]
+    SplitViewId,
+
     /// <summary>status</summary>
     [EnumValue("status")]
     Status,

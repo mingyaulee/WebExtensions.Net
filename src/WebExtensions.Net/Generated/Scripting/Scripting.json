@@ -212,6 +212,10 @@
             "items": {
               "$ref": "manifest.ExtensionURL"
             }
+          },
+          "cssOrigin": {
+            "optional": true,
+            "$ref": "extensionTypes.CSSOrigin"
           }
         }
       }

@@ -11,6 +11,10 @@ public partial interface IActionApi
     [JsAccessPath("onClicked")]
     OnClickedEvent OnClicked { get; }
 
+    /// <summary>Fired when user-specified settings relating to an extension's action change.</summary>
+    [JsAccessPath("onUserSettingsChanged")]
+    OnUserSettingsChangedEvent OnUserSettingsChanged { get; }
+
     /// <summary>Disables the browser action for a tab.</summary>
     /// <param name="tabId">The id of the tab for which you want to modify the browser action.</param>
     [JsAccessPath("disable")]
@@ -58,7 +62,12 @@ public partial interface IActionApi
     /// <summary>Checks whether the browser action is enabled.</summary>
     /// <param name="details"></param>
     [JsAccessPath("isEnabled")]
-    void IsEnabled(Details details);
+    void IsEnabled(Details details = null);
+
+    /// <summary>Checks whether the browser action is enabled.</summary>
+    /// <param name="details"></param>
+    [JsAccessPath("isEnabled")]
+    void IsEnabled(int? details = null);
 
     /// <summary>Opens the extension popup window in the specified window.</summary>
     /// <param name="options">An object with information about the popup to open.</param>

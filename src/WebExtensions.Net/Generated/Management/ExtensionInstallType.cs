@@ -2,7 +2,7 @@
 
 namespace WebExtensions.Net.Management;
 
-/// <summary>How the extension was installed. One of<br /><c>development</c>: The extension was loaded unpacked in developer mode,<br /><c>normal</c>: The extension was installed normally via an .xpi file,<br /><c>sideload</c>: The extension was installed by other software on the machine,<br /><c>admin</c>: The extension was installed by policy,<br /><c>other</c>: The extension was installed by other means.</summary>
+/// <summary>How the extension was installed.'dl''dt'development'/dt''dd'The extension was loaded unpacked in developer mode,'/dd''dt'normal'/dt''dd'The extension was installed normally via an .xpi file'/dd''dt'sideload'/dt''dd'The extension was installed by other software on the machine'/dd''dt'admin'/dt''dd'The extension was installed by policy'/dd''dt'other'/dt''dd'The extension was installed by other means.'/dd''/dl'</summary>
 [JsonConverter(typeof(EnumStringConverter<ExtensionInstallType>))]
 public enum ExtensionInstallType
 {

@@ -165,6 +165,9 @@ public partial class TabsApi(IJsRuntimeAdapter jsRuntime, string accessPath) : B
     }
 
     /// <inheritdoc />
+    public int SPLIT_VIEW_ID_NONE => -1;
+
+    /// <inheritdoc />
     public int TAB_ID_NONE => -1;
 
     /// <inheritdoc />

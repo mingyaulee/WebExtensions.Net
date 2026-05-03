@@ -2070,6 +2070,10 @@
                 "items": {
                   "$ref": "OptionalDataCollectionPermission"
                 }
+              },
+              "has_previous_consent": {
+                "optional": true,
+                "type": "boolean"
               }
             }
           }
@@ -2201,6 +2205,10 @@
             "items": {
               "$ref": "ExtensionURL"
             }
+          },
+          "css_origin": {
+            "optional": true,
+            "$ref": "extensionTypes.CSSOrigin"
           },
           "js": {
             "description": "The list of JS files to inject",

@@ -20,5 +20,5 @@ public static class DefaultMockObjects
     /// <summary>
     /// The default mock sync storage object.
     /// </summary>
-    public static readonly StorageAreaWithUsage SyncStorage = new();
+    public static readonly StorageArea SyncStorage = new();
 }

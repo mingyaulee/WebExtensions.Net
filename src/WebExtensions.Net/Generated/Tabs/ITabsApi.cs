@@ -52,6 +52,10 @@ public partial interface ITabsApi
     [JsAccessPath("onZoomChange")]
     OnZoomChangeEvent OnZoomChange { get; }
 
+    /// <summary>A value for use with splitViewId to represent that the tab is not a member of a Split View.</summary>
+    [JsAccessPath("SPLIT_VIEW_ID_NONE")]
+    int SPLIT_VIEW_ID_NONE { get; }
+
     /// <summary>An ID which represents the absence of a browser tab.</summary>
     [JsAccessPath("TAB_ID_NONE")]
     int TAB_ID_NONE { get; }

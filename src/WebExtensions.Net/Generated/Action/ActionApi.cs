@@ -9,6 +9,7 @@ namespace WebExtensions.Net.ActionNs;
 public partial class ActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) : BaseApi(jsRuntime, AccessPaths.Combine(accessPath, "action")), IActionApi
 {
     private OnClickedEvent _onClicked;
+    private OnUserSettingsChangedEvent _onUserSettingsChanged;
 
     /// <inheritdoc />
     public OnClickedEvent OnClicked
@@ -21,6 +22,20 @@ public partial class ActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) :
                 _onClicked.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onClicked"));
             }
             return _onClicked;
+        }
+    }
+
+    /// <inheritdoc />
+    public OnUserSettingsChangedEvent OnUserSettingsChanged
+    {
+        get
+        {
+            if (_onUserSettingsChanged is null)
+            {
+                _onUserSettingsChanged = new OnUserSettingsChangedEvent();
+                _onUserSettingsChanged.Initialize(JsRuntime, AccessPaths.Combine(AccessPath, "onUserSettingsChanged"));
+            }
+            return _onUserSettingsChanged;
         }
     }
 
@@ -57,7 +72,11 @@ public partial class ActionApi(IJsRuntimeAdapter jsRuntime, string accessPath) :
         => InvokeAsync<UserSettings>("getUserSettings");
 
     /// <inheritdoc />
-    public virtual void IsEnabled(Details details)
+    public virtual void IsEnabled(Details details = null)
+        => InvokeVoid("isEnabled", details);
+
+    /// <inheritdoc />
+    public virtual void IsEnabled(int? details = null)
         => InvokeVoid("isEnabled", details);
 
     /// <inheritdoc />

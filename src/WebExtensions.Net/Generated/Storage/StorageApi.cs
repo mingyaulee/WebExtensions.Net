@@ -30,8 +30,8 @@ public partial class StorageApi(IJsRuntimeAdapter jsRuntime, string accessPath) 
     }
 
     /// <inheritdoc />
-    public StorageAreaWithUsage Session => GetProperty<StorageAreaWithUsage>("session");
+    public StorageArea Session => GetProperty<StorageArea>("session");
 
     /// <inheritdoc />
-    public StorageAreaWithUsage Sync => GetProperty<StorageAreaWithUsage>("sync");
+    public StorageArea Sync => GetProperty<StorageArea>("sync");
 }

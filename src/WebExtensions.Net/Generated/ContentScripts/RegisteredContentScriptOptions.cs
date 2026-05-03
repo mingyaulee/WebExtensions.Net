@@ -29,6 +29,12 @@ public partial class RegisteredContentScriptOptions : BaseObject
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IEnumerable<ExtensionFileOrCode> Css { get; set; }
 
+    /// <summary>The css origin of the stylesheet to inject. Defaults to "author".</summary>
+    [JsAccessPath("cssOrigin")]
+    [JsonPropertyName("cssOrigin")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public CSSOrigin? CssOrigin { get; set; }
+
     /// <summary></summary>
     [JsAccessPath("excludeGlobs")]
     [JsonPropertyName("excludeGlobs")]

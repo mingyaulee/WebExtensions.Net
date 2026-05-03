@@ -18,6 +18,10 @@ public enum PlatformArch
     [EnumValue("ppc64")]
     Ppc64,
 
+    /// <summary>riscv64</summary>
+    [EnumValue("riscv64")]
+    Riscv64,
+
     /// <summary>s390x</summary>
     [EnumValue("s390x")]
     S390x,

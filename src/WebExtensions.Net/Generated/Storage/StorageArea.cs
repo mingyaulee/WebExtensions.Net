@@ -1,4 +1,5 @@
 ﻿using JsBind.Net;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -18,13 +19,26 @@ public partial class StorageArea : BaseObject
     /// <param name="keys">A single key to get, list of keys to get, or a dictionary specifying default values (see description of the object).  An empty list or object will return an empty result object.  Pass in <c>null</c> to get the entire contents of storage.</param>
     /// <returns>Object with items in their key-value mappings.</returns>
     [JsAccessPath("get")]
-    public virtual ValueTask<JsonElement> Get(StorageAreaGetKeys keys = null)
+    public virtual ValueTask<JsonElement> Get(GetKeys keys = null)
         => InvokeAsync<JsonElement>("get", keys);
+
+    /// <summary>Gets the amount of space (in bytes) being used by one or more items.</summary>
+    /// <param name="keys">A single key or list of keys to get the total usage for. An empty list will return 0. Pass in <c>null</c> to get the total usage of all of storage.</param>
+    /// <returns>Amount of space being used in storage, in bytes.</returns>
+    [JsAccessPath("getBytesInUse")]
+    public virtual ValueTask<int> GetBytesInUse(GetBytesInUseKeys keys = null)
+        => InvokeAsync<int>("getBytesInUse", keys);
+
+    /// <summary>Gets the keys of all items in storage.</summary>
+    /// <returns>The keys of all items in storage.</returns>
+    [JsAccessPath("getKeys")]
+    public virtual ValueTask<IEnumerable<string>> GetKeys()
+        => InvokeAsync<IEnumerable<string>>("getKeys");
 
     /// <summary>Removes one or more items from storage.</summary>
     /// <param name="keys">A single key or a list of keys for items to remove.</param>
     [JsAccessPath("remove")]
-    public virtual ValueTask Remove(StorageAreaRemoveKeys keys)
+    public virtual ValueTask Remove(RemoveKeys keys)
         => InvokeVoidAsync("remove", keys);
 
     /// <summary>Sets multiple items.</summary>

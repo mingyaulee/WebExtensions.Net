@@ -135,6 +135,12 @@ public partial class Tab : BaseObject
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public SharingState SharingState { get; set; }
 
+    /// <summary>The ID of the Split View that the tab belongs to. $(ref:tabs.SPLIT_VIEW_ID_NONE) if the tab does not belong to a split view.</summary>
+    [JsAccessPath("splitViewId")]
+    [JsonPropertyName("splitViewId")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? SplitViewId { get; set; }
+
     /// <summary>Either <em>loading</em> or <em>complete</em>.</summary>
     [JsAccessPath("status")]
     [JsonPropertyName("status")]

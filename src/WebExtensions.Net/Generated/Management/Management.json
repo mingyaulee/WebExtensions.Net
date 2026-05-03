@@ -38,7 +38,7 @@
       },
       {
         "id": "ExtensionInstallType",
-        "description": "How the extension was installed. One of\u003Cbr\u003E\u003Cvar\u003Edevelopment\u003C/var\u003E: The extension was loaded unpacked in developer mode,\u003Cbr\u003E\u003Cvar\u003Enormal\u003C/var\u003E: The extension was installed normally via an .xpi file,\u003Cbr\u003E\u003Cvar\u003Esideload\u003C/var\u003E: The extension was installed by other software on the machine,\u003Cbr\u003E\u003Cvar\u003Eadmin\u003C/var\u003E: The extension was installed by policy,\u003Cbr\u003E\u003Cvar\u003Eother\u003C/var\u003E: The extension was installed by other means.",
+        "description": "How the extension was installed.\u003Cdl\u003E\u003Cdt\u003Edevelopment\u003C/dt\u003E\u003Cdd\u003EThe extension was loaded unpacked in developer mode,\u003C/dd\u003E\u003Cdt\u003Enormal\u003C/dt\u003E\u003Cdd\u003EThe extension was installed normally via an .xpi file\u003C/dd\u003E\u003Cdt\u003Esideload\u003C/dt\u003E\u003Cdd\u003EThe extension was installed by other software on the machine\u003C/dd\u003E\u003Cdt\u003Eadmin\u003C/dt\u003E\u003Cdd\u003EThe extension was installed by policy\u003C/dd\u003E\u003Cdt\u003Eother\u003C/dt\u003E\u003Cdd\u003EThe extension was installed by other means.\u003C/dd\u003E\u003C/dl\u003E",
         "type": "string",
         "enum": [
           "development",

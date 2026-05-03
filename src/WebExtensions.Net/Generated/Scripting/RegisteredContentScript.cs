@@ -23,6 +23,12 @@ public partial class RegisteredContentScript : BaseObject
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public IEnumerable<ExtensionUrl> Css { get; set; }
 
+    /// <summary></summary>
+    [JsAccessPath("cssOrigin")]
+    [JsonPropertyName("cssOrigin")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public CSSOrigin? CssOrigin { get; set; }
+
     /// <summary>Excludes pages that this content script would otherwise be injected into.</summary>
     [JsAccessPath("excludeMatches")]
     [JsonPropertyName("excludeMatches")]

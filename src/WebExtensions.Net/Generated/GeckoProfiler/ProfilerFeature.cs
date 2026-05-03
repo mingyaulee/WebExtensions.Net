@@ -121,4 +121,8 @@ public enum ProfilerFeature
     /// <summary>flows</summary>
     [EnumValue("flows")]
     Flows,
+
+    /// <summary>jssources</summary>
+    [EnumValue("jssources")]
+    Jssources,
 }

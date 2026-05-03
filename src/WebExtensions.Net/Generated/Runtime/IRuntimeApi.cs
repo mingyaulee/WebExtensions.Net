@@ -69,7 +69,7 @@ public partial interface IRuntimeApi
     /// <summary>Attempts to connect to connect listeners within an extension/app (such as the background page), or other extensions/apps. This is useful for content scripts connecting to their extension processes, inter-app/extension communication, and $(topic:manifest/externally_connectable)[web messaging]. Note that this does not connect to any listeners in a content script. Extensions may connect to content scripts embedded in tabs via $(ref:tabs.connect).</summary>
     /// <param name="extensionId">The ID of the extension or app to connect to. If omitted, a connection will be attempted with your own extension. Required if sending messages from a web page for $(topic:manifest/externally_connectable)[web messaging].</param>
     /// <param name="connectInfo"></param>
-    /// <returns>Port through which messages can be sent and received. The port's $(ref:runtime.Port onDisconnect) event is fired if the extension/app does not exist. </returns>
+    /// <returns>Port through which messages can be sent and received. The port's $(ref:runtime.Port.onDisconnect) event is fired if the extension/app does not exist. </returns>
     [JsAccessPath("connect")]
     Port Connect(string extensionId = null, ConnectInfo connectInfo = null);
 
