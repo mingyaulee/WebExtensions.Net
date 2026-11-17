@@ -1,6 +1,5 @@
 ﻿@page "/tests.html"
 @using WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure
-@inject NavigationManager NavigationManager
 
 @code {
     [Inject]
@@ -9,15 +8,10 @@
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        var coverlet = NavigationManager.Uri.Contains("coverlet");
         base.OnAfterRender(firstRender);
         if (firstRender)
         {
             await TestRunner.RunTests();
-            if (coverlet)
-            {
-                await TestRunner.GetTestCoverageInfo();
-            }
         }
     }
 }

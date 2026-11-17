@@ -98,19 +98,8 @@ class TestResultError extends Error {
         };
     }
 
-    let testCoverage = null;
-    function setTestCoverage(value) {
-        testCoverage = value;
-    }
-
-    function getTestCoverage() {
-        return testCoverage;
-    }
-
     global.TestRunner = {
         Start: startTestRunner,
-        GetTestResults: getTestResults,
-        SetTestCoverage: setTestCoverage,
-        GetTestCoverage: getTestCoverage
+        GetTestResults: getTestResults
     };
 })(globalThis);

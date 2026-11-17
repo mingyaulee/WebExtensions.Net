@@ -2,10 +2,6 @@
 
   <PropertyGroup>
     <ImplicitUsings>true</ImplicitUsings>
-    <!-- Disable conversion of DLLs to webcil-in-wasm format, fingerprinting, compression. This is for coverlet to inject the hits counter into the assembly which only works for DLLs with PDBs. -->
-    <WasmEnableWebcil>false</WasmEnableWebcil>
-    <CompressionEnabled>false</CompressionEnabled>
-    <WasmFingerprintAssets>false</WasmFingerprintAssets>
   </PropertyGroup>
 
   <ItemGroup>

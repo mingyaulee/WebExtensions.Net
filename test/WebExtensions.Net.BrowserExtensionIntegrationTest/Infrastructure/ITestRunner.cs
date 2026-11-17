@@ -3,5 +3,4 @@
 public interface ITestRunner
 {
     Task RunTests();
-    Task GetTestCoverageInfo();
 }

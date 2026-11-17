@@ -50,14 +50,6 @@ public class Runner
             await WriteResultsToFile(trxFilePath, resultsXML);
             Console.WriteLine($"Results file: {trxFilePath}");
 
-            // Test coverage
-            var testCoverage = await GetTestCoverageHits(page);
-            if (testCoverage is not null)
-            {
-                TestCoverageWriter.Write(testCoverage.HitsFilePath, testCoverage.HitsArray);
-                Console.WriteLine($"Test coverage hits file: {testCoverage.HitsFilePath}");
-            }
-
             if (testResults.Status == "failed")
             {
                 var errors = new StringBuilder();
@@ -106,7 +98,7 @@ public class Runner
     private static Task LaunchTestPage(IPage page)
     {
         var extensionUri = new Uri(page.Url);
-        var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false&coverlet";
+        var testPageUrl = $"{extensionUri.Scheme}://{extensionUri.Host}/tests.html?random=false";
         return page.GotoAsync(testPageUrl);
     }
 
@@ -165,45 +157,6 @@ public class Runner
         }
 
         return testRunResult;
-    }
-
-    private static async Task<TestCoverage> GetTestCoverageHits(IPage page)
-    {
-        // wait for 5 seconds
-        var waitTime = 5 * 1000;
-        var interval = 500;
-        var count = waitTime / interval;
-
-        TestCoverage testCoverage = null;
-
-        while (count > 0)
-        {
-            count--;
-            var resultsObject = await page.EvaluateAsync<string>("JSON.stringify(TestRunner.GetTestCoverage())");
-            testCoverage = JsonSerializer.Deserialize<TestCoverage>(resultsObject, new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-            if (testCoverage != null)
-            {
-                break;
-            }
-            await Task.Delay(interval);
-        }
-
-#if RELEASE
-        if (testCoverage is null)
-        {
-            throw new TestRunnerException("Failed to get test coverage results.");
-        }
-
-        if (testCoverage.HitsFilePath is null)
-        {
-            throw new TestRunnerException("Failed to get test coverage hits file path.");
-        }
-#endif
-
-        return testCoverage;
     }
 
     private static async Task WriteResultsToFile(string trxFilePath, string resultsXML)

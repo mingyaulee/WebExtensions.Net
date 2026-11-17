@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System.Reflection;
 using WebExtensions.Net.BrowserExtensionIntegrationTest.Models;
 
 namespace WebExtensions.Net.BrowserExtensionIntegrationTest.Infrastructure;
@@ -71,39 +70,5 @@ public class TestRunner : ITestRunner
         var testClassInstance = ActivatorUtilities.CreateInstance(serviceProvider, testClassType);
         testClassInstances.Add(testClassType, testClassInstance);
         return testClassInstance;
-    }
-
-    public async Task GetTestCoverageInfo()
-    {
-        // AppDomain.Unload is not supported, in the case where the extension is running with coverlet, look for the HitsArray static field in WebExtensions.Net
-        // This is a hack to get into the module injected by Coverlet
-        // Reference: https://github.com/coverlet-coverage/coverlet/blob/master/src/coverlet.core/Instrumentation/ModuleTrackerTemplate.cs
-        var webExtensionsAssembly = typeof(WebExtensions.Net.IWebExtensionsApi).Assembly;
-        var types = webExtensionsAssembly.GetTypes();
-        var coverletType = types.FirstOrDefault(type => type.Namespace?.Contains("Coverlet", StringComparison.OrdinalIgnoreCase) ?? false);
-        if (coverletType == null)
-        {
-            logger.LogError("Failed to get coverlet type.");
-            return;
-        }
-        var hitsArrayField = coverletType.GetField("HitsArray", BindingFlags.Public | BindingFlags.Static);
-        if (hitsArrayField == null)
-        {
-            logger.LogError("Failed to get 'HitsArray' field.");
-            return;
-        }
-        var hitsFilePathField = coverletType.GetField("HitsFilePath", BindingFlags.Public | BindingFlags.Static);
-        if (hitsFilePathField == null)
-        {
-            logger.LogError("Failed to get 'HitsFilePath' field.");
-            return;
-        }
-        var hitsArray = (int[])hitsArrayField.GetValue(null);
-        var hitsFilePath = (string)hitsFilePathField.GetValue(null);
-        await jsRuntime.InvokeVoidAsync("TestRunner.SetTestCoverage", new
-        {
-            HitsFilePath = hitsFilePath,
-            HitsArray = hitsArray
-        });
     }
 }
